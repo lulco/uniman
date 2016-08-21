@@ -1,5 +1,1 @@
-<form>
-	<select>
-		<option n:foreach="array_keys($driver->databases()) as $database" onclick="window.location = {plink List:tables, $driver->type(), $database}"{if $database == $actualDatabase} selected{/if}>{$database}</option>
-	</select>
-</form>
+{control select}

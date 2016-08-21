@@ -1,26 +1,31 @@
 {block content}
 
-{control databaseSelect}
+<div class="row">
+	<div class="col-lg-2">
+		{control databaseSelect}
+	</div>
+	<div class="col-lg-10">
+		<h1>{implode(', ', array_keys($itemsTitles))} for {$databaseTitle} {$database}</h1>
 
-<h1>{implode(', ', array_keys($itemsTitles))} for {$databaseTitle} {$database}</h1>
-
-{if $tables}
-	{foreach $tables as $type => $rows}
-		<h3>{$type} ({count($rows)})</h3>
-		<table class="table">
-			<thead n:if="isset($tablesHeaders[$type]) && $tablesHeaders[$type]">
-				<tr>
-					<th n:foreach="$tablesHeaders[$type] as $tableHeader">{$tableHeader}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr n:foreach="$rows as $key => $values">
-					<td><a href="{link List:items, $driver, $database, $type, $key}">{$key}</a></td>
-					<td n:foreach="$values as $value">{$value}</td>
-				</tr>
-			</tbody>
-		</table>
-	{/foreach}
-{else}
-	No tables
-{/if}
+		{if $tables}
+			{foreach $tables as $type => $rows}
+				<h3>{$type} ({count($rows)})</h3>
+				<table class="table">
+					<thead n:if="isset($tablesHeaders[$type]) && $tablesHeaders[$type]">
+						<tr>
+							<th n:foreach="$tablesHeaders[$type] as $tableHeader">{$tableHeader}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr n:foreach="$rows as $key => $values">
+							<td><a href="{link List:items, $driver, $database, $type, $key}">{$key}</a></td>
+							<td n:foreach="$values as $value">{$value}</td>
+						</tr>
+					</tbody>
+				</table>
+			{/foreach}
+		{else}
+			No tables
+		{/if}
+	</div>
+</div>

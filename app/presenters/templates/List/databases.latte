@@ -1,17 +1,22 @@
 {block content}
 
-{control databaseSelect}
-
-<table class="table">
-	<thead>
-		<tr>
-			<th n:foreach="$databasesHeaders as $header">{$header}</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr n:foreach="$databases as $database => $databaseInfo">
-			<td><a href="{link List:tables, $driver, $database}">{$database}</a></td>
-			<td n:foreach="$databaseInfo as $databaseProperty">{$databaseProperty}</td>
-		</tr>
-	</tbody>
-</table>
+<div class="row">
+	<div class="col-lg-2">
+		{control databaseSelect}
+	</div>
+	<div class="col-lg-10">
+		<table class="table">
+			<thead>
+				<tr>
+					<th n:foreach="$databasesHeaders as $header">{$header}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr n:foreach="$databases as $database => $databaseInfo">
+					<td><a href="{link List:tables, $driver, $database}">{$database}</a></td>
+					<td n:foreach="$databaseInfo as $databaseProperty">{$databaseProperty}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
