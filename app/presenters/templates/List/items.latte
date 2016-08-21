@@ -1,0 +1,19 @@
+{block content}
+
+{control databaseSelect}
+
+{dump $items}
+<h3>{$type} ({count($items)})</h3>
+<table class="table">
+	<thead n:if="isset($itemsHeaders[$type]) && $itemsHeaders[$type]">
+		<tr>
+			<th n:foreach="$itemsHeaders[$type] as $itemHeader">{$itemHeader}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr n:foreach="$items as $key => $values">
+			<td>{$key}</td>
+			<td n:foreach="$values as $value">{$value}</td>
+		</tr>
+	</tbody>
+</table>

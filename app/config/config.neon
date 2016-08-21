@@ -1,0 +1,13 @@
+application:
+	mapping:
+		*: Adminerng\Presenters\*Presenter
+
+services:
+	router: Adminerng\Router\RouterFactory::createRouter
+
+	-
+		class: Adminerng\Core\DriverStorage
+		setup: 
+			- add(Adminerng\Drivers\Redis\RedisDriver())
+			- add(Adminerng\Drivers\Memcache\MemcacheDriver())
+			- add(Adminerng\Drivers\Rabbit\RabbitDriver())
