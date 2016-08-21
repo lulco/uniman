@@ -25,6 +25,8 @@ class ListPresenter extends BasePresenter
         $this->template->driver = $driver;
         $this->template->database = $database;
         $this->template->tables = $this->driver->tables($database);
+        $this->template->itemsTitles = $this->driver->itemsTitles();
+        $this->template->databaseTitle = $this->driver->databaseTitle();
         $this->template->tablesHeaders = $this->driver->tablesHeaders();
     }
 
@@ -37,6 +39,7 @@ class ListPresenter extends BasePresenter
         $this->template->type = $type;
         $this->template->table = $table;
         $this->template->items = $this->driver->items($database, $type, $table);
+        $this->template->itemsTitles = $this->driver->itemsTitles();
         $this->template->itemsHeaders = $this->driver->itemsHeaders();
     }
 

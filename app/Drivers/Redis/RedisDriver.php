@@ -7,8 +7,6 @@ use RedisProxy\RedisProxy;
 
 class RedisDriver extends AbstractDriver
 {
-    private $connection;
-
     public function check()
     {
         return extension_loaded('redis') || class_exists('Predis\Client');
@@ -36,6 +34,11 @@ class RedisDriver extends AbstractDriver
     public function connect(array $credentials)
     {
         $this->connection = new RedisProxy($credentials['host'], $credentials['port'], 0);
+    }
+
+    public function databaseTitle()
+    {
+        return 'database';
     }
 
     public function databasesHeaders()
@@ -69,8 +72,8 @@ class RedisDriver extends AbstractDriver
     public function tablesHeaders()
     {
         return [
+            'Hashes' => ['Hash', 'Number of fields'],
             'Keys' => ['Key', 'Value', 'Length'],
-            'Hashes' => ['Hash', 'Number of fields']
         ];
     }
 
@@ -100,6 +103,14 @@ class RedisDriver extends AbstractDriver
         }
         ksort($tables);
         return $tables;
+    }
+
+    public function itemsTitles()
+    {
+        return [
+            'Keys' => 'Key',
+            'Hashes' => 'Keys',
+        ];
     }
 
     public function itemsHeaders()

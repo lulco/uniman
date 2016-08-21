@@ -30,6 +30,11 @@ class RabbitDriver extends AbstractDriver
     {
         echo 'con rab';
     }
+    
+    public function databaseTitle()
+    {
+        return 'vhost';
+    }
 
     public function databasesHeaders()
     {
@@ -55,6 +60,12 @@ class RabbitDriver extends AbstractDriver
         
     }
 
+    public function itemsTitles()
+    {
+        return [
+        ];
+    }
+    
     public function itemsHeaders()
     {
         return [];

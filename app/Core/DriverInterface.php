@@ -32,6 +32,8 @@ interface DriverInterface
      * @param array $credentials
      */
     public function connect(array $credentials);
+
+    public function databaseTitle();
     
     /**
      * @return array table column names
@@ -48,6 +50,8 @@ interface DriverInterface
     // storages - alebo nejaky vseobecny nazov pre db: tables, redis: hashsets, keys, memcache: key, rabbit: queues
     public function tables($database);
     
+    public function itemsTitles();
+
     public function itemsHeaders();
     
     public function items($database, $type, $table);

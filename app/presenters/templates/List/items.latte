@@ -2,8 +2,7 @@
 
 {control databaseSelect}
 
-{dump $items}
-<h3>{$type} ({count($items)})</h3>
+<h3>{$itemsTitles[$type]} ({count($items)})</h3>
 <table class="table">
 	<thead n:if="isset($itemsHeaders[$type]) && $itemsHeaders[$type]">
 		<tr>

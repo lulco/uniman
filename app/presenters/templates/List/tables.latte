@@ -2,7 +2,7 @@
 
 {control databaseSelect}
 
-<h1>"Tables" for "database" {$database}</h1>
+<h1>{implode(', ', array_keys($itemsTitles))} for {$databaseTitle} {$database}</h1>
 
 {if $tables}
 	{foreach $tables as $type => $rows}
