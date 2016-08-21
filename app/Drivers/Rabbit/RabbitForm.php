@@ -17,7 +17,7 @@ class RabbitForm implements CredentialsFormInterface
             ->setAttribute('placeholder', 'guest');
         $form->addPassword('password', 'Password')
             ->setAttribute('placeholder', 'guest');
-        $form->addTextArea('vhost', 'Vhost')
+        $form->addText('vhost', 'Vhost')
             ->setAttribute('placeholder', '/');
         $form->addTextArea('queues', 'Queues');
     }

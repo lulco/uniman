@@ -33,7 +33,7 @@ class DatabaseSelectControl extends Control
         $databases = array_keys($this->driver->databases());
         $form = new Form();
         $form->setRenderer(new BootstrapVerticalRenderer());
-        $form->addSelect('database', 'Select database', array_combine($databases, $databases))
+        $form->addSelect('database', 'Select ' . $this->driver->databaseTitle(), array_combine($databases, $databases))
             ->setAttribute('onchange', 'window.location = \'' . $this->presenter->link('List:tables', $this->driver->type()) . '&database=\' + this.value')
             ->setDefaultValue($this->database);
         return $form;
