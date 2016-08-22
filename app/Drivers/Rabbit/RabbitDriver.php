@@ -77,7 +77,7 @@ class RabbitDriver extends AbstractDriver
     public function tablesHeaders()
     {
         return [
-            'Queues' => ['Queue']
+            'Queues' => ['Queue', 'Number of items', 'Size']
         ];
     }
 
@@ -85,7 +85,16 @@ class RabbitDriver extends AbstractDriver
     {
         $tables = [];
         foreach ($this->queues as $queue) {
-            $tables['Queues'][$queue] = [];
+            $count = 0;
+            $size = 0;
+            while ($message = $this->getMessage($queue)) {
+                $count++;
+                $size += $message->getBodySize();
+            }
+            $tables['Queues'][$queue] = [
+                'items' => $count,
+                'size' => $size,
+            ];
         }
         return $tables;
     }
@@ -106,9 +115,8 @@ class RabbitDriver extends AbstractDriver
     
     public function items($database, $type, $table)
     {
-        $channel = $this->connection->channel();
         $items = [];
-        while($message = $channel->basic_get($table)) {
+        while($message = $this->getMessage($table)) {
             $items[$message->getBody()] = [
                 'size' => $message->getBodySize(),
                 'is_truncated' => $message->isTruncated() ? 'Yes' : 'No',
@@ -122,5 +130,12 @@ class RabbitDriver extends AbstractDriver
     protected function getCredentialsForm()
     {
         return new RabbitForm();
+    }
+    
+    private function getMessage($queue)
+    {
+        $channel = $this->connection->channel();
+        $channel->queue_declare($queue, false, false, false, false);
+        return $channel->basic_get($queue);
     }
 }

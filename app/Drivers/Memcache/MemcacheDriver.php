@@ -131,6 +131,9 @@ class MemcacheDriver extends AbstractDriver
         $items = [];
         $keys = isset($this->connection->getExtendedStats('cachedump',(int)$table)[$database])
             ? $this->connection->getExtendedStats('cachedump',(int)$table)[$database] : [];
+        if ($keys === false) {
+            return $items;
+        }
         foreach ($keys as $key => $info) {
             $flags = false;
             $items[$key] = [
