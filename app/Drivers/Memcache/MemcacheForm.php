@@ -13,5 +13,8 @@ class MemcacheForm implements CredentialsFormInterface
             ->setAttribute('placeholder', 'localhost');
         $form->addText('port', 'Port')
             ->setAttribute('placeholder', '11211');
+        $form->addTextArea('multiservers', 'Multi servers')
+            ->setAttribute('placeholder', 'localhost:11211')
+            ->setOption('description', 'Each server on new line in format: host:port');
     }
 }

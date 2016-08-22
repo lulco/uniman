@@ -15,13 +15,7 @@ class HomepagePresenter extends Presenter
 
     public function actionDefault($driver = null)
     {
-        $this->driver = $driver;// ?: current(array_keys($this->driverStorage->getDrivers()));
-        $section = $this->getSession('adminerng');
-        $settings = $section->{$this->driver};
-        $credentials = json_decode(base64_decode($settings), true);
-        if ($credentials) {
-            $this->redirect('List:databases', $this->driver);
-        }
+        $this->driver = $driver ?: current(array_keys($this->driverStorage->getDrivers()));
     }
 
     public function actionLogout($driver = null)

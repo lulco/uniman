@@ -38,7 +38,6 @@ class LoginForm extends Control
             }
         }
         $form->addSelect('driver', 'Driver', $driversList)
-            ->setPrompt('Select driver')
             ->setAttribute('onchange', 'window.location = "?driver=" + this.value;')
             ->setDefaultValue($this->driver);
         if ($this->driver) {

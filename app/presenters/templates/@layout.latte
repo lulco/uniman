@@ -9,7 +9,13 @@
 	<link rel="icon" href="/favicon.ico">	*}
 </head>
 <body>
-	{* <a href="{link Homepage:logout, $presenter->getParam('driver')}">Logout</a> *}
+	<div class="navbar navbar-default navbar-static-top">
+		<div class="container-fluid">
+			<div n:if="isset($actualDriver) && $actualDriver" class="nav navbar-nav navbar-right" style="margin: 10px 5px;">
+				<a class="btn btn-default" href="{link Homepage:logout, $actualDriver}">Logout</a>
+			</div>
+		</div>
+	</div>
 	{include content}
 </body>
 </html>

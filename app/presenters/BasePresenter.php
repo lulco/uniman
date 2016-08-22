@@ -36,5 +36,6 @@ abstract class BasePresenter extends Presenter
             throw new BadRequestException('Driver "' . $actualDriver . '" not found');
         }
         $this->driver->connect($credentials);
+        $this->template->actualDriver = $actualDriver;
     }
 }
