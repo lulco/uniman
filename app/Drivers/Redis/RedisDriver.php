@@ -49,8 +49,6 @@ class RedisDriver extends AbstractDriver
             'Expires',
             'Avg ttl'
         ];
-        // tu budu nazvy fieldov vo vypise databaz
-        // db number, size (pocet klucov), ... viac sa asi pre redis neda, ale ostatne drivre toho mozno budu mat viac
     }
 
     public function databases()

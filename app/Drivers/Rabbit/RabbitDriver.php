@@ -7,9 +7,9 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class RabbitDriver extends AbstractDriver
 {
-    private $vhost;
+    private $credentials = [];
 
-    private $queues = [];
+    private $client;
 
     public function check()
     {
@@ -31,23 +31,22 @@ class RabbitDriver extends AbstractDriver
         return [
             'host' => 'localhost',
             'port' => '5672',
+            'api_host' => 'localhost',
+            'api_port' => '15672',
             'user' => 'guest',
             'password' => 'guest',
-            'vhost' => '/',
         ];
     }
 
     public function connect(array $credentials)
     {
-        $this->vhost = $credentials['vhost'];
-        $this->queues = array_map('trim', explode("\n", $credentials['queues']));
-
-        $this->connection = new AMQPStreamConnection(
-            $credentials['host'],
-            $credentials['port'],
-            $credentials['user'],
-            $credentials['password'],
-            $credentials['vhost']
+        $this->credentials = $credentials;
+        
+        $this->client = new RabbitManagementApiClient(
+            $this->credentials['api_host'],
+            $this->credentials['api_port'],
+            $this->credentials['user'],
+            $this->credentials['password']
         );
     }
     
@@ -59,19 +58,30 @@ class RabbitDriver extends AbstractDriver
     public function databasesHeaders()
     {
         return [
-            'Vhost'
+            'Vhost', 'Messages'
         ];
     }
 
     public function databases()
     {
-        return [
-            $this->vhost => [],
-        ];
+        $vhosts = [];
+        foreach ($this->client->getVhosts($this->credentials['user']) as $vhost) {
+            $vhosts[$vhost['name']] = [
+                'messages' => $vhost['messages'],
+            ];
+        }
+        return $vhosts;
     }
 
     public function selectDatabase($database)
     {
+        $this->connection = new AMQPStreamConnection(
+            $this->credentials['host'],
+            $this->credentials['port'],
+            $this->credentials['user'],
+            $this->credentials['password'],
+            $database
+        );
     }
 
     public function tablesHeaders()
@@ -84,16 +94,10 @@ class RabbitDriver extends AbstractDriver
     public function tables($database)
     {
         $tables = [];
-        foreach ($this->queues as $queue) {
-            $count = 0;
-            $size = 0;
-            while ($message = $this->getMessage($queue)) {
-                $count++;
-                $size += $message->getBodySize();
-            }
-            $tables['Queues'][$queue] = [
-                'items' => $count,
-                'size' => $size,
+        foreach ($this->client->getQueues($database) as $queue) {
+            $tables['Queues'][$queue['name']] = [
+                'items' => $queue['messages'],
+                'size' => $queue['message_bytes'],
             ];
         }
         return $tables;
@@ -115,6 +119,7 @@ class RabbitDriver extends AbstractDriver
     
     public function items($database, $type, $table)
     {
+        $this->selectDatabase($database);
         $items = [];
         while($message = $this->getMessage($table)) {
             $items[$message->getBody()] = [
