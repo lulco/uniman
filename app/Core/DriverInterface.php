@@ -42,9 +42,7 @@ interface DriverInterface
     
     // database, vhost - vyymsliet nazov spolocny
     public function databases();
-    
-    public function selectDatabase($database);
-    
+
     public function tablesHeaders();
 
     // storages - alebo nejaky vseobecny nazov pre db: tables, redis: hashsets, keys, memcache: key, rabbit: queues

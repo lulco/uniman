@@ -24,17 +24,17 @@ class LoginForm extends Control
     {
         echo $this['form'];
     }
-    
+
     protected function createComponentForm()
     {
         $form = new Form();
-        $form->setRenderer(new BootstrapVerticalRenderer);
+        $form->setRenderer(new BootstrapVerticalRenderer());
         $form->setMethod('get');
 
         $driversList = [];
-        foreach ($this->driverStorage->getDrivers() as $key => $driver) {
+        foreach ($this->driverStorage->getDrivers() as $driver) {
             if ($driver->check()) {
-                $driversList[$key] = $driver->name();
+                $driversList[$driver->type()] = $driver->name();
             }
         }
         $form->addSelect('driver', 'Driver', $driversList)
@@ -59,7 +59,7 @@ class LoginForm extends Control
         }
         $section = $this->presenter->getSession('adminerng');
         $section->{$values['driver']} = base64_encode(json_encode($values));
-        
+
         if (isset($values['database']) && $values['database']) {
             $this->presenter->redirect('List:tables', $values['driver'], $values['database']);
         }

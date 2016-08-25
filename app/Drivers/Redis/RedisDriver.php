@@ -62,7 +62,7 @@ class RedisDriver extends AbstractDriver
         return $databases;
     }
 
-    public function selectDatabase($database)
+    private function selectDatabase($database)
     {
         $this->connection->select($database);
     }

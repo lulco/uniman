@@ -12,6 +12,9 @@ class DriverStorage
         return $this;
     }
     
+    /**
+     * @return DriverInterface[]
+     */
     public function getDrivers()
     {
         return $this->drivers;

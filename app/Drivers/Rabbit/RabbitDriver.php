@@ -49,7 +49,7 @@ class RabbitDriver extends AbstractDriver
             $this->credentials['password']
         );
     }
-    
+
     public function databaseTitle()
     {
         return 'vhost';
@@ -67,20 +67,20 @@ class RabbitDriver extends AbstractDriver
         $vhosts = [];
         foreach ($this->client->getVhosts($this->credentials['user']) as $vhost) {
             $vhosts[$vhost['name']] = [
-                'messages' => $vhost['messages'],
+                'messages' => isset($vhost['messages']) ? $vhost['messages'] : 0,
             ];
         }
         return $vhosts;
     }
 
-    public function selectDatabase($database)
+    private function connectToVhost($vhost)
     {
         $this->connection = new AMQPStreamConnection(
             $this->credentials['host'],
             $this->credentials['port'],
             $this->credentials['user'],
             $this->credentials['password'],
-            $database
+            $vhost
         );
     }
 
@@ -119,7 +119,7 @@ class RabbitDriver extends AbstractDriver
     
     public function items($database, $type, $table)
     {
-        $this->selectDatabase($database);
+        $this->connectToVhost($database);
         $items = [];
         while($message = $this->getMessage($table)) {
             $items[$message->getBody()] = [

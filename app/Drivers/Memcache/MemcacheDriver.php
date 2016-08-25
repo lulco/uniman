@@ -82,11 +82,6 @@ class MemcacheDriver extends AbstractDriver
         return $databases;
     }
 
-    public function selectDatabase($database)
-    {
-        
-    }
-
     public function tablesHeaders()
     {
         return [
