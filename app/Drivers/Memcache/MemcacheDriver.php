@@ -25,19 +25,14 @@ class MemcacheDriver extends AbstractDriver
     public function defaultCredentials()
     {
         return [
-            'host' => 'localhost',
-            'port' => '11211',
+            'servers' => 'localhost:11211',
         ];
     }
 
     public function connect(array $credentials)
     {
         $this->connection = new Memcache();
-        if (!$credentials['multiservers']) {
-            $this->connection->addserver($credentials['host'], $credentials['port']);
-            return;
-        }
-        $servers = array_map('trim', explode("\n", trim($credentials['multiservers'])));
+        $servers = array_map('trim', explode("\n", trim($credentials['servers'])));
         foreach ($servers as $server) {
             list($host, $port) = explode(':', $server, 2);
             $this->connection->addserver($host, $port);
