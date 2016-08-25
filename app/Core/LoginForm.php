@@ -60,7 +60,7 @@ class LoginForm extends Control
         $section = $this->presenter->getSession('adminerng');
         $section->{$values['driver']} = base64_encode(json_encode($values));
         
-        if ($values['database']) {
+        if (isset($values['database']) && $values['database']) {
             $this->presenter->redirect('List:tables', $values['driver'], $values['database']);
         }
         $this->presenter->redirect('List:databases', $values['driver']);
