@@ -1,0 +1,9 @@
+name: Redis
+
+form:
+	host:
+		label: Host
+	port:
+		label: Port
+	database:
+		label: Database

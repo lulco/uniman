@@ -1,0 +1,6 @@
+name: Memcache
+
+form:
+	servers:
+		label: Servery
+		description: 'Každý server na nový riadok vo formáte: host:port'

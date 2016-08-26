@@ -8,6 +8,11 @@ abstract class AbstractDriver implements DriverInterface
 {
     protected $connection;
 
+    public function name()
+    {
+        return $this->type() . '.name';
+    }
+
     public final function addFormFields(Form $form)
     {
         return $this->getCredentialsForm()->addFieldsToForm($form);

@@ -1,0 +1,17 @@
+name: Rabbit
+
+form:
+	user:
+		label: User
+	password:
+		label: Password
+	host:
+		label: Host
+	port:
+		label: Port
+	rabbitmq_management_http_api_host:
+		label: RabbitMQ Management HTTP API host
+		description: rabbitmq_management plugin must be enabled
+	rabbitmq_management_http_api_port:
+		label: RabbitMQ Management HTTP API port
+		description: rabbitmq_management plugin must be enabled

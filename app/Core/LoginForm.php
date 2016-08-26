@@ -4,18 +4,22 @@ namespace Adminerng\Core;
 
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
+use Nette\Localization\ITranslator;
 use Nette\Utils\ArrayHash;
 use Tomaj\Form\Renderer\BootstrapVerticalRenderer;
 
 class LoginForm extends Control
 {
+    private $translator;
+
     private $driverStorage;
     
     private $driver;
     
-    public function __construct(DriverStorage $driverStorage, $driver)
+    public function __construct(ITranslator $translator, DriverStorage $driverStorage, $driver)
     {
         parent::__construct();
+        $this->translator = $translator;
         $this->driverStorage = $driverStorage;
         $this->driver = $driver;
     }
@@ -28,6 +32,7 @@ class LoginForm extends Control
     protected function createComponentForm()
     {
         $form = new Form();
+        $form->setTranslator($this->translator);
         $form->setRenderer(new BootstrapVerticalRenderer());
         $form->setMethod('get');
 
@@ -37,13 +42,13 @@ class LoginForm extends Control
                 $driversList[$driver->type()] = $driver->name();
             }
         }
-        $form->addSelect('driver', 'Driver', $driversList)
+        $form->addSelect('driver', 'core.form.driver', $driversList)
             ->setAttribute('onchange', 'window.location = "?driver=" + this.value;')
             ->setDefaultValue($this->driver);
         if ($this->driver) {
             $driver = $this->driverStorage->getDriver($this->driver);
             $driver->addFormFields($form);
-            $form->addSubmit('connect', 'Connect');
+            $form->addSubmit('connect', 'core.form.connect');
             $form->onSuccess[] = [$this, 'connect'];
         }
         return $form;

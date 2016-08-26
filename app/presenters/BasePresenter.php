@@ -6,15 +6,19 @@ use Adminerng\Core\DriverInterface;
 use Adminerng\Core\DriverStorage;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Presenter;
+use Nette\Localization\ITranslator;
 
 abstract class BasePresenter extends Presenter
 {
     /** @var DriverStorage @inject */
     public $driverStorage;
-    
+
     /** @var DriverInterface */
     protected $driver;
-    
+
+    /** @var ITranslator @inject */
+    public $translator;
+
     protected function startup()
     {
         parent::startup();

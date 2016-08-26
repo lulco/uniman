@@ -5,11 +5,15 @@ namespace Adminerng\Presenters;
 use Adminerng\Core\DriverStorage;
 use Adminerng\Core\LoginForm;
 use Nette\Application\UI\Presenter;
+use Nette\Localization\ITranslator;
 
 class HomepagePresenter extends Presenter
 {
     /** @var DriverStorage @inject */
     public $driverStorage;
+    
+    /** @var ITranslator @inject */
+    public $translator;
 
     private $driver;
 
@@ -31,6 +35,6 @@ class HomepagePresenter extends Presenter
 
     protected function createComponentLoginForm()
     {
-        return new LoginForm($this->driverStorage, $this->driver);
+        return new LoginForm($this->translator, $this->driverStorage, $this->driver);
     }
 }

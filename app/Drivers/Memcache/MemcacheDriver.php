@@ -17,11 +17,6 @@ class MemcacheDriver extends AbstractDriver
         return 'memcache';
     }
 
-    public function name()
-    {
-        return 'Memcache';
-    }
-
     public function defaultCredentials()
     {
         return [

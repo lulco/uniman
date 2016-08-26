@@ -16,11 +16,6 @@ class RedisDriver extends AbstractDriver
     {
         return 'redis';
     }
-    
-    public function name()
-    {
-        return 'Redis';
-    }
 
     public function defaultCredentials()
     {
@@ -30,7 +25,7 @@ class RedisDriver extends AbstractDriver
             'database' => '0',
         ];
     }
-    
+
     public function connect(array $credentials)
     {
         $this->connection = new RedisProxy($credentials['host'], $credentials['port'], $credentials['database']);

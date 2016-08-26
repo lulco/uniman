@@ -1,0 +1,6 @@
+name: Memcache
+
+form:
+	servers:
+		label: Servers
+		description: 'Each server on new line in format: host:port'

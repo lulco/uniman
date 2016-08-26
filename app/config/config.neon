@@ -2,6 +2,9 @@ application:
 	mapping:
 		*: Adminerng\Presenters\*Presenter
 
+extensions:
+	translation: Kdyby\Translation\DI\TranslationExtension
+
 services:
 	router: Adminerng\Router\RouterFactory::createRouter
 

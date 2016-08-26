@@ -9,8 +9,8 @@ class MemcacheForm implements CredentialsFormInterface
 {
     public function addFieldsToForm(Form $form)
     {
-        $form->addTextArea('servers', 'Servers')
+        $form->addTextArea('servers', 'memcache.form.servers.label')
             ->setAttribute('placeholder', 'localhost:11211')
-            ->setOption('description', 'Each server on new line in format: host:port');
+            ->setOption('description', 'memcache.form.servers.description');
     }
 }

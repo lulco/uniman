@@ -9,11 +9,11 @@ class RedisForm implements CredentialsFormInterface
 {
     public function addFieldsToForm(Form $form)
     {
-        $form->addText('host', 'Host')
+        $form->addText('host', 'redis.form.host.label')
             ->setAttribute('placeholder', 'localhost');
-        $form->addText('port', 'Port')
+        $form->addText('port', 'redis.form.port.label')
             ->setAttribute('placeholder', '6379');
-        $form->addText('database', 'Database')
+        $form->addText('database', 'redis.form.database.label')
             ->setAttribute('placeholder', 0);
     }
 }

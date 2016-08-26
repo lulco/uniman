@@ -21,11 +21,6 @@ class RabbitDriver extends AbstractDriver
         return 'rabbit';
     }
 
-    public function name()
-    {
-        return 'Rabbit';
-    }
-
     public function defaultCredentials()
     {
         return [

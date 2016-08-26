@@ -7,7 +7,8 @@
 		"php-amqplib/php-amqplib": "~2.6",
 		"lulco/redis-proxy": "^0.1.0",
 		"predis/predis": "^1.1",
-		"guzzlehttp/guzzle": "^6.2"
+		"guzzlehttp/guzzle": "^6.2",
+		"kdyby/translation": "dev-master"
 	},
 	"require-dev": {
 		"squizlabs/php_codesniffer": "~2.0"
