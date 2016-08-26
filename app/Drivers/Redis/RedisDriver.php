@@ -33,7 +33,7 @@ class RedisDriver extends AbstractDriver
     
     public function connect(array $credentials)
     {
-        $this->connection = new RedisProxy($credentials['host'], $credentials['port'], 0);
+        $this->connection = new RedisProxy($credentials['host'], $credentials['port'], $credentials['database']);
     }
 
     public function databaseTitle()
