@@ -67,6 +67,7 @@ class RedisDriver extends AbstractDriver
         return [
             'Hashes' => ['Hash', 'Number of fields'],
             'Keys' => ['Key', 'Value', 'Length'],
+            'Sets' => ['Set', 'Number of members']
         ];
     }
 
@@ -77,14 +78,19 @@ class RedisDriver extends AbstractDriver
         $commands = [
             'get' => 'Keys',
             'hLen' => 'Hashes',
+            'sMembers' => 'Sets',
         ];
         foreach ($this->connection->keys('*') as $key) {
             foreach ($commands as $command => $label) {
                 $result = $this->connection->$command($key);        
                 if ($this->connection->getLastError() === null) {
-                    $tables[$label][$key] = [
-                        $result
-                    ];
+                    if ($label == 'Sets') {
+                        $tables[$label][$key] = [count($result)];
+                    } else {
+                        $tables[$label][$key] = [
+                            $result
+                        ];
+                    }
                     if ($label == 'Keys') {
                         $tables[$label][$key][] = strlen($result);
                     }
@@ -103,6 +109,7 @@ class RedisDriver extends AbstractDriver
         return [
             'Keys' => 'Key',
             'Hashes' => 'Keys',
+            'Sets' => 'Members',
         ];
     }
 
@@ -115,9 +122,12 @@ class RedisDriver extends AbstractDriver
             'Hashes' => [
                 'Key', 'Length', 'Value'
             ],
+            'Sets' => [
+                'Member', 'Length'
+            ]
         ];
     }
-    
+
     public function items($database, $type, $table)
     {
         $items = [];
@@ -135,6 +145,12 @@ class RedisDriver extends AbstractDriver
                 'length' => strlen($value),
                 'value' => $value,
             ];
+        } elseif ($type == 'Sets') {
+            foreach ($this->connection->sMembers($table) as $item) {
+                $items[$item] = [
+                    'length' => strlen($item),
+                ];
+            }
         }
         return $items;
     }
