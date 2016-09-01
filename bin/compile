@@ -1,0 +1,103 @@
+#!/usr/bin/env php
+<?php
+
+namespace Adminerng;
+
+use FilesystemIterator;
+use Phar;
+use Symfony\Component\Finder\Finder;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+class Compile
+{
+    private $phar;
+
+    private $appRoot;
+
+    public function run()
+    {
+        $this->appRoot = realpath(__DIR__ . '/..') . '/';
+
+        $name = 'index';
+        $pharFile = $name . '.phar';
+        $pharTarget = __DIR__ . '/../build/' . $pharFile;
+        $phpTarget = __DIR__ . '/../build/' . $name . '.php';
+
+        $this->phar = new Phar($pharTarget, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, $pharFile);
+        $this->phar->startBuffering();
+        $this->addFile(__DIR__ . '/../www/index.php');
+        $this->addFile(__DIR__ . '/../app/bootstrap_live.php', 'app/bootstrap.php');
+
+        // TODO optimize - do not include not needed files
+        $finder = new Finder();
+        $finder->files()
+            ->ignoreVCS(true)
+            ->name('*.php')
+            ->name('*.phtml')
+            ->name('*.neon')
+            ->name('*.latte')
+            ->name('*.css')
+            ->name('*.js')
+            ->name('LICENSE')
+            ->exclude('Tests')
+            ->exclude('tests')
+            ->exclude('docs')
+            ->in(__DIR__.'/../app/Core/')
+            ->in(__DIR__.'/../app/Drivers/')
+            ->in(__DIR__.'/../app/Router/')
+            ->in(__DIR__.'/../app/components/')
+            ->in(__DIR__.'/../app/config/')
+            ->in(__DIR__.'/../app/lang/')
+            ->in(__DIR__.'/../app/presenters/')
+            ->in(__DIR__.'/../vendor/nette/')
+            ->in(__DIR__.'/../vendor/tracy/')
+            ->in(__DIR__.'/../vendor/latte/')
+            ->in(__DIR__.'/../vendor/symfony/')
+            ->in(__DIR__.'/../vendor/lulco/')
+            ->in(__DIR__.'/../vendor/tomaj/')
+            ->in(__DIR__.'/../vendor/php-amqplib/')
+            ->in(__DIR__.'/../vendor/guzzlehttp/')
+            ->in(__DIR__.'/../vendor/kdyby/')
+            ->in(__DIR__.'/../vendor/predis/')
+;
+
+        foreach ($finder as $file) {
+            $this->addFile($file);
+        }
+        
+        $this->addFile(__DIR__ . '/../vendor/autoload.php');
+        $this->addFile(__DIR__ . '/../vendor/composer/autoload_classmap.php');
+        $this->addFile(__DIR__ . '/../vendor/composer/autoload_files.php');
+        $this->addFile(__DIR__ . '/../vendor/composer/autoload_namespaces.php');
+        $this->addFile(__DIR__ . '/../vendor/composer/autoload_psr4.php');
+        $this->addFile(__DIR__ . '/../vendor/composer/autoload_real.php');
+        $this->addFile(__DIR__ . '/../vendor/composer/autoload_static.php');
+        $this->addFile(__DIR__ . '/../vendor/composer/ClassLoader.php');
+
+        $this->phar->setStub('<?php
+        Phar::mapPhar(\'' . $pharFile . '\');
+        require \'phar://' . $pharFile . '/www/index.php\';
+        __HALT_COMPILER(); ?>');
+
+        $this->phar->stopBuffering();
+
+        copy($pharTarget, $phpTarget);
+    }
+    
+    private function addFile($filepath, $pharPath = null)
+    {
+        if (!file_exists($filepath)) {
+            return false;
+        }
+        if ($pharPath === null) {
+            $realPath = realpath($filepath);
+            $pharPath = str_replace($this->appRoot, '', $realPath);
+        }
+        $this->phar->addFromString($pharPath, file_get_contents($filepath));
+        return true;
+    }
+}
+
+$compile = new \Adminerng\Compile();
+$compile->run();
