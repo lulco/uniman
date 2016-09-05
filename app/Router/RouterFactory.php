@@ -3,8 +3,8 @@
 namespace Adminerng\Router;
 
 use Nette\Application\IRouter;
-use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
+use Nette\Application\Routers\SimpleRouter;
 
 class RouterFactory
 {
@@ -14,7 +14,7 @@ class RouterFactory
     public static function createRouter()
     {
         $router = new RouteList();
-        $router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+        $router[] = new SimpleRouter('Homepage:default');
         return $router;
     }
 }

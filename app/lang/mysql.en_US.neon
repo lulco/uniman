@@ -1,0 +1,11 @@
+name: MySql
+
+form:
+	server:
+		label: Server
+	user:
+		label: User
+	password:
+		label: Password
+	database:
+		label: Database

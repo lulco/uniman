@@ -1,0 +1,11 @@
+name: MySql
+
+form:
+	server:
+		label: Server
+	user:
+		label: Používateľ
+	password:
+		label: Heslo
+	database:
+		label: Databáza

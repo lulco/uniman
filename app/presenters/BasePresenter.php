@@ -4,6 +4,7 @@ namespace Adminerng\Presenters;
 
 use Adminerng\Core\DriverInterface;
 use Adminerng\Core\DriverStorage;
+use Adminerng\Core\Exception\ConnectException;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Presenter;
 use Nette\Localization\ITranslator;
@@ -39,7 +40,11 @@ abstract class BasePresenter extends Presenter
         if (!$this->driver) {
             throw new BadRequestException('Driver "' . $actualDriver . '" not found');
         }
-        $this->driver->connect($credentials);
+        try {
+            $this->driver->connect($credentials);
+        } catch (ConnectException $e) {
+            $this->template->error = $e->getMessage();
+        }
         $this->template->actualDriver = $actualDriver;
     }
 }
