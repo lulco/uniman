@@ -1,0 +1,26 @@
+<nav n:if="$paginator->pageCount > 1" class="text-center">
+	<ul class="pagination">
+		<li{if $paginator->isFirst()} class="disabled"{/if}>
+			{if $paginator->isFirst()}
+				<span><span aria-hidden="true">&laquo;</span></span>
+			{else}
+				<a href="{plink this, 'page' => $paginator->page - 1}" aria-label="{_core.pagination.previous}" title="{_core.pagination.previous}"><span aria-hidden="true">&laquo;</span></a>
+			{/if}
+		</li>
+		{foreach $steps as $step}
+			{if $step == $paginator->page}
+				<li class="active"><span>{$step} <span class="sr-only">(current)</span></span></li>
+			{else}
+				<li><a href="{plink this, 'page' => $step}">{$step}</a></li>
+			{/if}
+			{if $iterator->nextValue > $step + 1}<li class="disabled"><span><span>&hellip;</span></span></li>{/if}
+		{/foreach}
+		<li{if $paginator->isLast()} class="disabled"{/if}>
+			{if $paginator->isLast()}
+				<span><span aria-hidden="true">&raquo;</span></span>
+			{else}
+				<a href="{plink this, 'page' => $paginator->page + 1}" aria-label="{_core.pagination.next}" title="{_core.pagination.next}"><span aria-hidden="true">&raquo;</span></a>
+			{/if}
+		</li>
+	</ul>
+</nav>

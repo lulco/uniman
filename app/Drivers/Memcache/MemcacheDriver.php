@@ -111,7 +111,12 @@ class MemcacheDriver extends AbstractDriver
         ];
     }
 
-    public function items($database, $type, $table)
+    public function itemsCount($database, $type, $table)
+    {
+        return 1000;
+    }
+    
+    public function items($database, $type, $table, $page, $onPage)
     {
         $items = [];
         $keys = isset($this->connection->getExtendedStats('cachedump',(int)$table)[$database])

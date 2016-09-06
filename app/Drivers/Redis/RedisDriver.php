@@ -130,12 +130,34 @@ class RedisDriver extends AbstractDriver
         ];
     }
 
-    public function items($database, $type, $table)
+    public function itemsCount($database, $type, $table)
+    {
+        $this->selectDatabase($database);
+        if ($type == 'Hashes') {
+            return $this->connection->hLen($table);
+        }
+        if ($type == 'Keys') {
+            return 1;
+        }
+        if ($type == 'Sets') {
+            return $this->connection->sCard($table);
+        }
+        return 0;
+    }
+
+    public function items($database, $type, $table, $page, $onPage)
     {
         $items = [];
         $this->selectDatabase($database);
         if ($type == 'Hashes') {
-            foreach ($this->connection->hGetAll($table) as $key => $value) {
+            $counter = 0;
+            $iterator = '';
+            do {
+                $res = $this->connection->hscan($table, $iterator, null, $onPage);
+                $counter++;
+            } while ($counter != $page);
+            $res = $res ?: [];
+            foreach ($res as $key => $value) {
                 $items[$key] = [
                     'key' => $key,
                     'length' => strlen($value),
@@ -150,7 +172,14 @@ class RedisDriver extends AbstractDriver
                 'value' => $value,
             ];
         } elseif ($type == 'Sets') {
-            foreach ($this->connection->sMembers($table) as $item) {
+            $counter = 0;
+            $iterator = '';
+            do {
+                $res = $this->connection->sscan($table, $iterator, null, $onPage);
+                $counter++;
+            } while ($counter != $page);
+            $res = $res ?: [];
+            foreach ($res as $item) {
                 $items[$item] = [
                     'member' => $item,
                     'length' => strlen($item),

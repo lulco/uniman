@@ -3,6 +3,7 @@
 namespace Adminerng\Presenters;
 
 use Adminerng\Components\DatabaseSelect\DatabaseSelectControl;
+use App\Component\VisualPaginator;
 
 class ListPresenter extends BasePresenter
 {
@@ -30,7 +31,7 @@ class ListPresenter extends BasePresenter
         $this->template->tablesHeaders = $this->driver->tablesHeaders();
     }
 
-    public function renderItems($driver, $database, $type, $table)
+    public function renderItems($driver, $database, $type, $table, $page = 1, $onPage = 50)
     {
         $this->database = $database;
 
@@ -38,13 +39,26 @@ class ListPresenter extends BasePresenter
         $this->template->database = $database;
         $this->template->type = $type;
         $this->template->table = $table;
-        $this->template->items = $this->driver->items($database, $type, $table);
+        $itemsCount = $this->driver->itemsCount($database, $type, $table);
+        $this->template->itemsCount = $itemsCount;
+        $this->template->items = $this->driver->items($database, $type, $table, $page, $onPage);
         $this->template->itemsTitles = $this->driver->itemsTitles();
         $this->template->itemsHeaders = $this->driver->itemsHeaders();
+        
+        $visualPaginator = $this['paginator'];
+        $paginator = $visualPaginator->getPaginator();
+        $paginator->setItemCount($itemsCount);
+        $paginator->setItemsPerPage($onPage);
+        $paginator->page = $page;
     }
 
     protected function createComponentDatabaseSelect()
     {
         return new DatabaseSelectControl($this->driver, $this->database);
+    }
+    
+    protected function createComponentPaginator()
+    {
+        return new VisualPaginator();
     }
 }

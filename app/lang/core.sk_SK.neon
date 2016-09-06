@@ -3,3 +3,7 @@ title: Adminer novej generácie
 form:
 	driver: Driver
 	connect: Pripojiť
+
+pagination:
+	previous: Predchádzajúca
+	next: Ďalšia
