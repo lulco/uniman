@@ -3,13 +3,18 @@
 namespace Adminerng\Presenters;
 
 use Adminerng\Components\DatabaseSelect\DatabaseSelectControl;
+use Adminerng\Core\Forms\ItemForm;
 use Nette\Application\ForbiddenRequestException;
-use Nette\Application\UI\Form;
-use Tomaj\Form\Renderer\BootstrapVerticalRenderer;
 
 class ItemPresenter extends BasePresenter
 {
     private $database;
+
+    private $type;
+    
+    private $table;
+
+    private $item;
 
     public function actionCreate($driver, $database, $type, $table)
     {
@@ -18,6 +23,8 @@ class ItemPresenter extends BasePresenter
         }
         $this->template->driver = $driver;
         $this->database = $database;
+        $this->type = $type;
+        $this->table = $table;
     }
 
     public function actionEdit($driver, $database, $type, $table, $item)
@@ -27,6 +34,9 @@ class ItemPresenter extends BasePresenter
         }
         $this->template->driver = $driver;
         $this->database = $database;
+        $this->type = $type;
+        $this->table = $table;
+        $this->item = $item;
     }
 
     protected function createComponentDatabaseSelect()
@@ -36,10 +46,6 @@ class ItemPresenter extends BasePresenter
 
     protected function createComponentForm()
     {
-        $form = new Form();
-        $form->setRenderer(new BootstrapVerticalRenderer());
-        $form->addText('x', 'y');
-        $form->addSubmit('save', 'Save');
-        return $form;
+        return new ItemForm($this->translator, $this->driver, $this->database, $this->type, $this->table, $this->item);
     }
 }

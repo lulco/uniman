@@ -21,21 +21,16 @@ abstract class AbstractDriver implements DriverInterface
     {
         return $this->getCredentialsForm()->addFieldsToForm($form);
     }
-    
-    public function addEditFormFields(Form $form)
+
+    public function itemForm($database, $type, $table, $item)
     {
-        return $this->getCredentialsForm()->addFieldsToForm($form);
+        return false;
     }
 
     /**
      * @return CredentialsFormInterface
      */
     abstract protected function getCredentialsForm();
-
-    /**
-     * @return CredentialsFormInterface
-     */
-//    abstract protected function getForm();
 
     /**
      * @return PermissionsInterface

@@ -2,6 +2,7 @@
 
 namespace Adminerng\Core;
 
+use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
 use Adminerng\Core\Permissions\PermissionsInterface;
 use Nette\Application\UI\Form;
 
@@ -61,6 +62,16 @@ interface DriverInterface
      */
     public function addFormFields(Form $form);
 
+    /**
+     * create / edit item form
+     * @param string $database
+     * @param string $type
+     * @param string $table
+     * @param mixed|null $item is null if create item form is rendered
+     * @return ItemFormInterface
+     */
+    public function itemForm($database, $type, $table, $item);
+    
     /**
      * @return PermissionsInterface
      */

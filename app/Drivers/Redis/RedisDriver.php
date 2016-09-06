@@ -3,6 +3,8 @@
 namespace Adminerng\Drivers\Redis;
 
 use Adminerng\Core\AbstractDriver;
+use Adminerng\Drivers\Redis\Forms\RedisHashKeyItemForm;
+use Adminerng\Drivers\Redis\Forms\RedisKeyItemForm;
 use RedisProxy\RedisProxy;
 
 class RedisDriver extends AbstractDriver
@@ -179,5 +181,20 @@ class RedisDriver extends AbstractDriver
             ];
         }
         return $info;
+    }
+    
+    public function itemForm($database, $type, $table, $item)
+    {
+        $this->selectDatabase($database);
+        if ($type == 'Hashes') {
+            return new RedisHashKeyItemForm($this->connection, $table, $item);
+        } elseif ($type == 'Keys') {
+            return new RedisKeyItemForm($this->connection, $item);
+        }
+    }
+
+    protected function getPermissions()
+    {
+        return new RedisPermissions();
     }
 }
