@@ -6,15 +6,17 @@
 	</div>
 	<div class="col-lg-10">
 		<h3>{$itemsTitles[$type]} ({count($items)})</h3>
+		<a href="{link Item:create, $driver, $database, $type, $table}">Create new</a>
 		<table class="table">
 			<thead n:if="isset($itemsHeaders[$type]) && $itemsHeaders[$type]">
 				<tr>
+					<th{* n:if="false"*}></th>
 					<th n:foreach="$itemsHeaders[$type] as $itemHeader">{$itemHeader}</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr n:foreach="$items as $key => $values">
-					<td>{$key}</td>
+					<td{* n:if="false"*}><a href="{link Item:edit, $driver, $database, $type, $table, $key}">Change</a></td>
 					<td n:foreach="$values as $value">{$value}</td>
 				</tr>
 			</tbody>

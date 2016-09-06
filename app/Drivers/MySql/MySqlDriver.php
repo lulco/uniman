@@ -13,7 +13,7 @@ class MySqlDriver extends AbstractDriver
 
     public function check()
     {
-        return true;    // TODO check PDO and mysql_pdo
+        return extension_loaded('pdo_mysql');
     }
     
     public function type()
@@ -124,7 +124,7 @@ class MySqlDriver extends AbstractDriver
     public function itemsHeaders()
     {
         return [
-            $this->type => array_merge(['hash'], $this->columns),
+            $this->type => $this->columns,
         ];
     }
 

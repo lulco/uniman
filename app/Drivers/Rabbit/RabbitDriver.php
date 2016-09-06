@@ -118,6 +118,7 @@ class RabbitDriver extends AbstractDriver
         $items = [];
         while($message = $this->getMessage($table)) {
             $items[$message->getBody()] = [
+                'message_body' => $message->getBody(),
                 'size' => $message->getBodySize(),
                 'is_truncated' => $message->isTruncated() ? 'Yes' : 'No',
                 'content_encoding' => $message->getContentEncoding(),

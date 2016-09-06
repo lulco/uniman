@@ -135,6 +135,7 @@ class RedisDriver extends AbstractDriver
         if ($type == 'Hashes') {
             foreach ($this->connection->hGetAll($table) as $key => $value) {
                 $items[$key] = [
+                    'key' => $key,
                     'length' => strlen($value),
                     'value' => $value,
                 ];
@@ -142,12 +143,14 @@ class RedisDriver extends AbstractDriver
         } elseif ($type == 'Keys') {
             $value = $this->connection->get($table);
             $items[$table] = [
+                'key' => $table,
                 'length' => strlen($value),
                 'value' => $value,
             ];
         } elseif ($type == 'Sets') {
             foreach ($this->connection->sMembers($table) as $item) {
                 $items[$item] = [
+                    'member' => $item,
                     'length' => strlen($item),
                 ];
             }
