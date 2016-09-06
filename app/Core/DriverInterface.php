@@ -2,6 +2,7 @@
 
 namespace Adminerng\Core;
 
+use Adminerng\Core\Permissions\PermissionsInterface;
 use Nette\Application\UI\Form;
 
 interface DriverInterface
@@ -53,9 +54,15 @@ interface DriverInterface
     public function itemsHeaders();
     
     public function items($database, $type, $table);
+
     /**
      * adds fields to credential form
      * @param Form $form
      */
     public function addFormFields(Form $form);
+
+    /**
+     * @return PermissionsInterface
+     */
+    public function permissions();
 }

@@ -5,18 +5,26 @@
 		{control databaseSelect}
 	</div>
 	<div class="col-lg-10">
-		<h3>{$itemsTitles[$type]} ({count($items)})</h3>
-		<a href="{link Item:create, $driver, $database, $type, $table}">Create new</a>
+		<div class="row">
+			<div class="col-lg-10">
+				<h3>{$itemsTitles[$type]} ({count($items)})</h3>
+			</div>
+			<div class="col-lg-2">
+				<div n:if="$actualDriver->permissions()->canCreateItem($database, $type, $table)" class="pull-right">
+					<a href="{link Item:create, $driver, $database, $type, $table}">Create new</a>
+				</div>
+			</div>
+		</div>
 		<table class="table">
 			<thead n:if="isset($itemsHeaders[$type]) && $itemsHeaders[$type]">
 				<tr>
-					<th{* n:if="false"*}></th>
+					<th n:if="$actualDriver->permissions()->canEditItem($database, $type, $table)"></th>
 					<th n:foreach="$itemsHeaders[$type] as $itemHeader">{$itemHeader}</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr n:foreach="$items as $key => $values">
-					<td{* n:if="false"*}><a href="{link Item:edit, $driver, $database, $type, $table, $key}">Change</a></td>
+					<td n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)"><a href="{link Item:edit, $driver, $database, $type, $table, $key}">Change</a></td>
 					<td n:foreach="$values as $value">{$value}</td>
 				</tr>
 			</tbody>

@@ -15,7 +15,7 @@
 				<h2><a href="{link Homepage:default, $presenter->getParam('driver')}">{_'core.title'}</a></h2>
 			</div>
 			<div n:if="isset($actualDriver) && $actualDriver" class="nav navbar-nav navbar-right" style="margin: 10px 5px;">
-				<a class="btn btn-default" href="{link Homepage:logout, $actualDriver}">Logout</a>
+				<a class="btn btn-default" href="{link Homepage:logout, $actualDriver->type()}">Logout</a>
 			</div>
 		</div>
 	</div>

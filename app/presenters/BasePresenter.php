@@ -45,6 +45,6 @@ abstract class BasePresenter extends Presenter
         } catch (ConnectException $e) {
             $this->template->error = $e->getMessage();
         }
-        $this->template->actualDriver = $actualDriver;
+        $this->template->actualDriver = $this->driver;
     }
 }
