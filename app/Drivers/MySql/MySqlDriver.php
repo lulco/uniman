@@ -3,6 +3,7 @@
 namespace Adminerng\Drivers\MySql;
 
 use Adminerng\Core\AbstractDriver;
+use Adminerng\Drivers\Redis\Forms\MySqlItemForm;
 use PDO;
 
 class MySqlDriver extends AbstractDriver
@@ -13,7 +14,7 @@ class MySqlDriver extends AbstractDriver
 
     public function check()
     {
-        return true;    // TODO check PDO and mysql_pdo
+        return extension_loaded('pdo_mysql');
     }
     
     public function type()
@@ -124,7 +125,7 @@ class MySqlDriver extends AbstractDriver
     public function itemsHeaders()
     {
         return [
-            $this->type => array_merge(['hash'], $this->columns),
+            $this->type => $this->columns,
         ];
     }
 
@@ -159,5 +160,11 @@ class MySqlDriver extends AbstractDriver
             $items[implode('|', $pk)] = $item;
         }
         return $items;
+    }
+    
+    public function itemForm($database, $type, $table, $item)
+    {
+        $this->selectDatabase($database);
+        return new MySqlItemForm($this->connection, $table, $item);
     }
 }

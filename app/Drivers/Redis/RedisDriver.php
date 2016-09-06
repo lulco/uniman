@@ -3,6 +3,8 @@
 namespace Adminerng\Drivers\Redis;
 
 use Adminerng\Core\AbstractDriver;
+use Adminerng\Drivers\Redis\Forms\RedisHashKeyItemForm;
+use Adminerng\Drivers\Redis\Forms\RedisKeyItemForm;
 use RedisProxy\RedisProxy;
 
 class RedisDriver extends AbstractDriver
@@ -135,6 +137,7 @@ class RedisDriver extends AbstractDriver
         if ($type == 'Hashes') {
             foreach ($this->connection->hGetAll($table) as $key => $value) {
                 $items[$key] = [
+                    'key' => $key,
                     'length' => strlen($value),
                     'value' => $value,
                 ];
@@ -142,12 +145,14 @@ class RedisDriver extends AbstractDriver
         } elseif ($type == 'Keys') {
             $value = $this->connection->get($table);
             $items[$table] = [
+                'key' => $table,
                 'length' => strlen($value),
                 'value' => $value,
             ];
         } elseif ($type == 'Sets') {
             foreach ($this->connection->sMembers($table) as $item) {
                 $items[$item] = [
+                    'member' => $item,
                     'length' => strlen($item),
                 ];
             }
@@ -176,5 +181,20 @@ class RedisDriver extends AbstractDriver
             ];
         }
         return $info;
+    }
+    
+    public function itemForm($database, $type, $table, $item)
+    {
+        $this->selectDatabase($database);
+        if ($type == 'Hashes') {
+            return new RedisHashKeyItemForm($this->connection, $table, $item);
+        } elseif ($type == 'Keys') {
+            return new RedisKeyItemForm($this->connection, $item);
+        }
+    }
+
+    protected function getPermissions()
+    {
+        return new RedisPermissions();
     }
 }

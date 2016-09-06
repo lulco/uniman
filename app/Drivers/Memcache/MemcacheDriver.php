@@ -122,6 +122,7 @@ class MemcacheDriver extends AbstractDriver
         foreach ($keys as $key => $info) {
             $flags = false;
             $items[$key] = [
+                'key' => $key,
                 'value' => $this->connection->get($key, $flags),
                 'size' => $info[0],
                 'expiration' => ($info[1] - time()) > 0 ? $info[1] - time() : null,
