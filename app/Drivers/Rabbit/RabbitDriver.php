@@ -114,14 +114,19 @@ class RabbitDriver extends AbstractDriver
     
     public function itemsCount($database, $type, $table)
     {
-        return 1000;
+        foreach ($this->client->getQueues($database) as $queue) {
+            if ($queue['name'] == $table) {
+                return $queue['messages'];
+            }
+        }
+        return 0;
     }
     
     public function items($database, $type, $table, $page, $onPage)
     {
         $this->connectToVhost($database);
         $items = [];
-        while($message = $this->getMessage($table)) {
+        while ($message = $this->getMessage($table)) {
             $items[$message->getBody()] = [
                 'message_body' => $message->getBody(),
                 'size' => $message->getBodySize(),
@@ -129,10 +134,13 @@ class RabbitDriver extends AbstractDriver
                 'content_encoding' => $message->getContentEncoding(),
                 'redelivered' => $message->get('redelivered') ? 'Yes' : 'No',
             ];
+            if (count($items) == $page * $onPage) {
+                break;
+            }
         }
-        return $items;
+        return array_slice($items, ($page - 1) * $onPage, $onPage, true);
     }
-    
+
     protected function getCredentialsForm()
     {
         return new RabbitForm();
