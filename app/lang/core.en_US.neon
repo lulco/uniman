@@ -3,3 +3,7 @@ title: Adminer next generation
 form:
 	driver: Driver
 	connect: Connect
+
+pagination:
+	previous: Previous
+	next: Next

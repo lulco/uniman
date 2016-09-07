@@ -41,7 +41,7 @@ class MySqlDriver extends AbstractDriver
         if (strpos($credentials['server'], ':') !== false) {
             list($host, $port) = explode(':', $credentials['server'], 2);
         }
-        $dsn = 'mysql:;host=' . $host . ';port=' . $port;
+        $dsn = 'mysql:;host=' . $host . ';port=' . $port . ';charset=utf8';
         $this->connection = new PDO($dsn, $credentials['user'], $credentials['password']);
     }
 
@@ -137,7 +137,14 @@ class MySqlDriver extends AbstractDriver
         ];
     }
 
-    public function items($database, $type, $table)
+    public function itemsCount($database, $type, $table)
+    {
+        $this->selectDatabase($database);
+        $query = 'SELECT count(*) FROM `' . $table . '`';
+        return $this->connection->query($query)->fetch(PDO::FETCH_COLUMN);
+    }
+    
+    public function items($database, $type, $table, $page, $onPage)
     {
         $this->type = $type;
         $this->selectDatabase($database);
@@ -152,7 +159,7 @@ class MySqlDriver extends AbstractDriver
             $primaryColumns = $this->columns;
         }
         $items = [];
-        foreach ($this->connection->query('SELECT * FROM `' . $table . '`')->fetchAll(PDO::FETCH_ASSOC) as $item) {
+        foreach ($this->connection->query('SELECT * FROM `' . $table . '` LIMIT ' . (($page - 1) * $onPage) . ', ' . $onPage)->fetchAll(PDO::FETCH_ASSOC) as $item) {
             $pk = [];
             foreach ($primaryColumns as $primaryColumn) {
                 $pk[] = $item[$primaryColumn];

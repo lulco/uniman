@@ -11,7 +11,7 @@ class RedisPermissions implements PermissionsInterface
         return true;
     }
 
-    public function canEditItem($database, $type, $table, $item)
+    public function canEditItem($database, $type, $table, $item = null)
     {
         return true;
     }
