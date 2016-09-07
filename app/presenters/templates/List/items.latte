@@ -15,7 +15,7 @@
 				</div>
 			</div>
 		</div>
-		<table class="table">
+		<table class="table text-nowrap">
 			<thead n:if="isset($itemsHeaders[$type]) && $itemsHeaders[$type]">
 				<tr>
 					<th n:if="$actualDriver->permissions()->canEditItem($database, $type, $table)"></th>
