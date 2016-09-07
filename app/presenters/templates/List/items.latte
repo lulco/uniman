@@ -25,7 +25,7 @@
 			<tbody>
 				<tr n:foreach="$items as $key => $values">
 					<td n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)"><a href="{link Item:edit, $driver, $database, $type, $table, $key}">Change</a></td>
-					<td n:foreach="$values as $value">{$value}</td>
+					<td n:foreach="$values as $value" title="{if is_null($value)}NULL{else}{$value}{/if}">{if is_null($value)}<i>NULL</i>{else}{$value|truncate:100}{/if}</td>
 				</tr>
 			</tbody>
 		</table>
