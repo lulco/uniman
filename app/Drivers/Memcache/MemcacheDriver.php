@@ -113,9 +113,11 @@ class MemcacheDriver extends AbstractDriver
 
     public function itemsCount($database, $type, $table)
     {
-        return 1000;
+        $stats = $this->connection->getExtendedStats('cachedump',(int)$table);
+        $keys = isset($stats[$database]) ? $stats[$database] : [];
+        return count($keys);
     }
-    
+
     public function items($database, $type, $table, $page, $onPage)
     {
         $items = [];
@@ -124,6 +126,7 @@ class MemcacheDriver extends AbstractDriver
         if ($keys === false) {
             return $items;
         }
+        $keys = array_slice($keys, ($page - 1) * $onPage, $onPage, true);
         foreach ($keys as $key => $info) {
             $flags = false;
             $items[$key] = [
