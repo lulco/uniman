@@ -1,0 +1,12 @@
+{foreach $tables as $type => $rows}
+	<h3>{$type}</h3>
+	<ul>
+		<li n:foreach="$rows as $table => $info">
+			<a href="{plink this, 'type' => $type, 'table' => $table, 'page' => 1}">
+				<strong n:tag-if="$table == $actualTable">
+					{$table}
+				</strong>
+			</a>
+		</li>
+	</ul>
+{/foreach}
