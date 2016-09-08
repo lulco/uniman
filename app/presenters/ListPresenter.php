@@ -4,10 +4,14 @@ namespace Adminerng\Presenters;
 
 use Adminerng\Components\DatabaseSelect\DatabaseSelectControl;
 use App\Component\VisualPaginator;
+use Nette\Application\UI\Form;
+use Tomaj\Form\Renderer\BootstrapInlineRenderer;
 
 class ListPresenter extends BasePresenter
 {
     private $database;
+
+    private $onPage;
 
     public function renderDatabases($driver)
     {
@@ -34,6 +38,7 @@ class ListPresenter extends BasePresenter
     public function renderItems($driver, $database, $type, $table, $page = 1, $onPage = 50)
     {
         $this->database = $database;
+        $this->onPage = $onPage;
 
         $this->template->driver = $driver;
         $this->template->database = $database;
@@ -56,9 +61,20 @@ class ListPresenter extends BasePresenter
     {
         return new DatabaseSelectControl($this->driver, $this->database);
     }
-    
+
     protected function createComponentPaginator()
     {
         return new VisualPaginator();
+    }
+
+    protected function createComponentFilterForm()
+    {
+        $form = new Form();
+        $form->setRenderer(new BootstrapInlineRenderer());
+        $form->setMethod('get');
+        $form->addText('onPage', 'On page')
+            ->setDefaultValue($this->onPage);
+        $form->addSubmit('filter', 'Filter');
+        return $form;
     }
 }
