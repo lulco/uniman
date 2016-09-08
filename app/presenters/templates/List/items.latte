@@ -16,7 +16,7 @@
 			</div>
 			<div class="col-lg-2">
 				<div n:if="$actualDriver->permissions()->canCreateItem($database, $type, $table)" class="pull-right">
-					<a href="{link Item:create, $driver, $database, $type, $table}">Create new</a>
+					<a class="btn btn-default" style="margin-right: 20px;" href="{link Item:create, $driver, $database, $type, $table}">Create new</a>
 				</div>
 			</div>
 		</div>

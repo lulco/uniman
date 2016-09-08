@@ -155,7 +155,7 @@ class MySqlDriver extends AbstractDriver
                 $primaryColumns[] = $column['Field'];
             }
         }
-        if ($type == 'Views') {
+        if ($type == 'Views' || !$primaryColumns) {
             $primaryColumns = $this->columns;
         }
         $items = [];
