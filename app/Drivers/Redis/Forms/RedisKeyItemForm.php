@@ -22,7 +22,7 @@ class RedisKeyItemForm implements ItemFormInterface
     public function addFieldsToForm(Form $form)
     {
         $form->addText('key', 'redis.item_form.key.label')
-            ->setRequired();
+            ->setRequired('redis.item_form.key.required');
         $form->addText('value', 'redis.item_form.value.label');
         
         if ($this->key) {

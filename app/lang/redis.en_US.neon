@@ -7,3 +7,17 @@ form:
 		label: Port
 	database:
 		label: Database
+
+key_form:
+	key:
+		label: Key
+		required: Key is required
+	value:
+		label: Value
+
+item_form:
+	key:
+		label: Key
+		required: Key is required
+	value:
+		label: Value

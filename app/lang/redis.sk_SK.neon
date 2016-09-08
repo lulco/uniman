@@ -7,3 +7,17 @@ form:
 		label: Port
 	database:
 		label: Databáza
+
+key_form:
+	key:
+		label: Kľúč
+		required: Kľúč je povinné pole
+	value:
+		label: Hodnota
+
+item_form:
+	key:
+		label: Kľúč
+		required: Kľúč je povinné pole
+	value:
+		label: Hodnota

@@ -25,7 +25,7 @@ class RedisHashKeyItemForm implements ItemFormInterface
     public function addFieldsToForm(Form $form)
     {
         $form->addText('key', 'redis.key_form.key.label')
-            ->setRequired();
+            ->setRequired('redis.key_form.key.required');
         $form->addText('value', 'redis.key_form.value.label');
         
         if ($this->key) {
