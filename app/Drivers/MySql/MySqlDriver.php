@@ -10,13 +10,13 @@ class MySqlDriver extends AbstractDriver
 {
     private $type;
 
-    private $columns = [];
+    private $columns = null;
 
     public function check()
     {
         return extension_loaded('pdo_mysql');
     }
-    
+
     public function type()
     {
         return 'mysql';
@@ -124,7 +124,12 @@ class MySqlDriver extends AbstractDriver
 
     public function itemsHeaders($type)
     {
-        return $this->columns;
+        $columns = $this->getColumns($type, 'this parameter is missing but I dont care');   // TODO fix me
+        $headers = [];
+        foreach ($columns as $column) {
+            $headers[] = $column['Field'];
+        }
+        return $headers;
     }
 
     public function itemsTitles($type = null)
@@ -147,30 +152,60 @@ class MySqlDriver extends AbstractDriver
     {
         $this->type = $type;
         $this->selectDatabase($database);
-        $primaryColumns = [];
-        foreach ($this->connection->query('SHOW FULL COLUMNS FROM `' . $table .'`')->fetchAll(PDO::FETCH_ASSOC) as $column) {
-            $this->columns[] = $column['Field'];            
-            if ($column['Key'] == 'PRI') {
-                $primaryColumns[] = $column['Field'];
-            }
-        }
-        if ($type == 'Views' || !$primaryColumns) {
-            $primaryColumns = $this->columns;
-        }
+
+        $primaryColumns = $this->getPrimaryColumns($type, $table);
         $items = [];
         foreach ($this->connection->query('SELECT * FROM `' . $table . '` LIMIT ' . (($page - 1) * $onPage) . ', ' . $onPage)->fetchAll(PDO::FETCH_ASSOC) as $item) {
             $pk = [];
             foreach ($primaryColumns as $primaryColumn) {
                 $pk[] = $item[$primaryColumn];
             }
-            $items[implode('|', $pk)] = $item;
+            $items[md5(implode('|', $pk))] = $item;
         }
         return $items;
     }
-    
+
     public function itemForm($database, $type, $table, $item)
     {
         $this->selectDatabase($database);
         return new MySqlItemForm($this->connection, $table, $item);
+    }
+
+    protected function getPermissions()
+    {
+        return new MySqlPermissions();
+    }
+
+    public function deleteItem($database, $type, $table, $item)
+    {
+        $this->selectDatabase($database);
+        $primaryColumns = $this->getPrimaryColumns($type, $table);
+        
+        $query = 'DELETE FROM `' . $table . '` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "' . $item . '"';
+        return $this->connection->query($query);
+    }
+
+    private function getPrimaryColumns($type, $table)
+    {
+        $primaryColumns = [];
+        $columns = [];
+        foreach ($this->getColumns($type, $table) as $column) {
+            $columns[] = $column['Field'];
+            if ($column['Key'] == 'PRI') {
+                $primaryColumns[] = $column['Field'];
+            }
+        }
+        if (empty($primaryColumns)) {
+            $primaryColumns = $columns;
+        }
+        return $primaryColumns;
+    }
+
+    private function getColumns($type, $table)
+    {
+        if ($this->columns === null) {
+            $this->columns = $this->connection->query('SHOW FULL COLUMNS FROM `' . $table .'`')->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return $this->columns;
     }
 }
