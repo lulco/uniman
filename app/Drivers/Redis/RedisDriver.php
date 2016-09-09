@@ -213,7 +213,7 @@ class RedisDriver extends AbstractDriver
         }
         return $info;
     }
-    
+
     public function itemForm($database, $type, $table, $item)
     {
         $this->selectDatabase($database);
@@ -237,6 +237,9 @@ class RedisDriver extends AbstractDriver
         }
         if ($type == 'Keys') {
             return $this->connection->del($table);
+        }
+        if ($type == 'Sets') {
+            return $this->connection->srem($table, $item);
         }
         // TODO throw exception if type is not found?
         return false;
