@@ -98,18 +98,20 @@ class RabbitDriver extends AbstractDriver
         return $tables;
     }
 
-    public function itemsTitles()
+    public function itemsTitles($type = null)
     {
-        return [
+        $titles = [
             'Queues' => 'Message'
         ];
+        return $type === null ? $titles : $titles[$type];
     }
     
-    public function itemsHeaders()
+    public function itemsHeaders($type)
     {
-        return [
+        $headers = [
             'Queues' => ['Message body', 'Size', 'Is truncated', 'Content encoding', 'Redelivered']
         ];
+        return isset($headers[$type]) ? $headers[$type] : [];
     }
     
     public function itemsCount($database, $type, $table)

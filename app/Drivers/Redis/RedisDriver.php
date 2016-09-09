@@ -106,18 +106,19 @@ class RedisDriver extends AbstractDriver
         return $tables;
     }
 
-    public function itemsTitles()
+    public function itemsTitles($type = null)
     {
-        return [
+        $titles = [
             'Keys' => 'Key',
             'Hashes' => 'Keys',
             'Sets' => 'Members',
         ];
+        return $type === null ? $titles : $titles[$type];
     }
 
-    public function itemsHeaders()
+    public function itemsHeaders($type)
     {
-        return [
+        $headers = [
             'Keys' => [
                 'Key', 'Length', 'Value'
             ],
@@ -128,6 +129,7 @@ class RedisDriver extends AbstractDriver
                 'Member', 'Length'
             ]
         ];
+        return isset($headers[$type]) ? $headers[$type] : [];
     }
 
     public function itemsCount($database, $type, $table)

@@ -14,7 +14,7 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-10">
-				<h3>{$itemsTitles[$type]} ({$itemsCount})</h3>
+				<h3>{$itemsTitle} ({$itemsCount})</h3>
 			</div>
 			<div class="col-lg-2">
 				<div n:if="$actualDriver->permissions()->canCreateItem($database, $type, $table)" class="pull-right">
@@ -23,15 +23,19 @@
 			</div>
 		</div>
 		<table class="table text-nowrap">
-			<thead n:if="isset($itemsHeaders[$type]) && $itemsHeaders[$type]">
+			<thead n:if="$itemsHeaders">
 				<tr>
 					<th n:if="$actualDriver->permissions()->canEditItem($database, $type, $table)"></th>
-					<th n:foreach="$itemsHeaders[$type] as $itemHeader">{$itemHeader}</th>
+					<th n:foreach="$itemsHeaders as $itemHeader">{$itemHeader}</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr n:foreach="$items as $key => $values">
-					<td n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)"><a href="{link Item:edit, $driver, $database, $type, $table, $key}">Change</a></td>
+					<td n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)">
+						<div class="btn-group">
+							<a class="btn-default" href="{link Item:edit, $driver, $database, $type, $table, $key}"><i class="fa fa-edit"></i></a>
+						</div>
+					</td>
 					<td n:foreach="$values as $value" title="{if is_null($value)}NULL{else}{$value}{/if}">{if is_null($value)}<i>NULL</i>{else}{$value|truncate:100}{/if}</td>
 				</tr>
 			</tbody>

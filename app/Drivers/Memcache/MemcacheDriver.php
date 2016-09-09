@@ -97,18 +97,20 @@ class MemcacheDriver extends AbstractDriver
         return $tables;
     }
 
-    public function itemsTitles()
+    public function itemsTitles($type = null)
     {
-        return [
+        $titles = [
             'Slabs' => 'Keys',
         ];
+        return $type === null ? $titles : $titles[$type];
     }
 
-    public function itemsHeaders()
+    public function itemsHeaders($type)
     {
-        return [
+        $headers = [
             'Slabs' => ['Key', 'Value', 'Size', 'Expiration', 'Flags']
         ];
+        return isset($headers[$type]) ? $headers[$type] : [];
     }
 
     public function itemsCount($database, $type, $table)

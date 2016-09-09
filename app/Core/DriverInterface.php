@@ -49,11 +49,11 @@ interface DriverInterface
 
     // storages - alebo nejaky vseobecny nazov pre db: tables, redis: hashsets, keys, memcache: key, rabbit: queues
     public function tables($database);
-    
-    public function itemsTitles();
 
-    public function itemsHeaders();
-    
+    public function itemsTitles($type);
+
+    public function itemsHeaders($type);
+
     /**
      * @param string $database
      * @param string $type

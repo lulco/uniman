@@ -122,19 +122,18 @@ class MySqlDriver extends AbstractDriver
         return $tables;
     }
 
-    public function itemsHeaders()
+    public function itemsHeaders($type)
     {
-        return [
-            $this->type => $this->columns,
-        ];
+        return $this->columns;
     }
 
-    public function itemsTitles()
+    public function itemsTitles($type = null)
     {
-        return [
+        $titles = [
             'Tables' => 'Items',
             'Views' => 'Items',
         ];
+        return $type === null ? $titles : $titles[$type];
     }
 
     public function itemsCount($database, $type, $table)
