@@ -25,15 +25,16 @@
 		<table class="table text-nowrap">
 			<thead n:if="$itemsHeaders">
 				<tr>
-					<th n:if="$actualDriver->permissions()->canEditItem($database, $type, $table)"></th>
+					<th></th>
 					<th n:foreach="$itemsHeaders as $itemHeader">{$itemHeader}</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr n:foreach="$items as $key => $values">
-					<td n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)">
+					<td>
 						<div class="btn-group">
-							<a class="btn-default" href="{link Item:edit, $driver, $database, $type, $table, $key}"><i class="fa fa-edit"></i></a>
+							<a n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)" class="btn-default" href="{link Item:edit, $driver, $database, $type, $table, $key}"><i class="fa fa-edit"></i></a>
+							<a n:if="$actualDriver->permissions()->canDeleteItem($database, $type, $table, $key)" class="btn-default" href="{link Item:delete, $driver, $database, $type, $table, $key}"><i class="fa fa-trash"></i></a>
 						</div>
 					</td>
 					<td n:foreach="$values as $value" title="{if is_null($value)}NULL{else}{$value}{/if}">{if is_null($value)}<i>NULL</i>{else}{$value|truncate:100}{/if}</td>

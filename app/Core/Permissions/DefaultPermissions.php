@@ -13,4 +13,9 @@ class DefaultPermissions implements PermissionsInterface
     {
         return false;
     }
+
+    public function canDeleteItem($database, $type, $table, $item)
+    {
+        return false;
+    }
 }

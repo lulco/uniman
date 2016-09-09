@@ -51,4 +51,9 @@ abstract class AbstractDriver implements DriverInterface
     {
         return new DefaultPermissions();
     }
+
+    public function deleteItem($database, $type, $table, $item)
+    {
+        return false;
+    }
 }

@@ -92,4 +92,6 @@ interface DriverInterface
      * @return PermissionsInterface
      */
     public function permissions();
+    
+    public function deleteItem($database, $type, $table, $item);
 }

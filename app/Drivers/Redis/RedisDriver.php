@@ -228,4 +228,17 @@ class RedisDriver extends AbstractDriver
     {
         return new RedisPermissions();
     }
+
+    public function deleteItem($database, $type, $table, $item)
+    {
+        $this->selectDatabase($database);
+        if ($type == 'Hashes') {
+            return $this->connection->hdel($table, $item);
+        }
+        if ($type == 'Keys') {
+            return $this->connection->del($table);
+        }
+        // TODO throw exception if type is not found?
+        return false;
+    }
 }
