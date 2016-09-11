@@ -17,13 +17,13 @@ interface DriverInterface
      * @return string name of driver
      */
     public function name();
-    
+
     /**
      * checks if required php extensions and/or php libraries are available
      * @return boolean
      */
     public function check();
-    
+
     /**
      * @return array default credentials for connect
      */
@@ -36,12 +36,12 @@ interface DriverInterface
     public function connect(array $credentials);
 
     public function databaseTitle();
-    
+
     /**
      * @return array table column names
      */
     public function databasesHeaders();
-    
+
     // database, vhost - vyymsliet nazov spolocny
     public function databases();
 
@@ -87,9 +87,11 @@ interface DriverInterface
      * @return ItemFormInterface
      */
     public function itemForm($database, $type, $table, $item);
-    
+
     /**
      * @return PermissionsInterface
      */
     public function permissions();
+
+    public function deleteItem($database, $type, $table, $item);
 }

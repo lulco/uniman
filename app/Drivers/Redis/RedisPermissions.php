@@ -15,4 +15,9 @@ class RedisPermissions implements PermissionsInterface
     {
         return true;
     }
+
+    public function canDeleteItem($database, $type, $table, $item)
+    {
+        return true;
+    }
 }

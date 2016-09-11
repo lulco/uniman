@@ -1,8 +1,10 @@
 <?php
 
-namespace Adminerng\Core\Permissions;
+namespace Adminerng\Drivers\Memcache;
 
-class DefaultPermissions implements PermissionsInterface
+use Adminerng\Core\Permissions\PermissionsInterface;
+
+class MemcachePermissions implements PermissionsInterface
 {
     public function canCreateItem($database, $type, $table)
     {
@@ -16,6 +18,6 @@ class DefaultPermissions implements PermissionsInterface
 
     public function canDeleteItem($database, $type, $table, $item)
     {
-        return false;
+        return true;
     }
 }

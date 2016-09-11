@@ -51,4 +51,17 @@ abstract class AbstractDriver implements DriverInterface
     {
         return new DefaultPermissions();
     }
+
+    /**
+     * Implement this method if permission canDeleteItem is true
+     * @param string $database
+     * @param string $type
+     * @param string $table
+     * @param string $item
+     * @return boolean
+     */
+    public function deleteItem($database, $type, $table, $item)
+    {
+        return false;
+    }
 }

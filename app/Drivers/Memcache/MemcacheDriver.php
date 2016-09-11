@@ -143,6 +143,16 @@ class MemcacheDriver extends AbstractDriver
         return $items;
     }
 
+    protected function getPermissions()
+    {
+        return new MemcachePermissions();
+    }
+
+    public function deleteItem($database, $type, $table, $item)
+    {
+        return $this->connection->delete($item);
+    }
+
     protected function getCredentialsForm()
     {
         return new MemcacheForm();
