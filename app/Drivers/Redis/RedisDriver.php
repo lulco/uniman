@@ -9,6 +9,10 @@ use RedisProxy\RedisProxy;
 
 class RedisDriver extends AbstractDriver
 {
+    const TYPE_KEY = 'key';
+    const TYPE_HASH = 'hash';
+    const TYPE_SET = 'set';
+
     public function check()
     {
         return extension_loaded('redis') || class_exists('Predis\Client');
@@ -63,13 +67,13 @@ class RedisDriver extends AbstractDriver
     {
         $this->connection->select($database);
     }
-    
+
     public function tablesHeaders()
     {
         return [
-            'Hashes' => ['Hash', 'Number of fields'],
-            'Keys' => ['Key', 'Value', 'Length'],
-            'Sets' => ['Set', 'Number of members']
+            self::TYPE_KEY => ['Key', 'Value', 'Length'],
+            self::TYPE_HASH => ['Hash', 'Number of fields'],
+            self::TYPE_SET => ['Set', 'Number of members'],
         ];
     }
 
@@ -78,22 +82,22 @@ class RedisDriver extends AbstractDriver
         $this->selectDatabase($database);
         $tables = [];
         $commands = [
-            'get' => 'Keys',
-            'hLen' => 'Hashes',
-            'sMembers' => 'Sets',
+            'get' => self::TYPE_KEY,
+            'hLen' => self::TYPE_HASH,
+            'sMembers' => self::TYPE_SET,
         ];
         foreach ($this->connection->keys('*') as $key) {
             foreach ($commands as $command => $label) {
                 $result = $this->connection->$command($key);        
                 if ($this->connection->getLastError() === null) {
-                    if ($label == 'Sets') {
+                    if ($label == self::TYPE_SET) {
                         $tables[$label][$key] = [count($result)];
                     } else {
                         $tables[$label][$key] = [
                             $result
                         ];
                     }
-                    if ($label == 'Keys') {
+                    if ($label == self::TYPE_KEY) {
                         $tables[$label][$key][] = strlen($result);
                     }
                     break;
@@ -109,9 +113,9 @@ class RedisDriver extends AbstractDriver
     public function itemsTitles($type = null)
     {
         $titles = [
-            'Keys' => 'Key',
-            'Hashes' => 'Keys',
-            'Sets' => 'Members',
+            self::TYPE_KEY => 'Key',
+            self::TYPE_HASH => 'Keys',
+            self::TYPE_SET => 'Members',
         ];
         return $type === null ? $titles : $titles[$type];
     }
@@ -119,13 +123,13 @@ class RedisDriver extends AbstractDriver
     public function itemsHeaders($type)
     {
         $headers = [
-            'Keys' => [
+            self::TYPE_KEY => [
                 'Key', 'Length', 'Value'
             ],
-            'Hashes' => [
+            self::TYPE_HASH => [
                 'Key', 'Length', 'Value'
             ],
-            'Sets' => [
+            self::TYPE_SET => [
                 'Member', 'Length'
             ]
         ];
@@ -135,13 +139,13 @@ class RedisDriver extends AbstractDriver
     public function itemsCount($database, $type, $table)
     {
         $this->selectDatabase($database);
-        if ($type == 'Hashes') {
+        if ($type == self::TYPE_HASH) {
             return $this->connection->hLen($table);
         }
-        if ($type == 'Keys') {
+        if ($type == self::TYPE_KEY) {
             return 1;
         }
-        if ($type == 'Sets') {
+        if ($type == self::TYPE_SET) {
             return $this->connection->sCard($table);
         }
         return 0;
@@ -151,7 +155,7 @@ class RedisDriver extends AbstractDriver
     {
         $items = [];
         $this->selectDatabase($database);
-        if ($type == 'Hashes') {
+        if ($type == self::TYPE_HASH) {
             $counter = 0;
             $iterator = '';
             do {
@@ -166,14 +170,14 @@ class RedisDriver extends AbstractDriver
                     'value' => $value,
                 ];
             }
-        } elseif ($type == 'Keys') {
+        } elseif ($type == self::TYPE_KEY) {
             $value = $this->connection->get($table);
             $items[$table] = [
                 'key' => $table,
                 'length' => strlen($value),
                 'value' => $value,
             ];
-        } elseif ($type == 'Sets') {
+        } elseif ($type == self::TYPE_SET) {
             $counter = 0;
             $iterator = '';
             do {
@@ -190,12 +194,12 @@ class RedisDriver extends AbstractDriver
         }
         return $items;
     }
-    
+
     public function getCredentialsForm()
     {
         return new RedisForm();
     }
-    
+
     private function databaseInfo($keyspace, $db)
     {
         $info = [
@@ -217,9 +221,9 @@ class RedisDriver extends AbstractDriver
     public function itemForm($database, $type, $table, $item)
     {
         $this->selectDatabase($database);
-        if ($type == 'Hashes') {
+        if ($type == self::TYPE_HASH) {
             return new RedisHashKeyItemForm($this->connection, $table, $item);
-        } elseif ($type == 'Keys') {
+        } elseif ($type == self::TYPE_KEY) {
             return new RedisKeyItemForm($this->connection, $item);
         }
     }
@@ -232,13 +236,13 @@ class RedisDriver extends AbstractDriver
     public function deleteItem($database, $type, $table, $item)
     {
         $this->selectDatabase($database);
-        if ($type == 'Hashes') {
+        if ($type == self::TYPE_HASH) {
             return $this->connection->hdel($table, $item);
         }
-        if ($type == 'Keys') {
+        if ($type == self::TYPE_KEY) {
             return $this->connection->del($table);
         }
-        if ($type == 'Sets') {
+        if ($type == self::TYPE_SET) {
             return $this->connection->srem($table, $item);
         }
         // TODO throw exception if type is not found?
