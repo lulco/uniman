@@ -8,6 +8,9 @@ use PDO;
 
 class MySqlDriver extends AbstractDriver
 {
+    const TYPE_TABLE = 'table';
+    const TYPE_VIEW = 'view';
+
     private $type;
 
     private $columns = null;
@@ -47,7 +50,7 @@ class MySqlDriver extends AbstractDriver
 
     public function databaseTitle()
     {
-        return '';
+        return 'database';
     }
 
     public function databasesHeaders()
@@ -90,8 +93,8 @@ class MySqlDriver extends AbstractDriver
     public function tablesHeaders()
     {
         return [
-            'Tables' => ['Table', 'Engine', 'Collation', 'Data length', 'Index length', 'Data free', 'Auto increment', 'Rows'],
-            'Views' => ['View', 'Check option', 'Is updatable', 'Definer', 'Security type', 'Character set', 'Collation'],
+            self::TYPE_TABLE => ['Table', 'Engine', 'Collation', 'Data length', 'Index length', 'Data free', 'Auto increment', 'Rows'],
+            self::TYPE_VIEW => ['View', 'Check option', 'Is updatable', 'Definer', 'Security type', 'Character set', 'Collation'],
         ];
     }
 
@@ -99,7 +102,7 @@ class MySqlDriver extends AbstractDriver
     {
         $tables = [];
         foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $table) {
-            $tables['Tables'][$table['TABLE_NAME']] = [
+            $tables[self::TYPE_TABLE][$table['TABLE_NAME']] = [
                 $table['ENGINE'],
                 $table['TABLE_COLLATION'],
                 number_format($table['DATA_LENGTH'], 0),
@@ -110,7 +113,7 @@ class MySqlDriver extends AbstractDriver
             ];
         }
         foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $view) {
-            $tables['Views'][$view['TABLE_NAME']] = [
+            $tables[self::TYPE_VIEW][$view['TABLE_NAME']] = [
                 $view['CHECK_OPTION'],
                 $view['IS_UPDATABLE'],
                 $view['DEFINER'],
@@ -135,8 +138,8 @@ class MySqlDriver extends AbstractDriver
     public function itemsTitles($type = null)
     {
         $titles = [
-            'Tables' => 'Items',
-            'Views' => 'Items',
+            self::TYPE_TABLE => 'Items',
+            self::TYPE_VIEW => 'Items',
         ];
         return $type === null ? $titles : $titles[$type];
     }
