@@ -7,6 +7,8 @@ use Memcache;
 
 class MemcacheDriver extends AbstractDriver
 {
+    const TYPE_SLAB = 'slab';
+
     public function check()
     {
         return extension_loaded('memcache');
@@ -75,7 +77,7 @@ class MemcacheDriver extends AbstractDriver
     public function tablesHeaders()
     {
         return [
-            'Slabs' => ['Slab ID', 'Size', 'Used chunks', 'Total chunks']
+            self::TYPE_SLAB => ['Slab ID', 'Size', 'Used chunks', 'Total chunks']
         ];
     }
     
@@ -88,7 +90,7 @@ class MemcacheDriver extends AbstractDriver
             if (!is_int($slabId)) {
                 continue;
             }
-            $tables['Slabs'][$slabId] = [
+            $tables[self::TYPE_SLAB][$slabId] = [
                 'size' => $slabInfo['mem_requested'],
                 'used_chunks' => $slabInfo['used_chunks'],
                 'total_chunks' => $slabInfo['total_chunks'],
@@ -100,7 +102,7 @@ class MemcacheDriver extends AbstractDriver
     public function itemsTitles($type = null)
     {
         $titles = [
-            'Slabs' => 'Keys',
+            self::TYPE_SLAB => 'Keys',
         ];
         return $type === null ? $titles : $titles[$type];
     }
@@ -108,7 +110,7 @@ class MemcacheDriver extends AbstractDriver
     public function itemsHeaders($type)
     {
         $headers = [
-            'Slabs' => ['Key', 'Value', 'Size', 'Expiration', 'Flags']
+            self::TYPE_SLAB => ['Key', 'Value', 'Size', 'Expiration', 'Flags']
         ];
         return isset($headers[$type]) ? $headers[$type] : [];
     }

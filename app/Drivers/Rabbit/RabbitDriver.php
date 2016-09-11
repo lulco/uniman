@@ -7,6 +7,8 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class RabbitDriver extends AbstractDriver
 {
+    const TYPE_QUEUE = 'queue';
+
     private $credentials = [];
 
     private $client;
@@ -82,7 +84,7 @@ class RabbitDriver extends AbstractDriver
     public function tablesHeaders()
     {
         return [
-            'Queues' => ['Queue', 'Number of items', 'Size']
+            self::TYPE_QUEUE => ['Queue', 'Number of items', 'Size']
         ];
     }
 
@@ -90,7 +92,7 @@ class RabbitDriver extends AbstractDriver
     {
         $tables = [];
         foreach ($this->client->getQueues($database) as $queue) {
-            $tables['Queues'][$queue['name']] = [
+            $tables[self::TYPE_QUEUE][$queue['name']] = [
                 'items' => $queue['messages'],
                 'size' => $queue['message_bytes'],
             ];
@@ -101,7 +103,7 @@ class RabbitDriver extends AbstractDriver
     public function itemsTitles($type = null)
     {
         $titles = [
-            'Queues' => 'Message'
+            self::TYPE_QUEUE => 'Message'
         ];
         return $type === null ? $titles : $titles[$type];
     }
@@ -109,7 +111,7 @@ class RabbitDriver extends AbstractDriver
     public function itemsHeaders($type)
     {
         $headers = [
-            'Queues' => ['Message body', 'Size', 'Is truncated', 'Content encoding', 'Redelivered']
+            self::TYPE_QUEUE => ['Message body', 'Size', 'Is truncated', 'Content encoding', 'Redelivered']
         ];
         return isset($headers[$type]) ? $headers[$type] : [];
     }
