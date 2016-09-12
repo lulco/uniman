@@ -11,6 +11,12 @@ interface DataManagerInterface
     public function databases();
 
     /**
+     * @todo try to remove this method from data manager (or keep it as private)
+     * @param string $database
+     */
+    public function selectDatabase($database);
+
+    /**
      * list of item storages: tables, views, hashes, sets, queues etc.
      * @param string $database
      * @return array

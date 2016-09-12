@@ -7,6 +7,7 @@ use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use RedisProxy\RedisProxy;
 
+// TODO use data manager instead of connection
 class RedisHashKeyItemForm implements ItemFormInterface
 {
     private $connection;
@@ -27,7 +28,7 @@ class RedisHashKeyItemForm implements ItemFormInterface
         $form->addText('key', 'redis.key_form.key.label')
             ->setRequired('redis.key_form.key.required');
         $form->addText('value', 'redis.key_form.value.label');
-        
+
         if ($this->key) {
             $form->setDefaults([
                 'key' => $this->key,

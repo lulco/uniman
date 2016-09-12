@@ -160,9 +160,8 @@ class MemcacheDriver extends AbstractDriver
         return new MemcacheForm();
     }
 
-    public function dataManager()
+    protected function getDataManager()
     {
         
     }
-
 }

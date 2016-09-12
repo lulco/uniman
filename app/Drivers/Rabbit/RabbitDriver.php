@@ -157,9 +157,8 @@ class RabbitDriver extends AbstractDriver
         return $channel->basic_get($queue);
     }
 
-    public function dataManager()
+    protected function getDataManager()
     {
         
     }
-
 }

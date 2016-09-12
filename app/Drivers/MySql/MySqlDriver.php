@@ -98,7 +98,7 @@ class MySqlDriver extends AbstractDriver
         return new MySqlPermissions();
     }
 
-    public function getDataManager()
+    protected function getDataManager()
     {
         return new MySqlDataManager($this->connection);
     }
