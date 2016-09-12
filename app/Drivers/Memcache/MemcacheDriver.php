@@ -7,8 +7,8 @@ use Memcache;
 
 class MemcacheDriver extends AbstractDriver
 {
-    const TYPE_SLAB = 'slab';
-
+    const TYPE_KEY = 'key';
+    
     public function check()
     {
         return extension_loaded('memcache');
@@ -57,15 +57,13 @@ class MemcacheDriver extends AbstractDriver
 
     public function tablesHeaders()
     {
-        return [
-            self::TYPE_SLAB => ['Slab ID', 'Size', 'Used chunks', 'Total chunks']
-        ];
+        return [];
     }
 
     public function itemsTitles($type = null)
     {
         $titles = [
-            self::TYPE_SLAB => 'Keys',
+            self::TYPE_KEY => 'Keys',
         ];
         return $type === null ? $titles : $titles[$type];
     }
@@ -73,7 +71,7 @@ class MemcacheDriver extends AbstractDriver
     public function itemsHeaders($type, $table)
     {
         $headers = [
-            self::TYPE_SLAB => ['Key', 'Value', 'Size', 'Expiration', 'Flags']
+            self::TYPE_KEY => ['Key', 'Value', 'Size', 'Expiration', 'Flags']
         ];
         return isset($headers[$type]) ? $headers[$type] : [];
     }

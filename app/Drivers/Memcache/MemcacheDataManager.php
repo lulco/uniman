@@ -3,6 +3,7 @@
 namespace Adminerng\Drivers\Memcache;
 
 use Adminerng\Core\DataManagerInterface;
+use Adminerng\Core\Exception\NoTablesJustItemsException;
 use Memcache;
 
 class MemcacheDataManager implements DataManagerInterface
@@ -35,24 +36,25 @@ class MemcacheDataManager implements DataManagerInterface
 
     public function tables($database)
     {
-        $slabs = isset($this->connection->getExtendedStats('slabs')[$database])
-            ? $this->connection->getExtendedStats('slabs')[$database] : [];
-        $tables = [];
-        foreach ($slabs as $slabId => $slabInfo) {
-            if (!is_int($slabId)) {
-                continue;
-            }
-            $tables[MemcacheDriver::TYPE_SLAB][$slabId] = [
-                'size' => $slabInfo['mem_requested'],
-                'used_chunks' => $slabInfo['used_chunks'],
-                'total_chunks' => $slabInfo['total_chunks'],
-            ];
-        }
-        return $tables;
+        throw new NoTablesJustItemsException('key', 'all');
     }
 
     public function itemsCount($database, $type, $table)
     {
+        if ($table == 'all') {
+            $slabs = $this->connection->getExtendedStats('slabs');
+            $databaseSlabs = isset($slabs[$database]) ? $slabs[$database] : [];
+            $count = 0;
+            foreach (array_keys($databaseSlabs) as $slabId) {
+                if (!is_int($slabId)) {
+                    continue;
+                }
+                $slabKeys = $this->getSlabKeys($database, $slabId);
+                $count += count($slabKeys);
+            }
+            return $count;
+        }
+
         $stats = $this->connection->getExtendedStats('cachedump',(int)$table);
         $keys = isset($stats[$database]) ? $stats[$database] : [];
         return count($keys);
@@ -60,13 +62,24 @@ class MemcacheDataManager implements DataManagerInterface
 
     public function items($database, $type, $table, $page, $onPage)
     {
-        $items = [];
-        $keys = isset($this->connection->getExtendedStats('cachedump',(int)$table)[$database])
-            ? $this->connection->getExtendedStats('cachedump',(int)$table)[$database] : [];
-        if ($keys === false) {
-            return $items;
+        if ($table == 'all') {
+            $slabs = $this->connection->getExtendedStats('slabs');
+            $databaseSlabs = isset($slabs[$database]) ? $slabs[$database] : [];
+            $keys = [];
+            foreach (array_keys($databaseSlabs) as $slabId) {
+                if (!is_int($slabId)) {
+                    continue;
+                }
+                $keys = array_merge($keys, $this->getSlabKeys($database, $slabId));
+            }
+        } else {
+            $keys = $this->getSlabKeys($database, $table);
         }
+
+        ksort($keys);
         $keys = array_slice($keys, ($page - 1) * $onPage, $onPage, true);
+        
+        $items = [];
         foreach ($keys as $key => $info) {
             $flags = false;
             $items[$key] = [
@@ -77,7 +90,6 @@ class MemcacheDataManager implements DataManagerInterface
                 'flags' => $flags == MEMCACHE_COMPRESSED ? 'compressed' : null,
             ];
         }
-        ksort($items);
         return $items;
     }
 
@@ -89,5 +101,15 @@ class MemcacheDataManager implements DataManagerInterface
     public function selectDatabase($database)
     {
         return null;
+    }
+
+    private function getSlabKeys($database, $slabId)
+    {
+        $cacheDump = $this->connection->getExtendedStats('cachedump',(int) $slabId);
+        $keys = isset($cacheDump[$database]) ? $cacheDump[$database] : [];
+        if ($keys === false) {
+            return [];
+        }
+        return $keys;
     }
 }

@@ -4,6 +4,7 @@ namespace Adminerng\Presenters;
 
 use Adminerng\Components\DatabaseSelect\DatabaseSelectControl;
 use Adminerng\Components\DatabaseSelect\TablesSideBarControl;
+use Adminerng\Core\Exception\NoTablesJustItemsException;
 use App\Component\VisualPaginator;
 use Nette\Application\UI\Form;
 use Tomaj\Form\Renderer\BootstrapInlineRenderer;
@@ -29,10 +30,16 @@ class ListPresenter extends BasePresenter
             $this->redirect('List:databases', $driver);
         }
         $this->database = $database;
-        
+
+        try {
+            $tables = $this->driver->dataManager()->tables($database);
+        } catch (NoTablesJustItemsException $e) {
+            $this->redirect('List:items', $driver, $database, $e->getType(), $e->getTable());
+        }
+
         $this->template->driver = $driver;
         $this->template->database = $database;
-        $this->template->tables = $this->driver->dataManager()->tables($database);
+        $this->template->tables = $tables;
         $this->template->itemsTitles = $this->driver->itemsTitles();
         $this->template->databaseTitle = $this->driver->databaseTitle();
         $this->template->tablesHeaders = $this->driver->tablesHeaders();
