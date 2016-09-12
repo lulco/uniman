@@ -11,10 +11,6 @@ class MySqlDriver extends AbstractDriver
     const TYPE_TABLE = 'table';
     const TYPE_VIEW = 'view';
 
-    private $type;
-
-    private $columns = null;
-
     public function check()
     {
         return extension_loaded('pdo_mysql');
@@ -64,32 +60,6 @@ class MySqlDriver extends AbstractDriver
         ];
     }
 
-    public function databases()
-    {
-        $tableSchemas = [];
-        foreach ($this->connection->query('SELECT TABLE_SCHEMA, count(*) AS tables_count, SUM(DATA_LENGTH) AS size FROM information_schema.TABLES GROUP BY TABLE_SCHEMA')->fetchAll(PDO::FETCH_ASSOC) as $tableSchema) {
-            $tableSchemas[$tableSchema['TABLE_SCHEMA']] = [
-                'tables_count' => $tableSchema['tables_count'],
-                'size' => $tableSchema['size'],
-            ];
-        }
-        $databases = [];
-        foreach ($this->connection->query('SELECT * FROM information_schema.SCHEMATA')->fetchAll(PDO::FETCH_ASSOC) as $database) {
-            $databases[$database['SCHEMA_NAME']] = [
-                'charset' => $database['DEFAULT_CHARACTER_SET_NAME'],
-                'collation' => $database['DEFAULT_COLLATION_NAME'],
-                'tables_count' => isset($tableSchemas[$database['SCHEMA_NAME']]['tables_count']) ? $tableSchemas[$database['SCHEMA_NAME']]['tables_count'] : '0',
-                'size' => isset($tableSchemas[$database['SCHEMA_NAME']]['size']) ? $tableSchemas[$database['SCHEMA_NAME']]['size'] : '0',
-            ];
-        }
-        return $databases;
-    }
-
-    private function selectDatabase($database)
-    {
-        $this->connection->query('USE `' . $database . '`');
-    }
-
     public function tablesHeaders()
     {
         return [
@@ -98,36 +68,9 @@ class MySqlDriver extends AbstractDriver
         ];
     }
 
-    public function tables($database)
+    public function itemsHeaders($type, $table)
     {
-        $tables = [];
-        foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $table) {
-            $tables[self::TYPE_TABLE][$table['TABLE_NAME']] = [
-                $table['ENGINE'],
-                $table['TABLE_COLLATION'],
-                number_format($table['DATA_LENGTH'], 0),
-                $table['INDEX_LENGTH'],
-                number_format($table['DATA_FREE'], 0, ',', ' '),
-                $table['AUTO_INCREMENT'],
-                $table['TABLE_ROWS'],
-            ];
-        }
-        foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $view) {
-            $tables[self::TYPE_VIEW][$view['TABLE_NAME']] = [
-                $view['CHECK_OPTION'],
-                $view['IS_UPDATABLE'],
-                $view['DEFINER'],
-                $view['SECURITY_TYPE'],
-                $view['CHARACTER_SET_CLIENT'],
-                $view['COLLATION_CONNECTION'],
-            ];
-        }
-        return $tables;
-    }
-
-    public function itemsHeaders($type)
-    {
-        $columns = $this->getColumns($type, 'this parameter is missing but I dont care');   // TODO fix me
+        $columns = $this->dataManager()->getColumns($type, $table);
         $headers = [];
         foreach ($columns as $column) {
             $headers[] = $column['Field'];
@@ -144,33 +87,9 @@ class MySqlDriver extends AbstractDriver
         return $type === null ? $titles : $titles[$type];
     }
 
-    public function itemsCount($database, $type, $table)
-    {
-        $this->selectDatabase($database);
-        $query = 'SELECT count(*) FROM `' . $table . '`';
-        return $this->connection->query($query)->fetch(PDO::FETCH_COLUMN);
-    }
-    
-    public function items($database, $type, $table, $page, $onPage)
-    {
-        $this->type = $type;
-        $this->selectDatabase($database);
-
-        $primaryColumns = $this->getPrimaryColumns($type, $table);
-        $items = [];
-        foreach ($this->connection->query('SELECT * FROM `' . $table . '` LIMIT ' . (($page - 1) * $onPage) . ', ' . $onPage)->fetchAll(PDO::FETCH_ASSOC) as $item) {
-            $pk = [];
-            foreach ($primaryColumns as $primaryColumn) {
-                $pk[] = $item[$primaryColumn];
-            }
-            $items[md5(implode('|', $pk))] = $item;
-        }
-        return $items;
-    }
-
     public function itemForm($database, $type, $table, $item)
     {
-        $this->selectDatabase($database);
+        $this->dataManager()->selectDatabase($database);
         return new MySqlItemForm($this->connection, $table, $item);
     }
 
@@ -179,36 +98,8 @@ class MySqlDriver extends AbstractDriver
         return new MySqlPermissions();
     }
 
-    public function deleteItem($database, $type, $table, $item)
+    public function getDataManager()
     {
-        $this->selectDatabase($database);
-        $primaryColumns = $this->getPrimaryColumns($type, $table);
-        
-        $query = 'DELETE FROM `' . $table . '` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "' . $item . '"';
-        return $this->connection->query($query);
-    }
-
-    private function getPrimaryColumns($type, $table)
-    {
-        $primaryColumns = [];
-        $columns = [];
-        foreach ($this->getColumns($type, $table) as $column) {
-            $columns[] = $column['Field'];
-            if ($column['Key'] == 'PRI') {
-                $primaryColumns[] = $column['Field'];
-            }
-        }
-        if (empty($primaryColumns)) {
-            $primaryColumns = $columns;
-        }
-        return $primaryColumns;
-    }
-
-    private function getColumns($type, $table)
-    {
-        if ($this->columns === null) {
-            $this->columns = $this->connection->query('SHOW FULL COLUMNS FROM `' . $table .'`')->fetchAll(PDO::FETCH_ASSOC);
-        }
-        return $this->columns;
+        return new MySqlDataManager($this->connection);
     }
 }

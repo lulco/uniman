@@ -4,8 +4,6 @@ namespace Adminerng\Components\DatabaseSelect;
 
 use Adminerng\Core\DriverInterface;
 use Nette\Application\UI\Control;
-use Nette\Application\UI\Form;
-use Tomaj\Form\Renderer\BootstrapVerticalRenderer;
 
 class TablesSideBarControl extends Control
 {
@@ -28,7 +26,7 @@ class TablesSideBarControl extends Control
         $this->template->driver = $this->driver;
         $this->template->actualDatabase = $this->database;
         $this->template->actualTable = $this->table;
-        $this->template->tables = $this->driver->tables($this->database);
+        $this->template->tables = $this->driver->dataManager()->tables($this->database);
         $this->template->setFile(__DIR__ . '/default.latte');
         $this->template->render();
     }

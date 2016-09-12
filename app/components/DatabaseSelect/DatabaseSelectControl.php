@@ -30,7 +30,7 @@ class DatabaseSelectControl extends Control
     
     protected function createComponentSelect()
     {
-        $databases = array_keys($this->driver->databases());
+        $databases = array_keys($this->driver->dataManager()->databases());
         $form = new Form();
         $form->setRenderer(new BootstrapVerticalRenderer());
         $form->addSelect('database', ucfirst($this->driver->databaseTitle()), array_combine($databases, $databases))

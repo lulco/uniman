@@ -108,7 +108,7 @@ class RabbitDriver extends AbstractDriver
         return $type === null ? $titles : $titles[$type];
     }
     
-    public function itemsHeaders($type)
+    public function itemsHeaders($type, $table)
     {
         $headers = [
             self::TYPE_QUEUE => ['Message body', 'Size', 'Is truncated', 'Content encoding', 'Redelivered']
@@ -156,4 +156,10 @@ class RabbitDriver extends AbstractDriver
         $channel->queue_declare($queue, false, false, false, false);
         return $channel->basic_get($queue);
     }
+
+    public function dataManager()
+    {
+        
+    }
+
 }

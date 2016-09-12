@@ -107,7 +107,7 @@ class MemcacheDriver extends AbstractDriver
         return $type === null ? $titles : $titles[$type];
     }
 
-    public function itemsHeaders($type)
+    public function itemsHeaders($type, $table)
     {
         $headers = [
             self::TYPE_SLAB => ['Key', 'Value', 'Size', 'Expiration', 'Flags']
@@ -159,4 +159,10 @@ class MemcacheDriver extends AbstractDriver
     {
         return new MemcacheForm();
     }
+
+    public function dataManager()
+    {
+        
+    }
+
 }

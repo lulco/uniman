@@ -12,6 +12,8 @@ abstract class AbstractDriver implements DriverInterface
 
     private $permissions;
 
+    private $dataManager;
+
     public function name()
     {
         return $this->type() . '.name';
@@ -53,15 +55,18 @@ abstract class AbstractDriver implements DriverInterface
     }
 
     /**
-     * Implement this method if permission canDeleteItem is true
-     * @param string $database
-     * @param string $type
-     * @param string $table
-     * @param string $item
-     * @return boolean
+     * @return DataManagerInterface
      */
-    public function deleteItem($database, $type, $table, $item)
+    public function dataManager()
     {
-        return false;
+        if ($this->dataManager === null) {
+            $this->dataManager = $this->getDataManager();
+        }
+        return $this->dataManager;
     }
+
+    /**
+     * @return DataManagerInterface
+     */
+    abstract protected function getDataManager();
 }

@@ -120,7 +120,7 @@ class RedisDriver extends AbstractDriver
         return $type === null ? $titles : $titles[$type];
     }
 
-    public function itemsHeaders($type)
+    public function itemsHeaders($type, $title)
     {
         $headers = [
             self::TYPE_KEY => [
@@ -248,4 +248,10 @@ class RedisDriver extends AbstractDriver
         // TODO throw exception if type is not found?
         return false;
     }
+
+    public function dataManager()
+    {
+        
+    }
+
 }
