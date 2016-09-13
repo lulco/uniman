@@ -1,5 +1,16 @@
 name: MySql
 
+table_types_for_database: 'Tabuľky a viewy pre databázu %database%'
+no_tables_for_database: 'V datábáze %database% neboli nájdené žiadne tabuľky ani viewy'
+
+table_type:
+	table:
+		items:
+			title: Záznam|Záznamy|Záznamy
+	view:
+		items:
+			title: Záznam|Záznamy|Záznamy
+
 form:
 	server:
 		label: Server
@@ -9,3 +20,8 @@ form:
 		label: Heslo
 	database:
 		label: Databáza
+
+database_select_control:
+	database:
+		label: Databázy
+		prompt: Vyberte databázu

@@ -36,11 +36,6 @@ class MemcacheDriver extends AbstractDriver
         }
     }
 
-    public function databaseTitle()
-    {
-        return 'server';
-    }
-
     public function databasesHeaders()
     {
         return [
@@ -58,14 +53,6 @@ class MemcacheDriver extends AbstractDriver
     public function tablesHeaders()
     {
         return [];
-    }
-
-    public function itemsTitles($type = null)
-    {
-        $titles = [
-            self::TYPE_KEY => 'Keys',
-        ];
-        return $type === null ? $titles : $titles[$type];
     }
 
     public function itemsHeaders($type, $table)

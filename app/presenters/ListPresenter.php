@@ -40,8 +40,6 @@ class ListPresenter extends BasePresenter
         $this->template->driver = $driver;
         $this->template->database = $database;
         $this->template->tables = $tables;
-        $this->template->itemsTitles = $this->driver->itemsTitles();
-        $this->template->databaseTitle = $this->driver->databaseTitle();
         $this->template->tablesHeaders = $this->driver->tablesHeaders();
     }
 
@@ -58,7 +56,6 @@ class ListPresenter extends BasePresenter
         $itemsCount = $this->driver->dataManager()->itemsCount($database, $type, $table);
         $this->template->itemsCount = $itemsCount;
         $this->template->items = $this->driver->dataManager()->items($database, $type, $table, $page, $onPage);
-        $this->template->itemsTitle = $this->driver->itemsTitles($type);
         $this->template->itemsHeaders = $this->driver->itemsHeaders($type, $table);
         
         $visualPaginator = $this['paginator'];
@@ -70,7 +67,7 @@ class ListPresenter extends BasePresenter
 
     protected function createComponentDatabaseSelect()
     {
-        return new DatabaseSelectControl($this->driver, $this->database);
+        return new DatabaseSelectControl($this->driver, $this->translator, $this->database);
     }
 
     protected function createComponentTablesSideBar()

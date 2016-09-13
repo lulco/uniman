@@ -1,5 +1,13 @@
 name: Rabbit
 
+table_types_for_database: 'Front pre vhost %database%'
+no_tables_for_database: 'Žiadne fronty pre vhost %database% neboli nájdené'
+
+table_type:
+	queue:
+		items:
+			title: Správa|Správy|Správy
+
 form:
 	user:
 		label: Používateľ
@@ -15,3 +23,8 @@ form:
 	rabbitmq_management_http_api_port:
 		label: RabbitMQ Management HTTP API port
 		description: rabbitmq_management plugin musí byť povolený
+
+database_select_control:
+	database:
+		label: Vhosts
+		prompt: Vyberte vhost

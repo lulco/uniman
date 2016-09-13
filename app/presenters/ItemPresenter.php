@@ -54,7 +54,7 @@ class ItemPresenter extends BasePresenter
 
     protected function createComponentDatabaseSelect()
     {
-        return new DatabaseSelectControl($this->driver, $this->database);
+        return new DatabaseSelectControl($this->driver, $this->translator, $this->database);
     }
 
     protected function createComponentForm()

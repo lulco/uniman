@@ -1,5 +1,19 @@
 name: Redis
 
+table_types_for_database: 'Kľúče, hashe a sety pre databázu %database%'
+no_tables_for_database: 'V datábáze %database% neboli nájdené žiadne kľúče, hashe ani sety'
+
+table_type:
+	hash:
+		items:
+			title: Kľúč|Kľúče|Kľúče
+	key:
+		items:
+			title: Kľúč|Kľúče|Kľúče
+	set:
+		items:
+			title: Prvok|Prvky|Prvky
+
 form:
 	host:
 		label: Host
@@ -21,3 +35,8 @@ item_form:
 		required: Kľúč je povinné pole
 	value:
 		label: Hodnota
+
+database_select_control:
+	database:
+		label: Databázy
+		prompt: Vyberte databázu

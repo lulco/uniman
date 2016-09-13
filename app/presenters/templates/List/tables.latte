@@ -5,8 +5,7 @@
 		{control databaseSelect}
 	</div>
 	<div class="col-lg-10">
-		<h1>{implode(', ', array_keys($itemsTitles))} for {$databaseTitle} {$database}</h1>
-
+		<h1>{_$driver . '.table_types_for_database', ['database' => $database]}</h1>
 		{if $tables}
 			{foreach $tables as $type => $rows}
 				<h3>{$type} ({count($rows)})</h3>
@@ -25,7 +24,7 @@
 				</table>
 			{/foreach}
 		{else}
-			No {implode(', ', array_keys($itemsTitles))}
+			<div class="no-items">{_$driver . '.no_tables_for_database', ['database' => $database]}</div>
 		{/if}
 	</div>
 </div>

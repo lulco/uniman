@@ -1,5 +1,19 @@
 name: Redis
 
+table_types_for_database: 'Keys, hashes and sets for database %database%'
+no_tables_for_database: 'No keys, hashes and sets found for database %database%'
+
+table_type:
+	hash:
+		items:
+			title: Key|Keys
+	key:
+		items:
+			title: Key|Keys
+	set:
+		items:
+			title: Member|Members
+
 form:
 	host:
 		label: Host
@@ -21,3 +35,8 @@ item_form:
 		required: Key is required
 	value:
 		label: Value
+
+database_select_control:
+	database:
+		label: Databases
+		prompt: Select database
