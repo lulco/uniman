@@ -4,6 +4,7 @@ namespace Adminerng\Presenters;
 
 use Adminerng\Components\DatabaseSelect\DatabaseSelectControl;
 use Adminerng\Components\DatabaseSelect\TablesSideBarControl;
+use Adminerng\Core\Exception\NoTablesJustItemsException;
 use App\Component\VisualPaginator;
 use Nette\Application\UI\Form;
 use Tomaj\Form\Renderer\BootstrapInlineRenderer;
@@ -20,7 +21,7 @@ class ListPresenter extends BasePresenter
     {
         $this->template->driver = $driver;
         $this->template->databasesHeaders = $this->driver->databasesHeaders();
-        $this->template->databases = $this->driver->databases();
+        $this->template->databases = $this->driver->dataManager()->databases();
     }
     
     public function renderTables($driver, $database = null)
@@ -29,10 +30,16 @@ class ListPresenter extends BasePresenter
             $this->redirect('List:databases', $driver);
         }
         $this->database = $database;
-        
+
+        try {
+            $tables = $this->driver->dataManager()->tables($database);
+        } catch (NoTablesJustItemsException $e) {
+            $this->redirect('List:items', $driver, $database, $e->getType(), $e->getTable());
+        }
+
         $this->template->driver = $driver;
         $this->template->database = $database;
-        $this->template->tables = $this->driver->tables($database);
+        $this->template->tables = $tables;
         $this->template->itemsTitles = $this->driver->itemsTitles();
         $this->template->databaseTitle = $this->driver->databaseTitle();
         $this->template->tablesHeaders = $this->driver->tablesHeaders();
@@ -48,11 +55,11 @@ class ListPresenter extends BasePresenter
         $this->template->database = $database;
         $this->template->type = $type;
         $this->template->table = $table;
-        $itemsCount = $this->driver->itemsCount($database, $type, $table);
+        $itemsCount = $this->driver->dataManager()->itemsCount($database, $type, $table);
         $this->template->itemsCount = $itemsCount;
-        $this->template->items = $this->driver->items($database, $type, $table, $page, $onPage);
+        $this->template->items = $this->driver->dataManager()->items($database, $type, $table, $page, $onPage);
         $this->template->itemsTitle = $this->driver->itemsTitles($type);
-        $this->template->itemsHeaders = $this->driver->itemsHeaders($type);
+        $this->template->itemsHeaders = $this->driver->itemsHeaders($type, $table);
         
         $visualPaginator = $this['paginator'];
         $paginator = $visualPaginator->getPaginator();

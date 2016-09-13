@@ -3,7 +3,6 @@
 namespace Adminerng\Drivers\Rabbit;
 
 use Adminerng\Core\AbstractDriver;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class RabbitDriver extends AbstractDriver
 {
@@ -59,45 +58,11 @@ class RabbitDriver extends AbstractDriver
         ];
     }
 
-    public function databases()
-    {
-        $vhosts = [];
-        foreach ($this->client->getVhosts($this->credentials['user']) as $vhost) {
-            $vhosts[$vhost['name']] = [
-                'messages' => isset($vhost['messages']) ? $vhost['messages'] : 0,
-            ];
-        }
-        return $vhosts;
-    }
-
-    private function connectToVhost($vhost)
-    {
-        $this->connection = new AMQPStreamConnection(
-            $this->credentials['host'],
-            $this->credentials['port'],
-            $this->credentials['user'],
-            $this->credentials['password'],
-            $vhost
-        );
-    }
-
     public function tablesHeaders()
     {
         return [
             self::TYPE_QUEUE => ['Queue', 'Number of items', 'Size']
         ];
-    }
-
-    public function tables($database)
-    {
-        $tables = [];
-        foreach ($this->client->getQueues($database) as $queue) {
-            $tables[self::TYPE_QUEUE][$queue['name']] = [
-                'items' => $queue['messages'],
-                'size' => $queue['message_bytes'],
-            ];
-        }
-        return $tables;
     }
 
     public function itemsTitles($type = null)
@@ -108,52 +73,21 @@ class RabbitDriver extends AbstractDriver
         return $type === null ? $titles : $titles[$type];
     }
     
-    public function itemsHeaders($type)
+    public function itemsHeaders($type, $table)
     {
         $headers = [
             self::TYPE_QUEUE => ['Message body', 'Size', 'Is truncated', 'Content encoding', 'Redelivered']
         ];
         return isset($headers[$type]) ? $headers[$type] : [];
     }
-    
-    public function itemsCount($database, $type, $table)
-    {
-        foreach ($this->client->getQueues($database) as $queue) {
-            if ($queue['name'] == $table) {
-                return $queue['messages'];
-            }
-        }
-        return 0;
-    }
-    
-    public function items($database, $type, $table, $page, $onPage)
-    {
-        $this->connectToVhost($database);
-        $items = [];
-        while ($message = $this->getMessage($table)) {
-            $items[$message->getBody()] = [
-                'message_body' => $message->getBody(),
-                'size' => $message->getBodySize(),
-                'is_truncated' => $message->isTruncated() ? 'Yes' : 'No',
-                'content_encoding' => $message->getContentEncoding(),
-                'redelivered' => $message->get('redelivered') ? 'Yes' : 'No',
-            ];
-            if (count($items) == $page * $onPage) {
-                break;
-            }
-        }
-        return array_slice($items, ($page - 1) * $onPage, $onPage, true);
-    }
 
     protected function getCredentialsForm()
     {
         return new RabbitForm();
     }
-    
-    private function getMessage($queue)
+
+    protected function getDataManager()
     {
-        $channel = $this->connection->channel();
-        $channel->queue_declare($queue, false, false, false, false);
-        return $channel->basic_get($queue);
+        return new RabbitDataManager($this->credentials, $this->client);
     }
 }
