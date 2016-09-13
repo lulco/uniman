@@ -1,5 +1,10 @@
 name: Memcache
 
+table_type:
+	key:
+		items:
+			title: Kľúč|Kľúče|Kľúče
+
 form:
 	servers:
 		label: Servery

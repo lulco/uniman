@@ -1,5 +1,10 @@
 name: Memcache
 
+table_type:
+	key:
+		items:
+			title: Key|Keys
+
 form:
 	servers:
 		label: Servers

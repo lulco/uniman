@@ -1,5 +1,13 @@
 name: Rabbit
 
+table_types_for_database: 'Queues for vhost %database%'
+no_tables_for_database: 'No queues found for vhost %database%'
+
+table_type:
+	queue:
+		items:
+			title: Message|Messages
+
 form:
 	user:
 		label: User

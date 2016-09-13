@@ -1,5 +1,16 @@
 name: MySql
 
+table_types_for_database: 'Tables and views for database %database%'
+no_tables_for_database: 'No tables and views for database %database%'
+
+table_type:
+	table:
+		items:
+			title: Row|Rows
+	view:
+		items:
+			title: Row|Rows
+
 form:
 	server:
 		label: Server

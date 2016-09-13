@@ -1,5 +1,13 @@
 name: Rabbit
 
+table_types_for_database: 'Front pre vhost %database%'
+no_tables_for_database: 'Žiadne fronty pre vhost %database% neboli nájdené'
+
+table_type:
+	queue:
+		items:
+			title: Správa|Správy|Správy
+
 form:
 	user:
 		label: Používateľ

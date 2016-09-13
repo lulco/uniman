@@ -6,13 +6,13 @@ no_tables_for_database: 'No keys, hashes and sets found for database %database%'
 table_type:
 	hash:
 		items:
-			title: Keys
+			title: Key|Keys
 	key:
 		items:
-			title: Keys
+			title: Key|Keys
 	set:
 		items:
-			title: Members
+			title: Member|Members
 
 form:
 	host:
