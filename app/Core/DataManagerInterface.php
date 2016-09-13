@@ -6,7 +6,7 @@ interface DataManagerInterface
 {
     /**
      * list of databases, vhosts, etc.
-     * @return array
+     * @return array keys are used as database names for databases dropdown, values are databases informations (size, number of tables etc)
      */
     public function databases();
 
@@ -19,7 +19,7 @@ interface DataManagerInterface
     /**
      * list of item storages: tables, views, hashes, sets, queues etc.
      * @param string $database
-     * @return array
+     * @return array list of tables grouped by table type (table, view, queue)
      */
     public function tables($database);
 
@@ -46,6 +46,7 @@ interface DataManagerInterface
      * @param string $type
      * @param string $table
      * @param string $item
+     * @return boolean|null true if delete was successfull, false if not, null if delete item is not supported
      */
     public function deleteItem($database, $type, $table, $item);
 }
