@@ -9,3 +9,8 @@ form:
 		label: Heslo
 	database:
 		label: Databáza
+
+database_select_control:
+	database:
+		label: Databázy
+		prompt: Vyberte databázu

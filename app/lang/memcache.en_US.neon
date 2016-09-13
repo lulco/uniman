@@ -4,3 +4,8 @@ form:
 	servers:
 		label: Servers
 		description: 'Each server on new line in format: host:port'
+
+database_select_control:
+	database:
+		label: Servers
+		prompt: Select server

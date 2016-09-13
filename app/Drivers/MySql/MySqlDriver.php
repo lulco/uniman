@@ -44,11 +44,6 @@ class MySqlDriver extends AbstractDriver
         $this->connection = new PDO($dsn, $credentials['user'], $credentials['password']);
     }
 
-    public function databaseTitle()
-    {
-        return 'database';
-    }
-
     public function databasesHeaders()
     {
         return [
@@ -76,15 +71,6 @@ class MySqlDriver extends AbstractDriver
             $headers[] = $column['Field'];
         }
         return $headers;
-    }
-
-    public function itemsTitles($type = null)
-    {
-        $titles = [
-            self::TYPE_TABLE => 'Items',
-            self::TYPE_VIEW => 'Items',
-        ];
-        return $type === null ? $titles : $titles[$type];
     }
 
     public function itemForm($database, $type, $table, $item)

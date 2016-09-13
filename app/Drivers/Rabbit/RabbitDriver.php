@@ -46,11 +46,6 @@ class RabbitDriver extends AbstractDriver
         );
     }
 
-    public function databaseTitle()
-    {
-        return 'vhost';
-    }
-
     public function databasesHeaders()
     {
         return [
@@ -64,15 +59,7 @@ class RabbitDriver extends AbstractDriver
             self::TYPE_QUEUE => ['Queue', 'Number of items', 'Size']
         ];
     }
-
-    public function itemsTitles($type = null)
-    {
-        $titles = [
-            self::TYPE_QUEUE => 'Message'
-        ];
-        return $type === null ? $titles : $titles[$type];
-    }
-    
+ 
     public function itemsHeaders($type, $table)
     {
         $headers = [

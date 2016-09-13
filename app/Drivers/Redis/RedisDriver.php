@@ -37,11 +37,6 @@ class RedisDriver extends AbstractDriver
         $this->connection = new RedisProxy($credentials['host'], $credentials['port'], $credentials['database']);
     }
 
-    public function databaseTitle()
-    {
-        return 'database';
-    }
-
     public function databasesHeaders()
     {
         return [
@@ -59,16 +54,6 @@ class RedisDriver extends AbstractDriver
             self::TYPE_HASH => ['Hash', 'Number of fields'],
             self::TYPE_SET => ['Set', 'Number of members'],
         ];
-    }
-
-    public function itemsTitles($type = null)
-    {
-        $titles = [
-            self::TYPE_KEY => 'Key',
-            self::TYPE_HASH => 'Keys',
-            self::TYPE_SET => 'Members',
-        ];
-        return $type === null ? $titles : $titles[$type];
     }
 
     public function itemsHeaders($type, $title)

@@ -4,3 +4,8 @@ form:
 	servers:
 		label: Servery
 		description: 'Každý server na nový riadok vo formáte: host:port'
+
+database_select_control:
+	database:
+		label: Servery
+		prompt: Vyberte server

@@ -15,3 +15,8 @@ form:
 	rabbitmq_management_http_api_port:
 		label: RabbitMQ Management HTTP API port
 		description: rabbitmq_management plugin must be enabled
+
+database_select_control:
+	database:
+		label: Vhosts
+		prompt: Select vhost

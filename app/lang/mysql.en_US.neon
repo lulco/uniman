@@ -9,3 +9,8 @@ form:
 		label: Password
 	database:
 		label: Database
+
+database_select_control:
+	database:
+		label: Databases
+		prompt: Select database
