@@ -60,7 +60,7 @@ class RabbitDriver extends AbstractDriver
         ];
     }
  
-    public function itemsHeaders($type, $table)
+    public function columns($type, $table)
     {
         $headers = [
             self::TYPE_QUEUE => ['Message body', 'Size', 'Is truncated', 'Content encoding', 'Redelivered']

@@ -9,19 +9,23 @@
 		{if $tables}
 			{foreach $tables as $type => $rows}
 				<h3>{$type} ({count($rows)})</h3>
-				<table class="table">
-					<thead n:if="isset($tablesHeaders[$type]) && $tablesHeaders[$type]">
-						<tr>
-							<th n:foreach="$tablesHeaders[$type] as $tableHeader">{$tableHeader}</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr n:foreach="$rows as $key => $values">
-							<td><a href="{link List:items, $driver, $database, $type, $key}">{$key}</a></td>
-							<td n:foreach="$values as $value">{$value}</td>
-						</tr>
-					</tbody>
-				</table>
+				{if count($rows) > 0}
+					<table class="table">
+						<thead n:if="isset($tablesHeaders[$type]) && $tablesHeaders[$type]">
+							<tr>
+								<th n:foreach="$tablesHeaders[$type] as $tableHeader">{$tableHeader}</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr n:foreach="$rows as $key => $values">
+								<td><a href="{link List:items, $driver, $database, $type, $key}">{$key}</a></td>
+								<td n:foreach="$values as $value">{$value}</td>
+							</tr>
+						</tbody>
+					</table>
+				{else}
+					<div class="no-items">{_$driver . '.no_tables_for_type_' . $type}</div>
+				{/if}
 			{/foreach}
 		{else}
 			<div class="no-items">{_$driver . '.no_tables_for_database', ['database' => $database]}</div>

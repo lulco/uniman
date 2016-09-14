@@ -23,10 +23,14 @@
 			</div>
 		</div>
 		<table class="table text-nowrap">
-			<thead n:if="$itemsHeaders">
+			<thead n:if="$columns">
 				<tr>
 					<th></th>
-					<th n:foreach="$itemsHeaders as $itemHeader">{$itemHeader}</th>
+					<th n:foreach="$columns as $column">
+						<a n:tag-if="$column->isSortable()" href="#">
+							{_$column->getTitle()}
+						</a>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,7 +41,10 @@
 							<a n:if="$actualDriver->permissions()->canDeleteItem($database, $type, $table, $key)" class="btn-default" href="{link Item:delete, $driver, $database, $type, $table, $key}"><i class="fa fa-trash"></i></a>
 						</div>
 					</td>
-					<td n:foreach="$values as $value" title="{if is_null($value)}NULL{else}{$value}{/if}">{if is_null($value)}<i>NULL</i>{else}{$value|truncate:100}{/if}</td>
+					{foreach $columns as $column}
+						{php $value = isset($values[$column->getKey()]) ? $values[$column->getKey()] : null}
+						<td title="{if is_null($value)}NULL{else}{$value}{/if}">{if is_null($value)}<i>NULL</i>{else}{$value|truncate:100}{/if}</td>
+					{/foreach}
 				</tr>
 			</tbody>
 		</table>

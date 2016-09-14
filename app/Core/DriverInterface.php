@@ -42,7 +42,7 @@ interface DriverInterface
 
     public function tablesHeaders();
 
-    public function itemsHeaders($type, $table);
+    public function columns($type, $table);
 
     /**
      * adds fields to credential form

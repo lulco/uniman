@@ -55,7 +55,7 @@ class MemcacheDriver extends AbstractDriver
         return [];
     }
 
-    public function itemsHeaders($type, $table)
+    public function columns($type, $table)
     {
         $headers = [
             self::TYPE_KEY => ['Key', 'Value', 'Size', 'Expiration', 'Flags']

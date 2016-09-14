@@ -56,7 +56,7 @@ class ListPresenter extends BasePresenter
         $itemsCount = $this->driver->dataManager()->itemsCount($database, $type, $table);
         $this->template->itemsCount = $itemsCount;
         $this->template->items = $this->driver->dataManager()->items($database, $type, $table, $page, $onPage);
-        $this->template->itemsHeaders = $this->driver->itemsHeaders($type, $table);
+        $this->template->columns = $this->driver->columns($type, $table);
         
         $visualPaginator = $this['paginator'];
         $paginator = $visualPaginator->getPaginator();

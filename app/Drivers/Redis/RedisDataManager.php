@@ -28,7 +28,11 @@ class RedisDataManager implements DataManagerInterface
     public function tables($database)
     {
         $this->selectDatabase($database);
-        $tables = [];
+        $tables = [
+            RedisDriver::TYPE_KEY => [],
+            RedisDriver::TYPE_HASH => [],
+            RedisDriver::TYPE_SET => [],
+        ];
         $commands = [
             'get' => RedisDriver::TYPE_KEY,
             'hLen' => RedisDriver::TYPE_HASH,

@@ -3,6 +3,7 @@
 namespace Adminerng\Drivers\Redis;
 
 use Adminerng\Core\AbstractDriver;
+use Adminerng\Core\Column;
 use Adminerng\Drivers\Redis\Forms\RedisHashKeyItemForm;
 use Adminerng\Drivers\Redis\Forms\RedisKeyItemForm;
 use RedisProxy\RedisProxy;
@@ -56,20 +57,28 @@ class RedisDriver extends AbstractDriver
         ];
     }
 
-    public function itemsHeaders($type, $title)
+    public function columns($type, $table)
     {
-        $headers = [
-            self::TYPE_KEY => [
-                'Key', 'Length', 'Value'
-            ],
-            self::TYPE_HASH => [
-                'Key', 'Length', 'Value'
-            ],
-            self::TYPE_SET => [
-                'Member', 'Length'
-            ]
-        ];
-        return isset($headers[$type]) ? $headers[$type] : [];
+        $columns = [];
+        if ($type == self::TYPE_KEY || $type == self::TYPE_HASH) {
+            $columns[] = (new Column())
+                ->setKey('key')
+                ->setTitle('redis.columns.' . $type . '.key');
+            $columns[] = (new Column())
+                ->setKey('length')
+                ->setTitle('redis.columns.' . $type . '.length');
+            $columns[] = (new Column())
+                ->setKey('value')
+                ->setTitle('redis.columns.' . $type . '.value');
+        } elseif ($type == self::TYPE_SET) {
+            $columns[] = (new Column())
+                ->setKey('member')
+                ->setTitle('redis.columns.' . $type . '.member');
+            $columns[] = (new Column())
+                ->setKey('length')
+                ->setTitle('redis.columns.' . $type . '.length');
+        }
+        return $columns;
     }
 
     public function getCredentialsForm()
