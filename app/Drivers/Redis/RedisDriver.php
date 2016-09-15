@@ -4,8 +4,10 @@ namespace Adminerng\Drivers\Redis;
 
 use Adminerng\Core\AbstractDriver;
 use Adminerng\Core\Column;
+use Adminerng\Core\Exception\ConnectException;
 use Adminerng\Drivers\Redis\Forms\RedisHashKeyItemForm;
 use Adminerng\Drivers\Redis\Forms\RedisKeyItemForm;
+use RedisException;
 use RedisProxy\RedisProxy;
 
 class RedisDriver extends AbstractDriver
@@ -35,7 +37,11 @@ class RedisDriver extends AbstractDriver
 
     public function connect(array $credentials)
     {
-        $this->connection = new RedisProxy($credentials['host'], $credentials['port'], $credentials['database']);
+        try {
+            $this->connection = new RedisProxy($credentials['host'], $credentials['port'], $credentials['database']);
+        } catch (RedisException $e) {
+            throw new ConnectException($e->getMessage());
+        }
     }
 
     public function databasesHeaders()

@@ -2,6 +2,8 @@
 
 namespace Adminerng\Drivers\Rabbit;
 
+use GuzzleHttp\Client;
+
 class RabbitManagementApiClient
 {
     private $guzzleClient;
@@ -9,7 +11,7 @@ class RabbitManagementApiClient
     public function __construct($host = 'localhost', $port = '15672', $user = 'guest', $password = 'guest')
     {
         $baseUrl = 'http://' . $user . ':' . $password . '@' . $host . ':' . $port;
-        $this->guzzleClient = new \GuzzleHttp\Client(['base_uri' => $baseUrl]);
+        $this->guzzleClient = new Client(['base_uri' => $baseUrl]);
     }
 
     public function getVhosts($user = null)
@@ -33,7 +35,7 @@ class RabbitManagementApiClient
         }
         return $vhosts;
     }
-    
+
     public function getQueues($vhost = null)
     {
         $endpoint = '/api/queues';
