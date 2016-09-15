@@ -3,8 +3,8 @@
 namespace Adminerng\Drivers\Rabbit;
 
 use Adminerng\Core\DataManagerInterface;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 use Nette\Localization\ITranslator;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class RabbitDataManager implements DataManagerInterface
 {

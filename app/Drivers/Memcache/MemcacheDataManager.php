@@ -5,14 +5,18 @@ namespace Adminerng\Drivers\Memcache;
 use Adminerng\Core\DataManagerInterface;
 use Adminerng\Core\Exception\NoTablesJustItemsException;
 use Memcache;
+use Nette\Localization\ITranslator;
 
 class MemcacheDataManager implements DataManagerInterface
 {
+    private $translator;
+
     private $connection;
 
-    public function __construct(Memcache $connection)
+    public function __construct(Memcache $connection, ITranslator $translator)
     {
         $this->connection = $connection;
+        $this->translator = $translator;
     }
 
     public function databases()
@@ -87,7 +91,7 @@ class MemcacheDataManager implements DataManagerInterface
                 'value' => $this->connection->get($key, $flags),
                 'size' => $info[0],
                 'expiration' => ($info[1] - time()) > 0 ? $info[1] - time() : null,
-                'flags' => $flags == MEMCACHE_COMPRESSED ? 'compressed' : null,    // TODO "compressed" should be translated
+                'flags' => $flags == MEMCACHE_COMPRESSED ? $this->translator->translate('memcache.flags.compressed') : null,
             ];
         }
         return $items;

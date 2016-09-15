@@ -2,21 +2,10 @@
 
 namespace Adminerng\Presenters;
 
-use Adminerng\Core\DriverStorage;
 use Adminerng\Core\LoginForm;
-use Nette\Application\UI\Presenter;
-use Nette\Localization\ITranslator;
 
-class HomepagePresenter extends Presenter
+class HomepagePresenter extends AbstractBasePresenter
 {
-    /** @var DriverStorage @inject */
-    public $driverStorage;
-    
-    /** @var ITranslator @inject */
-    public $translator;
-
-    private $driver;
-
     public function actionDefault($driver = null)
     {
         $this->driver = $driver ?: current(array_keys($this->driverStorage->getDrivers()));

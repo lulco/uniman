@@ -2,24 +2,11 @@
 
 namespace Adminerng\Presenters;
 
-use Adminerng\Core\DriverInterface;
-use Adminerng\Core\DriverStorage;
 use Adminerng\Core\Exception\ConnectException;
 use Nette\Application\BadRequestException;
-use Nette\Application\UI\Presenter;
-use Nette\Localization\ITranslator;
 
-abstract class BasePresenter extends Presenter
+abstract class BasePresenter extends AbstractBasePresenter
 {
-    /** @var DriverStorage @inject */
-    public $driverStorage;
-
-    /** @var DriverInterface */
-    protected $driver;
-
-    /** @var ITranslator @inject */
-    public $translator;
-
     protected function startup()
     {
         parent::startup();

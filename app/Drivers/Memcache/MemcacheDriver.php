@@ -91,6 +91,6 @@ class MemcacheDriver extends AbstractDriver
 
     protected function getDataManager()
     {
-        return new MemcacheDataManager($this->connection);
+        return new MemcacheDataManager($this->connection, $this->translator);
     }
 }

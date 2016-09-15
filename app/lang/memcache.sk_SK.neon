@@ -1,5 +1,8 @@
 name: Memcache
 
+flags:
+	compressed: Komprimovaný
+
 table_type:
 	key:
 		items:

@@ -1,5 +1,8 @@
 name: Memcache
 
+flags:
+	compressed: Compressed
+
 table_type:
 	key:
 		items:
