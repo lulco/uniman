@@ -8,6 +8,14 @@ table_type:
 		items:
 			title: Message|Messages
 
+columns:
+	queue:
+		message_body: Message body
+		size: Size
+		is_truncated: Is truncated?
+		content_encoding: Content encoding
+		redelivered: Was redelivered?
+
 form:
 	user:
 		label: User

@@ -3,6 +3,7 @@
 namespace Adminerng\Drivers\Rabbit;
 
 use Adminerng\Core\AbstractDriver;
+use Adminerng\Core\Column;
 
 class RabbitDriver extends AbstractDriver
 {
@@ -37,7 +38,7 @@ class RabbitDriver extends AbstractDriver
     public function connect(array $credentials)
     {
         $this->credentials = $credentials;
-        
+
         $this->client = new RabbitManagementApiClient(
             $this->credentials['api_host'],
             $this->credentials['api_port'],
@@ -59,13 +60,28 @@ class RabbitDriver extends AbstractDriver
             self::TYPE_QUEUE => ['Queue', 'Number of items', 'Size']
         ];
     }
- 
+
     public function columns($type, $table)
     {
-        $headers = [
-            self::TYPE_QUEUE => ['Message body', 'Size', 'Is truncated', 'Content encoding', 'Redelivered']
-        ];
-        return isset($headers[$type]) ? $headers[$type] : [];
+        $columns = [];
+        if ($type == self::TYPE_QUEUE) {
+            $columns[] = (new Column())
+                ->setKey('message_body')
+                ->setTitle('rabbit.columns.' . $type . '.message_body');
+            $columns[] = (new Column())
+                ->setKey('size')
+                ->setTitle('rabbit.columns.' . $type . '.size');
+            $columns[] = (new Column())
+                ->setKey('is_truncated')
+                ->setTitle('rabbit.columns.' . $type . '.is_truncated');
+            $columns[] = (new Column())
+                ->setKey('content_encoding')
+                ->setTitle('rabbit.columns.' . $type . '.content_encoding');
+            $columns[] = (new Column())
+                ->setKey('redelivered')
+                ->setTitle('rabbit.columns.' . $type . '.redelivered');
+        }
+        return $columns;
     }
 
     protected function getCredentialsForm()
@@ -75,6 +91,6 @@ class RabbitDriver extends AbstractDriver
 
     protected function getDataManager()
     {
-        return new RabbitDataManager($this->credentials, $this->client);
+        return new RabbitDataManager($this->credentials, $this->client, $this->translator);
     }
 }
