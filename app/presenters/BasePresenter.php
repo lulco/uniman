@@ -40,10 +40,13 @@ abstract class BasePresenter extends Presenter
         if (!$this->driver) {
             throw new BadRequestException('Driver "' . $actualDriver . '" not found');
         }
+
+        // presunut mergovanie credentials a default credentials z formu az sem aby sa default cred. neukladali do session (vypisuju sa potom pri neuspesnom prihlaseni vo forme a to sa mi nepaci)
         try {
             $this->driver->connect($credentials);
         } catch (ConnectException $e) {
-            $this->template->error = $e->getMessage();
+            $this->flashMessage($e->getMessage(), 'danger');
+            $this->redirect('Homepage:default', $actualDriver);
         }
         $this->template->actualDriver = $this->driver;
     }

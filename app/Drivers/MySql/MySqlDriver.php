@@ -4,8 +4,10 @@ namespace Adminerng\Drivers\MySql;
 
 use Adminerng\Core\AbstractDriver;
 use Adminerng\Core\Column;
+use Adminerng\Core\Exception\ConnectException;
 use Adminerng\Drivers\Redis\Forms\MySqlItemForm;
 use PDO;
+use PDOException;
 
 class MySqlDriver extends AbstractDriver
 {
@@ -21,7 +23,7 @@ class MySqlDriver extends AbstractDriver
     {
         return 'mysql';
     }
-    
+
     public function defaultCredentials()
     {
         return [
@@ -42,7 +44,11 @@ class MySqlDriver extends AbstractDriver
             list($host, $port) = explode(':', $credentials['server'], 2);
         }
         $dsn = 'mysql:;host=' . $host . ';port=' . $port . ';charset=utf8';
-        $this->connection = new PDO($dsn, $credentials['user'], $credentials['password']);
+        try {
+            $this->connection = new PDO($dsn, $credentials['user'], $credentials['password']);
+        } catch (PDOException $e) {
+            throw new ConnectException($e->getMessage());
+        }
     }
 
     public function databasesHeaders()

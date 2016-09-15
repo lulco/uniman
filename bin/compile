@@ -9,6 +9,11 @@ use Symfony\Component\Finder\Finder;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+/**
+ * TODO create as command
+ * TODO add parameters (i.e.: languages - and compile only selected languages)
+ * TODO optimize - do not include not needed files
+ */
 class Compile
 {
     private $phar;
@@ -29,7 +34,6 @@ class Compile
         $this->addFile(__DIR__ . '/../www/index.php');
         $this->addFile(__DIR__ . '/../app/bootstrap_live.php', 'app/bootstrap.php');
 
-        // TODO optimize - do not include not needed files
         $finder = new Finder();
         $finder->files()
             ->ignoreVCS(true)
@@ -65,7 +69,7 @@ class Compile
         foreach ($finder as $file) {
             $this->addFile($file);
         }
-        
+
         $this->addFile(__DIR__ . '/../vendor/autoload.php');
         $this->addFile(__DIR__ . '/../vendor/composer/autoload_classmap.php');
         $this->addFile(__DIR__ . '/../vendor/composer/autoload_files.php');

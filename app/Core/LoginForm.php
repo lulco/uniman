@@ -13,9 +13,9 @@ class LoginForm extends Control
     private $translator;
 
     private $driverStorage;
-    
+
     private $driver;
-    
+
     public function __construct(ITranslator $translator, DriverStorage $driverStorage, $driver)
     {
         parent::__construct();
@@ -48,9 +48,16 @@ class LoginForm extends Control
         if ($this->driver) {
             $driver = $this->driverStorage->getDriver($this->driver);
             $driver->addFormFields($form);
+
+            $section = $this->presenter->getSession('adminerng');
+            $settings = $section->{$this->driver};
+            $credentials = $settings ? json_decode(base64_decode($settings), true) : [];
+            $form->setDefaults($credentials);
+
             $form->addSubmit('connect', 'core.form.connect');
             $form->onSuccess[] = [$this, 'connect'];
         }
+
         return $form;
     }
 
