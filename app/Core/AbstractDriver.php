@@ -5,14 +5,22 @@ namespace Adminerng\Core;
 use Adminerng\Core\Permissions\DefaultPermissions;
 use Adminerng\Core\Permissions\PermissionsInterface;
 use Nette\Application\UI\Form;
+use Nette\Localization\ITranslator;
 
 abstract class AbstractDriver implements DriverInterface
 {
     protected $connection;
 
+    protected $translator;
+
     private $permissions;
 
     private $dataManager;
+
+    public function __construct(ITranslator $translator)
+    {
+        $this->translator = $translator;
+    }
 
     public function name()
     {

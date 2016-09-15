@@ -1,5 +1,8 @@
 title: Adminer next generation
 
+yes: Yes
+no: No
+
 form:
 	driver: Driver
 	connect: Connect

@@ -3,20 +3,24 @@
 namespace Adminerng\Drivers\Rabbit;
 
 use Adminerng\Core\DataManagerInterface;
+use Nette\Localization\ITranslator;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class RabbitDataManager implements DataManagerInterface
 {
+    private $translator;
+
     private $connection;
 
     private $credentials = [];
 
     private $client;
 
-    public function __construct(array $credentials, RabbitManagementApiClient $client)
+    public function __construct(array $credentials, RabbitManagementApiClient $client, ITranslator $translator)
     {
         $this->credentials = $credentials;
         $this->client = $client;
+        $this->translator = $translator;
     }
 
     public function databases()
@@ -77,9 +81,9 @@ class RabbitDataManager implements DataManagerInterface
             $items[$message->getBody()] = [
                 'message_body' => $message->getBody(),
                 'size' => $message->getBodySize(),
-                'is_truncated' => $message->isTruncated() ? 'Yes' : 'No',
+                'is_truncated' => $message->isTruncated() ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
                 'content_encoding' => $message->getContentEncoding(),
-                'redelivered' => $message->get('redelivered') ? 'Yes' : 'No',
+                'redelivered' => $message->get('redelivered') ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
             ];
             if (count($items) == $page * $onPage) {
                 break;

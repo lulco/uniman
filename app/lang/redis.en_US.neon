@@ -2,6 +2,9 @@ name: Redis
 
 table_types_for_database: 'Keys, hashes and sets for database %database%'
 no_tables_for_database: 'No keys, hashes and sets found for database %database%'
+no_tables_for_type_key: 'No keys'
+no_tables_for_type_hash: 'No hashes'
+no_tables_for_type_set: 'No sets'
 
 table_type:
 	hash:
@@ -13,6 +16,19 @@ table_type:
 	set:
 		items:
 			title: Member|Members
+
+columns:
+	hash:
+		key: Key
+		length: Length
+		value: Value
+	key:
+		key: Key
+		length: Length
+		value: Value
+	set:
+		member: Member
+		length: Length
 
 form:
 	host:

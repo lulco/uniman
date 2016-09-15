@@ -1,9 +1,20 @@
 name: Memcache
 
+flags:
+	compressed: Compressed
+
 table_type:
 	key:
 		items:
 			title: Key|Keys
+
+columns:
+	key:
+		key: Key
+		value: Value
+		size: Size
+		expiration: Expiration
+		flags: Flags
 
 form:
 	servers:

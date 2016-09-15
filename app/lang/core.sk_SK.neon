@@ -1,5 +1,8 @@
 title: Adminer novej generácie
 
+yes: Áno
+no: Nie
+
 form:
 	driver: Driver
 	connect: Pripojiť

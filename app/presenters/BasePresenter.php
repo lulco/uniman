@@ -2,24 +2,11 @@
 
 namespace Adminerng\Presenters;
 
-use Adminerng\Core\DriverInterface;
-use Adminerng\Core\DriverStorage;
 use Adminerng\Core\Exception\ConnectException;
 use Nette\Application\BadRequestException;
-use Nette\Application\UI\Presenter;
-use Nette\Localization\ITranslator;
 
-abstract class BasePresenter extends Presenter
+abstract class BasePresenter extends AbstractBasePresenter
 {
-    /** @var DriverStorage @inject */
-    public $driverStorage;
-
-    /** @var DriverInterface */
-    protected $driver;
-
-    /** @var ITranslator @inject */
-    public $translator;
-
     protected function startup()
     {
         parent::startup();
@@ -40,10 +27,13 @@ abstract class BasePresenter extends Presenter
         if (!$this->driver) {
             throw new BadRequestException('Driver "' . $actualDriver . '" not found');
         }
+
+        // presunut mergovanie credentials a default credentials z formu az sem aby sa default cred. neukladali do session (vypisuju sa potom pri neuspesnom prihlaseni vo forme a to sa mi nepaci)
         try {
             $this->driver->connect($credentials);
         } catch (ConnectException $e) {
-            $this->template->error = $e->getMessage();
+            $this->flashMessage($e->getMessage(), 'danger');
+            $this->redirect('Homepage:default', $actualDriver);
         }
         $this->template->actualDriver = $this->driver;
     }

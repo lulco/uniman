@@ -2,6 +2,9 @@ name: Redis
 
 table_types_for_database: 'Kľúče, hashe a sety pre databázu %database%'
 no_tables_for_database: 'V datábáze %database% neboli nájdené žiadne kľúče, hashe ani sety'
+no_tables_for_type_key: 'Žiadne kľúče'
+no_tables_for_type_hash: 'Žiadne hashe'
+no_tables_for_type_set: 'Žiadne sety'
 
 table_type:
 	hash:
@@ -12,7 +15,21 @@ table_type:
 			title: Kľúč|Kľúče|Kľúče
 	set:
 		items:
-			title: Prvok|Prvky|Prvky
+			title: Kľúč|Kľúče|Kľúče
+
+
+columns:
+	hash:
+		key: Kľúč
+		length: Dĺžka
+		value: Hodnota
+	key:
+		key: Kľúč
+		length: Dĺžka
+		value: Hodnota
+	set:
+		member: Kľúč
+		length: Dĺžka
 
 form:
 	host:

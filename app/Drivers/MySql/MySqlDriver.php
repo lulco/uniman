@@ -3,8 +3,11 @@
 namespace Adminerng\Drivers\MySql;
 
 use Adminerng\Core\AbstractDriver;
+use Adminerng\Core\Column;
+use Adminerng\Core\Exception\ConnectException;
 use Adminerng\Drivers\Redis\Forms\MySqlItemForm;
 use PDO;
+use PDOException;
 
 class MySqlDriver extends AbstractDriver
 {
@@ -20,7 +23,7 @@ class MySqlDriver extends AbstractDriver
     {
         return 'mysql';
     }
-    
+
     public function defaultCredentials()
     {
         return [
@@ -41,7 +44,11 @@ class MySqlDriver extends AbstractDriver
             list($host, $port) = explode(':', $credentials['server'], 2);
         }
         $dsn = 'mysql:;host=' . $host . ';port=' . $port . ';charset=utf8';
-        $this->connection = new PDO($dsn, $credentials['user'], $credentials['password']);
+        try {
+            $this->connection = new PDO($dsn, $credentials['user'], $credentials['password']);
+        } catch (PDOException $e) {
+            throw new ConnectException($e->getMessage());
+        }
     }
 
     public function databasesHeaders()
@@ -63,14 +70,16 @@ class MySqlDriver extends AbstractDriver
         ];
     }
 
-    public function itemsHeaders($type, $table)
+    public function columns($type, $table)
     {
-        $columns = $this->dataManager()->getColumns($type, $table);
-        $headers = [];
-        foreach ($columns as $column) {
-            $headers[] = $column['Field'];
+        $columns = [];
+        foreach ($this->dataManager()->getColumns($type, $table) as $col) {
+            $column = (new Column())
+                ->setKey($col['Field'])
+                ->setTitle($col['Field']);
+            $columns[] = $column;
         }
-        return $headers;
+        return $columns;
     }
 
     public function itemForm($database, $type, $table, $item)

@@ -8,6 +8,14 @@ table_type:
 		items:
 			title: Správa|Správy|Správy
 
+columns:
+	queue:
+		message_body: Správa
+		size: Veľkosť
+		is_truncated: Je skrátená?
+		content_encoding: Kódovanie správy
+		redelivered: Bola viackrát poslaná?
+
 form:
 	user:
 		label: Používateľ
