@@ -5,6 +5,14 @@ table_type:
 		items:
 			title: Kľúč|Kľúče|Kľúče
 
+columns:
+	key:
+		key: Kľúč
+		value: Hodnota
+		size: Veľkosť
+		expiration: Expirácia
+		flags: Značky
+
 form:
 	servers:
 		label: Servery

@@ -9,7 +9,7 @@ use Memcache;
 class MemcacheDataManager implements DataManagerInterface
 {
     private $connection;
-    
+
     public function __construct(Memcache $connection)
     {
         $this->connection = $connection;
@@ -78,7 +78,7 @@ class MemcacheDataManager implements DataManagerInterface
 
         ksort($keys);
         $keys = array_slice($keys, ($page - 1) * $onPage, $onPage, true);
-        
+
         $items = [];
         foreach ($keys as $key => $info) {
             $flags = false;
@@ -87,7 +87,7 @@ class MemcacheDataManager implements DataManagerInterface
                 'value' => $this->connection->get($key, $flags),
                 'size' => $info[0],
                 'expiration' => ($info[1] - time()) > 0 ? $info[1] - time() : null,
-                'flags' => $flags == MEMCACHE_COMPRESSED ? 'compressed' : null,
+                'flags' => $flags == MEMCACHE_COMPRESSED ? 'compressed' : null,    // TODO "compressed" should be translated
             ];
         }
         return $items;

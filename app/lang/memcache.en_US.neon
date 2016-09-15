@@ -5,6 +5,14 @@ table_type:
 		items:
 			title: Key|Keys
 
+columns:
+	key:
+		key: Key
+		value: Value
+		size: Size
+		expiration: Expiration
+		flags: Flags
+
 form:
 	servers:
 		label: Servers

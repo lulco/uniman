@@ -3,12 +3,13 @@
 namespace Adminerng\Drivers\Memcache;
 
 use Adminerng\Core\AbstractDriver;
+use Adminerng\Core\Column;
 use Memcache;
 
 class MemcacheDriver extends AbstractDriver
 {
     const TYPE_KEY = 'key';
-    
+
     public function check()
     {
         return extension_loaded('memcache');
@@ -57,10 +58,25 @@ class MemcacheDriver extends AbstractDriver
 
     public function columns($type, $table)
     {
-        $headers = [
-            self::TYPE_KEY => ['Key', 'Value', 'Size', 'Expiration', 'Flags']
-        ];
-        return isset($headers[$type]) ? $headers[$type] : [];
+        $columns = [];
+        if ($type == self::TYPE_KEY) {
+            $columns[] = (new Column())
+                ->setKey('key')
+                ->setTitle('memcache.columns.' . $type . '.key');
+            $columns[] = (new Column())
+                ->setKey('value')
+                ->setTitle('memcache.columns.' . $type . '.value');
+            $columns[] = (new Column())
+                ->setKey('size')
+                ->setTitle('memcache.columns.' . $type . '.size');
+            $columns[] = (new Column())
+                ->setKey('expiration')
+                ->setTitle('memcache.columns.' . $type . '.expiration');
+            $columns[] = (new Column())
+                ->setKey('flags')
+                ->setTitle('memcache.columns.' . $type . '.flags');
+        }
+        return $columns;
     }
 
     protected function getPermissions()
