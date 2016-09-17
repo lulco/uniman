@@ -23,7 +23,7 @@ class ListPresenter extends BasePresenter
         $this->template->databasesHeaders = $this->driver->databasesHeaders();
         $this->template->databases = $this->driver->dataManager()->databases();
     }
-    
+
     public function renderTables($driver, $database = null)
     {
         if ($database === null) {
@@ -43,7 +43,7 @@ class ListPresenter extends BasePresenter
         $this->template->tablesHeaders = $this->driver->tablesHeaders();
     }
 
-    public function renderItems($driver, $database, $type, $table, $page = 1, $onPage = 50)
+    public function renderItems($driver, $database, $type, $table, $page = 1, $onPage = 50, array $filter = [], array $sorting = [])
     {
         $this->database = $database;
         $this->table = $table;
@@ -53,11 +53,13 @@ class ListPresenter extends BasePresenter
         $this->template->database = $database;
         $this->template->type = $type;
         $this->template->table = $table;
-        $itemsCount = $this->driver->dataManager()->itemsCount($database, $type, $table);
+        $this->template->sorting = $sorting;
+
+        $itemsCount = $this->driver->dataManager()->itemsCount($database, $type, $table, $filter);
         $this->template->itemsCount = $itemsCount;
-        $this->template->items = $this->driver->dataManager()->items($database, $type, $table, $page, $onPage);
+        $this->template->items = $this->driver->dataManager()->items($database, $type, $table, $page, $onPage, $filter, $sorting);
         $this->template->columns = $this->driver->columns($type, $table);
-        
+
         $visualPaginator = $this['paginator'];
         $paginator = $visualPaginator->getPaginator();
         $paginator->setItemCount($itemsCount);

@@ -27,7 +27,7 @@
 				<tr>
 					<th></th>
 					<th n:foreach="$columns as $column">
-						<a n:tag-if="$column->isSortable()" href="#">
+						<a n:tag-if="$column->isSortable()" href="{link this, sorting => [$column => isset($sorting[$column]) ? 'desc' : 'asc']}">
 							{_$column->getTitle()}
 						</a>
 					</th>
