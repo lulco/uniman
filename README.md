@@ -1,7 +1,7 @@
-Adminer NG
-====================
+Adminer Next Genereation
+========================
 
-Universal system for managing different services (Redis, Memcache, Rabbit).
+Universal system for managing different services (MySql, Redis, Memcache, Rabbit).
 
 Instalation
 -----------
@@ -14,4 +14,4 @@ DONE.
 
 Usage
 -----
-In general usage is simple: select one of available driver (service), connect to the server and view available data.
+In general, usage is simple: select one of available driver (service), connect to the server and view, edit or delete available data.
