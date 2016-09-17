@@ -39,6 +39,7 @@ class RedisDriver extends AbstractDriver
     {
         try {
             $this->connection = new RedisProxy($credentials['host'], $credentials['port'], $credentials['database']);
+            $this->connection->select($credentials['database']);
         } catch (RedisException $e) {
             throw new ConnectException($e->getMessage());
         }
