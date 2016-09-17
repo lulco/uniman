@@ -2,6 +2,7 @@
 
 namespace Adminerng\Presenters;
 
+use Adminerng\Core\Credentials\CredentialsStorageInterface;
 use Adminerng\Core\DriverInterface;
 use Adminerng\Core\DriverStorage;
 use Nette\Application\UI\Presenter;
@@ -11,6 +12,9 @@ abstract class AbstractBasePresenter extends Presenter
 {
     /** @var string @persistent */
     public $locale;
+
+    /** @var CredentialsStorageInterface @inject */
+    public $credentialsStorage;
 
     /** @var DriverStorage @inject */
     public $driverStorage;
