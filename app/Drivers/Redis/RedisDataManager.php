@@ -40,7 +40,7 @@ class RedisDataManager implements DataManagerInterface
         ];
         foreach ($this->connection->keys('*') as $key) {
             foreach ($commands as $command => $label) {
-                $result = $this->connection->$command($key);        
+                $result = $this->connection->$command($key);
                 if ($this->connection->getLastError() === null) {
                     if ($label == RedisDriver::TYPE_SET) {
                         $tables[$label][$key] = [count($result)];
@@ -62,7 +62,7 @@ class RedisDataManager implements DataManagerInterface
         return $tables;
     }
 
-    public function itemsCount($database, $type, $table)
+    public function itemsCount($database, $type, $table, array $filter = [])
     {
         $this->selectDatabase($database);
         if ($type == RedisDriver::TYPE_HASH) {
@@ -77,7 +77,7 @@ class RedisDataManager implements DataManagerInterface
         return 0;
     }
 
-    public function items($database, $type, $table, $page, $onPage)
+    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         $items = [];
         $this->selectDatabase($database);

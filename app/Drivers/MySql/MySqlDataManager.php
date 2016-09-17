@@ -64,20 +64,23 @@ class MySqlDataManager implements DataManagerInterface
         return $tables;
     }
 
-    public function itemsCount($database, $type, $table)
+    public function itemsCount($database, $type, $table, array $filter = [])
     {
         $this->selectDatabase($database);
         $query = 'SELECT count(*) FROM `' . $table . '`';
         return $this->connection->query($query)->fetch(PDO::FETCH_COLUMN);
     }
 
-    public function items($database, $type, $table, $page, $onPage)
+    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         $this->selectDatabase($database);
 
         $primaryColumns = $this->getPrimaryColumns($type, $table);
+        $query = 'SELECT * FROM `' . $table . '`';
+        $query .= $this->createOrderBy($sorting);
+        $query .= ' LIMIT ' . (($page - 1) * $onPage) . ', ' . $onPage;
         $items = [];
-        foreach ($this->connection->query('SELECT * FROM `' . $table . '` LIMIT ' . (($page - 1) * $onPage) . ', ' . $onPage)->fetchAll(PDO::FETCH_ASSOC) as $item) {
+        foreach ($this->connection->query($query)->fetchAll(PDO::FETCH_ASSOC) as $item) {
             $pk = [];
             foreach ($primaryColumns as $primaryColumn) {
                 $pk[] = $item[$primaryColumn];
@@ -87,7 +90,23 @@ class MySqlDataManager implements DataManagerInterface
         return $items;
     }
 
-    
+    private function createOrderBy($sorting)
+    {
+        if (empty($sorting)) {
+            return '';
+        }
+        $orderBy = ' ORDER BY ';
+        $order = [];
+        foreach ($sorting as $sort) {
+            foreach ($sort as $key => $direction) {
+                $direction = strtolower($direction) == 'asc' ? 'ASC' : 'DESC';
+                $order[] = "`$key` $direction";
+            }
+        }
+        $orderBy .= implode(', ', $order);
+        return $orderBy;
+    }
+
     /**
      * TODO create abstract data manager
      * Implement this method if permission canDeleteItem is true
@@ -101,7 +120,7 @@ class MySqlDataManager implements DataManagerInterface
 //    {
 //        return false;
 //    }
-    
+
     public function deleteItem($database, $type, $table, $item)
     {
         $this->selectDatabase($database);
@@ -110,7 +129,7 @@ class MySqlDataManager implements DataManagerInterface
         $query = 'DELETE FROM `' . $table . '` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "' . $item . '"';
         return $this->connection->query($query);
     }
-    
+
     public function selectDatabase($database)
     {
         $this->connection->query('USE `' . $database . '`');
