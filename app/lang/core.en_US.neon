@@ -3,6 +3,9 @@ title: Adminer next generation
 yes: Yes
 no: No
 
+ascending: Ascending
+descending: Descending
+
 form:
 	driver: Driver
 	connect: Connect

@@ -43,7 +43,7 @@ class MemcacheDataManager implements DataManagerInterface
         throw new NoTablesJustItemsException('key', 'all');
     }
 
-    public function itemsCount($database, $type, $table)
+    public function itemsCount($database, $type, $table, array $filter = [])
     {
         if ($table == 'all') {
             $slabs = $this->connection->getExtendedStats('slabs');
@@ -64,7 +64,7 @@ class MemcacheDataManager implements DataManagerInterface
         return count($keys);
     }
 
-    public function items($database, $type, $table, $page, $onPage)
+    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         if ($table == 'all') {
             $slabs = $this->connection->getExtendedStats('slabs');

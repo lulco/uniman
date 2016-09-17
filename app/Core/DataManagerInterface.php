@@ -27,9 +27,10 @@ interface DataManagerInterface
      * @param string $database
      * @param string $type
      * @param string $table
+     * @param array $filter
      * @return int total number of items
      */
-    public function itemsCount($database, $type, $table);
+    public function itemsCount($database, $type, $table, array $filter = []);
 
     /**
      * @param string $database
@@ -37,9 +38,11 @@ interface DataManagerInterface
      * @param string $table
      * @param int $page
      * @param int $onPage
+     * @param array $filter
+     * @param array $sorting
      * @return array list of items
      */
-    public function items($database, $type, $table, $page, $onPage);
+    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = []);
 
     /**
      * @param string $database

@@ -57,7 +57,7 @@ class RabbitDataManager implements DataManagerInterface
         return $tables;
     }
 
-    public function itemsCount($database, $type, $table)
+    public function itemsCount($database, $type, $table, array $filter = [])
     {
         if ($type != RabbitDriver::TYPE_QUEUE) {
             return 0;
@@ -70,7 +70,7 @@ class RabbitDataManager implements DataManagerInterface
         return 0;
     }
 
-    public function items($database, $type, $table, $page, $onPage)
+    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         if ($type != RabbitDriver::TYPE_QUEUE) {
             return [];

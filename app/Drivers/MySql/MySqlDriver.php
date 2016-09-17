@@ -74,10 +74,10 @@ class MySqlDriver extends AbstractDriver
     {
         $columns = [];
         foreach ($this->dataManager()->getColumns($type, $table) as $col) {
-            $column = (new Column())
+            $columns[] = (new Column())
                 ->setKey($col['Field'])
-                ->setTitle($col['Field']);
-            $columns[] = $column;
+                ->setTitle($col['Field'])
+                ->setIsSortable(true);
         }
         return $columns;
     }

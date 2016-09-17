@@ -24,6 +24,6 @@ class HomepagePresenter extends AbstractBasePresenter
 
     protected function createComponentLoginForm()
     {
-        return new LoginForm($this->translator, $this->driverStorage, $this->driver);
+        return new LoginForm($this->translator, $this->driverStorage, $this->credentialsStorage, $this->driver);
     }
 }

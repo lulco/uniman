@@ -3,6 +3,9 @@ title: Adminer novej generácie
 yes: Áno
 no: Nie
 
+ascending: Vzostupne
+descending: Zostupne
+
 form:
 	driver: Driver
 	connect: Pripojiť
