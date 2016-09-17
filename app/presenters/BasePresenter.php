@@ -23,7 +23,9 @@ abstract class BasePresenter extends AbstractBasePresenter
             $this->redirect('Homepage:default', $actualDriver);
         }
 
-        $credentials = array_merge($this->driver->defaultCredentials(), $credentials);
+        foreach ($this->driver->defaultCredentials() as $key => $defaultCredential) {
+            $credentials[$key] = $credentials[$key] ?: $defaultCredential;
+        }
         try {
             $this->driver->connect($credentials);
         } catch (ConnectException $e) {
