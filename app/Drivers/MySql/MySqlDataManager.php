@@ -77,13 +77,7 @@ class MySqlDataManager implements DataManagerInterface
 
         $primaryColumns = $this->getPrimaryColumns($type, $table);
         $query = 'SELECT * FROM `' . $table . '`';
-        if (!empty($sorting)) {
-            $query .= ' ORDER BY ';
-            foreach ($sorting as $key => $direction) {
-                $direction = strtolower($direction) == 'asc' ? 'ASC' : 'DESC';
-                $query .= "`$key` $direction";
-            }
-        }
+        $query .= $this->createOrderBy($sorting);
         $query .= ' LIMIT ' . (($page - 1) * $onPage) . ', ' . $onPage;
         $items = [];
         foreach ($this->connection->query($query)->fetchAll(PDO::FETCH_ASSOC) as $item) {
@@ -94,6 +88,23 @@ class MySqlDataManager implements DataManagerInterface
             $items[md5(implode('|', $pk))] = $item;
         }
         return $items;
+    }
+
+    private function createOrderBy($sorting)
+    {
+        if (empty($sorting)) {
+            return '';
+        }
+        $orderBy = ' ORDER BY ';
+        $order = [];
+        foreach ($sorting as $sort) {
+            foreach ($sort as $key => $direction) {
+                $direction = strtolower($direction) == 'asc' ? 'ASC' : 'DESC';
+                $order[] = "`$key` $direction";
+            }
+        }
+        $orderBy .= implode(', ', $order);
+        return $orderBy;
     }
 
     /**

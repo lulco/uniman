@@ -45,6 +45,7 @@ class ListPresenter extends BasePresenter
 
     public function renderItems($driver, $database, $type, $table, $page = 1, $onPage = 50, array $filter = [], array $sorting = [])
     {
+        ksort($sorting);
         $this->database = $database;
         $this->table = $table;
         $this->onPage = $onPage;
@@ -89,7 +90,7 @@ class ListPresenter extends BasePresenter
         $form->setMethod('get');
         $form->addText('onPage', 'On page')
             ->setDefaultValue($this->onPage);
-        $form->addSubmit('filter', 'Filter');
+        $form->addSubmit('submit', 'Filter');
         return $form;
     }
 }
