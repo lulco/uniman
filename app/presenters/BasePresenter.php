@@ -13,22 +13,17 @@ abstract class BasePresenter extends AbstractBasePresenter
         $drivers = $this->driverStorage->getDrivers();
         $actualDriver = isset($this->params['driver']) ? $this->params['driver'] : current(array_keys($drivers));
 
-        $section = $this->getSession('adminerng');
-        $settings = $section->$actualDriver;
-        if (!$settings) {
-            $this->redirect('Homepage:default', $actualDriver);
-        }
-
-        $credentials = json_decode(base64_decode($settings), true);
-        if (!$credentials) {
-            $this->redirect('Homepage:default', $actualDriver);
-        }
         $this->driver = $this->driverStorage->getDriver($actualDriver);
         if (!$this->driver) {
             throw new BadRequestException('Driver "' . $actualDriver . '" not found');
         }
 
-        // presunut mergovanie credentials a default credentials z formu az sem aby sa default cred. neukladali do session (vypisuju sa potom pri neuspesnom prihlaseni vo forme a to sa mi nepaci)
+        $credentials = $this->credentialsStorage->getCredentials($actualDriver);
+        if (!$credentials) {
+            $this->redirect('Homepage:default', $actualDriver);
+        }
+
+        $credentials = array_merge($this->driver->defaultCredentials(), $credentials);
         try {
             $this->driver->connect($credentials);
         } catch (ConnectException $e) {

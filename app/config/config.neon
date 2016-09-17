@@ -8,6 +8,8 @@ extensions:
 services:
 	router: Adminerng\Router\RouterFactory::createRouter
 
+	- Adminerng\Core\Credentials\SessionStorageCredentials
+
 	-
 		class: Adminerng\Core\DriverStorage
 		setup: 

@@ -2,6 +2,7 @@
 
 namespace Adminerng\Core;
 
+use Adminerng\Core\Credentials\CredentialsStorageInterface;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Localization\ITranslator;
@@ -14,13 +15,16 @@ class LoginForm extends Control
 
     private $driverStorage;
 
+    private $credentialsStorage;
+
     private $driver;
 
-    public function __construct(ITranslator $translator, DriverStorage $driverStorage, $driver)
+    public function __construct(ITranslator $translator, DriverStorage $driverStorage, CredentialsStorageInterface $credentialsStorage, $driver)
     {
         parent::__construct();
         $this->translator = $translator;
         $this->driverStorage = $driverStorage;
+        $this->credentialsStorage = $credentialsStorage;
         $this->driver = $driver;
     }
 
@@ -49,9 +53,7 @@ class LoginForm extends Control
             $driver = $this->driverStorage->getDriver($this->driver);
             $driver->addFormFields($form);
 
-            $section = $this->presenter->getSession('adminerng');
-            $settings = $section->{$this->driver};
-            $credentials = $settings ? json_decode(base64_decode($settings), true) : [];
+            $credentials = $this->credentialsStorage->getCredentials($this->driver);
             $form->setDefaults($credentials);
 
             $form->addSubmit('connect', 'core.form.connect');
@@ -63,18 +65,11 @@ class LoginForm extends Control
 
     public function connect(Form $form, ArrayHash $values)
     {
-        $driver = $this->driverStorage->getDriver($this->driver);
-        $defaultCredentials = $driver->defaultCredentials();
         $values = (array)$values;
-        foreach ($defaultCredentials as $key => $defaultCredential) {
-            $values[$key] = $values[$key] ?: $defaultCredential;
-        }
-        $section = $this->presenter->getSession('adminerng');
-        $section->{$values['driver']} = base64_encode(json_encode($values));
-
+        $this->credentialsStorage->setCredentials($this->driver, $values);
         if (isset($values['database']) && $values['database']) {
-            $this->presenter->redirect('List:tables', $values['driver'], $values['database']);
+            $this->presenter->redirect('List:tables', $this->driver, $values['database']);
         }
-        $this->presenter->redirect('List:databases', $values['driver']);
+        $this->presenter->redirect('List:databases', $this->driver);
     }
 }
