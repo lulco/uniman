@@ -4,6 +4,7 @@ namespace Adminerng\Drivers\Memcache;
 
 use Adminerng\Core\AbstractDriver;
 use Adminerng\Core\Column;
+use Adminerng\Core\Exception\ConnectException;
 use Memcache;
 
 class MemcacheDriver extends AbstractDriver
@@ -33,7 +34,9 @@ class MemcacheDriver extends AbstractDriver
         $servers = array_map('trim', explode("\n", trim($credentials['servers'])));
         foreach ($servers as $server) {
             list($host, $port) = explode(':', $server, 2);
-            $this->connection->addserver($host, $port);
+            if ($this->connection->addserver($host, $port)) {
+                throw new ConnectException("Couldn't connect to $host:$port");
+            }
         }
     }
 
