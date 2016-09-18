@@ -19,13 +19,16 @@ class LoginForm extends Control
 
     private $driver;
 
-    public function __construct(ITranslator $translator, DriverStorage $driverStorage, CredentialsStorageInterface $credentialsStorage, $driver)
+    private $locale;
+
+    public function __construct(ITranslator $translator, DriverStorage $driverStorage, CredentialsStorageInterface $credentialsStorage, $driver, $locale)
     {
         parent::__construct();
         $this->translator = $translator;
         $this->driverStorage = $driverStorage;
         $this->credentialsStorage = $credentialsStorage;
         $this->driver = $driver;
+        $this->locale = $locale;
     }
 
     public function render()
@@ -47,7 +50,7 @@ class LoginForm extends Control
             }
         }
         $form->addSelect('driver', 'core.form.driver', $driversList)
-            ->setAttribute('onchange', 'window.location = "?driver=" + this.value;')
+            ->setAttribute('onchange', 'window.location = "' . $this->presenter->link('this', ['driver' => null, 'locale' => $this->locale]) . ($this->locale == 'en' ? '?' : '&') . 'driver=" + this.value;')
             ->setDefaultValue($this->driver);
         if ($this->driver) {
             $driver = $this->driverStorage->getDriver($this->driver);

@@ -11,7 +11,7 @@ use Nette\Localization\ITranslator;
 abstract class AbstractBasePresenter extends Presenter
 {
     /** @var string @persistent */
-    public $locale;
+    public $locale = 'en';
 
     /** @var CredentialsStorageInterface @inject */
     public $credentialsStorage;
@@ -24,4 +24,10 @@ abstract class AbstractBasePresenter extends Presenter
 
     /** @var DriverInterface */
     protected $driver;
+
+    protected function startup()
+    {
+        parent::startup();
+        $this->template->locale = $this->locale;
+    }
 }

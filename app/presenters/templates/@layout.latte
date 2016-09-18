@@ -15,8 +15,16 @@
 			<div class="nav navbar-nav">
 				<h2><a href="{link Homepage:default, $presenter->getParam('driver')}">{_'core.title'}</a></h2>
 			</div>
-			<div n:if="isset($actualDriver) && $actualDriver" class="nav navbar-nav navbar-right" style="margin: 10px 5px;">
-				<a class="btn btn-default" href="{link Homepage:logout, $actualDriver->type()}">Logout</a>
+			<div style="margin: 10px 5px;">
+				<div n:if="isset($actualDriver) && $actualDriver" class="pull-right">
+					<a class="btn btn-default" href="{link Homepage:logout, $actualDriver->type()}">Logout</a>
+				</div>
+				<div class="pull-right form-group" style="margin-right: 10px;">
+					<select onchange="window.location={link this, 'driver' => $driver, 'locale' => null} + '&locale=' + this.value;" class="form-control">
+						<option value="en"{if $locale == 'en'} selected{/if}>English</option>
+						<option value="sk"{if $locale == 'sk'} selected{/if}>Slovenčina</option>
+					</select>
+				</div>
 			</div>
 		</div>
 	</div>

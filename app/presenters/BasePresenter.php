@@ -13,6 +13,7 @@ abstract class BasePresenter extends AbstractBasePresenter
         $drivers = $this->driverStorage->getDrivers();
         $actualDriver = isset($this->params['driver']) ? $this->params['driver'] : current(array_keys($drivers));
 
+        $this->template->driver = $actualDriver;
         $this->driver = $this->driverStorage->getDriver($actualDriver);
         if (!$this->driver) {
             throw new BadRequestException('Driver "' . $actualDriver . '" not found');
