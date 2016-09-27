@@ -37,6 +37,11 @@ abstract class AbstractDriver implements DriverInterface
         return false;
     }
 
+    public function tableForm($database, $type, $table)
+    {
+        return false;
+    }
+
     /**
      * @return CredentialsFormInterface
      */

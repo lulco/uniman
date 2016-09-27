@@ -20,4 +20,22 @@ class RedisPermissions implements PermissionsInterface
     {
         return true;
     }
+
+    public function canCreateTable($database, $type)
+    {
+        if ($type == RedisDriver::TYPE_HASH) {
+            return true;
+        }
+        return false;
+    }
+
+    public function canEditTable($database, $type, $table)
+    {
+        return true;
+    }
+
+    public function canDeleteTable($database, $type, $table)
+    {
+        return true;
+    }
 }

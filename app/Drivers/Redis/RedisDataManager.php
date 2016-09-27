@@ -137,6 +137,12 @@ class RedisDataManager implements DataManagerInterface
         return false;
     }
 
+    public function deleteTable($database, $type, $table)
+    {
+        $this->selectDatabase($database);
+        return $this->connection->del($table);
+    }
+
     private function databaseInfo($keyspace, $db)
     {
         $info = [

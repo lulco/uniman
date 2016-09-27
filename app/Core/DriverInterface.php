@@ -3,6 +3,7 @@
 namespace Adminerng\Core;
 
 use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
+use Adminerng\Core\Forms\TableForm\TableFormInterface;
 use Adminerng\Core\Permissions\PermissionsInterface;
 use Nette\Application\UI\Form;
 
@@ -59,6 +60,15 @@ interface DriverInterface
      * @return ItemFormInterface
      */
     public function itemForm($database, $type, $table, $item);
+
+    /**
+     * create / edit table form
+     * @param string $database
+     * @param string $type
+     * @param string|null $table
+     * @return TableFormInterface
+     */
+    public function tableForm($database, $type, $table);
 
     /**
      * @return PermissionsInterface

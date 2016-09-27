@@ -5,8 +5,10 @@ namespace Adminerng\Drivers\Redis;
 use Adminerng\Core\AbstractDriver;
 use Adminerng\Core\Column;
 use Adminerng\Core\Exception\ConnectException;
+use Adminerng\Drivers\Redis\Forms\RedisCreateHashForm;
 use Adminerng\Drivers\Redis\Forms\RedisHashKeyItemForm;
 use Adminerng\Drivers\Redis\Forms\RedisKeyItemForm;
+use Adminerng\Drivers\Redis\Forms\RedisRenameHashForm;
 use RedisException;
 use RedisProxy\RedisProxy;
 
@@ -100,6 +102,17 @@ class RedisDriver extends AbstractDriver
             return new RedisHashKeyItemForm($this->connection, $table, $item);
         } elseif ($type == self::TYPE_KEY) {
             return new RedisKeyItemForm($this->connection, $item);
+        }
+    }
+
+    public function tableForm($database, $type, $table)
+    {
+        $this->dataManager()->selectDatabase($database);
+        if ($type == self::TYPE_HASH) {
+            if ($table) {
+                return new RedisRenameHashForm($this->connection, $table);
+            }
+            return new RedisCreateHashForm($this->connection);
         }
     }
 
