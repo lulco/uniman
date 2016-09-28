@@ -53,6 +53,13 @@ item_form:
 	value:
 		label: Hodnota
 
+member_form:
+	member:
+		label: Member
+		required: Member je povinný
+	message:
+		cannot_be_removed: Member sa nedá odstrániť
+
 hash_form:
 	key:
 		label: Kľúč
@@ -63,6 +70,18 @@ hash_form:
 	value:
 		label: Hodnota
 		required: Hodnota je povinná
+	new_key:
+		label: Nový kľúč
+		required: Nový kľúč je povinný
+
+set_form:
+	key:
+		label: Kľúč
+		required: Kľúč je povinný
+	members:
+		label: Members
+		required: Members sú povinné
+		description: Zadajte čiarkou oddelené
 
 database_select_control:
 	database:

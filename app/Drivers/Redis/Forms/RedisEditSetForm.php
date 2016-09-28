@@ -25,7 +25,7 @@ class RedisEditSetForm implements TableFormInterface
             ->setRequired('redis.set_form.key.required');
         $form->addText('members', 'redis.set_form.members.label')
             ->setRequired('redis.set_form.members.required')
-            ->setOption('description', 'redis.set_form.members.required');
+            ->setOption('description', 'redis.set_form.members.description');
         if ($this->key) {
             $form->setDefaults([
                 'key' => $this->key,

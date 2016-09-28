@@ -11,6 +11,7 @@ use Adminerng\Drivers\Redis\Forms\RedisEditSetForm;
 use Adminerng\Drivers\Redis\Forms\RedisHashKeyItemForm;
 use Adminerng\Drivers\Redis\Forms\RedisKeyItemForm;
 use Adminerng\Drivers\Redis\Forms\RedisRenameHashForm;
+use Adminerng\Drivers\Redis\Forms\RedisSetMemberForm;
 use RedisException;
 use RedisProxy\RedisProxy;
 
@@ -105,7 +106,7 @@ class RedisDriver extends AbstractDriver
         } elseif ($type == self::TYPE_KEY) {
             return new RedisKeyItemForm($this->connection, $item);
         } elseif ($type == self::TYPE_SET) {
-            return new RedisCreateSetForm($this->connection, $table);
+            return new RedisSetMemberForm($this->connection, $table, $item);
         }
     }
 

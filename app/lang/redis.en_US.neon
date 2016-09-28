@@ -52,6 +52,13 @@ item_form:
 	value:
 		label: Value
 
+member_form:
+	member:
+		label: Member
+		required: Member is required
+	message:
+		cannot_be_removed: Member cannot be removed
+
 hash_form:
 	key:
 		label: Key
@@ -65,6 +72,15 @@ hash_form:
 	new_key:
 		label: New key
 		required: New key is required
+
+set_form:
+	key:
+		label: Key
+		required: Key is required
+	members:
+		label: Members
+		required: Members are required
+		description: Comma separated
 
 database_select_control:
 	database:
