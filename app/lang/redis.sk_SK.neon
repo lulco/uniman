@@ -53,6 +53,17 @@ item_form:
 	value:
 		label: Hodnota
 
+hash_form:
+	key:
+		label: Kľúč
+		required: Kľúč je povinný
+	field:
+		label: Pole
+		required: Pole je povinné
+	value:
+		label: Hodnota
+		required: Hodnota je povinná
+
 database_select_control:
 	database:
 		label: Databázy

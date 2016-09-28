@@ -31,10 +31,9 @@ class RedisRenameHashForm implements TableFormInterface
 
     public function submit(Form $form, ArrayHash $values)
     {
-        if (!$this->connection->hlen($values['key']) > 0) {
+        if ($this->connection->rename($values['key'], $values['new_key'])) {
             $form->addError('Key "' . $values['key'] . '" doesn\'t exist');
             return;
         }
-        $this->connection->rename($values['key'], $values['new_key']);
     }
 }

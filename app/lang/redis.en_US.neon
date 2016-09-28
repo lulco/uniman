@@ -52,6 +52,20 @@ item_form:
 	value:
 		label: Value
 
+hash_form:
+	key:
+		label: Key
+		required: Key is required
+	field:
+		label: Field
+		required: Field is required
+	value:
+		label: Value
+		required: Value is required
+	new_key:
+		label: New key
+		required: New key is required
+
 database_select_control:
 	database:
 		label: Databases
