@@ -2,6 +2,7 @@ name: Rabbit
 
 table_types_for_database: 'Front pre vhost %database%'
 no_tables_for_database: 'Žiadne fronty pre vhost %database% neboli nájdené'
+no_tables_for_type_queue: 'Žiadne fronty'
 
 table_type:
 	queue:
@@ -31,6 +32,11 @@ form:
 	rabbitmq_management_http_api_port:
 		label: RabbitMQ Management HTTP API port
 		description: rabbitmq_management plugin musí byť povolený
+
+queue_form:
+	queue:
+		label: Front
+		required: Front je povinný
 
 database_select_control:
 	database:
