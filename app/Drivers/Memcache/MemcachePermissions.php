@@ -8,12 +8,12 @@ class MemcachePermissions implements PermissionsInterface
 {
     public function canCreateItem($database, $type, $table)
     {
-        return false;
+        return true;
     }
 
     public function canEditItem($database, $type, $table, $item = null)
     {
-        return false;
+        return true;
     }
 
     public function canDeleteItem($database, $type, $table, $item)

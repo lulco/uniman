@@ -44,6 +44,7 @@ key_form:
 		required: Key is required
 	value:
 		label: Value
+		required: Value is required
 
 item_form:
 	key:

@@ -21,6 +21,14 @@ form:
 		label: Servery
 		description: 'Každý server na nový riadok vo formáte: host:port'
 
+key_form:
+	key:
+		label: Kľúč
+		required: Kľúč je povinné pole
+	value:
+		label: Hodnota
+		required: Hodnota je povinné pole
+
 database_select_control:
 	database:
 		label: Servery

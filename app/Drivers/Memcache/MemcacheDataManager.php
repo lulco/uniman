@@ -102,6 +102,11 @@ class MemcacheDataManager implements DataManagerInterface
         return $this->connection->delete($item);
     }
 
+    public function deleteTable($database, $type, $table)
+    {
+        return false;
+    }
+
     public function selectDatabase($database)
     {
         return null;

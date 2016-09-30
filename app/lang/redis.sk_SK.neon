@@ -45,6 +45,7 @@ key_form:
 		required: Kľúč je povinné pole
 	value:
 		label: Hodnota
+		required: Hodnota je povinné pole
 
 item_form:
 	key:

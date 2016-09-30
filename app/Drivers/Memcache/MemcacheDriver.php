@@ -5,6 +5,7 @@ namespace Adminerng\Drivers\Memcache;
 use Adminerng\Core\AbstractDriver;
 use Adminerng\Core\Column;
 use Adminerng\Core\Exception\ConnectException;
+use Adminerng\Drivers\Memcache\Forms\MemcacheKeyForm;
 use Memcache;
 
 class MemcacheDriver extends AbstractDriver
@@ -34,7 +35,7 @@ class MemcacheDriver extends AbstractDriver
         $servers = array_map('trim', explode("\n", trim($credentials['servers'])));
         foreach ($servers as $server) {
             list($host, $port) = explode(':', $server, 2);
-            if ($this->connection->addserver($host, $port)) {
+            if (!$this->connection->addserver($host, $port)) {
                 throw new ConnectException("Couldn't connect to $host:$port");
             }
         }
@@ -95,5 +96,13 @@ class MemcacheDriver extends AbstractDriver
     protected function getDataManager()
     {
         return new MemcacheDataManager($this->connection, $this->translator);
+    }
+
+    public function itemForm($database, $type, $table, $item)
+    {
+        if ($type === self::TYPE_KEY) {
+            return new MemcacheKeyForm($this->connection, $item);
+        }
+        parent::itemForm($database, $type, $table, $item);
     }
 }

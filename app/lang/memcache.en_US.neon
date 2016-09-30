@@ -21,6 +21,14 @@ form:
 		label: Servers
 		description: 'Each server on new line in format: host:port'
 
+key_form:
+	key:
+		label: Key
+		required: Key is required
+	value:
+		label: Value
+		required: Value is required
+
 database_select_control:
 	database:
 		label: Servers
