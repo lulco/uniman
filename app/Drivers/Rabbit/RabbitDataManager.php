@@ -105,7 +105,9 @@ class RabbitDataManager implements DataManagerInterface
     {
         $this->selectDatabase($vhost);
         $channel = $this->connection->channel();
-        $res = $channel->queue_delete($queue);
+        $channel->queue_delete($queue);
+        $channel->close();
+        $this->connection->close();
         return true;
     }
 

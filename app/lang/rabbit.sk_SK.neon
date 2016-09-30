@@ -38,6 +38,11 @@ queue_form:
 		label: Front
 		required: Front je povinný
 
+message_form:
+	message:
+		label: Správa
+		required: Správa je povinná
+
 database_select_control:
 	database:
 		label: Vhosts

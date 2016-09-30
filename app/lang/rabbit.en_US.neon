@@ -38,6 +38,11 @@ queue_form:
 		label: Queue
 		required: Queue is required
 
+message_form:
+	message:
+		label: Message
+		required: Message is required
+
 database_select_control:
 	database:
 		label: Vhosts
