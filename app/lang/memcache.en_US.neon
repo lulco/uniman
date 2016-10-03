@@ -1,8 +1,5 @@
 name: Memcache
 
-flags:
-	compressed: Compressed
-
 table_type:
 	key:
 		items:
@@ -13,8 +10,8 @@ columns:
 		key: Key
 		value: Value
 		size: Size
-		expiration: Expiration
-		flags: Flags
+		expiration: 'Expiration (s)'
+		compressed: Compressed
 
 form:
 	servers:
@@ -28,6 +25,10 @@ key_form:
 	value:
 		label: Value
 		required: Value is required
+	compressed:
+		label: Compressed
+	expiration:
+		label: 'Expiration (s)'
 
 database_select_control:
 	database:

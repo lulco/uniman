@@ -1,8 +1,5 @@
 name: Memcache
 
-flags:
-	compressed: Komprimovaný
-
 table_type:
 	key:
 		items:
@@ -13,8 +10,8 @@ columns:
 		key: Kľúč
 		value: Hodnota
 		size: Veľkosť
-		expiration: Expirácia
-		flags: Značky
+		expiration: 'Expirácia (s)'
+		compressed: Komprimovaný
 
 form:
 	servers:
@@ -28,6 +25,10 @@ key_form:
 	value:
 		label: Hodnota
 		required: Hodnota je povinné pole
+	compressed:
+		label: Komprimovať
+	expiration:
+		label: 'Expirácia (s)'
 
 database_select_control:
 	database:

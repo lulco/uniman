@@ -77,8 +77,8 @@ class MemcacheDriver extends AbstractDriver
                 ->setKey('expiration')
                 ->setTitle('memcache.columns.' . $type . '.expiration');
             $columns[] = (new Column())
-                ->setKey('flags')
-                ->setTitle('memcache.columns.' . $type . '.flags');
+                ->setKey('compressed')
+                ->setTitle('memcache.columns.' . $type . '.compressed');
         }
         return $columns;
     }
