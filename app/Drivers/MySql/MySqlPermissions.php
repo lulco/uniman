@@ -33,6 +33,6 @@ class MySqlPermissions implements PermissionsInterface
 
     public function canDeleteTable($database, $type, $table)
     {
-        return false;
+        return true;
     }
 }
