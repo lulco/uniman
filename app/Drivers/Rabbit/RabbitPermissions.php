@@ -1,10 +1,10 @@
 <?php
 
-namespace Adminerng\Drivers\Memcache;
+namespace Adminerng\Drivers\Rabbit;
 
 use Adminerng\Core\Permissions\PermissionsInterface;
 
-class MemcachePermissions implements PermissionsInterface
+class RabbitPermissions implements PermissionsInterface
 {
     public function canCreateItem($database, $type, $table)
     {
@@ -13,17 +13,17 @@ class MemcachePermissions implements PermissionsInterface
 
     public function canEditItem($database, $type, $table, $item = null)
     {
-        return true;
+        return false;
     }
 
     public function canDeleteItem($database, $type, $table, $item)
     {
-        return true;
+        return false;
     }
 
     public function canCreateTable($database, $type)
     {
-        return false;
+        return true;
     }
 
     public function canEditTable($database, $type, $table)
@@ -33,6 +33,6 @@ class MemcachePermissions implements PermissionsInterface
 
     public function canDeleteTable($database, $type, $table)
     {
-        return false;
+        return true;
     }
 }

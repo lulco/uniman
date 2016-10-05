@@ -1,7 +1,7 @@
 title: Adminer next generation
 
-yes: Yes
-no: No
+yes: 'Yes'
+no: 'No'
 
 ascending: Ascending
 descending: Descending

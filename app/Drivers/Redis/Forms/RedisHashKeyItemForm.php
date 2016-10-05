@@ -7,7 +7,6 @@ use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use RedisProxy\RedisProxy;
 
-// TODO use data manager instead of connection
 class RedisHashKeyItemForm implements ItemFormInterface
 {
     private $connection;

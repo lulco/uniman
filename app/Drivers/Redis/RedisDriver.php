@@ -5,8 +5,13 @@ namespace Adminerng\Drivers\Redis;
 use Adminerng\Core\AbstractDriver;
 use Adminerng\Core\Column;
 use Adminerng\Core\Exception\ConnectException;
+use Adminerng\Drivers\Redis\Forms\RedisCreateHashForm;
+use Adminerng\Drivers\Redis\Forms\RedisCreateSetForm;
+use Adminerng\Drivers\Redis\Forms\RedisEditSetForm;
 use Adminerng\Drivers\Redis\Forms\RedisHashKeyItemForm;
 use Adminerng\Drivers\Redis\Forms\RedisKeyItemForm;
+use Adminerng\Drivers\Redis\Forms\RedisRenameHashForm;
+use Adminerng\Drivers\Redis\Forms\RedisSetMemberForm;
 use RedisException;
 use RedisProxy\RedisProxy;
 
@@ -100,6 +105,26 @@ class RedisDriver extends AbstractDriver
             return new RedisHashKeyItemForm($this->connection, $table, $item);
         } elseif ($type == self::TYPE_KEY) {
             return new RedisKeyItemForm($this->connection, $item);
+        } elseif ($type == self::TYPE_SET) {
+            return new RedisSetMemberForm($this->connection, $table, $item);
+        }
+    }
+
+    public function tableForm($database, $type, $table)
+    {
+        $this->dataManager()->selectDatabase($database);
+        if ($type == self::TYPE_HASH) {
+            if ($table) {
+                return new RedisRenameHashForm($this->connection, $table);
+            }
+            return new RedisCreateHashForm($this->connection);
+        } elseif ($type == self::TYPE_KEY) {
+            return new RedisKeyItemForm($this->connection, $table);
+        } elseif ($type == self::TYPE_SET) {
+            if (!$table) {
+                return new RedisCreateSetForm($this->connection, $table);
+            }
+            return new RedisEditSetForm($this->connection, $table);
         }
     }
 

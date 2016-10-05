@@ -49,7 +49,15 @@ interface DataManagerInterface
      * @param string $type
      * @param string $table
      * @param string $item
-     * @return boolean|null true if delete was successfull, false if not, null if delete item is not supported
+     * @return boolean|null true if delete was successfull, false if not, null if delete item is not allowed
      */
     public function deleteItem($database, $type, $table, $item);
+
+    /**
+     * @param string $database
+     * @param string $type
+     * @param string $table
+     * @return boolean|null true if delete was successfull, false if not, null if delete table is not allowed
+     */
+    public function deleteTable($database, $type, $table);
 }

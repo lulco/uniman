@@ -6,17 +6,41 @@ no_tables_for_type_key: 'Žiadne kľúče'
 no_tables_for_type_hash: 'Žiadne hashe'
 no_tables_for_type_set: 'Žiadne sety'
 
+table_form_header:
+	hash:
+		create: Vytvorenie nového hashu
+		edit: Úprava hashu
+	key:
+		create: Vytvorenie nového kľúča
+		edit: Úprava kľúča
+	set:
+		create: Vytvorenie nového setu
+		edit: Úprava setu
+
+item_form_header:
+	hash:
+		create: Vytvorenie nového kľúča v hashi
+		edit: Úprava kľúča v hashi
+	key:
+		create: Vytvorenie nového kľúča
+		edit: Úprava kľúča
+	set:
+		create: Pridanie kľúča do setu
+		edit: Úprava kľúča
+
 table_type:
 	hash:
+		title: Hashe
 		items:
 			title: Kľúč|Kľúče|Kľúče
 	key:
+		title: Kľúče
 		items:
 			title: Kľúč|Kľúče|Kľúče
 	set:
+		title: Sety
 		items:
 			title: Kľúč|Kľúče|Kľúče
-
 
 columns:
 	hash:
@@ -45,6 +69,7 @@ key_form:
 		required: Kľúč je povinné pole
 	value:
 		label: Hodnota
+		required: Hodnota je povinné pole
 
 item_form:
 	key:
@@ -52,6 +77,36 @@ item_form:
 		required: Kľúč je povinné pole
 	value:
 		label: Hodnota
+
+member_form:
+	member:
+		label: Member
+		required: Member je povinný
+	message:
+		cannot_be_removed: Member sa nedá odstrániť
+
+hash_form:
+	key:
+		label: Kľúč
+		required: Kľúč je povinný
+	field:
+		label: Pole
+		required: Pole je povinné
+	value:
+		label: Hodnota
+		required: Hodnota je povinná
+	new_key:
+		label: Nový kľúč
+		required: Nový kľúč je povinný
+
+set_form:
+	key:
+		label: Kľúč
+		required: Kľúč je povinný
+	members:
+		label: Members
+		required: Members sú povinné
+		description: Zadajte čiarkou oddelené
 
 database_select_control:
 	database:

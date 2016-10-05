@@ -2,12 +2,16 @@ name: MySql
 
 table_types_for_database: 'Tabuľky a viewy pre databázu %database%'
 no_tables_for_database: 'V datábáze %database% neboli nájdené žiadne tabuľky ani viewy'
+no_tables_for_type_table: 'Žiadne tabuľky'
+no_tables_for_type_view: 'Žiadne viewy'
 
 table_type:
 	table:
+		title: Tabuľky
 		items:
 			title: Záznam|Záznamy|Záznamy
 	view:
+		title: Viewy
 		items:
 			title: Záznam|Záznamy|Záznamy
 

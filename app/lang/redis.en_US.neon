@@ -6,14 +6,39 @@ no_tables_for_type_key: 'No keys'
 no_tables_for_type_hash: 'No hashes'
 no_tables_for_type_set: 'No sets'
 
+table_form_header:
+	hash:
+		create: Create new hash
+		edit: Edit hash
+	key:
+		create: Create new key
+		edit: Edit key
+	set:
+		create: Create new set
+		edit: Edit set
+
+item_form_header:
+	hash:
+		create: Create new key in hash
+		edit: Edit key in hash
+	key:
+		create: Create new key
+		edit: Edit key
+	set:
+		create: Add member to set
+		edit: Edit member
+
 table_type:
 	hash:
+		title: Hashes
 		items:
 			title: Key|Keys
 	key:
+		title: Keys
 		items:
 			title: Key|Keys
 	set:
+		title: Sets
 		items:
 			title: Member|Members
 
@@ -44,6 +69,7 @@ key_form:
 		required: Key is required
 	value:
 		label: Value
+		required: Value is required
 
 item_form:
 	key:
@@ -51,6 +77,36 @@ item_form:
 		required: Key is required
 	value:
 		label: Value
+
+member_form:
+	member:
+		label: Member
+		required: Member is required
+	message:
+		cannot_be_removed: Member cannot be removed
+
+hash_form:
+	key:
+		label: Key
+		required: Key is required
+	field:
+		label: Field
+		required: Field is required
+	value:
+		label: Value
+		required: Value is required
+	new_key:
+		label: New key
+		required: New key is required
+
+set_form:
+	key:
+		label: Key
+		required: Key is required
+	members:
+		label: Members
+		required: Members are required
+		description: Comma separated
 
 database_select_control:
 	database:

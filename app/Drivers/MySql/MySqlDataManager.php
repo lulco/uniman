@@ -3,6 +3,7 @@
 namespace Adminerng\Drivers\MySql;
 
 use Adminerng\Core\DataManagerInterface;
+use InvalidArgumentException;
 use PDO;
 
 class MySqlDataManager implements DataManagerInterface
@@ -39,7 +40,10 @@ class MySqlDataManager implements DataManagerInterface
 
     public function tables($database)
     {
-        $tables = [];
+        $tables = [
+            MySqlDriver::TYPE_TABLE => [],
+            MySqlDriver::TYPE_VIEW => [],
+        ];
         foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $table) {
             $tables[MySqlDriver::TYPE_TABLE][$table['TABLE_NAME']] = [
                 $table['ENGINE'],
@@ -130,6 +134,19 @@ class MySqlDataManager implements DataManagerInterface
         return $this->connection->query($query);
     }
 
+    public function deleteTable($database, $type, $table)
+    {
+        $this->selectDatabase($database);
+        if ($type === MySqlDriver::TYPE_TABLE) {
+            $query = 'DROP TABLE `' . $table . '`';
+        } elseif ($type === MySqlDriver::TYPE_VIEW) {
+            $query = 'DROP VIEW `' . $table . '`';
+        } else {
+            throw new InvalidArgumentException('Type "' . $type . '" is not supported');
+        }
+        return $this->connection->query($query);
+    }
+
     public function selectDatabase($database)
     {
         $this->connection->query('USE `' . $database . '`');
@@ -158,4 +175,5 @@ class MySqlDataManager implements DataManagerInterface
         }
         return $this->columns;
     }
+
 }

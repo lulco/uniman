@@ -8,17 +8,33 @@
 		<h1>{_$driver . '.table_types_for_database', ['database' => $database]}</h1>
 		{if $tables}
 			{foreach $tables as $type => $rows}
-				<h3>{$type} ({count($rows)})</h3>
+				<div class="row">
+					<div class="col-lg-10">
+						<h3>{_$driver . '.table_type.' . $type. '.title'} ({count($rows)})</h3>
+					</div>
+					<div class="col-lg-2">
+						<div n:if="$actualDriver->permissions()->canCreateTable($database, $type)" class="pull-right">
+							<a class="btn btn-default" style="margin-right: 20px;" href="{link List:create, $driver, $database, $type}">Create new</a>
+						</div>
+					</div>
+				</div>
 				{if count($rows) > 0}
 					<table class="table">
 						<thead n:if="isset($tablesHeaders[$type]) && $tablesHeaders[$type]">
 							<tr>
+								<th></th>
 								<th n:foreach="$tablesHeaders[$type] as $tableHeader">{$tableHeader}</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr n:foreach="$rows as $key => $values">
-								<td><a href="{link List:items, $driver, $database, $type, $key}">{$key}</a></td>
+							<tr n:foreach="$rows as $table => $values">
+								<td>
+									<div class="btn-group">
+										<a n:if="$actualDriver->permissions()->canEditTable($database, $type, $table)" class="btn-default" href="{link List:edit, $driver, $database, $type, $table}"><i class="fa fa-edit"></i></a>
+										<a n:if="$actualDriver->permissions()->canDeleteTable($database, $type, $table)" class="btn-default" href="{link List:delete, $driver, $database, $type, $table}"><i class="fa fa-trash"></i></a>
+									</div>
+								</td>
+								<td><a href="{link List:items, $driver, $database, $type, $table}">{$table}</a></td>
 								<td n:foreach="$values as $value">{$value}</td>
 							</tr>
 						</tbody>

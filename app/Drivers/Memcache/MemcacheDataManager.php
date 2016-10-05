@@ -91,7 +91,7 @@ class MemcacheDataManager implements DataManagerInterface
                 'value' => $this->connection->get($key, $flags),
                 'size' => $info[0],
                 'expiration' => ($info[1] - time()) > 0 ? $info[1] - time() : null,
-                'flags' => $flags == MEMCACHE_COMPRESSED ? $this->translator->translate('memcache.flags.compressed') : null,
+                'compressed' => $flags == MEMCACHE_COMPRESSED ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
             ];
         }
         return $items;
@@ -100,6 +100,11 @@ class MemcacheDataManager implements DataManagerInterface
     public function deleteItem($database, $type, $table, $item)
     {
         return $this->connection->delete($item);
+    }
+
+    public function deleteTable($database, $type, $table)
+    {
+        return false;
     }
 
     public function selectDatabase($database)

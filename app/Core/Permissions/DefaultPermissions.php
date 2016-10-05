@@ -18,4 +18,19 @@ class DefaultPermissions implements PermissionsInterface
     {
         return false;
     }
+
+    public function canCreateTable($database, $type)
+    {
+        return false;
+    }
+
+    public function canEditTable($database, $type, $table)
+    {
+        return false;
+    }
+
+    public function canDeleteTable($database, $type, $table)
+    {
+        return false;
+    }
 }

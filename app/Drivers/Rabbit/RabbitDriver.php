@@ -4,6 +4,8 @@ namespace Adminerng\Drivers\Rabbit;
 
 use Adminerng\Core\AbstractDriver;
 use Adminerng\Core\Column;
+use Adminerng\Drivers\Rabbit\Forms\RabbitMessageForm;
+use Adminerng\Drivers\Rabbit\Forms\RabbitQueueForm;
 
 class RabbitDriver extends AbstractDriver
 {
@@ -87,6 +89,29 @@ class RabbitDriver extends AbstractDriver
     protected function getCredentialsForm()
     {
         return new RabbitForm();
+    }
+
+    public function tableForm($database, $type, $table)
+    {
+        $connection = $this->dataManager()->selectDatabase($database);
+        if ($type === self::TYPE_QUEUE) {
+            return new RabbitQueueForm($connection, $table);
+        }
+        return parent::tableForm($database, $type, $table);
+    }
+
+    public function itemForm($database, $type, $table, $item)
+    {
+        $connection = $this->dataManager()->selectDatabase($database);
+        if (!$item && $type === self::TYPE_QUEUE) {
+            return new RabbitMessageForm($connection, $table);
+        }
+        parent::itemForm($database, $type, $table, $item);
+    }
+
+    protected function getPermissions()
+    {
+        return new RabbitPermissions();
     }
 
     protected function getDataManager()

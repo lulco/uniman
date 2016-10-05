@@ -10,6 +10,7 @@ class RabbitDataManager implements DataManagerInterface
 {
     private $translator;
 
+    /** @var AMQPStreamConnection */
     private $connection;
 
     private $credentials = [];
@@ -43,11 +44,14 @@ class RabbitDataManager implements DataManagerInterface
             $this->credentials['password'],
             $vhost
         );
+        return $this->connection;
     }
 
     public function tables($database)
     {
-        $tables = [];
+        $tables = [
+            RabbitDriver::TYPE_QUEUE => [],
+        ];
         foreach ($this->client->getQueues($database) as $queue) {
             $tables[RabbitDriver::TYPE_QUEUE][$queue['name']] = [
                 'items' => $queue['messages'],
@@ -95,6 +99,16 @@ class RabbitDataManager implements DataManagerInterface
     public function deleteItem($database, $type, $table, $item)
     {
         return false;
+    }
+
+    public function deleteTable($vhost, $type, $queue)
+    {
+        $this->selectDatabase($vhost);
+        $channel = $this->connection->channel();
+        $channel->queue_delete($queue);
+        $channel->close();
+        $this->connection->close();
+        return true;
     }
 
     private function getMessage($queue)

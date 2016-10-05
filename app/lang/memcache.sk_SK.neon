@@ -1,7 +1,9 @@
 name: Memcache
 
-flags:
-	compressed: Komprimovaný
+item_form_header:
+	key:
+		create: Vytvorenie nového kľúča
+		edit: Úprava kľúča
 
 table_type:
 	key:
@@ -13,13 +15,25 @@ columns:
 		key: Kľúč
 		value: Hodnota
 		size: Veľkosť
-		expiration: Expirácia
-		flags: Značky
+		expiration: 'Expirácia (s)'
+		compressed: Komprimovaný
 
 form:
 	servers:
 		label: Servery
 		description: 'Každý server na nový riadok vo formáte: host:port'
+
+key_form:
+	key:
+		label: Kľúč
+		required: Kľúč je povinné pole
+	value:
+		label: Hodnota
+		required: Hodnota je povinné pole
+	compressed:
+		label: Komprimovať
+	expiration:
+		label: 'Expirácia (s)'
 
 database_select_control:
 	database:

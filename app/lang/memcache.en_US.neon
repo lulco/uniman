@@ -1,7 +1,9 @@
 name: Memcache
 
-flags:
-	compressed: Compressed
+item_form_header:
+	key:
+		create: Create new key
+		edit: Edit key
 
 table_type:
 	key:
@@ -13,13 +15,25 @@ columns:
 		key: Key
 		value: Value
 		size: Size
-		expiration: Expiration
-		flags: Flags
+		expiration: 'Expiration (s)'
+		compressed: Compressed
 
 form:
 	servers:
 		label: Servers
 		description: 'Each server on new line in format: host:port'
+
+key_form:
+	key:
+		label: Key
+		required: Key is required
+	value:
+		label: Value
+		required: Value is required
+	compressed:
+		label: Compressed
+	expiration:
+		label: 'Expiration (s)'
 
 database_select_control:
 	database:

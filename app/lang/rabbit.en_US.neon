@@ -2,9 +2,19 @@ name: Rabbit
 
 table_types_for_database: 'Queues for vhost %database%'
 no_tables_for_database: 'No queues found for vhost %database%'
+no_tables_for_type_queue: 'No queues'
+
+table_form_header:
+	queue:
+		create: Create new queue
+
+item_form_header:
+	queue:
+		create: Create new message
 
 table_type:
 	queue:
+		title: Queues
 		items:
 			title: Message|Messages
 
@@ -31,6 +41,16 @@ form:
 	rabbitmq_management_http_api_port:
 		label: RabbitMQ Management HTTP API port
 		description: rabbitmq_management plugin must be enabled
+
+queue_form:
+	queue:
+		label: Queue
+		required: Queue is required
+
+message_form:
+	message:
+		label: Message
+		required: Message is required
 
 database_select_control:
 	database:
