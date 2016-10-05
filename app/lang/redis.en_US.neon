@@ -8,12 +8,15 @@ no_tables_for_type_set: 'No sets'
 
 table_type:
 	hash:
+		title: Hashes
 		items:
 			title: Key|Keys
 	key:
+		title: Keys
 		items:
 			title: Key|Keys
 	set:
+		title: Sets
 		items:
 			title: Member|Members
 

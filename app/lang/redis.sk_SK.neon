@@ -8,15 +8,17 @@ no_tables_for_type_set: 'Žiadne sety'
 
 table_type:
 	hash:
+		title: Hashe
 		items:
 			title: Kľúč|Kľúče|Kľúče
 	key:
+		title: Kľúče
 		items:
 			title: Kľúč|Kľúče|Kľúče
 	set:
+		title: Sety
 		items:
 			title: Kľúč|Kľúče|Kľúče
-
 
 columns:
 	hash:

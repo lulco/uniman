@@ -2,12 +2,16 @@ name: MySql
 
 table_types_for_database: 'Tables and views for database %database%'
 no_tables_for_database: 'No tables and views for database %database%'
+no_tables_for_type_table: 'No tables'
+no_tables_for_type_view: 'No views'
 
 table_type:
 	table:
+		title: Tables
 		items:
 			title: Row|Rows
 	view:
+		title: Views
 		items:
 			title: Row|Rows
 

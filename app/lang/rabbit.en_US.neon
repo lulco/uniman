@@ -6,6 +6,7 @@ no_tables_for_type_queue: 'No queues'
 
 table_type:
 	queue:
+		title: Queues
 		items:
 			title: Message|Messages
 

@@ -1,11 +1,12 @@
 name: Rabbit
 
-table_types_for_database: 'Front pre vhost %database%'
+table_types_for_database: 'Fronty pre vhost %database%'
 no_tables_for_database: 'Žiadne fronty pre vhost %database% neboli nájdené'
 no_tables_for_type_queue: 'Žiadne fronty'
 
 table_type:
 	queue:
+		title: Fronty
 		items:
 			title: Správa|Správy|Správy
 
