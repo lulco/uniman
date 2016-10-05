@@ -1,5 +1,10 @@
 name: Memcache
 
+item_form_header:
+	key:
+		create: Vytvorenie nového kľúča
+		edit: Úprava kľúča
+
 table_type:
 	key:
 		items:

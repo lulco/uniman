@@ -4,6 +4,14 @@ table_types_for_database: 'Queues for vhost %database%'
 no_tables_for_database: 'No queues found for vhost %database%'
 no_tables_for_type_queue: 'No queues'
 
+table_form_header:
+	queue:
+		create: Create new queue
+
+item_form_header:
+	queue:
+		create: Create new message
+
 table_type:
 	queue:
 		title: Queues

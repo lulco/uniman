@@ -1,5 +1,10 @@
 name: Memcache
 
+item_form_header:
+	key:
+		create: Create new key
+		edit: Edit key
+
 table_type:
 	key:
 		items:
