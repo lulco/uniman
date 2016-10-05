@@ -28,7 +28,7 @@ class ListPresenter extends BasePresenter
         }
         $this->template->driver = $driver;
         $this->database = $database;
-        $this->type = $type;
+        $this->template->type = $this->type = $type;
     }
 
     public function actionEdit($driver, $database, $type, $table)
@@ -38,7 +38,7 @@ class ListPresenter extends BasePresenter
         }
         $this->template->driver = $driver;
         $this->database = $database;
-        $this->type = $type;
+        $this->template->type = $this->type = $type;
         $this->table = $table;
     }
 

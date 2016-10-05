@@ -23,7 +23,7 @@ class RedisRenameHashForm implements TableFormInterface
     {
         $form->addText('key', 'redis.hash_form.key.label')
             ->setRequired('redis.hash_form.key.required')
-//            ->setDisabled()
+            ->setDisabled()
             ->setValue($this->key);
         $form->addText('new_key', 'redis.hash_form.new_key.label')
             ->setRequired('redis.hash_form.new_key.required');
@@ -31,8 +31,8 @@ class RedisRenameHashForm implements TableFormInterface
 
     public function submit(Form $form, ArrayHash $values)
     {
-        if ($this->connection->rename($values['key'], $values['new_key'])) {
-            $form->addError('Key "' . $values['key'] . '" doesn\'t exist');
+        if (!$this->connection->rename($this->key, $values['new_key'])) {
+            $form->addError('Key "' . $this->key . '" doesn\'t exist');
             return;
         }
     }

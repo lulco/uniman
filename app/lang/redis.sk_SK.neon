@@ -6,6 +6,28 @@ no_tables_for_type_key: 'Žiadne kľúče'
 no_tables_for_type_hash: 'Žiadne hashe'
 no_tables_for_type_set: 'Žiadne sety'
 
+table_form_header:
+	hash:
+		create: Vytvorenie nového hashu
+		edit: Úprava hashu
+	key:
+		create: Vytvorenie nového kľúča
+		edit: Úprava kľúča
+	set:
+		create: Vytvorenie nového setu
+		edit: Úprava setu
+
+item_form_header:
+	hash:
+		create: Vytvorenie nového kľúča v hashi
+		edit: Úprava kľúča v hashi
+	key:
+		create: Vytvorenie nového kľúča
+		edit: Úprava kľúča
+	set:
+		create: Pridanie kľúča do setu
+		edit: Úprava kľúča
+
 table_type:
 	hash:
 		title: Hashe

@@ -6,6 +6,28 @@ no_tables_for_type_key: 'No keys'
 no_tables_for_type_hash: 'No hashes'
 no_tables_for_type_set: 'No sets'
 
+table_form_header:
+	hash:
+		create: Create new hash
+		edit: Edit hash
+	key:
+		create: Create new key
+		edit: Edit key
+	set:
+		create: Create new set
+		edit: Edit set
+
+item_form_header:
+	hash:
+		create: Create new key in hash
+		edit: Edit key in hash
+	key:
+		create: Create new key
+		edit: Edit key
+	set:
+		create: Add member to set
+		edit: Edit member
+
 table_type:
 	hash:
 		title: Hashes

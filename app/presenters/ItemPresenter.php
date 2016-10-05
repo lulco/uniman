@@ -11,7 +11,7 @@ class ItemPresenter extends BasePresenter
     private $database;
 
     private $type;
-    
+
     private $table;
 
     private $item;
@@ -23,7 +23,7 @@ class ItemPresenter extends BasePresenter
         }
         $this->template->driver = $driver;
         $this->database = $database;
-        $this->type = $type;
+        $this->template->type = $this->type = $type;
         $this->table = $table;
     }
 
@@ -34,7 +34,7 @@ class ItemPresenter extends BasePresenter
         }
         $this->template->driver = $driver;
         $this->database = $database;
-        $this->type = $type;
+        $this->template->type = $this->type = $type;
         $this->table = $table;
         $this->item = $item;
     }
