@@ -2,6 +2,7 @@
 
 namespace Adminerng\Presenters;
 
+use Adminerng\Components\Breadcrumb\BreadcrumbControl;
 use Adminerng\Core\Credentials\CredentialsStorageInterface;
 use Adminerng\Core\DriverInterface;
 use Adminerng\Core\DriverStorage;
@@ -25,9 +26,28 @@ abstract class AbstractBasePresenter extends Presenter
     /** @var DriverInterface */
     protected $driver;
 
+    protected $database;
+
+    protected $type;
+
+    protected $table;
+
+    protected $item;
+
     protected function startup()
     {
         parent::startup();
         $this->template->locale = $this->locale;
+    }
+
+    protected function createComponentBreadcrumb()
+    {
+        return new BreadcrumbControl(
+            $this->driver instanceof DriverInterface ? $this->driver->type() : $this->driver,
+            $this->database,
+            $this->type,
+            $this->table,
+            $this->item
+        );
     }
 }

@@ -13,12 +13,6 @@ use Tomaj\Form\Renderer\BootstrapInlineRenderer;
 
 class ListPresenter extends BasePresenter
 {
-    private $database;
-
-    private $table;
-
-    private $type;
-
     private $onPage;
 
     public function actionCreate($driver, $database, $type)
@@ -85,6 +79,7 @@ class ListPresenter extends BasePresenter
     {
         ksort($sorting);
         $this->database = $database;
+        $this->type = $type;
         $this->table = $table;
         $this->onPage = $onPage;
 

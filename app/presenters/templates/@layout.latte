@@ -15,6 +15,7 @@
 			<div class="nav navbar-nav">
 				<h2><a href="{link Homepage:default, $presenter->getParam('driver')}">{_'core.title'}</a></h2>
 			</div>
+			{control breadcrumb}
 			<div style="margin: 10px 5px;">
 				<div n:if="isset($actualDriver) && $actualDriver" class="pull-right">
 					<a class="btn btn-default" href="{link Homepage:logout, $actualDriver->type()}">Logout</a>
