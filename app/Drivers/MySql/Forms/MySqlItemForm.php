@@ -3,6 +3,7 @@
 namespace Adminerng\Drivers\Redis\Forms;
 
 use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
+use Adminerng\Drivers\MySql\MySqlDataManager;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use PDO;
@@ -11,25 +12,46 @@ class MySqlItemForm implements ItemFormInterface
 {
     private $pdo;
 
+    private $dataManager;
+
+    private $type;
+
     private $table;
 
     private $item;
 
-    public function __construct(PDO $pdo, $table, $item)
+    public function __construct(PDO $pdo, MySqlDataManager $dataManager, $type, $table, $item)
     {
         $this->pdo = $pdo;
+        $this->dataManager = $dataManager;
+        $this->type = $type;
         $this->table = $table;
         $this->item = $item;
     }
 
     public function addFieldsToForm(Form $form)
     {
-        foreach ($this->pdo->query('SHOW FULL COLUMNS FROM `' . $this->table .'`')->fetchAll(PDO::FETCH_ASSOC) as $column) {
-            $form->addText($column['Field'], $column['Field']);
+        $columns = $this->dataManager->getColumns($this->type, $this->table);
+//        print_R($columns);
+//        exit();
+        foreach ($columns as $column) {
+            if ($column['Type'] === 'text') {
+                $field = $form->addTextArea($column['Field'], $column['Field'], null, 7);
+            } elseif ($column['Type'] === 'tinyint(1)') {
+                $field = $form->addCheckbox($column['Field'], $column['Field']);
+            } else {
+                $field = $form->addText($column['Field'], $column['Field']);
+            }
+            if ($column['Null'] === 'NO') {
+                $field->setRequired();
+            }
         }
 
         if ($this->item) {
-            // TODO
+            $item = $this->dataManager->loadItem($this->type, $this->table, $this->item);
+            if ($item) {
+                $form->setDefaults($item);
+            }
         }
     }
 

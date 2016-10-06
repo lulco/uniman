@@ -125,6 +125,14 @@ class MySqlDataManager implements DataManagerInterface
 //        return false;
 //    }
 
+    public function loadItem($type, $table, $item)
+    {
+        $primaryColumns = $this->getPrimaryColumns($type, $table);
+        $query = 'SELECT * FROM `' . $table . '` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "' . $item . '"';
+        return $this->connection->query($query)->fetch(PDO::FETCH_ASSOC);
+    }
+
+
     public function deleteItem($database, $type, $table, $item)
     {
         $this->selectDatabase($database);
