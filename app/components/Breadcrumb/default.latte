@@ -1,0 +1,20 @@
+{ifCurrent Homepage:*}
+{else}
+<div class="pull-left" style="margin-bottom: -15px; padding-top: 20px;">
+	<ul class="breadcrumb">
+		<li><a href="{if $driver}{plink Homepage:default, $driver}{else}{plink Homepage:default}{/if}">Login</a></li>
+		{if $driver}
+			<li n:if="$database"><a href="{plink List:databases, $driver}">Databases</a></li>
+			<li n:if="!$database" class="active">Databases</li>
+			{if $database}
+				<li n:if="$type && $table"><a href="{plink List:tables, $driver, $database}">{$database}</a></li>
+				<li n:if="!$type || !$table" class="active">{$database}</li>
+				{if $type && $table}
+					<li n:if="$item"><a href="{plink List:items, $driver, $database, $type, $table}">{$table}</a></li>
+					<li n:if="!$item" class="active">{$table}</li>
+				{/if}
+			{/if}
+		{/if}
+	</ul>
+</div>
+{/ifCurrent}
