@@ -93,7 +93,8 @@ class RabbitDriver extends AbstractDriver
 
     public function tableForm($database, $type, $table)
     {
-        $connection = $this->dataManager()->selectDatabase($database);
+        $this->dataManager()->selectDatabase($database);
+        $connection = $this->dataManager()->getConnection();
         if ($type === self::TYPE_QUEUE) {
             return new RabbitQueueForm($connection, $table);
         }
@@ -102,7 +103,8 @@ class RabbitDriver extends AbstractDriver
 
     public function itemForm($database, $type, $table, $item)
     {
-        $connection = $this->dataManager()->selectDatabase($database);
+        $this->dataManager()->selectDatabase($database);
+        $connection = $this->dataManager()->getConnection();
         if (!$item && $type === self::TYPE_QUEUE) {
             return new RabbitMessageForm($connection, $table);
         }
