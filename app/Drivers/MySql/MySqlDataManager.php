@@ -44,7 +44,11 @@ class MySqlDataManager implements DataManagerInterface
             MySqlDriver::TYPE_TABLE => [],
             MySqlDriver::TYPE_VIEW => [],
         ];
-        foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $table) {
+        $type = 'BASE TABLE';
+        if ($database == 'information_schema') {
+            $type = 'SYSTEM VIEW';
+        }
+        foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = '$type' AND TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $table) {
             $tables[MySqlDriver::TYPE_TABLE][$table['TABLE_NAME']] = [
                 $table['ENGINE'],
                 $table['TABLE_COLLATION'],
