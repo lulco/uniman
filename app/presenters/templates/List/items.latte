@@ -1,64 +1,62 @@
 {block content}
 
-<div class="row">
-	<div class="col-lg-2">
-		{control databaseSelect}
-		
-		{control tablesSideBar}
+<div class="col-lg-2">
+	{control databaseSelect}
+
+	{control tablesSideBar}
+</div>
+<div class="col-lg-10">
+	<div class="row">
+		<div class="col-lg-12">
+			{control filterForm}
+		</div>
 	</div>
-	<div class="col-lg-10">
-		<div class="row">
-			<div class="col-lg-12">
-				{control filterForm}
+	<div class="row">
+		<div class="col-lg-10">
+			<h3>{_$driver . '.table_type.' . $type . '.items.title', $itemsCount} ({$itemsCount})</h3>
+		</div>
+		<div class="col-lg-2">
+			<div n:if="$actualDriver->permissions()->canCreateItem($database, $type, $table)" class="pull-right">
+				<a class="btn btn-default" style="margin-right: 20px;" href="{link Item:create, $driver, $database, $type, $table}">Create new</a>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-lg-10">
-				<h3>{_$driver . '.table_type.' . $type . '.items.title', $itemsCount} ({$itemsCount})</h3>
-			</div>
-			<div class="col-lg-2">
-				<div n:if="$actualDriver->permissions()->canCreateItem($database, $type, $table)" class="pull-right">
-					<a class="btn btn-default" style="margin-right: 20px;" href="{link Item:create, $driver, $database, $type, $table}">Create new</a>
-				</div>
-			</div>
-		</div>
-		<table class="table text-nowrap">
-			<thead n:if="$columns">
-				<tr>
-					<th></th>
-					<th n:foreach="$columns as $column">
-						{_$column->getTitle()}
-						{if $column->isSortable()}
-							{php $actualSort = null}
-							{foreach $sorting as $sort}
-								{foreach $sort as $key => $direction}
-									{if $key == $column->getKey()}
-										{php $actualSort = $direction}
-									{/if}
-								{/foreach}
+	</div>
+	<table class="table text-nowrap">
+		<thead n:if="$columns">
+			<tr>
+				<th></th>
+				<th n:foreach="$columns as $column">
+					{_$column->getTitle()}
+					{if $column->isSortable()}
+						{php $actualSort = null}
+						{foreach $sorting as $sort}
+							{foreach $sort as $key => $direction}
+								{if $key == $column->getKey()}
+									{php $actualSort = $direction}
+								{/if}
 							{/foreach}
-							<a href="{link this, sorting => [0 => [$column->getKey() => $actualSort == 'asc' ? 'desc' : 'asc']]}" title="{if $actualSort == 'asc'}{_'core.descending'}{else}{_'core.ascending'}{/if}">
-								<i class="fa fa-sort{if $actualSort}-{$actualSort}{/if}"></i>
-							</a>
-						{/if}
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr n:foreach="$items as $key => $values">
-					<td>
-						<div class="btn-group">
-							<a n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)" class="btn-default" href="{link Item:edit, $driver, $database, $type, $table, $key}"><i class="fa fa-edit"></i></a>
-							<a n:if="$actualDriver->permissions()->canDeleteItem($database, $type, $table, $key)" class="btn-default" href="{link Item:delete, $driver, $database, $type, $table, $key}"><i class="fa fa-trash"></i></a>
-						</div>
-					</td>
-					{foreach $columns as $column}
-						{php $value = isset($values[$column->getKey()]) ? $values[$column->getKey()] : null}
-						<td title="{if is_null($value)}NULL{else}{$value}{/if}">{if is_null($value)}<i>NULL</i>{else}{$value|truncate:100}{/if}</td>
-					{/foreach}
-				</tr>
-			</tbody>
-		</table>
-		{control paginator}
-	</div>
+						{/foreach}
+						<a href="{link this, sorting => [0 => [$column->getKey() => $actualSort == 'asc' ? 'desc' : 'asc']]}" title="{if $actualSort == 'asc'}{_'core.descending'}{else}{_'core.ascending'}{/if}">
+							<i class="fa fa-sort{if $actualSort}-{$actualSort}{/if}"></i>
+						</a>
+					{/if}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr n:foreach="$items as $key => $values">
+				<td>
+					<div class="btn-group">
+						<a n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)" class="btn-default" href="{link Item:edit, $driver, $database, $type, $table, $key}"><i class="fa fa-edit"></i></a>
+						<a n:if="$actualDriver->permissions()->canDeleteItem($database, $type, $table, $key)" class="btn-default" href="{link Item:delete, $driver, $database, $type, $table, $key}"><i class="fa fa-trash"></i></a>
+					</div>
+				</td>
+				{foreach $columns as $column}
+					{php $value = isset($values[$column->getKey()]) ? $values[$column->getKey()] : null}
+					<td title="{if is_null($value)}NULL{else}{$value}{/if}">{if is_null($value)}<i>NULL</i>{else}{$value|truncate:100}{/if}</td>
+				{/foreach}
+			</tr>
+		</tbody>
+	</table>
+	{control paginator}
 </div>
