@@ -1,11 +1,9 @@
 {block content}
 
-<div class="row">
-	<div class="col-lg-2">
-		{control databaseSelect}
-	</div>
-	<div class="col-lg-10">
-		<h3>{_$driver . '.item_form_header.' . $type . '.edit'}</h3>
-		{control form}
-	</div>
+<div class="col-lg-2">
+	{control databaseSelect}
+</div>
+<div class="col-lg-10">
+	<h3>{_$driver . '.item_form_header.' . $type . '.edit'}</h3>
+	{control form}
 </div>

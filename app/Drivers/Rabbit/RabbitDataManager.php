@@ -24,6 +24,11 @@ class RabbitDataManager implements DataManagerInterface
         $this->translator = $translator;
     }
 
+    public function getConnection()
+    {
+        return $this->connection;
+    }
+    
     public function databases()
     {
         $vhosts = [];

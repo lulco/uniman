@@ -8,14 +8,6 @@ use Nette\Application\ForbiddenRequestException;
 
 class ItemPresenter extends BasePresenter
 {
-    private $database;
-
-    private $type;
-
-    private $table;
-
-    private $item;
-
     public function actionCreate($driver, $database, $type, $table)
     {
         if (!$this->driver->permissions()->canCreateItem($database, $type, $table)) {
