@@ -8,17 +8,17 @@ class MySqlPermissions implements PermissionsInterface
 {
     public function canCreateItem($database, $type, $table)
     {
-        return true;
+        return $database !== 'information_schema';
     }
 
     public function canEditItem($database, $type, $table, $item = null)
     {
-        return true;
+        return $database !== 'information_schema';
     }
 
     public function canDeleteItem($database, $type, $table, $item)
     {
-        return true;
+        return $database !== 'information_schema';
     }
 
     public function canCreateTable($database, $type)
@@ -33,6 +33,6 @@ class MySqlPermissions implements PermissionsInterface
 
     public function canDeleteTable($database, $type, $table)
     {
-        return true;
+        return $database !== 'information_schema';
     }
 }
