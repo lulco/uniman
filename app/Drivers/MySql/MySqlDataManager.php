@@ -160,7 +160,7 @@ class MySqlDataManager implements DataManagerInterface
         $this->connection->query('USE `' . $database . '`');
     }
 
-    private function getPrimaryColumns($type, $table)
+    public function getPrimaryColumns($type, $table)
     {
         $primaryColumns = [];
         $columns = [];

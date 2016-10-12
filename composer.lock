@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d072e5bb5812548c36bfe254890a9ae4",
-    "content-hash": "427c927eb5319d7dc5b3fd5cc07fc5ff",
+    "hash": "3ac916299d2bbce1f3aa02a26735eddc",
+    "content-hash": "d946ba8f5ebefd96acabad09ca810140",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -1812,6 +1812,49 @@
                 "psr-3"
             ],
             "time": "2016-09-19 16:02:08"
+        },
+        {
+            "name": "radekdostal/nette-datetimepicker",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/radekdostal/Nette-DateTimePicker.git",
+                "reference": "27481017419115946d9e8be6e6a2a4f1dcf410a3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/radekdostal/Nette-DateTimePicker/zipball/27481017419115946d9e8be6e6a2a4f1dcf410a3",
+                "reference": "27481017419115946d9e8be6e6a2a4f1dcf410a3",
+                "shasum": ""
+            },
+            "require": {
+                "nette/di": "^2.2.0",
+                "nette/forms": "^2.2.0",
+                "nette/utils": "^2.2.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "tracy/tracy": "^2.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1",
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Radek Dostál",
+                    "email": "radek.dostal@gmail.com"
+                }
+            ],
+            "description": "DatePicker and DateTimePicker input controls for Nette Framework",
+            "time": "2016-10-04 12:13:18"
         },
         {
             "name": "symfony/config",
