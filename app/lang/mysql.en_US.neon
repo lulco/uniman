@@ -5,6 +5,11 @@ no_tables_for_database: 'No tables and views for database %database%'
 no_tables_for_type_table: 'No tables'
 no_tables_for_type_view: 'No views'
 
+item_form_header:
+	table:
+		create: Create new item in table
+		edit: Edit item in table
+
 table_type:
 	table:
 		title: Tables
@@ -24,6 +29,11 @@ form:
 		label: Password
 	database:
 		label: Database
+
+item_form:
+	field:
+		required: This field is required
+		integer: Value in this field have to be integer
 
 database_select_control:
 	database:

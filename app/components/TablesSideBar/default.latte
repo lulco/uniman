@@ -1,8 +1,10 @@
 {foreach $tables as $type => $rows}
-	<h3>{$type}</h3>
-	<ul>
-		<li n:foreach="$rows as $table => $info">
-			<a href="{plink this, 'type' => $type, 'table' => $table, 'page' => 1}"><strong n:tag-if="$table == $actualTable">{$table}</strong></a>
-		</li>
-	</ul>
+	<div style="overflow-x: auto;">
+		<h3>{_$driver->type() . '.table_type.' . $type. '.title'}</h3>
+		<ul>
+			<li n:foreach="$rows as $table => $info">
+				<a href="{plink List:items, 'driver' => $driver->type(), 'database' => $actualDatabase, 'type' => $type, 'table' => $table}"><strong n:tag-if="$table == $actualTable">{$table}</strong></a>
+			</li>
+		</ul>
+	</div>
 {/foreach}

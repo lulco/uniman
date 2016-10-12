@@ -4,7 +4,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{ifset #title}{include #title} | {/ifset}Adminer next generation</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 {*	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="icon" href="/favicon.ico">	*}
@@ -15,6 +16,7 @@
 			<div class="nav navbar-nav">
 				<h2><a href="{link Homepage:default, $presenter->getParam('driver')}">{_'core.title'}</a></h2>
 			</div>
+			{control breadcrumb}
 			<div style="margin: 10px 5px;">
 				<div n:if="isset($actualDriver) && $actualDriver" class="pull-right">
 					<a class="btn btn-default" href="{link Homepage:logout, $actualDriver->type()}">Logout</a>
@@ -43,6 +45,25 @@
 			document.getElementById('flash-alerts').remove();
 		}, 2500);
 	</script>
-	{include content}
+	<div class="container-fluid">
+		<div class="row">
+			{include content}
+		</div>
+	</div>
+	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
+	<script>
+		$(function(){
+			// Datetimepicker initialize
+			$('.datetimepicker').datetimepicker({
+				format: "Y-m-d H:i:s"
+			});
+			
+			// Datepicker initialize
+			$('.datepicker').datetimepicker({
+				format: "Y-m-d"
+			});
+		});
+	</script>
 </body>
 </html>
