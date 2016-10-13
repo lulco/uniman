@@ -64,6 +64,7 @@ class Compile
             ->in(__DIR__.'/../vendor/guzzlehttp/')
             ->in(__DIR__.'/../vendor/kdyby/')
             ->in(__DIR__.'/../vendor/predis/')
+            ->in(__DIR__.'/../vendor/radekdostal/')
 ;
 
         foreach ($finder as $file) {
@@ -88,7 +89,7 @@ class Compile
 
         copy($pharTarget, $phpTarget);
     }
-    
+
     private function addFile($filepath, $pharPath = null)
     {
         if (!file_exists($filepath)) {
