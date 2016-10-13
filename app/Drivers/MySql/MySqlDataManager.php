@@ -3,6 +3,7 @@
 namespace Adminerng\Drivers\MySql;
 
 use Adminerng\Core\DataManagerInterface;
+use Adminerng\Core\Formatter;
 use InvalidArgumentException;
 use PDO;
 
@@ -12,9 +13,12 @@ class MySqlDataManager implements DataManagerInterface
 
     private $connection;
 
-    public function __construct(PDO $connection)
+    private $formatter;
+
+    public function __construct(PDO $connection, Formatter $formatter)
     {
         $this->connection = $connection;
+        $this->formatter = $formatter;
     }
 
     public function databases()
@@ -31,8 +35,8 @@ class MySqlDataManager implements DataManagerInterface
             $databases[$database['SCHEMA_NAME']] = [
                 'charset' => $database['DEFAULT_CHARACTER_SET_NAME'],
                 'collation' => $database['DEFAULT_COLLATION_NAME'],
-                'tables_count' => isset($tableSchemas[$database['SCHEMA_NAME']]['tables_count']) ? $tableSchemas[$database['SCHEMA_NAME']]['tables_count'] : '0',
-                'size' => isset($tableSchemas[$database['SCHEMA_NAME']]['size']) ? $tableSchemas[$database['SCHEMA_NAME']]['size'] : '0',
+                'tables_count' => isset($tableSchemas[$database['SCHEMA_NAME']]['tables_count']) ? $this->formatter->formatNumber($tableSchemas[$database['SCHEMA_NAME']]['tables_count']) : '0',
+                'size' => isset($tableSchemas[$database['SCHEMA_NAME']]['size']) ? $this->formatter->formatNumber($tableSchemas[$database['SCHEMA_NAME']]['size']) : '0',
             ];
         }
         return $databases;
@@ -52,11 +56,11 @@ class MySqlDataManager implements DataManagerInterface
             $tables[MySqlDriver::TYPE_TABLE][$table['TABLE_NAME']] = [
                 $table['ENGINE'],
                 $table['TABLE_COLLATION'],
-                number_format($table['DATA_LENGTH'], 0),
-                $table['INDEX_LENGTH'],
-                number_format($table['DATA_FREE'], 0, ',', ' '),
-                $table['AUTO_INCREMENT'],
-                $table['TABLE_ROWS'],
+                $this->formatter->formatNumber($table['DATA_LENGTH']),
+                $this->formatter->formatNumber($table['INDEX_LENGTH']),
+                $this->formatter->formatNumber($table['DATA_FREE']),
+                $this->formatter->formatNumber($table['AUTO_INCREMENT']),
+                $this->formatter->formatNumber($table['TABLE_ROWS']),
             ];
         }
         foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $view) {
@@ -76,7 +80,7 @@ class MySqlDataManager implements DataManagerInterface
     {
         $this->selectDatabase($database);
         $query = 'SELECT count(*) FROM `' . $table . '`';
-        return $this->connection->query($query)->fetch(PDO::FETCH_COLUMN);
+        return $this->formatter->formatNumber($this->connection->query($query)->fetch(PDO::FETCH_COLUMN));
     }
 
     public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])

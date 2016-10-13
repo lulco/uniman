@@ -6,6 +6,11 @@ no: 'No'
 ascending: Ascending
 descending: Descending
 
+formatter:
+	number_format:
+		thousands_separator: ','
+		decimal_point: '.'
+
 form:
 	driver: Driver
 	connect: Connect

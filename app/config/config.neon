@@ -7,6 +7,7 @@ extensions:
 
 services:
 	router: Adminerng\Router\RouterFactory::createRouter
+	- Adminerng\Core\Formatter
 
 	- Adminerng\Core\Credentials\SessionStorageCredentials
 

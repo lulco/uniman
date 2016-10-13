@@ -13,13 +13,16 @@ abstract class AbstractDriver implements DriverInterface
 
     protected $translator;
 
+    protected $formatter;
+
     private $permissions;
 
     private $dataManager;
 
-    public function __construct(ITranslator $translator)
+    public function __construct(ITranslator $translator, Formatter $formatter)
     {
         $this->translator = $translator;
+        $this->formatter = $formatter;
     }
 
     public function name()

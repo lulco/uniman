@@ -118,6 +118,6 @@ class RabbitDriver extends AbstractDriver
 
     protected function getDataManager()
     {
-        return new RabbitDataManager($this->credentials, $this->client, $this->translator);
+        return new RabbitDataManager($this->credentials, $this->client, $this->translator, $this->formatter);
     }
 }
