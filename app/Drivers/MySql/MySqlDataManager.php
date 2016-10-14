@@ -3,7 +3,7 @@
 namespace Adminerng\Drivers\MySql;
 
 use Adminerng\Core\DataManagerInterface;
-use Adminerng\Core\Formatter;
+use Adminerng\Core\Helper\Formatter;
 use InvalidArgumentException;
 use PDO;
 
@@ -80,7 +80,7 @@ class MySqlDataManager implements DataManagerInterface
     {
         $this->selectDatabase($database);
         $query = 'SELECT count(*) FROM `' . $table . '`';
-        return $this->formatter->formatNumber($this->connection->query($query)->fetch(PDO::FETCH_COLUMN));
+        return $this->connection->query($query)->fetch(PDO::FETCH_COLUMN);
     }
 
     public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])

@@ -7,8 +7,6 @@ extensions:
 
 services:
 	router: Adminerng\Router\RouterFactory::createRouter
-	- Adminerng\Core\Formatter
-
 	- Adminerng\Core\Credentials\SessionStorageCredentials
 
 	-
@@ -18,3 +16,14 @@ services:
 			- add(Adminerng\Drivers\Redis\RedisDriver())
 			- add(Adminerng\Drivers\Memcache\MemcacheDriver())
 			- add(Adminerng\Drivers\Rabbit\RabbitDriver())
+
+	formatter: Adminerng\Core\Helper\Formatter
+
+	filterLoader:
+		class: Adminerng\Core\Helper\FilterLoader
+		setup:
+			- register('formatNumber', [@formatter, formatNumber])
+
+	nette.latteFactory:
+		setup:
+			- addFilter(null, [@filterLoader, 'load'])

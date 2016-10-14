@@ -2,6 +2,7 @@
 
 namespace Adminerng\Core;
 
+use Adminerng\Core\Helper\Formatter;
 use Adminerng\Core\Permissions\DefaultPermissions;
 use Adminerng\Core\Permissions\PermissionsInterface;
 use Nette\Application\UI\Form;

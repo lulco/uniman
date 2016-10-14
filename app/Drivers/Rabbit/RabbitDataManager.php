@@ -3,7 +3,7 @@
 namespace Adminerng\Drivers\Rabbit;
 
 use Adminerng\Core\DataManagerInterface;
-use Adminerng\Core\Formatter;
+use Adminerng\Core\Helper\Formatter;
 use Nette\Localization\ITranslator;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
