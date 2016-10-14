@@ -37,12 +37,15 @@ interface DriverInterface
     public function connect(array $credentials);
 
     /**
-     * @return array table column names
+     * @return Column[]
      */
     public function databasesHeaders();
 
     public function tablesHeaders();
 
+    /**
+     * @return Column[]
+     */
     public function columns($type, $table);
 
     /**

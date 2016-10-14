@@ -49,14 +49,15 @@ class ListPresenter extends BasePresenter
         $this->redirect('List:tables', $driver, $database);
     }
 
-    public function renderDatabases($driver)
+    public function renderDatabases($driver, array $sorting = [])
     {
         $this->template->driver = $driver;
         $this->template->databasesHeaders = $this->driver->databasesHeaders();
-        $this->template->databases = $this->driver->dataManager()->databases();
+        $this->template->databases = $this->driver->dataManager()->databases($sorting);
+        $this->template->sorting = $sorting;
     }
 
-    public function renderTables($driver, $database = null)
+    public function renderTables($driver, $database = null, array $sorting = [])
     {
         if ($database === null) {
             $this->redirect('List:databases', $driver);
@@ -64,7 +65,7 @@ class ListPresenter extends BasePresenter
         $this->database = $database;
 
         try {
-            $tables = $this->driver->dataManager()->tables($database);
+            $tables = $this->driver->dataManager()->tables($database, $sorting);
         } catch (NoTablesJustItemsException $e) {
             $this->redirect('List:items', $driver, $database, $e->getType(), $e->getTable());
         }
@@ -73,6 +74,7 @@ class ListPresenter extends BasePresenter
         $this->template->database = $database;
         $this->template->tables = $tables;
         $this->template->tablesHeaders = $this->driver->tablesHeaders();
+        $this->template->sorting = $sorting;
     }
 
     public function renderItems($driver, $database, $type, $table, $page = 1, $onPage = 50, array $filter = [], array $sorting = [])

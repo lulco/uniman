@@ -8,7 +8,7 @@ interface DataManagerInterface
      * list of databases, vhosts, etc.
      * @return array keys are used as database names for databases dropdown, values are databases informations (size, number of tables etc)
      */
-    public function databases();
+    public function databases(array $sorting = []);
 
     /**
      * @todo try to remove this method from data manager (or keep it as private)
@@ -21,7 +21,7 @@ interface DataManagerInterface
      * @param string $database
      * @return array list of tables grouped by table type (table, view, queue)
      */
-    public function tables($database);
+    public function tables($database, array $sorting = []);
 
     /**
      * @param string $database

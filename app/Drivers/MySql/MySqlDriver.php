@@ -53,17 +53,89 @@ class MySqlDriver extends AbstractDriver
 
     public function databasesHeaders()
     {
-        return [
-            'database',
-            'charset',
-            'collation',
-            'tables',
-            'size'
-        ];
+        $columns = [];
+        $columns[] = (new Column())
+            ->setKey('database')
+            ->setTitle('mysql.headers.databases.database')
+            ->setIsSortable(true);
+
+        $columns[] = (new Column())
+            ->setKey('charset')
+            ->setTitle('mysql.headers.databases.charset')
+            ->setIsSortable(true);
+
+        $columns[] = (new Column())
+            ->setKey('collation')
+            ->setTitle('mysql.headers.databases.collation')
+            ->setIsSortable(true);
+
+        $columns[] = (new Column())
+            ->setKey('tables_count')
+            ->setTitle('mysql.headers.databases.tables')
+            ->setIsSortable(true)
+            ->setIsNumeric(true);
+
+        $columns[] = (new Column())
+            ->setKey('size')
+            ->setTitle('mysql.headers.databases.size')
+            ->setIsSortable(true)
+            ->setIsNumeric(true);
+        return $columns;
     }
 
     public function tablesHeaders()
     {
+        $tableColumns = [];
+        $tableColumns[] = (new Column())
+            ->setKey('table')
+            ->setTitle('mysql.headers.tables.table')
+            ->setIsSortable(true);
+
+        $tableColumns[] = (new Column())
+            ->setKey('engine')
+            ->setTitle('mysql.headers.tables.engine')
+            ->setIsSortable(true);
+
+        $tableColumns[] = (new Column())
+            ->setKey('collation')
+            ->setTitle('mysql.headers.tables.collation')
+            ->setIsSortable(true);
+
+        $tableColumns[] = (new Column())
+            ->setKey('data_length')
+            ->setTitle('mysql.headers.tables.data_length')
+            ->setIsSortable(true)
+            ->setIsNumeric(true);
+
+        $tableColumns[] = (new Column())
+            ->setKey('index_length')
+            ->setTitle('mysql.headers.tables.index_length')
+            ->setIsSortable(true)
+            ->setIsNumeric(true);
+
+        $tableColumns[] = (new Column())
+            ->setKey('data_free')
+            ->setTitle('mysql.headers.tables.data_free')
+            ->setIsSortable(true)
+            ->setIsNumeric(true);
+
+        $tableColumns[] = (new Column())
+            ->setKey('autoincrement')
+            ->setTitle('mysql.headers.tables.autoincrement')
+            ->setIsSortable(true)
+            ->setIsNumeric(true);
+
+        $tableColumns[] = (new Column())
+            ->setKey('rows')
+            ->setTitle('mysql.headers.tables.rows')
+            ->setIsSortable(true)
+            ->setIsNumeric(true);
+
+        return [
+            self::TYPE_TABLE => $tableColumns,
+        ];
+
+        $viewColumns = [];
         return [
             self::TYPE_TABLE => ['Table', 'Engine', 'Collation', 'Data length', 'Index length', 'Data free', 'Auto increment', 'Rows'],
             self::TYPE_VIEW => ['View', 'Check option', 'Is updatable', 'Definer', 'Security type', 'Character set', 'Collation'],

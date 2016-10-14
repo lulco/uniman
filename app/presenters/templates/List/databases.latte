@@ -4,16 +4,39 @@
 	{control databaseSelect}
 </div>
 <div class="col-lg-10">
-	<table class="table">
+	<table class="table text-nowrap">
 		<thead>
 			<tr>
-				<th n:foreach="$databasesHeaders as $header">{$header}</th>
+				<th></th>
+				<th n:foreach="$databasesHeaders as $column" n:class="$column->isNumeric() ? 'text-right'">
+					{_$column->getTitle()}
+					{if $column->isSortable()}
+						{php $actualSort = null}
+						{foreach $sorting as $sort}
+							{foreach $sort as $key => $direction}
+								{if $key == $column->getKey()}
+									{php $actualSort = $direction}
+								{/if}
+							{/foreach}
+						{/foreach}
+						<a href="{link this, sorting => [0 => [$column->getKey() => $actualSort == 'asc' ? 'desc' : 'asc']]}" title="{if $actualSort == 'asc'}{_'core.descending'}{else}{_'core.ascending'}{/if}">
+							<i class="fa fa-sort{if $actualSort}-{$actualSort}{/if}"></i>
+						</a>
+					{/if}
+				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr n:foreach="$databases as $database => $databaseInfo">
-				<td><a href="{link List:tables, $driver, $database}">{$database}</a></td>
-				<td n:foreach="$databaseInfo as $databaseProperty">{$databaseProperty}</td>
+				<td>
+					<div class="btn-group">
+						<a href="{link List:tables, $driver, $database}" class="btn-default" title="{$database}"><i class="fa fa-eye"></i></a>
+					</div>
+				</td>
+				{foreach $databasesHeaders as $column}
+					{php $value = isset($databaseInfo[$column->getKey()]) ? $databaseInfo[$column->getKey()] : null}
+					<td n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{else}{if $column->isNumeric()}{$value|formatNumber, $column->getDecimals()}{else}{$value|truncate:100}{/if}{/if}</td>
+				{/foreach}
 			</tr>
 		</tbody>
 	</table>
