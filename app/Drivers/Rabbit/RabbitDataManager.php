@@ -66,8 +66,8 @@ class RabbitDataManager implements DataManagerInterface
         foreach ($this->client->getQueues($database) as $queue) {
             $tables[RabbitDriver::TYPE_QUEUE][$queue['name']] = [
                 'queue' => $queue['name'],
-                'number_of_items' => $this->formatter->formatNumber($queue['messages']),
-                'size' => $this->formatter->formatNumber($queue['message_bytes']),
+                'number_of_items' => $queue['messages'],
+                'size' => $queue['message_bytes'],
             ];
         }
         return $tables;
