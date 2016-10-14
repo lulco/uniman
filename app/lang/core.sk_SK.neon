@@ -6,6 +6,11 @@ no: Nie
 ascending: Vzostupne
 descending: Zostupne
 
+formatter:
+	number_format:
+		thousands_separator: ' '
+		decimal_point: ','
+
 form:
 	driver: Driver
 	connect: Pripojiť

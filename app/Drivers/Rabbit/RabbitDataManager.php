@@ -3,12 +3,15 @@
 namespace Adminerng\Drivers\Rabbit;
 
 use Adminerng\Core\DataManagerInterface;
+use Adminerng\Core\Helper\Formatter;
 use Nette\Localization\ITranslator;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class RabbitDataManager implements DataManagerInterface
 {
     private $translator;
+
+    private $formatter;
 
     /** @var AMQPStreamConnection */
     private $connection;
@@ -17,24 +20,25 @@ class RabbitDataManager implements DataManagerInterface
 
     private $client;
 
-    public function __construct(array $credentials, RabbitManagementApiClient $client, ITranslator $translator)
+    public function __construct(array $credentials, RabbitManagementApiClient $client, ITranslator $translator, Formatter $formatter)
     {
         $this->credentials = $credentials;
         $this->client = $client;
         $this->translator = $translator;
+        $this->formatter = $formatter;
     }
 
     public function getConnection()
     {
         return $this->connection;
     }
-    
+
     public function databases()
     {
         $vhosts = [];
         foreach ($this->client->getVhosts($this->credentials['user']) as $vhost) {
             $vhosts[$vhost['name']] = [
-                'messages' => isset($vhost['messages']) ? $vhost['messages'] : 0,
+                'messages' => isset($vhost['messages']) ? $this->formatter->formatNumber($vhost['messages']) : 0,
             ];
         }
         return $vhosts;
@@ -59,8 +63,8 @@ class RabbitDataManager implements DataManagerInterface
         ];
         foreach ($this->client->getQueues($database) as $queue) {
             $tables[RabbitDriver::TYPE_QUEUE][$queue['name']] = [
-                'items' => $queue['messages'],
-                'size' => $queue['message_bytes'],
+                'items' => $this->formatter->formatNumber($queue['messages']),
+                'size' => $this->formatter->formatNumber($queue['message_bytes']),
             ];
         }
         return $tables;
@@ -73,7 +77,7 @@ class RabbitDataManager implements DataManagerInterface
         }
         foreach ($this->client->getQueues($database) as $queue) {
             if ($queue['name'] == $table) {
-                return $queue['messages'];
+                return $this->formatter->formatNumber($queue['messages']);
             }
         }
         return 0;
@@ -89,7 +93,7 @@ class RabbitDataManager implements DataManagerInterface
         while ($message = $this->getMessage($table)) {
             $items[$message->getBody()] = [
                 'message_body' => $message->getBody(),
-                'size' => $message->getBodySize(),
+                'size' => $this->formatter->formatNumber($message->getBodySize()),
                 'is_truncated' => $message->isTruncated() ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
                 'content_encoding' => $message->getContentEncoding(),
                 'redelivered' => $message->get('redelivered') ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),

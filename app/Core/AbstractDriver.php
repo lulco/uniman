@@ -2,6 +2,7 @@
 
 namespace Adminerng\Core;
 
+use Adminerng\Core\Helper\Formatter;
 use Adminerng\Core\Permissions\DefaultPermissions;
 use Adminerng\Core\Permissions\PermissionsInterface;
 use Nette\Application\UI\Form;
@@ -13,13 +14,16 @@ abstract class AbstractDriver implements DriverInterface
 
     protected $translator;
 
+    protected $formatter;
+
     private $permissions;
 
     private $dataManager;
 
-    public function __construct(ITranslator $translator)
+    public function __construct(ITranslator $translator, Formatter $formatter)
     {
         $this->translator = $translator;
+        $this->formatter = $formatter;
     }
 
     public function name()
