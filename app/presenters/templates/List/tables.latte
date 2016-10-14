@@ -22,7 +22,7 @@
 					<thead n:if="isset($tablesHeaders[$type]) && $tablesHeaders[$type]">
 						<tr>
 							<th></th>
-							<th n:foreach="$tablesHeaders[$type] as $column">
+							<th n:foreach="$tablesHeaders[$type] as $column" n:class="$column->isNumeric() ? 'text-right'">
 								{_$column->getTitle()}
 								{if $column->isSortable()}
 									{php $actualSort = null}
