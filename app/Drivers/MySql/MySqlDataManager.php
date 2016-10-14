@@ -90,7 +90,10 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
         $remappedSorting = [];
         foreach ($sorting as $index => $sort) {
             foreach ($sort as $key => $direction) {
-                $remappedSorting[$index][isset($map[$key]) ? $map[$key] : $key] = $direction;
+                if (!isset($map[$key])) {
+                    continue;
+                }
+                $remappedSorting[$index][$map[$key]] = $direction;
             }
         }
 
@@ -106,14 +109,36 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
                 'rows' => $table['TABLE_ROWS'],
             ];
         }
-        foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $view) {
+
+        $viewMap = [
+            'view' => 'TABLE_NAME',
+            'check_option' => 'CHECK_OPTION',
+            'is_updatable' => 'IS_UPDATABLE',
+            'definer' => 'DEFINER',
+            'security_type' => 'SECURITY_TYPE',
+            'character_set' => 'CHARACTER_SET_CLIENT',
+            'collation' => 'COLLATION_CONNECTION',
+        ];
+
+        $viewRemappedSorting = [];
+        foreach ($sorting as $index => $sort) {
+            foreach ($sort as $key => $direction) {
+                if (!isset($viewMap[$key])) {
+                    continue;
+                }
+                $viewRemappedSorting[$index][$viewMap[$key]] = $direction;
+            }
+        }
+
+        foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database'" . $this->createOrderBy($viewRemappedSorting))->fetchAll(PDO::FETCH_ASSOC) as $view) {
             $tables[MySqlDriver::TYPE_VIEW][$view['TABLE_NAME']] = [
-                $view['CHECK_OPTION'],
-                $view['IS_UPDATABLE'],
-                $view['DEFINER'],
-                $view['SECURITY_TYPE'],
-                $view['CHARACTER_SET_CLIENT'],
-                $view['COLLATION_CONNECTION'],
+                'view' => $view['TABLE_NAME'],
+                'check_option' => $view['CHECK_OPTION'],
+                'is_updatable' => $view['IS_UPDATABLE'],
+                'definer' => $view['DEFINER'],
+                'security_type' => $view['SECURITY_TYPE'],
+                'character_set' => $view['CHARACTER_SET_CLIENT'],
+                'collation' => $view['COLLATION_CONNECTION'],
             ];
         }
         return $tables;

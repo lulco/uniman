@@ -90,55 +90,73 @@ class MySqlDriver extends AbstractDriver
             ->setKey('table')
             ->setTitle('mysql.headers.tables.table')
             ->setIsSortable(true);
-
         $tableColumns[] = (new Column())
             ->setKey('engine')
             ->setTitle('mysql.headers.tables.engine')
             ->setIsSortable(true);
-
         $tableColumns[] = (new Column())
             ->setKey('collation')
             ->setTitle('mysql.headers.tables.collation')
             ->setIsSortable(true);
-
         $tableColumns[] = (new Column())
             ->setKey('data_length')
             ->setTitle('mysql.headers.tables.data_length')
             ->setIsSortable(true)
             ->setIsNumeric(true);
-
         $tableColumns[] = (new Column())
             ->setKey('index_length')
             ->setTitle('mysql.headers.tables.index_length')
             ->setIsSortable(true)
             ->setIsNumeric(true);
-
         $tableColumns[] = (new Column())
             ->setKey('data_free')
             ->setTitle('mysql.headers.tables.data_free')
             ->setIsSortable(true)
             ->setIsNumeric(true);
-
         $tableColumns[] = (new Column())
             ->setKey('autoincrement')
             ->setTitle('mysql.headers.tables.autoincrement')
             ->setIsSortable(true)
             ->setIsNumeric(true);
-
         $tableColumns[] = (new Column())
             ->setKey('rows')
             ->setTitle('mysql.headers.tables.rows')
             ->setIsSortable(true)
             ->setIsNumeric(true);
 
+        $viewColumns = [];
+        $viewColumns[] = (new Column())
+            ->setKey('view')
+            ->setTitle('mysql.headers.views.view')
+            ->setIsSortable(true);
+        $viewColumns[] = (new Column())
+            ->setKey('check_option')
+            ->setTitle('mysql.headers.views.check_option')
+            ->setIsSortable(true);
+        $viewColumns[] = (new Column())
+            ->setKey('is_updatable')
+            ->setTitle('mysql.headers.views.is_updatable')
+            ->setIsSortable(true);
+        $viewColumns[] = (new Column())
+            ->setKey('definer')
+            ->setTitle('mysql.headers.views.definer')
+            ->setIsSortable(true);
+        $viewColumns[] = (new Column())
+            ->setKey('security_type')
+            ->setTitle('mysql.headers.views.security_type')
+            ->setIsSortable(true);
+        $viewColumns[] = (new Column())
+            ->setKey('character_set')
+            ->setTitle('mysql.headers.views.character_set')
+            ->setIsSortable(true);
+        $viewColumns[] = (new Column())
+            ->setKey('collation')
+            ->setTitle('mysql.headers.views.collation')
+            ->setIsSortable(true);
+
         return [
             self::TYPE_TABLE => $tableColumns,
-        ];
-
-        $viewColumns = [];
-        return [
-            self::TYPE_TABLE => ['Table', 'Engine', 'Collation', 'Data length', 'Index length', 'Data free', 'Auto increment', 'Rows'],
-            self::TYPE_VIEW => ['View', 'Check option', 'Is updatable', 'Definer', 'Security type', 'Character set', 'Collation'],
+            self::TYPE_VIEW => $viewColumns,
         ];
     }
 

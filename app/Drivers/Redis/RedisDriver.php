@@ -108,12 +108,6 @@ class RedisDriver extends AbstractDriver
             self::TYPE_HASH => $hashColumns,
             self::TYPE_SET => $setColumns,
         ];
-
-        return [
-            self::TYPE_KEY => ['Key', 'Value', 'Length'],
-            self::TYPE_HASH => ['Hash', 'Number of fields'],
-            self::TYPE_SET => ['Set', 'Number of members'],
-        ];
     }
 
     public function columns($type, $table)
