@@ -22,6 +22,18 @@ class Column
      */
     private $isSortable = false;
 
+    /**
+     * value is number and should be align to right
+     * @var boolean
+     */
+    private $isNumeric = false;
+
+    /**
+     * number of decimals in numeric value
+     * @var integer
+     */
+    private $decimals = 0;
+
     public function setKey($key)
     {
         $this->key = $key;
@@ -53,5 +65,27 @@ class Column
     public function isSortable()
     {
         return $this->isSortable;
+    }
+
+    public function setIsNumeric($isNumeric)
+    {
+        $this->isNumeric = $isNumeric;
+        return $this;
+    }
+
+    public function isNumeric()
+    {
+        return $this->isNumeric;
+    }
+
+    public function setDecimals($decimals)
+    {
+        $this->decimals = $decimals;
+        return $this;
+    }
+
+    public function getDecimals()
+    {
+        return $this->decimals;
     }
 }

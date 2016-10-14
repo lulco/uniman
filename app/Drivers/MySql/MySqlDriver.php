@@ -77,9 +77,41 @@ class MySqlDriver extends AbstractDriver
             $columns[] = (new Column())
                 ->setKey($col['Field'])
                 ->setTitle($col['Field'])
-                ->setIsSortable(true);
+                ->setIsSortable(true)
+                ->setIsNumeric($this->isNumeric($col))
+                ->setDecimals($this->getDecimals($col));
         }
         return $columns;
+    }
+
+    private function isNumeric(array $column)
+    {
+        if (strpos($column['Type'], 'int') !== false) {
+            return true;
+        }
+        if (strpos($column['Type'], 'float') !== false) {
+            return true;
+        }
+        if (strpos($column['Type'], 'double') !== false) {
+            return true;
+        }
+        if (strpos($column['Type'], 'decimal') !== false) {
+            return true;
+        }
+        return false;
+    }
+
+    private function getDecimals(array $column)
+    {
+        if (!$this->isNumeric($column)) {
+            return 0;
+        }
+        if (strpos($column['Type'], ',') === false) {
+            return 0;
+        }
+        $pattern = '/(.*?)\((.*?),(.*?)\)/';
+        preg_match($pattern, $column['Type'], $match);
+        return isset($match[3]) ? $match[3] : 0;
     }
 
     public function itemForm($database, $type, $table, $item)
