@@ -60,7 +60,7 @@ class MemcacheDataManager implements DataManagerInterface
             return $count;
         }
 
-        $stats = $this->connection->getExtendedStats('cachedump',(int)$table);
+        $stats = $this->connection->getExtendedStats('cachedump', (int)$table);
         $keys = isset($stats[$database]) ? $stats[$database] : [];
         return count($keys);
     }
@@ -115,7 +115,7 @@ class MemcacheDataManager implements DataManagerInterface
 
     private function getSlabKeys($database, $slabId)
     {
-        $cacheDump = $this->connection->getExtendedStats('cachedump',(int) $slabId);
+        $cacheDump = $this->connection->getExtendedStats('cachedump', (int) $slabId);
         $keys = isset($cacheDump[$database]) ? $cacheDump[$database] : [];
         if ($keys === false) {
             return [];

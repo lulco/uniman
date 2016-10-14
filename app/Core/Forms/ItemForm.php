@@ -50,7 +50,7 @@ class ItemForm extends Control
             throw new InvalidArgumentException('Item form not set');
         }
         $itemForm->addFieldsToForm($form);
-        $form->addSubmit('save', 'Save');        
+        $form->addSubmit('save', 'Save');
         $form->onSuccess[] = [$itemForm, 'submit'];
         $form->onSuccess[] = function () {
             $this->presenter->redirect('List:items', $this->driver->type(), $this->database, $this->type, $this->table);

@@ -31,7 +31,7 @@ abstract class AbstractDriver implements DriverInterface
         return $this->type() . '.name';
     }
 
-    public final function addFormFields(Form $form)
+    final public function addFormFields(Form $form)
     {
         return $this->getCredentialsForm()->addFieldsToForm($form);
     }
@@ -54,7 +54,7 @@ abstract class AbstractDriver implements DriverInterface
     /**
      * @return PermissionsInterface
      */
-    public final function permissions()
+    final public function permissions()
     {
         if ($this->permissions === null) {
             $this->permissions = $this->getPermissions();

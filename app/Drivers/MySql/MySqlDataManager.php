@@ -251,5 +251,4 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
         }
         return $this->columns;
     }
-
 }
