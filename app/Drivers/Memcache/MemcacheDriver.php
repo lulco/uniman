@@ -44,12 +44,8 @@ class MemcacheDriver extends AbstractDriver
     public function databasesHeaders()
     {
         $fields = [
-            'server' => [
-                'is_numeric' => false,
-            ],
-            'process_id' => [
-                'is_numeric' => false
-            ],
+            'server' => ['is_numeric' => false],
+            'process_id' => ['is_numeric' => false],
             'uptime' => [],
             'current_items' => [],
             'total_items' => [],

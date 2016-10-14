@@ -89,21 +89,11 @@ class MySqlDriver extends AbstractDriver
             'table' => [],
             'engine' => [],
             'collation' => [],
-            'data_length' => [
-                'is_numeric' => true,
-            ],
-            'index_length' => [
-                'is_numeric' => true,
-            ],
-            'data_free' => [
-                'is_numeric' => true,
-            ],
-            'autoincrement' => [
-                'is_numeric' => true,
-            ],
-            'rows' => [
-                'is_numeric' => true,
-            ],
+            'data_length' => ['is_numeric' => true],
+            'index_length' => ['is_numeric' => true],
+            'data_free' => ['is_numeric' => true],
+            'autoincrement' => ['is_numeric' => true],
+            'rows' => ['is_numeric' => true],
         ];
         $tableColumns = [];
         foreach ($tableFields as $key => $settings) {
