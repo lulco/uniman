@@ -70,16 +70,45 @@ class RedisDriver extends AbstractDriver
             ->setIsNumeric(true)
             ->setDecimals(2);
         return $columns;
-//        return [
-//            'Database',
-//            'Keys',
-//            'Expires',
-//            'Avg ttl'
-//        ];
     }
 
     public function tablesHeaders()
     {
+        $keyColumns = [];
+        $keyColumns[] = (new Column())
+            ->setKey('key')
+            ->setTitle('redis.headers.keys.key');
+        $keyColumns[] = (new Column())
+            ->setKey('value')
+            ->setTitle('redis.headers.keys.value');
+        $keyColumns[] = (new Column())
+            ->setKey('length')
+            ->setTitle('redis.headers.keys.length');
+
+        $hashColumns = [];
+        $hashColumns[] = (new Column())
+            ->setKey('key')
+            ->setTitle('redis.headers.hashes.key');
+        $hashColumns[] = (new Column())
+            ->setKey('number_of_fields')
+            ->setTitle('redis.headers.hashes.number_of_fields')
+            ->setIsNumeric(true);
+
+        $setColumns = [];
+        $setColumns[] = (new Column())
+            ->setKey('key')
+            ->setTitle('redis.headers.sets.key');
+        $setColumns[] = (new Column())
+            ->setKey('number_of_members')
+            ->setTitle('redis.headers.sets.number_of_members')
+            ->setIsNumeric(true);
+
+        return [
+            self::TYPE_KEY => $keyColumns,
+            self::TYPE_HASH => $hashColumns,
+            self::TYPE_SET => $setColumns,
+        ];
+
         return [
             self::TYPE_KEY => ['Key', 'Value', 'Length'],
             self::TYPE_HASH => ['Hash', 'Number of fields'],

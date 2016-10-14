@@ -36,25 +36,27 @@ class RedisDataManager implements DataManagerInterface
         $commands = [
             'get' => RedisDriver::TYPE_KEY,
             'hLen' => RedisDriver::TYPE_HASH,
-            'sMembers' => RedisDriver::TYPE_SET,
+            'sCard' => RedisDriver::TYPE_SET,
         ];
         foreach ($this->connection->keys('*') as $key) {
             foreach ($commands as $command => $label) {
                 $result = $this->connection->$command($key);
-                if ($this->connection->getLastError() === null) {
-                    if ($label == RedisDriver::TYPE_SET) {
-                        $tables[$label][$key] = [count($result)];
-                    } else {
-                        $tables[$label][$key] = [
-                            $result
-                        ];
-                    }
-                    if ($label == RedisDriver::TYPE_KEY) {
-                        $tables[$label][$key][] = strlen($result);
-                    }
-                    break;
+                if ($this->connection->getLastError() !== null) {
+                    $this->connection->clearLastError();
+                    continue;
                 }
-                $this->connection->clearLastError();
+                $tables[$label][$key] = [
+                    'key' => $key
+                ];
+                if ($label == RedisDriver::TYPE_KEY) {
+                    $tables[$label][$key]['value'] = $result;
+                    $tables[$label][$key]['length'] = strlen($result);
+                } elseif ($label == RedisDriver::TYPE_HASH) {
+                    $tables[$label][$key]['number_of_fields'] = $result;
+                } elseif ($label == RedisDriver::TYPE_SET) {
+                    $tables[$label][$key]['number_of_members'] = $result;
+                }
+                break;
             }
             ksort($tables[$label]);
         }
