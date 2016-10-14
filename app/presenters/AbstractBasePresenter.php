@@ -43,7 +43,7 @@ abstract class AbstractBasePresenter extends Presenter
     protected function createComponentBreadcrumb()
     {
         return new BreadcrumbControl(
-            $this->driver instanceof DriverInterface ? $this->driver->type() : $this->driver,
+            $this->driver->type(),
             $this->database,
             $this->type,
             $this->table,

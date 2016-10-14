@@ -8,8 +8,9 @@ class HomepagePresenter extends AbstractBasePresenter
 {
     public function actionDefault($driver = null)
     {
-        $this->driver = $driver ?: current(array_keys($this->driverStorage->getDrivers()));
-        $this->template->driver = $this->driver;
+        $actualDriver = $driver ?: current(array_keys($this->driverStorage->getDrivers()));
+        $this->driver = $this->driverStorage->getDriver($actualDriver);
+        $this->template->driver = $actualDriver;
     }
 
     public function actionLogout($driver = null)
@@ -25,6 +26,6 @@ class HomepagePresenter extends AbstractBasePresenter
 
     protected function createComponentLoginForm()
     {
-        return new LoginForm($this->translator, $this->driverStorage, $this->credentialsStorage, $this->driver, $this->locale);
+        return new LoginForm($this->translator, $this->driverStorage, $this->credentialsStorage, $this->driver->type(), $this->locale);
     }
 }
