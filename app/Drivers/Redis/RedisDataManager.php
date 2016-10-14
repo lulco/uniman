@@ -14,7 +14,7 @@ class RedisDataManager implements DataManagerInterface
         $this->connection = $connection;
     }
 
-    public function databases()
+    public function databases(array $sorting = [])
     {
         $numberOfDatabases = $this->connection->config('get', 'databases')['databases'];
         $keyspace = $this->connection->info('keyspace');
@@ -25,7 +25,7 @@ class RedisDataManager implements DataManagerInterface
         return $databases;
     }
 
-    public function tables($database)
+    public function tables($database, array $sorting = [])
     {
         $this->selectDatabase($database);
         $tables = [
@@ -146,17 +146,16 @@ class RedisDataManager implements DataManagerInterface
     private function databaseInfo($keyspace, $db)
     {
         $info = [
+            'database' => $db,
             'keys' => 0,
-            'expires' => '-',
-            'avg_ttl' => '-',
+            'expires' => null,
+            'avg_ttl' => null,
         ];
         if (isset($keyspace['db' . $db])) {
             $dbKeyspace = explode(',', $keyspace['db' . $db]);
-            $info = [
-                'keys' => explode('=', $dbKeyspace[0])[1],
-                'expires' => explode('=', $dbKeyspace[1])[1],
-                'avg_ttl' => explode('=', $dbKeyspace[2])[1],
-            ];
+            $info['keys'] = explode('=', $dbKeyspace[0])[1];
+            $info['expires'] = explode('=', $dbKeyspace[1])[1];
+            $info['avg_ttl'] = explode('=', $dbKeyspace[2])[1];
         }
         return $info;
     }

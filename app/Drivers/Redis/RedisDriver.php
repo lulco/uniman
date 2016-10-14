@@ -52,12 +52,30 @@ class RedisDriver extends AbstractDriver
 
     public function databasesHeaders()
     {
-        return [
-            'Database',
-            'Keys',
-            'Expires',
-            'Avg ttl'
-        ];
+        $columns = [];
+        $columns[] = (new Column())
+            ->setKey('database')
+            ->setTitle('redis.headers.databases.database');
+        $columns[] = (new Column())
+            ->setKey('keys')
+            ->setTitle('redis.headers.databases.keys')
+            ->setIsNumeric(true);
+        $columns[] = (new Column())
+            ->setKey('expires')
+            ->setTitle('redis.headers.databases.expires')
+            ->setIsNumeric(true);
+        $columns[] = (new Column())
+            ->setKey('avg_ttl')
+            ->setTitle('redis.headers.databases.avg_ttl')
+            ->setIsNumeric(true)
+            ->setDecimals(2);
+        return $columns;
+//        return [
+//            'Database',
+//            'Keys',
+//            'Expires',
+//            'Avg ttl'
+//        ];
     }
 
     public function tablesHeaders()
