@@ -85,74 +85,58 @@ class MySqlDriver extends AbstractDriver
 
     public function tablesHeaders()
     {
+        $tableFields = [
+            'table' => [],
+            'engine' => [],
+            'collation' => [],
+            'data_length' => [
+                'is_numeric' => true,
+            ],
+            'index_length' => [
+                'is_numeric' => true,
+            ],
+            'data_free' => [
+                'is_numeric' => true,
+            ],
+            'autoincrement' => [
+                'is_numeric' => true,
+            ],
+            'rows' => [
+                'is_numeric' => true,
+            ],
+        ];
         $tableColumns = [];
-        $tableColumns[] = (new Column())
-            ->setKey('table')
-            ->setTitle('mysql.headers.tables.table')
-            ->setIsSortable(true);
-        $tableColumns[] = (new Column())
-            ->setKey('engine')
-            ->setTitle('mysql.headers.tables.engine')
-            ->setIsSortable(true);
-        $tableColumns[] = (new Column())
-            ->setKey('collation')
-            ->setTitle('mysql.headers.tables.collation')
-            ->setIsSortable(true);
-        $tableColumns[] = (new Column())
-            ->setKey('data_length')
-            ->setTitle('mysql.headers.tables.data_length')
-            ->setIsSortable(true)
-            ->setIsNumeric(true);
-        $tableColumns[] = (new Column())
-            ->setKey('index_length')
-            ->setTitle('mysql.headers.tables.index_length')
-            ->setIsSortable(true)
-            ->setIsNumeric(true);
-        $tableColumns[] = (new Column())
-            ->setKey('data_free')
-            ->setTitle('mysql.headers.tables.data_free')
-            ->setIsSortable(true)
-            ->setIsNumeric(true);
-        $tableColumns[] = (new Column())
-            ->setKey('autoincrement')
-            ->setTitle('mysql.headers.tables.autoincrement')
-            ->setIsSortable(true)
-            ->setIsNumeric(true);
-        $tableColumns[] = (new Column())
-            ->setKey('rows')
-            ->setTitle('mysql.headers.tables.rows')
-            ->setIsSortable(true)
-            ->setIsNumeric(true);
+        foreach ($tableFields as $key => $settings) {
+            $column = (new Column())
+                ->setKey($key)
+                ->setTitle('mysql.headers.tables.' . $key)
+                ->setIsSortable(true);
+            if (isset($settings['is_numeric'])) {
+                $column->setIsNumeric($settings['is_numeric']);
+            }
+            $tableColumns[] = $column;
+        }
 
+        $viewFields = [
+            'view' => [],
+            'check_option' => [],
+            'is_updatable' => [],
+            'definer' => [],
+            'security_type' => [],
+            'character_set' => [],
+            'collation' => [],
+        ];
         $viewColumns = [];
-        $viewColumns[] = (new Column())
-            ->setKey('view')
-            ->setTitle('mysql.headers.views.view')
-            ->setIsSortable(true);
-        $viewColumns[] = (new Column())
-            ->setKey('check_option')
-            ->setTitle('mysql.headers.views.check_option')
-            ->setIsSortable(true);
-        $viewColumns[] = (new Column())
-            ->setKey('is_updatable')
-            ->setTitle('mysql.headers.views.is_updatable')
-            ->setIsSortable(true);
-        $viewColumns[] = (new Column())
-            ->setKey('definer')
-            ->setTitle('mysql.headers.views.definer')
-            ->setIsSortable(true);
-        $viewColumns[] = (new Column())
-            ->setKey('security_type')
-            ->setTitle('mysql.headers.views.security_type')
-            ->setIsSortable(true);
-        $viewColumns[] = (new Column())
-            ->setKey('character_set')
-            ->setTitle('mysql.headers.views.character_set')
-            ->setIsSortable(true);
-        $viewColumns[] = (new Column())
-            ->setKey('collation')
-            ->setTitle('mysql.headers.views.collation')
-            ->setIsSortable(true);
+        foreach ($viewFields as $key => $settings) {
+            $column = (new Column())
+                ->setKey($key)
+                ->setTitle('mysql.headers.views.' . $key)
+                ->setIsSortable(true);
+            if (isset($settings['is_numeric'])) {
+                $column->setIsNumeric($settings['is_numeric']);
+            }
+            $viewColumns[] = $column;
+        }
 
         return [
             self::TYPE_TABLE => $tableColumns,

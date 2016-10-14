@@ -37,14 +37,10 @@ class MySqlDataManager implements DataManagerInterface
             'database' => 'SCHEMA_NAME',
             'charset' => 'DEFAULT_CHARACTER_SET_NAME',
             'collation' => 'DEFAULT_COLLATION_NAME',
+            'table_count' => 'table_count',
+            'size' => 'size',
         ];
-
-        $remappedSorting = [];
-        foreach ($sorting as $index => $sort) {
-            foreach ($sort as $key => $direction) {
-                $remappedSorting[$index][isset($map[$key]) ? $map[$key] : $key] = $direction;
-            }
-        }
+        $remappedSorting = $this->remapSorting($sorting, $map);
 
         $query = 'SELECT information_schema.SCHEMATA.*, count(*) AS tables_count, SUM(information_schema.TABLES.DATA_LENGTH) AS size
 FROM information_schema.SCHEMATA
@@ -86,16 +82,7 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
             'autoincrement' => 'AUTO_INCREMENT',
             'rows' => 'TABLE_ROWS',
         ];
-
-        $remappedSorting = [];
-        foreach ($sorting as $index => $sort) {
-            foreach ($sort as $key => $direction) {
-                if (!isset($map[$key])) {
-                    continue;
-                }
-                $remappedSorting[$index][$map[$key]] = $direction;
-            }
-        }
+        $remappedSorting = $this->remapSorting($sorting, $map);
 
         foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = '$type' AND TABLE_SCHEMA = '$database'" . $this->createOrderBy($remappedSorting))->fetchAll(PDO::FETCH_ASSOC) as $table) {
             $tables[MySqlDriver::TYPE_TABLE][$table['TABLE_NAME']] = [
@@ -119,16 +106,7 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
             'character_set' => 'CHARACTER_SET_CLIENT',
             'collation' => 'COLLATION_CONNECTION',
         ];
-
-        $viewRemappedSorting = [];
-        foreach ($sorting as $index => $sort) {
-            foreach ($sort as $key => $direction) {
-                if (!isset($viewMap[$key])) {
-                    continue;
-                }
-                $viewRemappedSorting[$index][$viewMap[$key]] = $direction;
-            }
-        }
+        $viewRemappedSorting = $this->remapSorting($sorting, $viewMap);
 
         foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database'" . $this->createOrderBy($viewRemappedSorting))->fetchAll(PDO::FETCH_ASSOC) as $view) {
             $tables[MySqlDriver::TYPE_VIEW][$view['TABLE_NAME']] = [
@@ -168,6 +146,20 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
             $items[md5(implode('|', $pk))] = $item;
         }
         return $items;
+    }
+
+    private function remapSorting($sorting, $map)
+    {
+        $remappedSorting = [];
+        foreach ($sorting as $index => $sort) {
+            foreach ($sort as $key => $direction) {
+                if (!isset($map[$key])) {
+                    continue;
+                }
+                $remappedSorting[$index][$map[$key]] = $direction;
+            }
+        }
+        return $remappedSorting;
     }
 
     private function createOrderBy($sorting)
