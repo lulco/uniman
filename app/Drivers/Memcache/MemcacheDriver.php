@@ -43,16 +43,32 @@ class MemcacheDriver extends AbstractDriver
 
     public function databasesHeaders()
     {
-        return [
-            'Server',
-            'Process id',
-            'Uptime',
-            'Current items',
-            'Total items',
-            'Size',
-            'Active slabs',
-            'Total malloced',
+        $fields = [
+            'server' => [
+                'is_numeric' => false,
+            ],
+            'process_id' => [
+                'is_numeric' => false
+            ],
+            'uptime' => [],
+            'current_items' => [],
+            'total_items' => [],
+            'size' => [],
+            'active_slabs' => [],
+            'total_malloced' => [],
         ];
+
+        $columns = [];
+        foreach ($fields as $key => $settings) {
+            $column = (new Column())
+                ->setKey($key)
+                ->setTitle('memcache.headers.servers.' . $key);
+            if (!isset($settings['is_numeric'])) {
+                $column->setIsNumeric(true);
+            }
+            $columns[] = $column;
+        }
+        return $columns;
     }
 
     public function tablesHeaders()

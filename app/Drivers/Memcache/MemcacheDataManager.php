@@ -19,16 +19,17 @@ class MemcacheDataManager implements DataManagerInterface
         $this->translator = $translator;
     }
 
-    public function databases()
+    public function databases(array $sorting = [])
     {
         $stats = $this->connection->getExtendedStats();
         $allSlabs = $this->connection->getExtendedStats('slabs');
         $databases = [];
         foreach ($stats as $server => $serverInfo) {
             $databases[$server] = [
-                'pid' => $serverInfo['pid'],
+                'server' => $server,
+                'process_id' => $serverInfo['pid'],
                 'uptime' => $serverInfo['uptime'],
-                'curr_items' => $serverInfo['curr_items'],
+                'current_items' => $serverInfo['curr_items'],
                 'total_items' => $serverInfo['total_items'],
                 'size' => $serverInfo['bytes'],
                 'active_slabs' => $allSlabs[$server]['active_slabs'],
@@ -38,7 +39,7 @@ class MemcacheDataManager implements DataManagerInterface
         return $databases;
     }
 
-    public function tables($database)
+    public function tables($database, array $sorting = [])
     {
         throw new NoTablesJustItemsException('key', 'all');
     }
