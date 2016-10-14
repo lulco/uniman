@@ -25,7 +25,7 @@
 		<thead n:if="$columns">
 			<tr>
 				<th></th>
-				<th n:foreach="$columns as $column">
+				<th n:foreach="$columns as $column" n:class="$column->isNumeric() ? 'text-right'">
 					{_$column->getTitle()}
 					{if $column->isSortable()}
 						{php $actualSort = null}
@@ -53,7 +53,7 @@
 				</td>
 				{foreach $columns as $column}
 					{php $value = isset($values[$column->getKey()]) ? $values[$column->getKey()] : null}
-					<td title="{if is_null($value)}NULL{else}{$value}{/if}">{if is_null($value)}<i>NULL</i>{else}{$value|truncate:100}{/if}</td>
+					<td title="{if is_null($value)}NULL{else}{$value}{/if}" n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{else}{$value|truncate:100}{/if}</td>
 				{/foreach}
 			</tr>
 		</tbody>
