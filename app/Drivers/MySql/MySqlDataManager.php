@@ -15,34 +15,53 @@ class MySqlDataManager implements DataManagerInterface
 
     private $formatter;
 
+    /**
+     * cache
+     * @var array|null
+     */
+    private $databases = null;
+
     public function __construct(PDO $connection, Formatter $formatter)
     {
         $this->connection = $connection;
         $this->formatter = $formatter;
     }
 
-    public function databases()
+    public function databases(array $sorting = [])
     {
-        $tableSchemas = [];
-        foreach ($this->connection->query('SELECT TABLE_SCHEMA, count(*) AS tables_count, SUM(DATA_LENGTH) AS size FROM information_schema.TABLES GROUP BY TABLE_SCHEMA')->fetchAll(PDO::FETCH_ASSOC) as $tableSchema) {
-            $tableSchemas[$tableSchema['TABLE_SCHEMA']] = [
-                'tables_count' => $tableSchema['tables_count'],
-                'size' => $tableSchema['size'],
-            ];
+        if ($this->databases !== null) {
+            return $this->databases;
         }
+
+        $map = [
+            'database' => 'SCHEMA_NAME',
+            'charset' => 'DEFAULT_CHARACTER_SET_NAME',
+            'collation' => 'DEFAULT_COLLATION_NAME',
+            'table_count' => 'table_count',
+            'size' => 'size',
+        ];
+        $remappedSorting = $this->remapSorting($sorting, $map);
+
+        $query = 'SELECT information_schema.SCHEMATA.*, count(*) AS tables_count, SUM(information_schema.TABLES.DATA_LENGTH) AS size
+FROM information_schema.SCHEMATA
+LEFT JOIN information_schema.TABLES ON information_schema.SCHEMATA.SCHEMA_NAME = information_schema.TABLES.TABLE_SCHEMA
+GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappedSorting);
+
         $databases = [];
-        foreach ($this->connection->query('SELECT * FROM information_schema.SCHEMATA')->fetchAll(PDO::FETCH_ASSOC) as $database) {
+        foreach ($this->connection->query($query)->fetchAll(PDO::FETCH_ASSOC) as $database) {
             $databases[$database['SCHEMA_NAME']] = [
+                'database' => $database['SCHEMA_NAME'],
                 'charset' => $database['DEFAULT_CHARACTER_SET_NAME'],
                 'collation' => $database['DEFAULT_COLLATION_NAME'],
-                'tables_count' => isset($tableSchemas[$database['SCHEMA_NAME']]['tables_count']) ? $this->formatter->formatNumber($tableSchemas[$database['SCHEMA_NAME']]['tables_count']) : '0',
-                'size' => isset($tableSchemas[$database['SCHEMA_NAME']]['size']) ? $this->formatter->formatNumber($tableSchemas[$database['SCHEMA_NAME']]['size']) : '0',
+                'tables_count' => $database['tables_count'],
+                'size' => $database['size'] ?: 0,
             ];
         }
+        $this->databases = $databases;
         return $databases;
     }
 
-    public function tables($database)
+    public function tables($database, array $sorting = [])
     {
         $tables = [
             MySqlDriver::TYPE_TABLE => [],
@@ -52,25 +71,52 @@ class MySqlDataManager implements DataManagerInterface
         if ($database == 'information_schema') {
             $type = 'SYSTEM VIEW';
         }
-        foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = '$type' AND TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $table) {
+
+        $map = [
+            'table' => 'TABLE_NAME',
+            'engine' => 'ENGINE',
+            'collation' => 'TABLE_COLLATION',
+            'data_length' => 'DATA_LENGTH',
+            'index_length' => 'INDEX_LENGTH',
+            'data_free' => 'DATA_FREE',
+            'autoincrement' => 'AUTO_INCREMENT',
+            'rows' => 'TABLE_ROWS',
+        ];
+        $remappedSorting = $this->remapSorting($sorting, $map);
+
+        foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = '$type' AND TABLE_SCHEMA = '$database'" . $this->createOrderBy($remappedSorting))->fetchAll(PDO::FETCH_ASSOC) as $table) {
             $tables[MySqlDriver::TYPE_TABLE][$table['TABLE_NAME']] = [
-                $table['ENGINE'],
-                $table['TABLE_COLLATION'],
-                $this->formatter->formatNumber($table['DATA_LENGTH']),
-                $this->formatter->formatNumber($table['INDEX_LENGTH']),
-                $this->formatter->formatNumber($table['DATA_FREE']),
-                $this->formatter->formatNumber($table['AUTO_INCREMENT']),
-                $this->formatter->formatNumber($table['TABLE_ROWS']),
+                'table' => $table['TABLE_NAME'],
+                'engine' => $table['ENGINE'],
+                'collation' => $table['TABLE_COLLATION'],
+                'data_length' => $table['DATA_LENGTH'],
+                'index_length' => $table['INDEX_LENGTH'],
+                'data_free' => $table['DATA_FREE'],
+                'autoincrement' => $table['AUTO_INCREMENT'],
+                'rows' => $table['TABLE_ROWS'],
             ];
         }
-        foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $view) {
+
+        $viewMap = [
+            'view' => 'TABLE_NAME',
+            'check_option' => 'CHECK_OPTION',
+            'is_updatable' => 'IS_UPDATABLE',
+            'definer' => 'DEFINER',
+            'security_type' => 'SECURITY_TYPE',
+            'character_set' => 'CHARACTER_SET_CLIENT',
+            'collation' => 'COLLATION_CONNECTION',
+        ];
+        $viewRemappedSorting = $this->remapSorting($sorting, $viewMap);
+
+        foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database'" . $this->createOrderBy($viewRemappedSorting))->fetchAll(PDO::FETCH_ASSOC) as $view) {
             $tables[MySqlDriver::TYPE_VIEW][$view['TABLE_NAME']] = [
-                $view['CHECK_OPTION'],
-                $view['IS_UPDATABLE'],
-                $view['DEFINER'],
-                $view['SECURITY_TYPE'],
-                $view['CHARACTER_SET_CLIENT'],
-                $view['COLLATION_CONNECTION'],
+                'view' => $view['TABLE_NAME'],
+                'check_option' => $view['CHECK_OPTION'],
+                'is_updatable' => $view['IS_UPDATABLE'],
+                'definer' => $view['DEFINER'],
+                'security_type' => $view['SECURITY_TYPE'],
+                'character_set' => $view['CHARACTER_SET_CLIENT'],
+                'collation' => $view['COLLATION_CONNECTION'],
             ];
         }
         return $tables;
@@ -100,6 +146,20 @@ class MySqlDataManager implements DataManagerInterface
             $items[md5(implode('|', $pk))] = $item;
         }
         return $items;
+    }
+
+    private function remapSorting($sorting, $map)
+    {
+        $remappedSorting = [];
+        foreach ($sorting as $index => $sort) {
+            foreach ($sort as $key => $direction) {
+                if (!isset($map[$key])) {
+                    continue;
+                }
+                $remappedSorting[$index][$map[$key]] = $direction;
+            }
+        }
+        return $remappedSorting;
     }
 
     private function createOrderBy($sorting)

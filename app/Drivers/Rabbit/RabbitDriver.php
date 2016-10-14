@@ -51,15 +51,37 @@ class RabbitDriver extends AbstractDriver
 
     public function databasesHeaders()
     {
-        return [
-            'Vhost', 'Messages'
-        ];
+        $columns = [];
+        $columns[] = (new Column())
+            ->setKey('vhost')
+            ->setTitle('rabbit.headers.vhosts.vhost');
+        $columns[] = (new Column())
+            ->setKey('queues')
+            ->setTitle('rabbit.headers.vhosts.queues')
+            ->setIsNumeric(true);
+        $columns[] = (new Column())
+            ->setKey('messages')
+            ->setTitle('rabbit.headers.vhosts.messages')
+            ->setIsNumeric(true);
+        return $columns;
     }
 
     public function tablesHeaders()
     {
+        $columns = [];
+        $columns[] = (new Column())
+            ->setKey('queue')
+            ->setTitle('rabbit.headers.queues.queue');
+        $columns[] = (new Column())
+            ->setKey('number_of_items')
+            ->setTitle('rabbit.headers.queues.number_of_items')
+            ->setIsNumeric(true);
+        $columns[] = (new Column())
+            ->setKey('size')
+            ->setTitle('rabbit.headers.queues.size')
+            ->setIsNumeric(true);
         return [
-            self::TYPE_QUEUE => ['Queue', 'Number of items', 'Size']
+            self::TYPE_QUEUE => $columns,
         ];
     }
 

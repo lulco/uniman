@@ -5,6 +5,31 @@ no_tables_for_database: 'No tables and views for database %database%'
 no_tables_for_type_table: 'No tables'
 no_tables_for_type_view: 'No views'
 
+headers:
+	databases:
+		database: 'Database'
+		charset: 'Charset'
+		collation: 'Collation'
+		tables: 'Tables'
+		size: 'Size'
+	tables:
+		table: 'Table'
+		engine: 'Engine'
+		collation: 'Collation'
+		data_length: 'Data length'
+		index_length: 'Index length'
+		data_free: 'Data free'
+		autoincrement: 'Autoincrement'
+		rows: 'Rows'
+	views:
+		view: 'View'
+		check_option: 'Check option'
+		is_updatable: 'Is updatable'
+		definer: 'Definer'
+		security_type: 'Security type'
+		character_set: 'Character set'
+		collation: 'Collation'
+
 item_form_header:
 	table:
 		create: Create new item in table

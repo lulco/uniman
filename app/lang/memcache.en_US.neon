@@ -1,5 +1,16 @@
 name: Memcache
 
+headers:
+	servers:
+		server: 'Server'
+		process_id: 'Process id'
+		uptime: 'Uptime'
+		current_items: 'Current items'
+		total_items: 'Total items'
+		size: 'Size'
+		active_slabs: 'Active slabs'
+		total_malloced: 'Total malloced'
+
 item_form_header:
 	key:
 		create: Create new key

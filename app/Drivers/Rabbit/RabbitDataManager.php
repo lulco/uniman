@@ -33,12 +33,14 @@ class RabbitDataManager implements DataManagerInterface
         return $this->connection;
     }
 
-    public function databases()
+    public function databases(array $sorting = [])
     {
         $vhosts = [];
         foreach ($this->client->getVhosts($this->credentials['user']) as $vhost) {
             $vhosts[$vhost['name']] = [
-                'messages' => isset($vhost['messages']) ? $this->formatter->formatNumber($vhost['messages']) : 0,
+                'vhost' => $vhost['name'],
+                'queues' => count($this->client->getQueues($vhost['name'])),
+                'messages' => isset($vhost['messages']) ? $vhost['messages'] : 0,
             ];
         }
         return $vhosts;
@@ -56,15 +58,16 @@ class RabbitDataManager implements DataManagerInterface
         return $this->connection;
     }
 
-    public function tables($database)
+    public function tables($database, array $sorting = [])
     {
         $tables = [
             RabbitDriver::TYPE_QUEUE => [],
         ];
         foreach ($this->client->getQueues($database) as $queue) {
             $tables[RabbitDriver::TYPE_QUEUE][$queue['name']] = [
-                'items' => $this->formatter->formatNumber($queue['messages']),
-                'size' => $this->formatter->formatNumber($queue['message_bytes']),
+                'queue' => $queue['name'],
+                'number_of_items' => $queue['messages'],
+                'size' => $queue['message_bytes'],
             ];
         }
         return $tables;

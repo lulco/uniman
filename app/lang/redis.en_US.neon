@@ -6,6 +6,23 @@ no_tables_for_type_key: 'No keys'
 no_tables_for_type_hash: 'No hashes'
 no_tables_for_type_set: 'No sets'
 
+headers:
+	databases:
+		database: 'Database'
+		keys: 'Keys'
+		expires: 'Expires'
+		avg_ttl: 'Avg TTL'
+	keys:
+		key: 'Key'
+		value: 'Value'
+		length: 'Length'
+	hashes:
+		key: 'Key'
+		number_of_fields: 'Number of fields'
+	sets:
+		key: 'Key'
+		number_of_members: 'Number of members'
+
 table_form_header:
 	hash:
 		create: Create new hash
