@@ -2,6 +2,7 @@
 
 namespace Adminerng\Core\Translator\Loader;
 
+use Nette\Neon\Neon;
 use Symfony\Component\Finder\Finder;
 
 class NeonFileLoader implements LoaderInterface
@@ -23,7 +24,7 @@ class NeonFileLoader implements LoaderInterface
 
         $translations = [];
         foreach ($finder as $file) {
-            $translations[pathinfo($file, PATHINFO_FILENAME)] = \Nette\Neon\Neon::decode(file_get_contents($file));
+            $translations[pathinfo($file, PATHINFO_FILENAME)] = Neon::decode(file_get_contents($file));
         }
         $this->flatten($translations);
         return $translations;
@@ -31,17 +32,17 @@ class NeonFileLoader implements LoaderInterface
 
     private function flatten(array &$messages, array $subnode = null, $path = null)
     {
-        if (null === $subnode) {
+        if ($subnode === null) {
             $subnode = &$messages;
         }
         foreach ($subnode as $key => $value) {
             if (is_array($value)) {
                 $nodePath = $path ? $path.'.'.$key : $key;
                 $this->flatten($messages, $value, $nodePath);
-                if (null === $path) {
+                if ($path === null) {
                     unset($messages[$key]);
                 }
-            } elseif (null !== $path) {
+            } elseif ($path !== null) {
                 $messages[$path.'.'.$key] = $value;
             }
         }
