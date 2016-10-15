@@ -54,14 +54,17 @@ class RabbitDriver extends AbstractDriver
         $columns = [];
         $columns[] = (new Column())
             ->setKey('vhost')
-            ->setTitle('rabbit.headers.vhosts.vhost');
+            ->setTitle('rabbit.headers.vhosts.vhost')
+            ->setIsSortable(true);
         $columns[] = (new Column())
             ->setKey('queues')
             ->setTitle('rabbit.headers.vhosts.queues')
+            ->setIsSortable(true)
             ->setIsNumeric(true);
         $columns[] = (new Column())
             ->setKey('messages')
             ->setTitle('rabbit.headers.vhosts.messages')
+            ->setIsSortable(true)
             ->setIsNumeric(true);
         return $columns;
     }
@@ -71,14 +74,17 @@ class RabbitDriver extends AbstractDriver
         $columns = [];
         $columns[] = (new Column())
             ->setKey('queue')
-            ->setTitle('rabbit.headers.queues.queue');
+            ->setTitle('rabbit.headers.queues.queue')
+            ->setIsSortable(true);
         $columns[] = (new Column())
             ->setKey('number_of_items')
             ->setTitle('rabbit.headers.queues.number_of_items')
+            ->setIsSortable(true)
             ->setIsNumeric(true);
         $columns[] = (new Column())
             ->setKey('size')
             ->setTitle('rabbit.headers.queues.size')
+            ->setIsSortable(true)
             ->setIsNumeric(true);
         return [
             self::TYPE_QUEUE => $columns,

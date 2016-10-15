@@ -15,7 +15,7 @@ class DatabaseSelectControl extends Control
     private $translator;
 
     private $database;
-    
+
     public function __construct(DriverInterface $driver, ITranslator $translator, $database = null)
     {
         parent::__construct();
@@ -31,10 +31,11 @@ class DatabaseSelectControl extends Control
         $this->template->setFile(__DIR__ . '/default.latte');
         $this->template->render();
     }
-    
+
     protected function createComponentSelect()
     {
         $databases = array_keys($this->driver->dataManager()->databases());
+        sort($databases);
         $form = new Form();
         $form->setRenderer(new BootstrapVerticalRenderer());
         $form->addSelect('database', $this->translator->translate($this->driver->type() . '.database_select_control.database.label'), array_combine($databases, $databases))

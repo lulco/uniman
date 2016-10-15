@@ -3,6 +3,7 @@
 namespace Adminerng\Drivers\Redis;
 
 use Adminerng\Core\DataManagerInterface;
+use Adminerng\Core\Multisort;
 use RedisProxy\RedisProxy;
 
 class RedisDataManager implements DataManagerInterface
@@ -22,7 +23,7 @@ class RedisDataManager implements DataManagerInterface
         for ($i = 0; $i < $numberOfDatabases; ++$i) {
             $databases[$i] = $this->databaseInfo($keyspace, $i);
         }
-        return $databases;
+        return Multisort::sort($databases, $sorting);
     }
 
     public function tables($database, array $sorting = [])
@@ -58,10 +59,12 @@ class RedisDataManager implements DataManagerInterface
                 }
                 break;
             }
-            ksort($tables[$label]);
         }
-        ksort($tables);
-        return $tables;
+        return [
+            RedisDriver::TYPE_KEY => Multisort::sort($tables[RedisDriver::TYPE_KEY], $sorting),
+            RedisDriver::TYPE_HASH => Multisort::sort($tables[RedisDriver::TYPE_HASH], $sorting),
+            RedisDriver::TYPE_SET => Multisort::sort($tables[RedisDriver::TYPE_SET], $sorting),
+        ];
     }
 
     public function itemsCount($database, $type, $table, array $filter = [])

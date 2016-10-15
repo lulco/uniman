@@ -4,6 +4,7 @@ namespace Adminerng\Drivers\MySql;
 
 use Adminerng\Core\DataManagerInterface;
 use Adminerng\Core\Helper\Formatter;
+use Adminerng\Core\Multisort;
 use InvalidArgumentException;
 use PDO;
 
@@ -33,19 +34,10 @@ class MySqlDataManager implements DataManagerInterface
             return $this->databases;
         }
 
-        $map = [
-            'database' => 'SCHEMA_NAME',
-            'charset' => 'DEFAULT_CHARACTER_SET_NAME',
-            'collation' => 'DEFAULT_COLLATION_NAME',
-            'table_count' => 'table_count',
-            'size' => 'size',
-        ];
-        $remappedSorting = $this->remapSorting($sorting, $map);
-
         $query = 'SELECT information_schema.SCHEMATA.*, count(*) AS tables_count, SUM(information_schema.TABLES.DATA_LENGTH) AS size
 FROM information_schema.SCHEMATA
 LEFT JOIN information_schema.TABLES ON information_schema.SCHEMATA.SCHEMA_NAME = information_schema.TABLES.TABLE_SCHEMA
-GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappedSorting);
+GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
 
         $databases = [];
         foreach ($this->connection->query($query)->fetchAll(PDO::FETCH_ASSOC) as $database) {
@@ -58,7 +50,7 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
             ];
         }
         $this->databases = $databases;
-        return $databases;
+        return Multisort::sort($databases, $sorting);
     }
 
     public function tables($database, array $sorting = [])
@@ -72,19 +64,7 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
             $type = 'SYSTEM VIEW';
         }
 
-        $map = [
-            'table' => 'TABLE_NAME',
-            'engine' => 'ENGINE',
-            'collation' => 'TABLE_COLLATION',
-            'data_length' => 'DATA_LENGTH',
-            'index_length' => 'INDEX_LENGTH',
-            'data_free' => 'DATA_FREE',
-            'autoincrement' => 'AUTO_INCREMENT',
-            'rows' => 'TABLE_ROWS',
-        ];
-        $remappedSorting = $this->remapSorting($sorting, $map);
-
-        foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = '$type' AND TABLE_SCHEMA = '$database'" . $this->createOrderBy($remappedSorting))->fetchAll(PDO::FETCH_ASSOC) as $table) {
+        foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = '$type' AND TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $table) {
             $tables[MySqlDriver::TYPE_TABLE][$table['TABLE_NAME']] = [
                 'table' => $table['TABLE_NAME'],
                 'engine' => $table['ENGINE'],
@@ -97,18 +77,7 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
             ];
         }
 
-        $viewMap = [
-            'view' => 'TABLE_NAME',
-            'check_option' => 'CHECK_OPTION',
-            'is_updatable' => 'IS_UPDATABLE',
-            'definer' => 'DEFINER',
-            'security_type' => 'SECURITY_TYPE',
-            'character_set' => 'CHARACTER_SET_CLIENT',
-            'collation' => 'COLLATION_CONNECTION',
-        ];
-        $viewRemappedSorting = $this->remapSorting($sorting, $viewMap);
-
-        foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database'" . $this->createOrderBy($viewRemappedSorting))->fetchAll(PDO::FETCH_ASSOC) as $view) {
+        foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $view) {
             $tables[MySqlDriver::TYPE_VIEW][$view['TABLE_NAME']] = [
                 'view' => $view['TABLE_NAME'],
                 'check_option' => $view['CHECK_OPTION'],
@@ -119,7 +88,10 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
                 'collation' => $view['COLLATION_CONNECTION'],
             ];
         }
-        return $tables;
+        return [
+            MySqlDriver::TYPE_TABLE => Multisort::sort($tables[MySqlDriver::TYPE_TABLE], $sorting),
+            MySqlDriver::TYPE_VIEW => Multisort::sort($tables[MySqlDriver::TYPE_VIEW], $sorting),
+        ];
     }
 
     public function itemsCount($database, $type, $table, array $filter = [])
@@ -146,20 +118,6 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA' . $this->createOrderBy($remappe
             $items[md5(implode('|', $pk))] = $item;
         }
         return $items;
-    }
-
-    private function remapSorting($sorting, $map)
-    {
-        $remappedSorting = [];
-        foreach ($sorting as $index => $sort) {
-            foreach ($sort as $key => $direction) {
-                if (!isset($map[$key])) {
-                    continue;
-                }
-                $remappedSorting[$index][$map[$key]] = $direction;
-            }
-        }
-        return $remappedSorting;
     }
 
     private function createOrderBy($sorting)

@@ -24,10 +24,6 @@ if (!file_exists($tempDir)) {
 }
 $configurator->setTempDirectory($tempDir);
 
-$configurator->createRobotLoader()
-    ->addDirectory(__DIR__)
-    ->register();
-
 $configurator->addConfig(__DIR__ . '/config/config.neon');
 $container = $configurator->createContainer();
 
