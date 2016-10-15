@@ -14,11 +14,11 @@ table_type:
 	table:
 		title: Tabuľky
 		items:
-			title: Záznam|Záznamy|Záznamy
+			title: Záznamy
 	view:
 		title: Viewy
 		items:
-			title: Záznam|Záznamy|Záznamy
+			title: Záznamy
 
 form:
 	server:

@@ -39,11 +39,11 @@ table_type:
 	table:
 		title: Tables
 		items:
-			title: Row|Rows
+			title: Rows
 	view:
 		title: Views
 		items:
-			title: Row|Rows
+			title: Rows
 
 form:
 	server:

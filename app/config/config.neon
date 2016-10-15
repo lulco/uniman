@@ -2,11 +2,15 @@ application:
 	mapping:
 		*: Adminerng\Presenters\*Presenter
 
-extensions:
-	translation: Kdyby\Translation\DI\TranslationExtension
-
 services:
 	router: Adminerng\Router\RouterFactory::createRouter
+	translator:
+		class: Adminerng\Core\Translator\Translator
+		setup:
+			- setDefaultLanguage('en')
+
+	- Adminerng\Core\Translator\Storage\MemoryStorage
+	- Adminerng\Core\Translator\Loader\NeonFileLoader(%appDir%/lang)
 	- Adminerng\Core\Credentials\SessionStorageCredentials
 
 	-
@@ -27,3 +31,4 @@ services:
 	nette.latteFactory:
 		setup:
 			- addFilter(null, [@filterLoader, 'load'])
+			- addFilter('translate', [@translator, 'translate'])

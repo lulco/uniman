@@ -19,7 +19,7 @@ item_form_header:
 table_type:
 	key:
 		items:
-			title: Key|Keys
+			title: Keys
 
 columns:
 	key:
