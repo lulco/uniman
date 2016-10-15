@@ -49,15 +49,15 @@ table_type:
 	hash:
 		title: Hashes
 		items:
-			title: Key|Keys
+			title: Keys
 	key:
 		title: Keys
 		items:
-			title: Key|Keys
+			title: Keys
 	set:
 		title: Sets
 		items:
-			title: Member|Members
+			title: Members
 
 columns:
 	hash:

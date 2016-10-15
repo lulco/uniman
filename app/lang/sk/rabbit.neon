@@ -16,7 +16,7 @@ table_type:
 	queue:
 		title: Fronty
 		items:
-			title: Správa|Správy|Správy
+			title: Správy
 
 columns:
 	queue:
