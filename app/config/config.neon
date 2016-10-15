@@ -1,4 +1,5 @@
 application:
+	scanDirs: false
 	mapping:
 		*: Adminerng\Presenters\*Presenter
 
