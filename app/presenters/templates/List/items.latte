@@ -13,7 +13,7 @@
 	</div>
 	<div class="row">
 		<div class="col-lg-10">
-			<h3>{_$driver . '.table_type.' . $type . '.items.title', $itemsCount} ({$itemsCount|formatNumber})</h3>
+			<h3>{_$driver . '.table_type.' . $type . '.items.title'} ({$itemsCount|formatNumber})</h3>
 		</div>
 		<div class="col-lg-2">
 			<div n:if="$actualDriver->permissions()->canCreateItem($database, $type, $table)" class="pull-right">

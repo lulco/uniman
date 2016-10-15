@@ -7,7 +7,7 @@ use Nette\Localization\ITranslator;
 
 class Translator implements ITranslator
 {
-    private $backupLanguage;
+    private $defaultLanguage;
 
     private $storage;
 
@@ -16,9 +16,9 @@ class Translator implements ITranslator
         $this->storage = $storage;
     }
 
-    public function setBackupLanguage($language)
+    public function setDefaultLanguage($language)
     {
-        $this->backupLanguage = $language;
+        $this->defaultLanguage = $language;
         return $this;
     }
 
@@ -27,18 +27,31 @@ class Translator implements ITranslator
         return filter_input(INPUT_GET, 'locale');
     }
 
-    public function translate($message, $count = null)
+    public function translate($message, $params = null)
     {
-        $value = $this->storage->load($this->getLanguage(), $message);
-        if ($value) {
-            return $value;
+        if ($this->getLanguage()) {
+            $value = $this->storage->load($this->getLanguage(), $message);
+            if ($value) {
+                return $this->replaceTokens($value, $params);
+            }
         }
 
-        if (!$this->backupLanguage) {
+        if (!$this->defaultLanguage) {
             return '';
         }
 
-        $value = $this->storage->load($this->backupLanguage, $message);
-        return $value ?: $message;
+        $value = $this->storage->load($this->defaultLanguage, $message);
+        return $value ? $this->replaceTokens($value, $params) : $message;
+    }
+
+    private function replaceTokens($message, $params = null)
+    {
+        if (!$params) {
+            return $message;
+        }
+        foreach ($params as $key => $value) {
+            $message = str_replace('%' . $key . '%', $value, $message);
+        }
+        return $message;
     }
 }

@@ -62,7 +62,6 @@ class Compile
             ->in(__DIR__.'/../vendor/tomaj/')
             ->in(__DIR__.'/../vendor/php-amqplib/')
             ->in(__DIR__.'/../vendor/guzzlehttp/')
-            ->in(__DIR__.'/../vendor/kdyby/')
             ->in(__DIR__.'/../vendor/predis/')
             ->in(__DIR__.'/../vendor/radekdostal/')
 ;

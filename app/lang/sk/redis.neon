@@ -32,15 +32,15 @@ table_type:
 	hash:
 		title: Hashe
 		items:
-			title: Kľúč|Kľúče|Kľúče
+			title: Kľúče
 	key:
 		title: Kľúče
 		items:
-			title: Kľúč|Kľúče|Kľúče
+			title: Kľúče
 	set:
 		title: Sety
 		items:
-			title: Kľúč|Kľúče|Kľúče
+			title: Kľúče
 
 columns:
 	hash:

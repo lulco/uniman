@@ -26,7 +26,7 @@ table_type:
 	queue:
 		title: Queues
 		items:
-			title: Message|Messages
+			title: Messages
 
 columns:
 	queue:
