@@ -4,6 +4,7 @@ namespace Adminerng\Drivers\Memcache;
 
 use Adminerng\Core\DataManagerInterface;
 use Adminerng\Core\Exception\NoTablesJustItemsException;
+use Adminerng\Core\Multisort;
 use Memcache;
 use Nette\Localization\ITranslator;
 
@@ -36,7 +37,7 @@ class MemcacheDataManager implements DataManagerInterface
                 'total_malloced' => $allSlabs[$server]['total_malloced'],
             ];
         }
-        return $databases;
+        return Multisort::sort($databases, $sorting);
     }
 
     public function tables($database, array $sorting = [])

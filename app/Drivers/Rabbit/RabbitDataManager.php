@@ -4,6 +4,7 @@ namespace Adminerng\Drivers\Rabbit;
 
 use Adminerng\Core\DataManagerInterface;
 use Adminerng\Core\Helper\Formatter;
+use Adminerng\Core\Multisort;
 use Nette\Localization\ITranslator;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
@@ -43,7 +44,7 @@ class RabbitDataManager implements DataManagerInterface
                 'messages' => isset($vhost['messages']) ? $vhost['messages'] : 0,
             ];
         }
-        return $vhosts;
+        return Multisort::sort($vhosts, $sorting);
     }
 
     public function selectDatabase($vhost)
@@ -70,7 +71,9 @@ class RabbitDataManager implements DataManagerInterface
                 'size' => $queue['message_bytes'],
             ];
         }
-        return $tables;
+        return [
+            RabbitDriver::TYPE_QUEUE => Multisort::sort($tables[RabbitDriver::TYPE_QUEUE], $sorting),
+        ];
     }
 
     public function itemsCount($database, $type, $table, array $filter = [])

@@ -55,18 +55,22 @@ class RedisDriver extends AbstractDriver
         $columns = [];
         $columns[] = (new Column())
             ->setKey('database')
-            ->setTitle('redis.headers.databases.database');
+            ->setTitle('redis.headers.databases.database')
+            ->setIsSortable(true);
         $columns[] = (new Column())
             ->setKey('keys')
             ->setTitle('redis.headers.databases.keys')
+            ->setIsSortable(true)
             ->setIsNumeric(true);
         $columns[] = (new Column())
             ->setKey('expires')
             ->setTitle('redis.headers.databases.expires')
+            ->setIsSortable(true)
             ->setIsNumeric(true);
         $columns[] = (new Column())
             ->setKey('avg_ttl')
             ->setTitle('redis.headers.databases.avg_ttl')
+            ->setIsSortable(true)
             ->setIsNumeric(true)
             ->setDecimals(2);
         return $columns;
@@ -77,30 +81,37 @@ class RedisDriver extends AbstractDriver
         $keyColumns = [];
         $keyColumns[] = (new Column())
             ->setKey('key')
-            ->setTitle('redis.headers.keys.key');
+            ->setTitle('redis.headers.keys.key')
+            ->setIsSortable(true);
         $keyColumns[] = (new Column())
             ->setKey('value')
-            ->setTitle('redis.headers.keys.value');
+            ->setTitle('redis.headers.keys.value')
+            ->setIsSortable(true);
         $keyColumns[] = (new Column())
             ->setKey('length')
-            ->setTitle('redis.headers.keys.length');
+            ->setTitle('redis.headers.keys.length')
+            ->setIsSortable(true);
 
         $hashColumns = [];
         $hashColumns[] = (new Column())
             ->setKey('key')
-            ->setTitle('redis.headers.hashes.key');
+            ->setTitle('redis.headers.hashes.key')
+            ->setIsSortable(true);
         $hashColumns[] = (new Column())
             ->setKey('number_of_fields')
             ->setTitle('redis.headers.hashes.number_of_fields')
+            ->setIsSortable(true)
             ->setIsNumeric(true);
 
         $setColumns = [];
         $setColumns[] = (new Column())
             ->setKey('key')
-            ->setTitle('redis.headers.sets.key');
+            ->setTitle('redis.headers.sets.key')
+            ->setIsSortable(true);
         $setColumns[] = (new Column())
             ->setKey('number_of_members')
             ->setTitle('redis.headers.sets.number_of_members')
+            ->setIsSortable(true)
             ->setIsNumeric(true);
 
         return [

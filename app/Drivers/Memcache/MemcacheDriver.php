@@ -58,7 +58,8 @@ class MemcacheDriver extends AbstractDriver
         foreach ($fields as $key => $settings) {
             $column = (new Column())
                 ->setKey($key)
-                ->setTitle('memcache.headers.servers.' . $key);
+                ->setTitle('memcache.headers.servers.' . $key)
+                ->setIsSortable(true);
             if (!isset($settings['is_numeric'])) {
                 $column->setIsNumeric(true);
             }
