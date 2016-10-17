@@ -31,7 +31,6 @@ class Compile
 
         $this->phar = new Phar($pharTarget, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, $pharFile);
         $this->phar->startBuffering();
-        $this->addFile(__DIR__ . '/../www/index.php');
         $this->addFile(__DIR__ . '/../app/bootstrap_live.php', 'app/bootstrap.php');
 
         $finder = new Finder();
@@ -43,10 +42,15 @@ class Compile
             ->name('*.latte')
             ->name('*.css')
             ->name('*.js')
+            ->name('*.eot')
+            ->name('*.ttf')
+            ->name('*.woff')
+            ->name('*.woff2')
             ->name('LICENSE')
             ->exclude('Tests')
             ->exclude('tests')
             ->exclude('docs')
+            ->in(__DIR__.'/../www/')
             ->in(__DIR__.'/../app/Core/')
             ->in(__DIR__.'/../app/Drivers/')
             ->in(__DIR__.'/../app/Router/')

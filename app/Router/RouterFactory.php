@@ -14,7 +14,7 @@ class RouterFactory
     public static function createRouter()
     {
         $router = new RouteList();
-        $router[] = new SimpleRouter('Homepage:default');
+        $router[] = new SimpleRouter('Default:default');
         return $router;
     }
 }

@@ -4,9 +4,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{ifset #title}{include #title} | {/ifset}Adminer next generation</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/jquery.datetimepicker.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{link Default:file, 'css/bootstrap.min.css'}">
+	<link rel="stylesheet" href="{link Default:file, 'css/jquery.datetimepicker.min.css'}">
+	<link rel="stylesheet" href="{link Default:file, 'css/font-awesome.min.css'}">
 {*	<link rel="shortcut icon" href="/favicon.ico">
 	<link rel="icon" href="/favicon.ico">	*}
 </head>
@@ -14,12 +14,12 @@
 	<div class="navbar navbar-default navbar-static-top">
 		<div class="container-fluid">
 			<div class="nav navbar-nav">
-				<h2><a href="{link Homepage:default, $presenter->getParam('driver')}">{_'core.title'}</a></h2>
+				<h2><a href="{link Default:default, $presenter->getParam('driver')}">{_'core.title'}</a></h2>
 			</div>
 			{control breadcrumb}
 			<div style="margin: 10px 5px;">
 				<div n:if="isset($actualDriver) && $actualDriver" class="pull-right">
-					<a class="btn btn-default" href="{link Homepage:logout, $actualDriver->type()}">Logout</a>
+					<a class="btn btn-default" href="{link Default:logout, $actualDriver->type()}">Logout</a>
 				</div>
 				<div class="pull-right form-group" style="margin-right: 10px;">
 					<select onchange="window.location={link this, 'driver' => $driver, 'locale' => null} + '&locale=' + this.value;" class="form-control">
@@ -50,8 +50,8 @@
 			{include content}
 		</div>
 	</div>
-	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
+	<script src="{link Default:file, 'js/jquery.min.js'}"></script>
+	<script src="{link Default:file, 'js/jquery.datetimepicker.full.min.js'}"></script>
 	<script>
 		$(function(){
 			// Datetimepicker initialize

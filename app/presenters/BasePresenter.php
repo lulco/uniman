@@ -21,7 +21,7 @@ abstract class BasePresenter extends AbstractBasePresenter
 
         $credentials = $this->credentialsStorage->getCredentials($actualDriver);
         if (!$credentials) {
-            $this->redirect('Homepage:default', $actualDriver);
+            $this->redirect('Default:default', $actualDriver);
         }
 
         foreach ($this->driver->defaultCredentials() as $key => $defaultCredential) {
@@ -31,7 +31,7 @@ abstract class BasePresenter extends AbstractBasePresenter
             $this->driver->connect($credentials);
         } catch (ConnectException $e) {
             $this->flashMessage($e->getMessage(), 'danger');
-            $this->redirect('Homepage:default', $actualDriver);
+            $this->redirect('Default:default', $actualDriver);
         }
         $this->template->actualDriver = $this->driver;
     }
