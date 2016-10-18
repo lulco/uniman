@@ -26,9 +26,8 @@ class RedisDataManager implements DataManagerInterface
         return Multisort::sort($databases, $sorting);
     }
 
-    public function tables($database, array $sorting = [])
+    public function tables(array $sorting = [])
     {
-        $this->selectDatabase($database);
         $tables = [
             RedisDriver::TYPE_KEY => [],
             RedisDriver::TYPE_HASH => [],
@@ -67,9 +66,8 @@ class RedisDataManager implements DataManagerInterface
         ];
     }
 
-    public function itemsCount($database, $type, $table, array $filter = [])
+    public function itemsCount($type, $table, array $filter = [])
     {
-        $this->selectDatabase($database);
         if ($type == RedisDriver::TYPE_HASH) {
             return $this->connection->hLen($table);
         }
@@ -82,10 +80,9 @@ class RedisDataManager implements DataManagerInterface
         return 0;
     }
 
-    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
+    public function items($type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         $items = [];
-        $this->selectDatabase($database);
         if ($type == RedisDriver::TYPE_HASH) {
             $counter = 0;
             $iterator = '';
@@ -126,9 +123,8 @@ class RedisDataManager implements DataManagerInterface
         return $items;
     }
 
-    public function deleteItem($database, $type, $table, $item)
+    public function deleteItem($type, $table, $item)
     {
-        $this->selectDatabase($database);
         if ($type == RedisDriver::TYPE_HASH) {
             return $this->connection->hdel($table, $item);
         }
@@ -142,10 +138,14 @@ class RedisDataManager implements DataManagerInterface
         return false;
     }
 
-    public function deleteTable($database, $type, $table)
+    public function deleteTable($type, $table)
     {
-        $this->selectDatabase($database);
         return $this->connection->del($table);
+    }
+
+    public function selectDatabase($database)
+    {
+        $this->connection->select($database);
     }
 
     private function databaseInfo($keyspace, $db)
@@ -163,10 +163,5 @@ class RedisDataManager implements DataManagerInterface
             $info['avg_ttl'] = explode('=', $dbKeyspace[2])[1];
         }
         return $info;
-    }
-
-    public function selectDatabase($database)
-    {
-        $this->connection->select($database);
     }
 }

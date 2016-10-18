@@ -180,7 +180,6 @@ class MySqlDriver extends AbstractDriver
 
     public function itemForm($database, $type, $table, $item)
     {
-        $this->dataManager()->selectDatabase($database);
         return new MySqlItemForm($this->connection, $this->dataManager(), $type, $table, $item);
     }
 

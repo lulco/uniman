@@ -28,7 +28,7 @@ class TablesSideBarControl extends Control
         $this->template->actualDatabase = $this->database;
         $this->template->actualTable = $this->table;
         try {
-            $tables = $this->driver->dataManager()->tables($this->database);
+            $tables = $this->driver->dataManager()->tables();
         } catch (NoTablesJustItemsException $e) {
             $tables = [];
         }

@@ -152,7 +152,6 @@ class RedisDriver extends AbstractDriver
 
     public function itemForm($database, $type, $table, $item)
     {
-        $this->dataManager()->selectDatabase($database);
         if ($type == self::TYPE_HASH) {
             return new RedisHashKeyItemForm($this->connection, $table, $item);
         } elseif ($type == self::TYPE_KEY) {
@@ -164,7 +163,6 @@ class RedisDriver extends AbstractDriver
 
     public function tableForm($database, $type, $table)
     {
-        $this->dataManager()->selectDatabase($database);
         if ($type == self::TYPE_HASH) {
             if ($table) {
                 return new RedisRenameHashForm($this->connection, $table);

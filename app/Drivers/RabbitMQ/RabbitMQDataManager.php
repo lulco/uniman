@@ -21,6 +21,8 @@ class RabbitMQDataManager implements DataManagerInterface
 
     private $client;
 
+    private $vhost;
+
     public function __construct(array $credentials, RabbitMQManagementApiClient $client, ITranslator $translator, Formatter $formatter)
     {
         $this->credentials = $credentials;
@@ -49,6 +51,7 @@ class RabbitMQDataManager implements DataManagerInterface
 
     public function selectDatabase($vhost)
     {
+        $this->vhost = $vhost;
         $this->connection = new AMQPStreamConnection(
             $this->credentials['host'],
             $this->credentials['port'],
@@ -59,12 +62,12 @@ class RabbitMQDataManager implements DataManagerInterface
         return $this->connection;
     }
 
-    public function tables($database, array $sorting = [])
+    public function tables(array $sorting = [])
     {
         $tables = [
             RabbitMQDriver::TYPE_QUEUE => [],
         ];
-        foreach ($this->client->getQueues($database) as $queue) {
+        foreach ($this->client->getQueues($this->vhost) as $queue) {
             $tables[RabbitMQDriver::TYPE_QUEUE][$queue['name']] = [
                 'queue' => $queue['name'],
                 'number_of_items' => $queue['messages'],
@@ -76,12 +79,12 @@ class RabbitMQDataManager implements DataManagerInterface
         ];
     }
 
-    public function itemsCount($database, $type, $table, array $filter = [])
+    public function itemsCount($type, $table, array $filter = [])
     {
         if ($type != RabbitMQDriver::TYPE_QUEUE) {
             return 0;
         }
-        foreach ($this->client->getQueues($database) as $queue) {
+        foreach ($this->client->getQueues($this->vhost) as $queue) {
             if ($queue['name'] == $table) {
                 return $this->formatter->formatNumber($queue['messages']);
             }
@@ -89,12 +92,11 @@ class RabbitMQDataManager implements DataManagerInterface
         return 0;
     }
 
-    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
+    public function items($type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         if ($type != RabbitMQDriver::TYPE_QUEUE) {
             return [];
         }
-        $this->selectDatabase($database);
         $items = [];
         while ($message = $this->getMessage($table)) {
             $items[$message->getBody()] = [
@@ -111,14 +113,13 @@ class RabbitMQDataManager implements DataManagerInterface
         return array_slice($items, ($page - 1) * $onPage, $onPage, true);
     }
 
-    public function deleteItem($database, $type, $table, $item)
+    public function deleteItem($type, $table, $item)
     {
         return false;
     }
 
-    public function deleteTable($vhost, $type, $queue)
+    public function deleteTable($type, $queue)
     {
-        $this->selectDatabase($vhost);
         $channel = $this->connection->channel();
         $channel->queue_delete($queue);
         $channel->close();

@@ -16,6 +16,8 @@ class MySqlDataManager implements DataManagerInterface
 
     private $formatter;
 
+    private $database;
+
     /**
      * cache
      * @var array|null
@@ -53,18 +55,18 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
         return Multisort::sort($databases, $sorting);
     }
 
-    public function tables($database, array $sorting = [])
+    public function tables(array $sorting = [])
     {
         $tables = [
             MySqlDriver::TYPE_TABLE => [],
             MySqlDriver::TYPE_VIEW => [],
         ];
         $type = 'BASE TABLE';
-        if ($database == 'information_schema') {
+        if ($this->database == 'information_schema') {
             $type = 'SYSTEM VIEW';
         }
 
-        foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = '$type' AND TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $table) {
+        foreach ($this->connection->query("SELECT * FROM information_schema.TABLES WHERE TABLE_TYPE = '$type' AND TABLE_SCHEMA = '{$this->database}' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $table) {
             $tables[MySqlDriver::TYPE_TABLE][$table['TABLE_NAME']] = [
                 'table' => $table['TABLE_NAME'],
                 'engine' => $table['ENGINE'],
@@ -77,7 +79,7 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
             ];
         }
 
-        foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '$database' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $view) {
+        foreach ($this->connection->query("SELECT * FROM information_schema.VIEWS WHERE TABLE_SCHEMA = '{$this->database}' ORDER BY TABLE_NAME")->fetchAll(PDO::FETCH_ASSOC) as $view) {
             $tables[MySqlDriver::TYPE_VIEW][$view['TABLE_NAME']] = [
                 'view' => $view['TABLE_NAME'],
                 'check_option' => $view['CHECK_OPTION'],
@@ -94,17 +96,14 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
         ];
     }
 
-    public function itemsCount($database, $type, $table, array $filter = [])
+    public function itemsCount($type, $table, array $filter = [])
     {
-        $this->selectDatabase($database);
         $query = 'SELECT count(*) FROM `' . $table . '`';
         return $this->connection->query($query)->fetch(PDO::FETCH_COLUMN);
     }
 
-    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
+    public function items($type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
-        $this->selectDatabase($database);
-
         $primaryColumns = $this->getPrimaryColumns($type, $table);
         $query = 'SELECT * FROM `' . $table . '`';
         $query .= $this->createOrderBy($sorting);
@@ -159,18 +158,16 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
     }
 
 
-    public function deleteItem($database, $type, $table, $item)
+    public function deleteItem($type, $table, $item)
     {
-        $this->selectDatabase($database);
         $primaryColumns = $this->getPrimaryColumns($type, $table);
 
         $query = 'DELETE FROM `' . $table . '` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "' . $item . '"';
         return $this->connection->query($query);
     }
 
-    public function deleteTable($database, $type, $table)
+    public function deleteTable($type, $table)
     {
-        $this->selectDatabase($database);
         if ($type === MySqlDriver::TYPE_TABLE) {
             $query = 'DROP TABLE `' . $table . '`';
         } elseif ($type === MySqlDriver::TYPE_VIEW) {
@@ -183,6 +180,7 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
 
     public function selectDatabase($database)
     {
+        $this->database = $database;
         $this->connection->query('USE `' . $database . '`');
     }
 

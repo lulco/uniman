@@ -14,6 +14,8 @@ class MemcacheDataManager implements DataManagerInterface
 
     private $connection;
 
+    private $database;
+
     public function __construct(Memcache $connection, ITranslator $translator)
     {
         $this->connection = $connection;
@@ -40,46 +42,46 @@ class MemcacheDataManager implements DataManagerInterface
         return Multisort::sort($databases, $sorting);
     }
 
-    public function tables($database, array $sorting = [])
+    public function tables(array $sorting = [])
     {
         throw new NoTablesJustItemsException('key', 'all');
     }
 
-    public function itemsCount($database, $type, $table, array $filter = [])
+    public function itemsCount($type, $table, array $filter = [])
     {
         if ($table == 'all') {
             $slabs = $this->connection->getExtendedStats('slabs');
-            $databaseSlabs = isset($slabs[$database]) ? $slabs[$database] : [];
+            $databaseSlabs = isset($slabs[$this->database]) ? $slabs[$this->database] : [];
             $count = 0;
             foreach (array_keys($databaseSlabs) as $slabId) {
                 if (!is_int($slabId)) {
                     continue;
                 }
-                $slabKeys = $this->getSlabKeys($database, $slabId);
+                $slabKeys = $this->getSlabKeys($this->database, $slabId);
                 $count += count($slabKeys);
             }
             return $count;
         }
 
         $stats = $this->connection->getExtendedStats('cachedump', (int)$table);
-        $keys = isset($stats[$database]) ? $stats[$database] : [];
+        $keys = isset($stats[$this->database]) ? $stats[$this->database] : [];
         return count($keys);
     }
 
-    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
+    public function items($type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         if ($table == 'all') {
             $slabs = $this->connection->getExtendedStats('slabs');
-            $databaseSlabs = isset($slabs[$database]) ? $slabs[$database] : [];
+            $databaseSlabs = isset($slabs[$this->database]) ? $slabs[$this->database] : [];
             $keys = [];
             foreach (array_keys($databaseSlabs) as $slabId) {
                 if (!is_int($slabId)) {
                     continue;
                 }
-                $keys = array_merge($keys, $this->getSlabKeys($database, $slabId));
+                $keys = array_merge($keys, $this->getSlabKeys($this->database, $slabId));
             }
         } else {
-            $keys = $this->getSlabKeys($database, $table);
+            $keys = $this->getSlabKeys($this->database, $table);
         }
 
         ksort($keys);
@@ -99,19 +101,19 @@ class MemcacheDataManager implements DataManagerInterface
         return $items;
     }
 
-    public function deleteItem($database, $type, $table, $item)
+    public function deleteItem($type, $table, $item)
     {
         return $this->connection->delete($item);
     }
 
-    public function deleteTable($database, $type, $table)
+    public function deleteTable($type, $table)
     {
         return false;
     }
 
     public function selectDatabase($database)
     {
-        return null;
+        return $this->database = $database;
     }
 
     private function getSlabKeys($database, $slabId)
