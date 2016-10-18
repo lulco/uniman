@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Drivers\Rabbit;
+namespace Adminerng\Drivers\RabbitMQ;
 
 use Adminerng\Core\DataManagerInterface;
 use Adminerng\Core\Helper\Formatter;
@@ -8,7 +8,7 @@ use Adminerng\Core\Multisort;
 use Nette\Localization\ITranslator;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
-class RabbitDataManager implements DataManagerInterface
+class RabbitMQDataManager implements DataManagerInterface
 {
     private $translator;
 
@@ -21,7 +21,7 @@ class RabbitDataManager implements DataManagerInterface
 
     private $client;
 
-    public function __construct(array $credentials, RabbitManagementApiClient $client, ITranslator $translator, Formatter $formatter)
+    public function __construct(array $credentials, RabbitMQManagementApiClient $client, ITranslator $translator, Formatter $formatter)
     {
         $this->credentials = $credentials;
         $this->client = $client;
@@ -62,23 +62,23 @@ class RabbitDataManager implements DataManagerInterface
     public function tables($database, array $sorting = [])
     {
         $tables = [
-            RabbitDriver::TYPE_QUEUE => [],
+            RabbitMQDriver::TYPE_QUEUE => [],
         ];
         foreach ($this->client->getQueues($database) as $queue) {
-            $tables[RabbitDriver::TYPE_QUEUE][$queue['name']] = [
+            $tables[RabbitMQDriver::TYPE_QUEUE][$queue['name']] = [
                 'queue' => $queue['name'],
                 'number_of_items' => $queue['messages'],
                 'size' => $queue['message_bytes'],
             ];
         }
         return [
-            RabbitDriver::TYPE_QUEUE => Multisort::sort($tables[RabbitDriver::TYPE_QUEUE], $sorting),
+            RabbitMQDriver::TYPE_QUEUE => Multisort::sort($tables[RabbitMQDriver::TYPE_QUEUE], $sorting),
         ];
     }
 
     public function itemsCount($database, $type, $table, array $filter = [])
     {
-        if ($type != RabbitDriver::TYPE_QUEUE) {
+        if ($type != RabbitMQDriver::TYPE_QUEUE) {
             return 0;
         }
         foreach ($this->client->getQueues($database) as $queue) {
@@ -91,7 +91,7 @@ class RabbitDataManager implements DataManagerInterface
 
     public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
-        if ($type != RabbitDriver::TYPE_QUEUE) {
+        if ($type != RabbitMQDriver::TYPE_QUEUE) {
             return [];
         }
         $this->selectDatabase($database);

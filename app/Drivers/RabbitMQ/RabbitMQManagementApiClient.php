@@ -1,10 +1,10 @@
 <?php
 
-namespace Adminerng\Drivers\Rabbit;
+namespace Adminerng\Drivers\RabbitMQ;
 
 use GuzzleHttp\Client;
 
-class RabbitManagementApiClient
+class RabbitMQManagementApiClient
 {
     private $guzzleClient;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace Adminerng\Drivers\Rabbit;
+namespace Adminerng\Drivers\RabbitMQ;
 
 use Adminerng\Core\Permissions\PermissionsInterface;
 
-class RabbitPermissions implements PermissionsInterface
+class RabbitMQPermissions implements PermissionsInterface
 {
     public function canCreateItem($database, $type, $table)
     {

@@ -20,7 +20,7 @@ services:
 			- add(Adminerng\Drivers\MySql\MySqlDriver())
 			- add(Adminerng\Drivers\Redis\RedisDriver())
 			- add(Adminerng\Drivers\Memcache\MemcacheDriver())
-			- add(Adminerng\Drivers\Rabbit\RabbitDriver())
+			- add(Adminerng\Drivers\RabbitMQ\RabbitMQDriver())
 
 	formatter: Adminerng\Core\Helper\Formatter
 

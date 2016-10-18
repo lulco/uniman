@@ -1,4 +1,4 @@
-name: Rabbit
+name: RabbitMQ
 
 table_types_for_database: 'Fronty pre vhost %database%'
 no_tables_for_database: 'Žiadne fronty pre vhost %database% neboli nájdené'
