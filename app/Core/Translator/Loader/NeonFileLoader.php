@@ -3,7 +3,7 @@
 namespace Adminerng\Core\Translator\Loader;
 
 use Nette\Neon\Neon;
-use Symfony\Component\Finder\Finder;
+use Nette\Utils\Finder;
 
 class NeonFileLoader implements LoaderInterface
 {
@@ -16,14 +16,9 @@ class NeonFileLoader implements LoaderInterface
 
     public function load($lang)
     {
-        $finder = new Finder();
-        $finder->files()
-            ->ignoreVCS(true)
-            ->name('*.neon')
-            ->in($this->localizationDirectory . '/' . $lang);
-
+        $files = Finder::findFiles('*.neon')->in($this->localizationDirectory . '/' . $lang);
         $translations = [];
-        foreach ($finder as $file) {
+        foreach ($files as $file) {
             $translations[pathinfo($file, PATHINFO_FILENAME)] = Neon::decode(file_get_contents($file));
         }
         $this->flatten($translations);

@@ -5,7 +5,7 @@ namespace Adminerng;
 
 use FilesystemIterator;
 use Phar;
-use Symfony\Component\Finder\Finder;
+use Nette\Utils\Finder;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -33,43 +33,45 @@ class Compile
         $this->phar->startBuffering();
         $this->addFile(__DIR__ . '/../app/bootstrap_live.php', 'app/bootstrap.php');
 
-        $finder = new Finder();
-        $finder->files()
-            ->ignoreVCS(true)
-            ->name('*.php')
-            ->name('*.phtml')
-            ->name('*.neon')
-            ->name('*.latte')
-            ->name('*.css')
-            ->name('*.js')
-            ->name('*.eot')
-            ->name('*.ttf')
-            ->name('*.woff')
-            ->name('*.woff2')
-            ->name('LICENSE')
-            ->exclude('Tests')
-            ->exclude('tests')
-            ->exclude('docs')
-            ->in(__DIR__.'/../www/')
-            ->in(__DIR__.'/../app/Core/')
-            ->in(__DIR__.'/../app/Drivers/')
-            ->in(__DIR__.'/../app/Router/')
-            ->in(__DIR__.'/../app/components/')
-            ->in(__DIR__.'/../app/config/')
-            ->in(__DIR__.'/../app/lang/')
-            ->in(__DIR__.'/../app/presenters/')
-            ->in(__DIR__.'/../vendor/nette/')
-            ->in(__DIR__.'/../vendor/tracy/')
-            ->in(__DIR__.'/../vendor/latte/')
-            ->in(__DIR__.'/../vendor/symfony/')
-            ->in(__DIR__.'/../vendor/lulco/')
-            ->in(__DIR__.'/../vendor/tomaj/')
-            ->in(__DIR__.'/../vendor/php-amqplib/')
-            ->in(__DIR__.'/../vendor/predis/')
-            ->in(__DIR__.'/../vendor/radekdostal/')
-        ;
+        $files = Finder::findFiles([
+            '*.php',
+            '*.phtml',
+            '*.neon',
+            '*.latte',
+            '*.css',
+            '*.js',
+            '*.eot',
+            '*.ttf',
+            '*.woff',
+            '*.woff2',
+        ])->from([
+            __DIR__.'/../www/',
+            __DIR__.'/../app/Core/',
+            __DIR__.'/../app/Drivers/',
+            __DIR__.'/../app/Router/',
+            __DIR__.'/../app/components/',
+            __DIR__.'/../app/config/',
+            __DIR__.'/../app/lang/',
+            __DIR__.'/../app/presenters/',
+            __DIR__.'/../vendor/nette/',
+            __DIR__.'/../vendor/tracy/',
+            __DIR__.'/../vendor/latte/',
+            __DIR__.'/../vendor/lulco/',
+            __DIR__.'/../vendor/tomaj/',
+            __DIR__.'/../vendor/php-amqplib/',
+            __DIR__.'/../vendor/predis/',
+            __DIR__.'/../vendor/radekdostal/'
+        ])->exclude([
+            '.git',
+            '.svn',
+            'LICENSE',
+            'Tests',
+            'tests',
+            'docs',
+            'examples',
+        ]);
 
-        foreach ($finder as $file) {
+        foreach ($files as $file) {
             $this->addFile($file);
         }
 
