@@ -11,7 +11,6 @@ interface DataManagerInterface
     public function databases(array $sorting = []);
 
     /**
-     * @todo try to remove this method from data manager (or keep it as private)
      * @param string $database
      */
     public function selectDatabase($database);

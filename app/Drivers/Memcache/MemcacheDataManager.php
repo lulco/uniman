@@ -14,6 +14,8 @@ class MemcacheDataManager implements DataManagerInterface
 
     private $connection;
 
+    private $database;
+
     public function __construct(Memcache $connection, ITranslator $translator)
     {
         $this->connection = $connection;
@@ -49,20 +51,20 @@ class MemcacheDataManager implements DataManagerInterface
     {
         if ($table == 'all') {
             $slabs = $this->connection->getExtendedStats('slabs');
-            $databaseSlabs = isset($slabs[$database]) ? $slabs[$database] : [];
+            $databaseSlabs = isset($slabs[$this->database]) ? $slabs[$this->database] : [];
             $count = 0;
             foreach (array_keys($databaseSlabs) as $slabId) {
                 if (!is_int($slabId)) {
                     continue;
                 }
-                $slabKeys = $this->getSlabKeys($database, $slabId);
+                $slabKeys = $this->getSlabKeys($this->database, $slabId);
                 $count += count($slabKeys);
             }
             return $count;
         }
 
         $stats = $this->connection->getExtendedStats('cachedump', (int)$table);
-        $keys = isset($stats[$database]) ? $stats[$database] : [];
+        $keys = isset($stats[$this->database]) ? $stats[$this->database] : [];
         return count($keys);
     }
 
@@ -70,16 +72,16 @@ class MemcacheDataManager implements DataManagerInterface
     {
         if ($table == 'all') {
             $slabs = $this->connection->getExtendedStats('slabs');
-            $databaseSlabs = isset($slabs[$database]) ? $slabs[$database] : [];
+            $databaseSlabs = isset($slabs[$this->database]) ? $slabs[$this->database] : [];
             $keys = [];
             foreach (array_keys($databaseSlabs) as $slabId) {
                 if (!is_int($slabId)) {
                     continue;
                 }
-                $keys = array_merge($keys, $this->getSlabKeys($database, $slabId));
+                $keys = array_merge($keys, $this->getSlabKeys($this->database, $slabId));
             }
         } else {
-            $keys = $this->getSlabKeys($database, $table);
+            $keys = $this->getSlabKeys($this->database, $table);
         }
 
         ksort($keys);
@@ -111,7 +113,7 @@ class MemcacheDataManager implements DataManagerInterface
 
     public function selectDatabase($database)
     {
-        return null;
+        return $this->database = $database;
     }
 
     private function getSlabKeys($database, $slabId)

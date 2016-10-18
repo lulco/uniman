@@ -29,6 +29,9 @@ abstract class BasePresenter extends AbstractBasePresenter
         }
         try {
             $this->driver->connect($credentials);
+            if (isset($this->params['database'])) {
+                $this->driver->dataManager()->selectDatabase($this->params['database']);
+            }
         } catch (ConnectException $e) {
             $this->flashMessage($e->getMessage(), 'danger');
             $this->redirect('Default:default', $actualDriver);

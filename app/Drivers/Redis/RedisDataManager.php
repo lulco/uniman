@@ -28,7 +28,6 @@ class RedisDataManager implements DataManagerInterface
 
     public function tables($database, array $sorting = [])
     {
-        $this->selectDatabase($database);
         $tables = [
             RedisDriver::TYPE_KEY => [],
             RedisDriver::TYPE_HASH => [],
@@ -69,7 +68,6 @@ class RedisDataManager implements DataManagerInterface
 
     public function itemsCount($database, $type, $table, array $filter = [])
     {
-        $this->selectDatabase($database);
         if ($type == RedisDriver::TYPE_HASH) {
             return $this->connection->hLen($table);
         }
@@ -85,7 +83,6 @@ class RedisDataManager implements DataManagerInterface
     public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         $items = [];
-        $this->selectDatabase($database);
         if ($type == RedisDriver::TYPE_HASH) {
             $counter = 0;
             $iterator = '';
@@ -128,7 +125,6 @@ class RedisDataManager implements DataManagerInterface
 
     public function deleteItem($database, $type, $table, $item)
     {
-        $this->selectDatabase($database);
         if ($type == RedisDriver::TYPE_HASH) {
             return $this->connection->hdel($table, $item);
         }
@@ -144,7 +140,6 @@ class RedisDataManager implements DataManagerInterface
 
     public function deleteTable($database, $type, $table)
     {
-        $this->selectDatabase($database);
         return $this->connection->del($table);
     }
 

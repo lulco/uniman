@@ -94,7 +94,7 @@ class RabbitMQDataManager implements DataManagerInterface
         if ($type != RabbitMQDriver::TYPE_QUEUE) {
             return [];
         }
-        $this->selectDatabase($database);
+//        $this->selectDatabase($database);
         $items = [];
         while ($message = $this->getMessage($table)) {
             $items[$message->getBody()] = [
@@ -118,7 +118,6 @@ class RabbitMQDataManager implements DataManagerInterface
 
     public function deleteTable($vhost, $type, $queue)
     {
-        $this->selectDatabase($vhost);
         $channel = $this->connection->channel();
         $channel->queue_delete($queue);
         $channel->close();
