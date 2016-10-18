@@ -2,30 +2,25 @@
 
 namespace Adminerng\Drivers\RabbitMQ;
 
-use GuzzleHttp\Client;
-
 class RabbitMQManagementApiClient
 {
-    private $guzzleClient;
+    private $baseUrl;
 
     public function __construct($host = 'localhost', $port = '15672', $user = 'guest', $password = 'guest')
     {
-        $baseUrl = 'http://' . $user . ':' . $password . '@' . $host . ':' . $port;
-        $this->guzzleClient = new Client(['base_uri' => $baseUrl]);
+        $this->baseUrl = 'http://' . $user . ':' . $password . '@' . $host . ':' . $port;
     }
 
     public function getVhosts($user = null)
     {
-        $response = $this->guzzleClient->get('/api/vhosts');
-        $result = json_decode((string)$response->getBody(), true);
+        $result = $this->call('/api/vhosts');
         $vhosts = [];
         foreach ($result as $item) {
             if ($user === null) {
                 $vhosts[] = $item;
                 continue;
             }
-            $response = $this->guzzleClient->get('/api/vhosts/' . urlencode($item['name']) . '/permissions');
-            $permissions = json_decode((string)$response->getBody(), true);
+            $permissions = $this->call('/api/vhosts/' . urlencode($item['name']) . '/permissions');
             foreach ($permissions as $permission) {
                 if ($permission['user'] == $user) {
                     $vhosts[] = $item;
@@ -42,8 +37,21 @@ class RabbitMQManagementApiClient
         if ($vhost) {
             $endpoint .= '/' . urlencode($vhost);
         }
-        $response = $this->guzzleClient->get($endpoint);
-        $queues = json_decode((string)$response->getBody(), true);
+        $queues = $this->call($endpoint);
         return $queues;
+    }
+
+    private function call($endpoint)
+    {
+        $ch = curl_init($this->baseUrl . $endpoint);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+        $response = curl_exec($ch);
+        if (!$response) {
+            return [];
+        }
+        curl_close($ch);
+        return json_decode((string)$response, true);
     }
 }
