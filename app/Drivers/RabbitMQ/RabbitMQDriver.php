@@ -47,6 +47,7 @@ class RabbitMQDriver extends AbstractDriver
             $this->credentials['user'],
             $this->credentials['password']
         );
+        $this->client->overview();
     }
 
     public function databasesHeaders()

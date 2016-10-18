@@ -55,7 +55,7 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
         return Multisort::sort($databases, $sorting);
     }
 
-    public function tables($database, array $sorting = [])
+    public function tables(array $sorting = [])
     {
         $tables = [
             MySqlDriver::TYPE_TABLE => [],
@@ -96,13 +96,13 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
         ];
     }
 
-    public function itemsCount($database, $type, $table, array $filter = [])
+    public function itemsCount($type, $table, array $filter = [])
     {
         $query = 'SELECT count(*) FROM `' . $table . '`';
         return $this->connection->query($query)->fetch(PDO::FETCH_COLUMN);
     }
 
-    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
+    public function items($type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         $primaryColumns = $this->getPrimaryColumns($type, $table);
         $query = 'SELECT * FROM `' . $table . '`';
@@ -158,7 +158,7 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
     }
 
 
-    public function deleteItem($database, $type, $table, $item)
+    public function deleteItem($type, $table, $item)
     {
         $primaryColumns = $this->getPrimaryColumns($type, $table);
 
@@ -166,7 +166,7 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
         return $this->connection->query($query);
     }
 
-    public function deleteTable($database, $type, $table)
+    public function deleteTable($type, $table)
     {
         if ($type === MySqlDriver::TYPE_TABLE) {
             $query = 'DROP TABLE `' . $table . '`';

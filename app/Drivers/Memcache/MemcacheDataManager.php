@@ -42,12 +42,12 @@ class MemcacheDataManager implements DataManagerInterface
         return Multisort::sort($databases, $sorting);
     }
 
-    public function tables($database, array $sorting = [])
+    public function tables(array $sorting = [])
     {
         throw new NoTablesJustItemsException('key', 'all');
     }
 
-    public function itemsCount($database, $type, $table, array $filter = [])
+    public function itemsCount($type, $table, array $filter = [])
     {
         if ($table == 'all') {
             $slabs = $this->connection->getExtendedStats('slabs');
@@ -68,7 +68,7 @@ class MemcacheDataManager implements DataManagerInterface
         return count($keys);
     }
 
-    public function items($database, $type, $table, $page, $onPage, array $filter = [], array $sorting = [])
+    public function items($type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         if ($table == 'all') {
             $slabs = $this->connection->getExtendedStats('slabs');
@@ -101,12 +101,12 @@ class MemcacheDataManager implements DataManagerInterface
         return $items;
     }
 
-    public function deleteItem($database, $type, $table, $item)
+    public function deleteItem($type, $table, $item)
     {
         return $this->connection->delete($item);
     }
 
-    public function deleteTable($database, $type, $table)
+    public function deleteTable($type, $table)
     {
         return false;
     }

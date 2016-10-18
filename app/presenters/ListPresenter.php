@@ -65,7 +65,7 @@ class ListPresenter extends BasePresenter
         $this->database = $database;
 
         try {
-            $tables = $this->driver->dataManager()->tables($database, $sorting);
+            $tables = $this->driver->dataManager()->tables($sorting);
         } catch (NoTablesJustItemsException $e) {
             $this->redirect('List:items', $driver, $database, $e->getType(), $e->getTable());
         }
@@ -91,9 +91,9 @@ class ListPresenter extends BasePresenter
         $this->template->table = $table;
         $this->template->sorting = $sorting;
 
-        $itemsCount = $this->driver->dataManager()->itemsCount($database, $type, $table, $filter);
+        $itemsCount = $this->driver->dataManager()->itemsCount($type, $table, $filter);
         $this->template->itemsCount = $itemsCount;
-        $this->template->items = $this->driver->dataManager()->items($database, $type, $table, $page, $onPage, $filter, $sorting);
+        $this->template->items = $this->driver->dataManager()->items($type, $table, $page, $onPage, $filter, $sorting);
         $this->template->columns = $this->driver->columns($type, $table);
 
         $visualPaginator = $this['paginator'];

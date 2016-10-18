@@ -36,7 +36,7 @@ class ItemPresenter extends BasePresenter
         if (!$this->driver->permissions()->canDeleteItem($database, $type, $table, $item)) {
             throw new ForbiddenRequestException('Delete item is not allowed');
         }
-        if ($this->driver->dataManager()->deleteItem($database, $type, $table, $item)) {
+        if ($this->driver->dataManager()->deleteItem($type, $table, $item)) {
             $this->flashMessage('Item was successfully deleted', 'success');
         } else {
             $this->flashMessage('Item was not deleted', 'danger');
