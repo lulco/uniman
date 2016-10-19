@@ -60,7 +60,6 @@ class Compile
             $this->appRoot . 'app/lang/',
             $this->appRoot . 'app/presenters/',
             $this->appRoot . 'vendor/nette/',
-            $this->appRoot . 'vendor/tracy/',
             $this->appRoot . 'vendor/latte/',
             $this->appRoot . 'vendor/lulco/',
             $this->appRoot . 'vendor/tomaj/',
