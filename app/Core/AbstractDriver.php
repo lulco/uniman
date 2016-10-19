@@ -31,6 +31,40 @@ abstract class AbstractDriver implements DriverInterface
         return $this->type() . '.name';
     }
 
+    /**
+     * check if driver can be used
+     * @return boolean
+     */
+    public function check()
+    {
+        foreach ($this->extensions() as $extension) {
+            if (!extension_loaded($extension)) {
+                return false;
+            }
+        }
+        foreach ($this->classes() as $class) {
+            if (!class_exists($class)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @return array list of php extensions which should be loaded
+     */
+    abstract public function extensions();
+
+    /**
+     *
+     * @return array list of php classes which should exist
+     */
+    public function classes()
+    {
+        return [];
+    }
+
+
     final public function addFormFields(Form $form)
     {
         return $this->getCredentialsForm()->addFieldsToForm($form);

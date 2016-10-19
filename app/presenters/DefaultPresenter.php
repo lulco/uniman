@@ -50,6 +50,15 @@ class DefaultPresenter extends AbstractBasePresenter
         $this->sendResponse(new TextResponse(file_get_contents($path)));
     }
 
+    public function renderCheck()
+    {
+        $drivers = $this->driverStorage->getDrivers();
+        $actualDriver = current(array_keys($drivers));
+        $this->driver = $this->driverStorage->getDriver($actualDriver);
+        $this->template->driver = $actualDriver;
+        $this->template->drivers = $drivers;
+    }
+
     protected function createComponentLoginForm()
     {
         return new LoginForm($this->translator, $this->driverStorage, $this->credentialsStorage, $this->driver->type(), $this->locale);

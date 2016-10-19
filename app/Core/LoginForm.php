@@ -7,6 +7,7 @@ use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Localization\ITranslator;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Html;
 use Tomaj\Form\Renderer\BootstrapVerticalRenderer;
 
 class LoginForm extends Control
@@ -51,7 +52,8 @@ class LoginForm extends Control
         }
         $form->addSelect('driver', 'core.form.driver', $driversList)
             ->setAttribute('onchange', 'window.location = "' . $this->presenter->link('this', ['driver' => null, 'locale' => $this->locale]) . ($this->locale == 'en' ? '?' : '&') . 'driver=" + this.value;')
-            ->setDefaultValue($this->driver);
+            ->setDefaultValue($this->driver)
+            ->setOption('description', Html::el('span')->addText($this->translator->translate('core.missing_driver') . ' ')->addHtml(Html::el('a')->setAttribute('href', $this->presenter->link('Default:check'))->setAttribute('target', '_blank')->setText($this->translator->translate('core.check_why'))));
         if ($this->driver) {
             $driver = $this->driverStorage->getDriver($this->driver);
             $driver->addFormFields($form);

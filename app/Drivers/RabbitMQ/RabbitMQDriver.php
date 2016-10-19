@@ -15,9 +15,14 @@ class RabbitMQDriver extends AbstractDriver
 
     private $client;
 
-    public function check()
+    public function extensions()
     {
-        return extension_loaded('curl') && class_exists('PhpAmqpLib\Connection\AMQPStreamConnection');
+        return ['curl'];
+    }
+
+    public function classes()
+    {
+        return ['PhpAmqpLib\Connection\AMQPStreamConnection'];
     }
 
     public function type()

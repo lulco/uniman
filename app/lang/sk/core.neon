@@ -6,6 +6,12 @@ no: Nie
 ascending: Vzostupne
 descending: Zostupne
 
+missing_driver: 'Chýba vám driver?'
+check_why: 'Skontrolujte prečo.'
+drivers_check_title: 'Požiadavky pre jednotlivé drivre'
+php_extension: 'PHP rozšírenie'
+php_class: 'PHP trieda'
+
 formatter:
 	number_format:
 		thousands_separator: ' '

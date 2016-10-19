@@ -6,6 +6,12 @@ no: 'No'
 ascending: Ascending
 descending: Descending
 
+missing_driver: Missing driver?
+check_why: Check why.
+drivers_check_title: 'Drivers requirements'
+php_extension: PHP extension
+php_class: PHP class
+
 formatter:
 	number_format:
 		thousands_separator: ','

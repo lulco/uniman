@@ -25,6 +25,16 @@ class RedisDriver extends AbstractDriver
     {
         return extension_loaded('redis') || class_exists('Predis\Client');
     }
+    
+    public function extensions()
+    {
+        return ['redis'];
+    }
+
+    public function classes()
+    {
+        return ['Predis\Client'];
+    }
 
     public function type()
     {

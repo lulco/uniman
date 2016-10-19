@@ -12,9 +12,9 @@ class MemcacheDriver extends AbstractDriver
 {
     const TYPE_KEY = 'key';
 
-    public function check()
+    public function extensions()
     {
-        return extension_loaded('memcache');
+        return ['memcache'];
     }
 
     public function type()
