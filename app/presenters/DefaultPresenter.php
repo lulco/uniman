@@ -36,6 +36,7 @@ class DefaultPresenter extends AbstractBasePresenter
             'jpg' => 'image/jpeg',
             'jpeg' => 'image/jpeg',
             'png' => 'image/png',
+            'ico' => 'image/x-icon',
             'eot' => 'application/vnd.ms-fontobject',
             'woff' => 'application/font-woff',
             'woff2' => 'application/font-woff2',

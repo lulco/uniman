@@ -44,6 +44,7 @@ class Compile
             '*.ttf',
             '*.woff',
             '*.woff2',
+            '*.ico',
         ])->from([
             __DIR__.'/../www/',
             __DIR__.'/../app/Core/',
