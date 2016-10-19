@@ -27,6 +27,9 @@
 				<th></th>
 				<th n:foreach="$columns as $column" n:class="$column->isNumeric() ? 'text-right'">
 					{_$column->getTitle()}
+					{if $column->getInfo()}
+						<a n:tag-if="$column->getInfoUrl()" href="{$column->getInfoUrl()}" target="_blank"><i class="fa fa-question-circle-o" title="{$column->getInfo()}" style="vertical-align: super;"></i></a>
+					{/if}
 					{if $column->isSortable()}
 						{php $actualSort = null}
 						{foreach $sorting as $sort}

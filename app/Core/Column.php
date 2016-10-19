@@ -34,6 +34,18 @@ class Column
      */
     private $decimals = 0;
 
+    /**
+     * extended info about column
+     * @var string
+     */
+    private $info;
+
+    /**
+     * link to extended info about column
+     * @var string
+     */
+    private $infoUrl;
+
     public function setKey($key)
     {
         $this->key = $key;
@@ -87,5 +99,27 @@ class Column
     public function getDecimals()
     {
         return $this->decimals;
+    }
+
+    public function setInfo($info)
+    {
+        $this->info = $info;
+        return $this;
+    }
+
+    public function getInfo()
+    {
+        return $this->info;
+    }
+
+    public function setInfoUrl($infoUrl)
+    {
+        $this->infoUrl = $infoUrl;
+        return $this;
+    }
+
+    public function getInfoUrl()
+    {
+        return $this->infoUrl;
     }
 }

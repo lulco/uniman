@@ -143,7 +143,8 @@ class MySqlDriver extends AbstractDriver
                 ->setTitle($col['Field'])
                 ->setIsSortable(true)
                 ->setIsNumeric($this->isNumeric($col))
-                ->setDecimals($this->getDecimals($col));
+                ->setDecimals($this->getDecimals($col))
+                ->setInfo($col['Comment']);
         }
         return $columns;
     }
