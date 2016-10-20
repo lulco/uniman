@@ -19,27 +19,7 @@
 			</div>
 			{if count($rows) > 0}
 				<table class="table text-nowrap">
-					<thead n:if="isset($tablesHeaders[$type]) && $tablesHeaders[$type]">
-						<tr>
-							<th></th>
-							<th n:foreach="$tablesHeaders[$type] as $column" n:class="$column->isNumeric() ? 'text-right'">
-								{_$column->getTitle()}
-								{if $column->isSortable()}
-									{php $actualSort = null}
-									{foreach $sorting as $sort}
-										{foreach $sort as $key => $direction}
-											{if $key == $column->getKey()}
-												{php $actualSort = $direction}
-											{/if}
-										{/foreach}
-									{/foreach}
-									<a href="{link this, sorting => [0 => [$column->getKey() => $actualSort == 'asc' ? 'desc' : 'asc']]}" title="{if $actualSort == 'asc'}{_'core.descending'}{else}{_'core.ascending'}{/if}">
-										<i class="fa fa-sort{if $actualSort}-{$actualSort}{/if}"></i>
-									</a>
-								{/if}
-							</th>
-						</tr>
-					</thead>
+					{include '../../../components/ListingTableHeader/default.latte', 'columns' => $tablesHeaders[$type]}
 					<tbody>
 						<tr n:foreach="$rows as $table => $values">
 							<td>

@@ -22,27 +22,7 @@
 		</div>
 	</div>
 	<table class="table text-nowrap">
-		<thead n:if="$columns">
-			<tr>
-				<th></th>
-				<th n:foreach="$columns as $column" n:class="$column->isNumeric() ? 'text-right'">
-					{_$column->getTitle()}
-					{if $column->isSortable()}
-						{php $actualSort = null}
-						{foreach $sorting as $sort}
-							{foreach $sort as $key => $direction}
-								{if $key == $column->getKey()}
-									{php $actualSort = $direction}
-								{/if}
-							{/foreach}
-						{/foreach}
-						<a href="{link this, sorting => [0 => [$column->getKey() => $actualSort == 'asc' ? 'desc' : 'asc']]}" title="{if $actualSort == 'asc'}{_'core.descending'}{else}{_'core.ascending'}{/if}">
-							<i class="fa fa-sort{if $actualSort}-{$actualSort}{/if}"></i>
-						</a>
-					{/if}
-				</th>
-			</tr>
-		</thead>
+		{include '../../../components/ListingTableHeader/default.latte', 'columns' => $columns}
 		<tbody>
 			<tr n:foreach="$items as $key => $values">
 				<td>
