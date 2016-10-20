@@ -12,6 +12,16 @@ drivers_check_title: 'Drivers requirements'
 php_extension: PHP extension
 php_class: PHP class
 
+errors:
+	go_home: 'Home'
+	error:
+		title: An error occured
+		message: We're sorry! The an error occured and server was unable to complete your request. Please try again later.
+	server_error:
+		title: Server error
+		message: We're sorry! The server encountered an internal error and was unable to complete your request. Please try again later.
+
+
 formatter:
 	number_format:
 		thousands_separator: ','

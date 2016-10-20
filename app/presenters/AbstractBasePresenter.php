@@ -38,12 +38,13 @@ abstract class AbstractBasePresenter extends Presenter
     {
         parent::startup();
         $this->template->locale = $this->locale;
+        $this->template->driver = isset($this->params['driver']) ? $this->params['driver'] : null;
     }
 
     protected function createComponentBreadcrumb()
     {
         return new BreadcrumbControl(
-            $this->driver->type(),
+            $this->driver ? $this->driver->type() : null,
             $this->database,
             $this->type,
             $this->table,
