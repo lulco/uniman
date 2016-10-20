@@ -2,6 +2,8 @@
 
 namespace Adminerng\Core;
 
+use Closure;
+
 class Column
 {
     /**
@@ -33,6 +35,8 @@ class Column
      * @var integer
      */
     private $decimals = 0;
+
+    private $external = [];
 
     public function setKey($key)
     {
@@ -87,5 +91,20 @@ class Column
     public function getDecimals()
     {
         return $this->decimals;
+    }
+
+    public function setExternal($database, $table, Closure $callback)
+    {
+        $this->external = [
+            'database' => $database,
+            'table' => $table,
+            'callback' => $callback,
+        ];
+        return $this;
+    }
+
+    public function getExternal()
+    {
+        return $this->external;
     }
 }

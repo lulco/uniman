@@ -203,7 +203,16 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
     public function getColumns($type, $table)
     {
         if ($this->columns === null) {
-            $this->columns = $this->connection->query('SHOW FULL COLUMNS FROM `' . $table .'`')->fetchAll(PDO::FETCH_ASSOC);
+            $columns = $this->connection->query('SHOW FULL COLUMNS FROM `' . $table .'`')->fetchAll(PDO::FETCH_ASSOC);
+            $keys = [];
+            foreach ($this->connection->query("SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = '{$this->database}' AND TABLE_NAME = '$table'")->fetchAll(PDO::FETCH_ASSOC) as $key) {
+                $keys[$key['COLUMN_NAME']] = $key;
+            }
+            $this->columns = [];
+            foreach ($columns as $column) {
+                $column['key_info'] = isset($keys[$column['Field']]) ? $keys[$column['Field']] : [];
+                $this->columns[$column['Field']] = $column;
+            }
         }
         return $this->columns;
     }

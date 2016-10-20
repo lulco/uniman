@@ -53,7 +53,20 @@
 				</td>
 				{foreach $columns as $column}
 					{php $value = isset($values[$column->getKey()]) ? $values[$column->getKey()] : null}
-					<td title="{if is_null($value)}NULL{else}{$value}{/if}" n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{else}{if $column->isNumeric()}{$value|formatNumber, $column->getDecimals()}{else}{$value|truncate:100}{/if}{/if}</td>
+					<td title="{if is_null($value)}NULL{else}{$value}{/if}" n:class="$column->isNumeric() ? 'text-right'">
+						{if is_null($value)}
+							<i>NULL</i>
+						{else}
+							{php $external = $column->getExternal()}
+							<a n:tag-if="$external" href="{link Item:edit, $driver, $external['database'], $type, $external['table'], $external['callback']($value)}">
+								{if $column->isNumeric()}
+									{$value|formatNumber, $column->getDecimals()}
+								{else}
+									{$value|truncate:100}
+								{/if}
+							</a>
+						{/if}
+					</td>
 				{/foreach}
 			</tr>
 		</tbody>

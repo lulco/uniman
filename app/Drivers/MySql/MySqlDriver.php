@@ -137,29 +137,42 @@ class MySqlDriver extends AbstractDriver
     public function columns($type, $table)
     {
         $columns = [];
-        foreach ($this->dataManager()->getColumns($type, $table) as $col) {
-            $columns[] = (new Column())
-                ->setKey($col['Field'])
-                ->setTitle($col['Field'])
+        foreach ($this->dataManager()->getColumns($type, $table) as $column => $definition) {
+            $col = (new Column())
+                ->setKey($column)
+                ->setTitle($column)
                 ->setIsSortable(true)
-                ->setIsNumeric($this->isNumeric($col))
-                ->setDecimals($this->getDecimals($col));
+                ->setIsNumeric($this->isNumeric($definition))
+                ->setDecimals($this->getDecimals($definition));
+            if ($definition['key_info'] && $definition['key_info']['REFERENCED_TABLE_NAME']) {
+                $col->setExternal(
+                    $definition['key_info']['REFERENCED_TABLE_SCHEMA'],
+                    $definition['key_info']['REFERENCED_TABLE_NAME'],
+                    function ($value) {
+                        return md5($value);
+                    }
+                );
+            }
+            $columns[] = $col;
         }
         return $columns;
     }
 
-    private function isNumeric(array $column)
+    private function isNumeric(array $definition)
     {
-        if (strpos($column['Type'], 'int') !== false) {
+        if ($definition['key_info']) {
+            return false;
+        }
+        if (strpos($definition['Type'], 'int') !== false) {
             return true;
         }
-        if (strpos($column['Type'], 'float') !== false) {
+        if (strpos($definition['Type'], 'float') !== false) {
             return true;
         }
-        if (strpos($column['Type'], 'double') !== false) {
+        if (strpos($definition['Type'], 'double') !== false) {
             return true;
         }
-        if (strpos($column['Type'], 'decimal') !== false) {
+        if (strpos($definition['Type'], 'decimal') !== false) {
             return true;
         }
         return false;
