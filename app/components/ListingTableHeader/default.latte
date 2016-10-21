@@ -15,7 +15,7 @@
 						{/if}
 					{/foreach}
 				{/foreach}
-				<a href="{link this, sorting => [0 => [$column->getKey() => $actualSort == 'asc' ? 'desc' : 'asc']]}" title="{if $actualSort == 'asc'}{_'core.descending'}{else}{_'core.ascending'}{/if}">
+				<a href="{link this, sorting => [0 => [$column->getKey() => $actualSort == 'desc' ? 'asc' : 'desc']]}" title="{if $actualSort == 'desc'}{_'core.ascending'}{else}{_'core.descending'}{/if}">
 					<i class="fa fa-sort{if $actualSort}-{$actualSort}{/if}"></i>
 				</a>
 			{/if}
