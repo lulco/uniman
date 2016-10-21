@@ -5,30 +5,7 @@
 </div>
 <div class="col-lg-10">
 	<table class="table text-nowrap">
-		<thead>
-			<tr>
-				<th></th>
-				<th n:foreach="$databasesHeaders as $column" n:class="$column->isNumeric() ? 'text-right'">
-					{_$column->getTitle()}
-					{if $column->getInfo()}
-						<a n:tag-if="$column->getInfoUrl()" href="{$column->getInfoUrl()}" target="_blank"><i class="fa fa-question-circle-o" title="{$column->getInfo()}" style="vertical-align: super;"></i></a>
-					{/if}
-					{if $column->isSortable()}
-						{php $actualSort = null}
-						{foreach $sorting as $sort}
-							{foreach $sort as $key => $direction}
-								{if $key == $column->getKey()}
-									{php $actualSort = $direction}
-								{/if}
-							{/foreach}
-						{/foreach}
-						<a href="{link this, sorting => [0 => [$column->getKey() => $actualSort == 'asc' ? 'desc' : 'asc']]}" title="{if $actualSort == 'asc'}{_'core.descending'}{else}{_'core.ascending'}{/if}">
-							<i class="fa fa-sort{if $actualSort}-{$actualSort}{/if}"></i>
-						</a>
-					{/if}
-				</th>
-			</tr>
-		</thead>
+		{include '../../../components/ListingTableHeader/default.latte', 'columns' => $databasesHeaders}
 		<tbody>
 			<tr n:foreach="$databases as $database => $databaseInfo">
 				<td>

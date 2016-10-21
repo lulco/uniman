@@ -3,9 +3,8 @@
 namespace Adminerng\Drivers\Memcache;
 
 use Adminerng\Core\AbstractDriver;
-use Adminerng\Core\Column;
 use Adminerng\Core\Exception\ConnectException;
-use Adminerng\Drivers\Memcache\Forms\MemcacheKeyForm;
+use Adminerng\Drivers\Memcache\Forms\MemcacheCredentialsForm;
 use Memcache;
 
 class MemcacheDriver extends AbstractDriver
@@ -29,6 +28,11 @@ class MemcacheDriver extends AbstractDriver
         ];
     }
 
+    public function getCredentialsForm()
+    {
+        return new MemcacheCredentialsForm();
+    }
+
     public function connect(array $credentials)
     {
         $this->connection = new Memcache();
@@ -41,59 +45,14 @@ class MemcacheDriver extends AbstractDriver
         }
     }
 
-    public function databasesHeaders()
+    protected function getFormManager()
     {
-        $fields = [
-            'server' => ['is_numeric' => false],
-            'process_id' => ['is_numeric' => false],
-            'uptime' => [],
-            'current_items' => [],
-            'total_items' => [],
-            'size' => [],
-            'active_slabs' => [],
-            'total_malloced' => [],
-        ];
-
-        $columns = [];
-        foreach ($fields as $key => $settings) {
-            $column = (new Column())
-                ->setKey($key)
-                ->setTitle('memcache.headers.servers.' . $key)
-                ->setIsSortable(true);
-            if (!isset($settings['is_numeric'])) {
-                $column->setIsNumeric(true);
-            }
-            $columns[] = $column;
-        }
-        return $columns;
+        return new MemcacheFormManager($this->connection);
     }
 
-    public function tablesHeaders()
+    protected function getHeaderManager()
     {
-        return [];
-    }
-
-    public function columns($type, $table)
-    {
-        $columns = [];
-        if ($type == self::TYPE_KEY) {
-            $columns[] = (new Column())
-                ->setKey('key')
-                ->setTitle('memcache.columns.' . $type . '.key');
-            $columns[] = (new Column())
-                ->setKey('value')
-                ->setTitle('memcache.columns.' . $type . '.value');
-            $columns[] = (new Column())
-                ->setKey('size')
-                ->setTitle('memcache.columns.' . $type . '.size');
-            $columns[] = (new Column())
-                ->setKey('expiration')
-                ->setTitle('memcache.columns.' . $type . '.expiration');
-            $columns[] = (new Column())
-                ->setKey('compressed')
-                ->setTitle('memcache.columns.' . $type . '.compressed');
-        }
-        return $columns;
+        return new MemcacheHeaderManager();
     }
 
     protected function getPermissions()
@@ -101,21 +60,8 @@ class MemcacheDriver extends AbstractDriver
         return new MemcachePermissions();
     }
 
-    protected function getCredentialsForm()
-    {
-        return new MemcacheForm();
-    }
-
     protected function getDataManager()
     {
         return new MemcacheDataManager($this->connection, $this->translator);
-    }
-
-    public function itemForm($database, $type, $table, $item)
-    {
-        if ($type === self::TYPE_KEY) {
-            return new MemcacheKeyForm($this->connection, $item);
-        }
-        parent::itemForm($database, $type, $table, $item);
     }
 }

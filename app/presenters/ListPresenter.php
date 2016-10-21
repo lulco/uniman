@@ -52,7 +52,7 @@ class ListPresenter extends BasePresenter
     public function renderDatabases($driver, array $sorting = [])
     {
         $this->template->driver = $driver;
-        $this->template->databasesHeaders = $this->driver->databasesHeaders();
+        $this->template->databasesHeaders = $this->driver->headerManager()->databasesHeaders();
         $this->template->databases = $this->driver->dataManager()->databases($sorting);
         $this->template->sorting = $sorting;
     }
@@ -73,7 +73,7 @@ class ListPresenter extends BasePresenter
         $this->template->driver = $driver;
         $this->template->database = $database;
         $this->template->tables = $tables;
-        $this->template->tablesHeaders = $this->driver->tablesHeaders();
+        $this->template->tablesHeaders = $this->driver->headerManager()->tablesHeaders();
         $this->template->sorting = $sorting;
     }
 
@@ -94,7 +94,7 @@ class ListPresenter extends BasePresenter
         $itemsCount = $this->driver->dataManager()->itemsCount($type, $table, $filter);
         $this->template->itemsCount = $itemsCount;
         $this->template->items = $this->driver->dataManager()->items($type, $table, $page, $onPage, $filter, $sorting);
-        $this->template->columns = $this->driver->columns($type, $table);
+        $this->template->columns = $this->driver->headerManager()->itemsHeaders($type, $table);
 
         $visualPaginator = $this['paginator'];
         $paginator = $visualPaginator->getPaginator();

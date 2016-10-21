@@ -2,6 +2,8 @@
 
 namespace Adminerng\Core;
 
+use Closure;
+
 class Column
 {
     /**
@@ -45,6 +47,16 @@ class Column
      * @var string
      */
     private $infoUrl;
+
+    /**
+     * external url settings for related items
+     * consists of 3 parts:
+     *  - database - database name
+     *  - table - table name
+     *  - callback - function to create item identifier
+     * @var array
+     */
+    private $external = [];
 
     public function setKey($key)
     {
@@ -121,5 +133,20 @@ class Column
     public function getInfoUrl()
     {
         return $this->infoUrl;
+    }
+
+    public function setExternal($database, $table, Closure $callback)
+    {
+        $this->external = [
+            'database' => $database,
+            'table' => $table,
+            'callback' => $callback,
+        ];
+        return $this;
+    }
+
+    public function getExternal()
+    {
+        return $this->external;
     }
 }

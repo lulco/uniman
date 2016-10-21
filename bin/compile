@@ -10,7 +10,6 @@ use Nette\Utils\Finder;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
- * TODO create as command
  * TODO add parameters (i.e.: languages - and compile only selected languages)
  * TODO optimize - do not include not needed files
  */
@@ -20,18 +19,24 @@ class Compile
 
     private $appRoot;
 
-    public function run()
+    public function __construct()
     {
         $this->appRoot = realpath(__DIR__ . '/..') . '/';
+    }
 
+    public function run()
+    {
         $name = 'index';
         $pharFile = $name . '.phar';
-        $pharTarget = __DIR__ . '/../build/' . $pharFile;
-        $phpTarget = __DIR__ . '/../build/' . $name . '.php';
+        if (!file_exists($this->appRoot . 'build')) {
+            mkdir($this->appRoot . 'build');
+        }
+        $pharTarget = $this->appRoot . 'build/' . $pharFile;
+        $phpTarget = $this->appRoot . 'build/' . $name . '.php';
 
         $this->phar = new Phar($pharTarget, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, $pharFile);
         $this->phar->startBuffering();
-        $this->addFile(__DIR__ . '/../app/bootstrap_live.php', 'app/bootstrap.php');
+        $this->addFile($this->appRoot . 'app/bootstrap_live.php', 'app/bootstrap.php');
 
         $files = Finder::findFiles([
             '*.php',
@@ -44,23 +49,23 @@ class Compile
             '*.ttf',
             '*.woff',
             '*.woff2',
+            '*.ico',
         ])->from([
-            __DIR__.'/../www/',
-            __DIR__.'/../app/Core/',
-            __DIR__.'/../app/Drivers/',
-            __DIR__.'/../app/Router/',
-            __DIR__.'/../app/components/',
-            __DIR__.'/../app/config/',
-            __DIR__.'/../app/lang/',
-            __DIR__.'/../app/presenters/',
-            __DIR__.'/../vendor/nette/',
-            __DIR__.'/../vendor/tracy/',
-            __DIR__.'/../vendor/latte/',
-            __DIR__.'/../vendor/lulco/',
-            __DIR__.'/../vendor/tomaj/',
-            __DIR__.'/../vendor/php-amqplib/',
-            __DIR__.'/../vendor/predis/',
-            __DIR__.'/../vendor/radekdostal/'
+            $this->appRoot . 'www/',
+            $this->appRoot . 'app/Core/',
+            $this->appRoot . 'app/Drivers/',
+            $this->appRoot . 'app/Router/',
+            $this->appRoot . 'app/components/',
+            $this->appRoot . 'app/config/',
+            $this->appRoot . 'app/lang/',
+            $this->appRoot . 'app/presenters/',
+            $this->appRoot . 'vendor/nette/',
+            $this->appRoot . 'vendor/latte/',
+            $this->appRoot . 'vendor/lulco/',
+            $this->appRoot . 'vendor/tomaj/',
+            $this->appRoot . 'vendor/php-amqplib/',
+            $this->appRoot . 'vendor/predis/',
+            $this->appRoot . 'vendor/radekdostal/'
         ])->exclude([
             '.git',
             '.svn',
@@ -75,14 +80,14 @@ class Compile
             $this->addFile($file);
         }
 
-        $this->addFile(__DIR__ . '/../vendor/autoload.php');
-        $this->addFile(__DIR__ . '/../vendor/composer/autoload_classmap.php');
-        $this->addFile(__DIR__ . '/../vendor/composer/autoload_files.php');
-        $this->addFile(__DIR__ . '/../vendor/composer/autoload_namespaces.php');
-        $this->addFile(__DIR__ . '/../vendor/composer/autoload_psr4.php');
-        $this->addFile(__DIR__ . '/../vendor/composer/autoload_real.php');
-        $this->addFile(__DIR__ . '/../vendor/composer/autoload_static.php');
-        $this->addFile(__DIR__ . '/../vendor/composer/ClassLoader.php');
+        $this->addFile($this->appRoot . 'vendor/autoload.php');
+        $this->addFile($this->appRoot . 'vendor/composer/autoload_classmap.php');
+        $this->addFile($this->appRoot . 'vendor/composer/autoload_files.php');
+        $this->addFile($this->appRoot . 'vendor/composer/autoload_namespaces.php');
+        $this->addFile($this->appRoot . 'vendor/composer/autoload_psr4.php');
+        $this->addFile($this->appRoot . 'vendor/composer/autoload_real.php');
+        $this->addFile($this->appRoot . 'vendor/composer/autoload_static.php');
+        $this->addFile($this->appRoot . 'vendor/composer/ClassLoader.php');
 
         $this->phar->setStub('<?php
         Phar::mapPhar(\'' . $pharFile . '\');

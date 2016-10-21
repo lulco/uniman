@@ -1,5 +1,6 @@
 application:
 	scanDirs: false
+	errorPresenter: Error
 	mapping:
 		*: Adminerng\Presenters\*Presenter
 

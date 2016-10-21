@@ -1,6 +1,6 @@
 {ifCurrent Default:*}
 {else}
-	<div class="pull-left" style="margin-bottom: -15px; padding-top: 20px;">
+	<div n:if="$driver" class="pull-left" style="margin-bottom: -15px; padding-top: 20px;">
 		<ul class="breadcrumb">
 			<li><a href="{if $driver}{plink Default:default, $driver}{else}{plink Default:default}{/if}">{_$driver . '.name'}</a></li>
 			<li n:if="$driver && !is_null($database)"><a href="{plink List:databases, $driver}">{_$driver . '.database_select_control.database.label'}</a></li>

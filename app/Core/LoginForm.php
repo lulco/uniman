@@ -3,6 +3,7 @@
 namespace Adminerng\Core;
 
 use Adminerng\Core\Credentials\CredentialsStorageInterface;
+use InvalidArgumentException;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Localization\ITranslator;
@@ -56,7 +57,11 @@ class LoginForm extends Control
             ->setOption('description', Html::el('span')->addText($this->translator->translate('core.missing_driver') . ' ')->addHtml(Html::el('a')->setAttribute('href', $this->presenter->link('Default:check'))->setAttribute('target', '_blank')->setText($this->translator->translate('core.check_why'))));
         if ($this->driver) {
             $driver = $this->driverStorage->getDriver($this->driver);
-            $driver->addFormFields($form);
+            $credentialsForm = $driver->getCredentialsForm();
+            if (!$credentialsForm) {
+                throw new InvalidArgumentException('Credentials form not set');
+            }
+            $credentialsForm->addFieldsToForm($form);
 
             $credentials = $this->credentialsStorage->getCredentials($this->driver);
             $form->setDefaults($credentials);

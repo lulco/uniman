@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Drivers\Memcache;
+namespace Adminerng\Drivers\Memcache\Forms;
 
 use Adminerng\Core\CredentialsFormInterface;
 use Nette\Application\UI\Form;
 
-class MemcacheForm implements CredentialsFormInterface
+class MemcacheCredentialsForm implements CredentialsFormInterface
 {
     public function addFieldsToForm(Form $form)
     {

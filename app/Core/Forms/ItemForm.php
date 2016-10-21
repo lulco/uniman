@@ -45,7 +45,7 @@ class ItemForm extends Control
         $form->setTranslator($this->translator);
         $form->setRenderer(new BootstrapVerticalRenderer());
 
-        $itemForm = $this->driver->itemForm($this->database, $this->type, $this->table, $this->item);
+        $itemForm = $this->driver->formManager()->itemForm($this->database, $this->type, $this->table, $this->item);
         if (!$itemForm) {
             throw new InvalidArgumentException('Item form not set');
         }

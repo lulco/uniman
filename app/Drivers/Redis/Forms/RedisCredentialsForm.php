@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Drivers\Redis;
+namespace Adminerng\Drivers\Redis\Forms;
 
 use Adminerng\Core\CredentialsFormInterface;
 use Nette\Application\UI\Form;
 
-class RedisForm implements CredentialsFormInterface
+class RedisCredentialsForm implements CredentialsFormInterface
 {
     public function addFieldsToForm(Form $form)
     {
