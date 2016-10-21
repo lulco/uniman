@@ -2,7 +2,7 @@
 
 namespace Adminerng\Components\DatabaseSelect;
 
-use Adminerng\Core\DriverInterface;
+use Adminerng\Core\Driver\DriverInterface;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Localization\ITranslator;

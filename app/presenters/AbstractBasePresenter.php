@@ -4,8 +4,8 @@ namespace Adminerng\Presenters;
 
 use Adminerng\Components\Breadcrumb\BreadcrumbControl;
 use Adminerng\Core\Credentials\CredentialsStorageInterface;
-use Adminerng\Core\DriverInterface;
-use Adminerng\Core\DriverStorage;
+use Adminerng\Core\Driver\DriverInterface;
+use Adminerng\Core\Driver\DriverStorage;
 use Nette\Application\UI\Presenter;
 use Nette\Localization\ITranslator;
 

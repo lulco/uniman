@@ -2,7 +2,7 @@
 
 namespace Adminerng\Drivers\Memcache;
 
-use Adminerng\Core\AbstractDriver;
+use Adminerng\Core\Driver\AbstractDriver;
 use Adminerng\Core\Exception\ConnectException;
 use Adminerng\Drivers\Memcache\Forms\MemcacheCredentialsForm;
 use Memcache;

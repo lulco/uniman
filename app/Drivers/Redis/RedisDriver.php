@@ -2,7 +2,7 @@
 
 namespace Adminerng\Drivers\Redis;
 
-use Adminerng\Core\AbstractDriver;
+use Adminerng\Core\Driver\AbstractDriver;
 use Adminerng\Core\Exception\ConnectException;
 use Adminerng\Drivers\Redis\Forms\RedisCredentialsForm;
 use RedisException;

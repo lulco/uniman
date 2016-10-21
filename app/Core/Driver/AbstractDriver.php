@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core;
+namespace Adminerng\Core\Driver;
 
 use Adminerng\Core\Forms\DefaultFormManager;
 use Adminerng\Core\Forms\FormManagerInterface;

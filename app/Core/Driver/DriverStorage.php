@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core;
+namespace Adminerng\Core\Driver;
 
 class DriverStorage
 {
@@ -11,7 +11,7 @@ class DriverStorage
         $this->drivers[$driver->type()] = $driver;
         return $this;
     }
-    
+
     /**
      * @return DriverInterface[]
      */
@@ -19,7 +19,7 @@ class DriverStorage
     {
         return $this->drivers;
     }
-    
+
     public function getDriver($driver)
     {
         return isset($this->drivers[$driver]) ? $this->drivers[$driver] : null;

@@ -2,7 +2,7 @@
 
 namespace Adminerng\Drivers\RabbitMQ;
 
-use Adminerng\Core\AbstractDriver;
+use Adminerng\Core\Driver\AbstractDriver;
 use Adminerng\Drivers\RabbitMQ\Forms\RabbitMQCredentialsForm;
 
 class RabbitMQDriver extends AbstractDriver

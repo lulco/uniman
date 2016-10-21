@@ -16,7 +16,7 @@ services:
 	- Adminerng\Core\Credentials\SessionStorageCredentials
 
 	-
-		class: Adminerng\Core\DriverStorage
+		class: Adminerng\Core\Driver\DriverStorage
 		setup: 
 			- add(Adminerng\Drivers\MySql\MySqlDriver())
 			- add(Adminerng\Drivers\Redis\RedisDriver())

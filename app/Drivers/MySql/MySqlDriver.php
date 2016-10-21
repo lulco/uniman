@@ -2,7 +2,7 @@
 
 namespace Adminerng\Drivers\MySql;
 
-use Adminerng\Core\AbstractDriver;
+use Adminerng\Core\Driver\AbstractDriver;
 use Adminerng\Core\Exception\ConnectException;
 use Adminerng\Drivers\MySql\Forms\MySqlCredentialsForm;
 use PDO;

@@ -2,7 +2,7 @@
 
 namespace Adminerng\Core\Forms;
 
-use Adminerng\Core\DriverInterface;
+use Adminerng\Core\Driver\DriverInterface;
 use InvalidArgumentException;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;

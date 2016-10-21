@@ -2,7 +2,7 @@
 
 namespace Adminerng\Components\DatabaseSelect;
 
-use Adminerng\Core\DriverInterface;
+use Adminerng\Core\Driver\DriverInterface;
 use Adminerng\Core\Exception\NoTablesJustItemsException;
 use Nette\Application\UI\Control;
 

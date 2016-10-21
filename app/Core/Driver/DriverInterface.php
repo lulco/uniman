@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core;
+namespace Adminerng\Core\Driver;
 
 use Adminerng\Core\Forms\FormManagerInterface;
 use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
