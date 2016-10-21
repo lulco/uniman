@@ -36,6 +36,26 @@ class Column
      */
     private $decimals = 0;
 
+    /**
+     * extended info about column
+     * @var string
+     */
+    private $info;
+
+    /**
+     * link to extended info about column
+     * @var string
+     */
+    private $infoUrl;
+
+    /**
+     * external url settings for related items
+     * consists of 3 parts:
+     *  - database - database name
+     *  - table - table name
+     *  - callback - function to create item identifier
+     * @var array
+     */
     private $external = [];
 
     public function setKey($key)
@@ -91,6 +111,28 @@ class Column
     public function getDecimals()
     {
         return $this->decimals;
+    }
+
+    public function setInfo($info)
+    {
+        $this->info = $info;
+        return $this;
+    }
+
+    public function getInfo()
+    {
+        return $this->info;
+    }
+
+    public function setInfoUrl($infoUrl)
+    {
+        $this->infoUrl = $infoUrl;
+        return $this;
+    }
+
+    public function getInfoUrl()
+    {
+        return $this->infoUrl;
     }
 
     public function setExternal($database, $table, Closure $callback)

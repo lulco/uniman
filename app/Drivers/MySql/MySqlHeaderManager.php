@@ -106,7 +106,8 @@ class MySqlHeaderManager implements HeaderManagerInterface
                 ->setTitle($column)
                 ->setIsSortable(true)
                 ->setIsNumeric($this->isNumeric($definition))
-                ->setDecimals($this->getDecimals($definition));
+                ->setDecimals($this->getDecimals($definition))
+                ->setInfo($definition['Comment']);
             if ($definition['key_info'] && $definition['key_info']['REFERENCED_TABLE_NAME']) {
                 $col->setExternal(
                     $definition['key_info']['REFERENCED_TABLE_SCHEMA'],
