@@ -33,18 +33,10 @@
 
 	<div n:if="$flashes" id="flash-alerts">
 		<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
 			{$flash->message|noescape}
 		</div>
 	</div>
 
-	<script n:if="$flashes">
-		setTimeout(function() {
-			document.getElementById('flash-alerts').remove();
-		}, 2500);
-	</script>
 	<div class="container-fluid">
 		<div class="row">
 			{include content}
