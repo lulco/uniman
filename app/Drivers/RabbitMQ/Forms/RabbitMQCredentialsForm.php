@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Drivers\RabbitMQ;
+namespace Adminerng\Drivers\RabbitMQ\Forms;
 
 use Adminerng\Core\CredentialsFormInterface;
 use Nette\Application\UI\Form;
 
-class RabbitMQForm implements CredentialsFormInterface
+class RabbitMQCredentialsForm implements CredentialsFormInterface
 {
     public function addFieldsToForm(Form $form)
     {

@@ -2,10 +2,9 @@
 
 namespace Adminerng\Core;
 
-use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
-use Adminerng\Core\Forms\TableForm\TableFormInterface;
+use Adminerng\Core\Forms\FormManagerInterface;
+use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
 use Adminerng\Core\Permissions\PermissionsInterface;
-use Nette\Application\UI\Form;
 
 interface DriverInterface
 {
@@ -26,6 +25,11 @@ interface DriverInterface
     public function check();
 
     /**
+     * @return CredentialsFormInterface
+     */
+    public function getCredentialsForm();
+
+    /**
      * @return array default credentials for connect
      */
     public function defaultCredentials();
@@ -37,43 +41,6 @@ interface DriverInterface
     public function connect(array $credentials);
 
     /**
-     * @return Column[]
-     */
-    public function databasesHeaders();
-
-    public function tablesHeaders();
-
-    /**
-     * @return Column[]
-     */
-    public function columns($type, $table);
-
-    /**
-     * adds fields to credential form
-     * @param Form $form
-     */
-    public function addFormFields(Form $form);
-
-    /**
-     * create / edit item form
-     * @param string $database
-     * @param string $type
-     * @param string $table
-     * @param mixed|null $item is null if create item form is rendered
-     * @return ItemFormInterface
-     */
-    public function itemForm($database, $type, $table, $item);
-
-    /**
-     * create / edit table form
-     * @param string $database
-     * @param string $type
-     * @param string|null $table
-     * @return TableFormInterface
-     */
-    public function tableForm($database, $type, $table);
-
-    /**
      * @return PermissionsInterface
      */
     public function permissions();
@@ -82,4 +49,14 @@ interface DriverInterface
      * @return DataManagerInterface
      */
     public function dataManager();
+
+    /**
+     * @return FormManagerInterface
+     */
+    public function formManager();
+
+    /**
+     * @return HeaderManagerInterface
+     */
+    public function headerManager();
 }

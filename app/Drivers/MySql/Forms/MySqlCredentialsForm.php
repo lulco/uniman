@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Drivers\MySql;
+namespace Adminerng\Drivers\MySql\Forms;
 
 use Adminerng\Core\CredentialsFormInterface;
 use Nette\Application\UI\Form;
 
-class MySqlForm implements CredentialsFormInterface
+class MySqlCredentialsForm implements CredentialsFormInterface
 {
     public function addFieldsToForm(Form $form)
     {

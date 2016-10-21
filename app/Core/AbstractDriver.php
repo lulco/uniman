@@ -2,10 +2,12 @@
 
 namespace Adminerng\Core;
 
+use Adminerng\Core\Forms\DefaultFormManager;
+use Adminerng\Core\Forms\FormManagerInterface;
 use Adminerng\Core\Helper\Formatter;
+use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
 use Adminerng\Core\Permissions\DefaultPermissions;
 use Adminerng\Core\Permissions\PermissionsInterface;
-use Nette\Application\UI\Form;
 use Nette\Localization\ITranslator;
 
 abstract class AbstractDriver implements DriverInterface
@@ -17,6 +19,10 @@ abstract class AbstractDriver implements DriverInterface
     protected $formatter;
 
     private $permissions;
+
+    private $formManager;
+
+    private $headerManager;
 
     private $dataManager;
 
@@ -64,27 +70,6 @@ abstract class AbstractDriver implements DriverInterface
         return [];
     }
 
-
-    final public function addFormFields(Form $form)
-    {
-        return $this->getCredentialsForm()->addFieldsToForm($form);
-    }
-
-    public function itemForm($database, $type, $table, $item)
-    {
-        return false;
-    }
-
-    public function tableForm($database, $type, $table)
-    {
-        return false;
-    }
-
-    /**
-     * @return CredentialsFormInterface
-     */
-    abstract protected function getCredentialsForm();
-
     /**
      * @return PermissionsInterface
      */
@@ -104,6 +89,42 @@ abstract class AbstractDriver implements DriverInterface
     {
         return new DefaultPermissions();
     }
+
+    /**
+     * @return FormManagerInterface
+     */
+    final public function formManager()
+    {
+        if ($this->formManager === null) {
+            $this->formManager = $this->getFormManager();
+        }
+        return $this->formManager;
+    }
+
+    /**
+     * can be overriden in child
+     * @return FormManagerInterface
+     */
+    protected function getFormManager()
+    {
+        return new DefaultFormManager();
+    }
+
+    /**
+     * @return HeaderManagerInterface
+     */
+    final public function headerManager()
+    {
+        if ($this->headerManager === null) {
+            $this->headerManager = $this->getHeaderManager();
+        }
+        return $this->headerManager;
+    }
+
+    /**
+     * @return HeaderManagerInterface
+     */
+    abstract protected function getHeaderManager();
 
     /**
      * @return DataManagerInterface

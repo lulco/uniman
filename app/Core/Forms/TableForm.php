@@ -42,7 +42,7 @@ class TableForm extends Control
         $form->setTranslator($this->translator);
         $form->setRenderer(new BootstrapVerticalRenderer());
 
-        $tableForm = $this->driver->tableForm($this->database, $this->type, $this->table);
+        $tableForm = $this->driver->formManager()->tableForm($this->database, $this->type, $this->table);
         if (!$tableForm) {
             throw new InvalidArgumentException('Item form not set');
         }
