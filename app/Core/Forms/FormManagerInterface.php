@@ -2,11 +2,19 @@
 
 namespace Adminerng\Core\Forms;
 
+use Adminerng\Core\Forms\DatabaseForm\DatabaseFormInterface;
 use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
 use Adminerng\Core\Forms\TableForm\TableFormInterface;
 
 interface FormManagerInterface
 {
+    /**
+     * create / edit database form
+     * @param string|null $database
+     * @return DatabaseFormInterface
+     */
+    public function databaseForm($database);
+
     /**
      * create / edit table form
      * @param string $database

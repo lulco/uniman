@@ -35,4 +35,19 @@ class MySqlPermissions implements PermissionsInterface
     {
         return $database !== 'information_schema';
     }
+
+    public function canCreateDatabase()
+    {
+        return true;
+    }
+
+    public function canDeleteDatabase()
+    {
+        return false;
+    }
+
+    public function canEditDatabase()
+    {
+        return false;
+    }
 }

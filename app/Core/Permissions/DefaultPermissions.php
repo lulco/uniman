@@ -33,4 +33,19 @@ class DefaultPermissions implements PermissionsInterface
     {
         return false;
     }
+
+    public function canCreateDatabase()
+    {
+        return false;
+    }
+
+    public function canEditDatabase()
+    {
+        return false;
+    }
+
+    public function canDeleteDatabase()
+    {
+        return false;
+    }
 }

@@ -15,4 +15,10 @@ interface PermissionsInterface
     public function canEditTable($database, $type, $table);
 
     public function canDeleteTable($database, $type, $table);
+
+    public function canCreateDatabase();
+
+    public function canEditDatabase();
+    
+    public function canDeleteDatabase();
 }

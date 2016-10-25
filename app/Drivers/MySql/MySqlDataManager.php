@@ -39,7 +39,8 @@ class MySqlDataManager extends AbstractDataManager
         $query = 'SELECT information_schema.SCHEMATA.*, count(*) AS tables_count, SUM(information_schema.TABLES.DATA_LENGTH) AS size
 FROM information_schema.SCHEMATA
 LEFT JOIN information_schema.TABLES ON information_schema.SCHEMATA.SCHEMA_NAME = information_schema.TABLES.TABLE_SCHEMA
-GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
+GROUP BY information_schema.SCHEMATA.SCHEMA_NAME
+ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
 
         $databases = [];
         foreach ($this->connection->query($query)->fetchAll(PDO::FETCH_ASSOC) as $database) {
