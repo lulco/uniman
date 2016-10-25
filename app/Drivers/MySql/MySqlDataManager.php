@@ -2,13 +2,13 @@
 
 namespace Adminerng\Drivers\MySql;
 
-use Adminerng\Core\DataManagerInterface;
+use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Helper\Formatter;
 use Adminerng\Core\Multisort;
 use InvalidArgumentException;
 use PDO;
 
-class MySqlDataManager implements DataManagerInterface
+class MySqlDataManager extends AbstractDataManager
 {
     private $columns = null;
 
@@ -135,20 +135,6 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
         $orderBy .= implode(', ', $order);
         return $orderBy;
     }
-
-    /**
-     * TODO create abstract data manager
-     * Implement this method if permission canDeleteItem is true
-     * @param string $database
-     * @param string $type
-     * @param string $table
-     * @param string $item
-     * @return boolean
-     */
-//    public function deleteItem($database, $type, $table, $item)
-//    {
-//        return false;
-//    }
 
     public function loadItem($type, $table, $item)
     {

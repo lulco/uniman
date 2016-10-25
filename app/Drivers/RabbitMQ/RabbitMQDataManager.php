@@ -2,13 +2,13 @@
 
 namespace Adminerng\Drivers\RabbitMQ;
 
-use Adminerng\Core\DataManagerInterface;
+use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Helper\Formatter;
 use Adminerng\Core\Multisort;
 use Nette\Localization\ITranslator;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
-class RabbitMQDataManager implements DataManagerInterface
+class RabbitMQDataManager extends AbstractDataManager
 {
     private $translator;
 
@@ -111,11 +111,6 @@ class RabbitMQDataManager implements DataManagerInterface
             }
         }
         return array_slice($items, ($page - 1) * $onPage, $onPage, true);
-    }
-
-    public function deleteItem($type, $table, $item)
-    {
-        return false;
     }
 
     public function deleteTable($type, $queue)

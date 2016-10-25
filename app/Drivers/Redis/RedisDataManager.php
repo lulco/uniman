@@ -2,11 +2,11 @@
 
 namespace Adminerng\Drivers\Redis;
 
-use Adminerng\Core\DataManagerInterface;
+use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Multisort;
 use RedisProxy\RedisProxy;
 
-class RedisDataManager implements DataManagerInterface
+class RedisDataManager extends AbstractDataManager
 {
     private $connection;
 
@@ -134,8 +134,7 @@ class RedisDataManager implements DataManagerInterface
         if ($type == RedisDriver::TYPE_SET) {
             return $this->connection->srem($table, $item);
         }
-        // TODO throw exception if type is not found?
-        return false;
+        return parent::deleteItem($type, $table, $item);
     }
 
     public function deleteTable($type, $table)

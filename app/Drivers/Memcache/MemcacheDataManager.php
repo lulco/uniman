@@ -2,13 +2,13 @@
 
 namespace Adminerng\Drivers\Memcache;
 
-use Adminerng\Core\DataManagerInterface;
+use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Exception\NoTablesJustItemsException;
 use Adminerng\Core\Multisort;
 use Memcache;
 use Nette\Localization\ITranslator;
 
-class MemcacheDataManager implements DataManagerInterface
+class MemcacheDataManager extends AbstractDataManager
 {
     private $translator;
 
@@ -104,11 +104,6 @@ class MemcacheDataManager implements DataManagerInterface
     public function deleteItem($type, $table, $item)
     {
         return $this->connection->delete($item);
-    }
-
-    public function deleteTable($type, $table)
-    {
-        return false;
     }
 
     public function selectDatabase($database)
