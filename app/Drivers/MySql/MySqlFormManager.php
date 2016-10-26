@@ -3,6 +3,7 @@
 namespace Adminerng\Drivers\MySql;
 
 use Adminerng\Core\Forms\DefaultFormManager;
+use Adminerng\Drivers\Mysql\Forms\MySqlDatabaseForm;
 use Adminerng\Drivers\Mysql\Forms\MySqlItemForm;
 use PDO;
 
@@ -21,5 +22,10 @@ class MySqlFormManager extends DefaultFormManager
     public function itemForm($database, $type, $table, $item)
     {
         return new MySqlItemForm($this->connection, $this->dataManager, $type, $table, $item);
+    }
+
+    public function databaseForm($database)
+    {
+        return new MySqlDatabaseForm($this->connection, $database);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Adminerng\Drivers\Redis;
 
-use Adminerng\Core\Permissions\PermissionsInterface;
+use Adminerng\Core\Permissions\DefaultPermissions;
 
-class RedisPermissions implements PermissionsInterface
+class RedisPermissions extends DefaultPermissions
 {
     public function canCreateItem($database, $type, $table)
     {

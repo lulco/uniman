@@ -13,4 +13,9 @@ class DefaultFormManager implements FormManagerInterface
     {
         return false;
     }
+
+    public function databaseForm($database)
+    {
+        return false;
+    }
 }

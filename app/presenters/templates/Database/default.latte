@@ -4,6 +4,16 @@
 	{control databaseSelect}
 </div>
 <div class="col-lg-10">
+	<div class="row">
+		<div class="col-lg-10">
+			<h3>{_$driver . '.database_select_control.database.label'} ({count($databases)|formatNumber})</h3>
+		</div>
+		<div class="col-lg-2">
+			<div n:if="$actualDriver->permissions()->canCreateDatabase()" class="pull-right">
+				<a class="btn btn-default" style="margin-right: 20px;" href="{link Database:create, $driver}">Create new</a>
+			</div>
+		</div>
+	</div>
 	<table class="table text-nowrap">
 		{include '../../../components/ListingTableHeader/default.latte', 'columns' => $databasesHeaders}
 		<tbody>
@@ -11,6 +21,8 @@
 				<td>
 					<div class="btn-group">
 						<a href="{link List:tables, $driver, $database}" class="btn-default" title="{$database}"><i class="fa fa-eye"></i></a>
+						<a n:if="$actualDriver->permissions()->canEditDatabase($database)" href="{link Database:edit, $driver, $database}" class="btn-default"><i class="fa fa-edit"></i></a>
+						<a n:if="$actualDriver->permissions()->canDeleteDatabase($database)" href="{link Database:delete, $driver, $database}" class="btn-default"><i class="fa fa-trash"></i></a>
 					</div>
 				</td>
 				{foreach $databasesHeaders as $column}

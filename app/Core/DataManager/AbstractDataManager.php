@@ -10,6 +10,7 @@ abstract class AbstractDataManager implements DataManagerInterface
      * @param string $table
      * @param string $item
      * @return boolean|null
+     * @see DataManagerInterface
      */
     public function deleteItem($type, $table, $item)
     {
@@ -21,8 +22,20 @@ abstract class AbstractDataManager implements DataManagerInterface
      * @param string $type
      * @param string $table
      * @return boolean|null
+     * @see DataManagerInterface
      */
     public function deleteTable($type, $table)
+    {
+        return null;
+    }
+
+    /**
+     * Implement this method if permission canDeleteDatabase is true
+     * @param string $database
+     * @return boolean|null
+     * @see DataManagerInterface
+     */
+    public function deleteDatabase($database)
     {
         return null;
     }

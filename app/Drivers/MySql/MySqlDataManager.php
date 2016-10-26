@@ -39,7 +39,8 @@ class MySqlDataManager extends AbstractDataManager
         $query = 'SELECT information_schema.SCHEMATA.*, count(*) AS tables_count, SUM(information_schema.TABLES.DATA_LENGTH) AS size
 FROM information_schema.SCHEMATA
 LEFT JOIN information_schema.TABLES ON information_schema.SCHEMATA.SCHEMA_NAME = information_schema.TABLES.TABLE_SCHEMA
-GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
+GROUP BY information_schema.SCHEMATA.SCHEMA_NAME
+ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
 
         $databases = [];
         foreach ($this->connection->query($query)->fetchAll(PDO::FETCH_ASSOC) as $database) {
@@ -143,7 +144,6 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
         return $this->connection->query($query)->fetch(PDO::FETCH_ASSOC);
     }
 
-
     public function deleteItem($type, $table, $item)
     {
         $primaryColumns = $this->getPrimaryColumns($type, $table);
@@ -161,6 +161,12 @@ GROUP BY information_schema.TABLES.TABLE_SCHEMA ORDER BY information_schema.SCHE
         } else {
             throw new InvalidArgumentException('Type "' . $type . '" is not supported');
         }
+        return $this->connection->query($query);
+    }
+
+    public function deleteDatabase($database)
+    {
+        $query = 'DROP DATABASE `' . $database . '`';
         return $this->connection->query($query);
     }
 

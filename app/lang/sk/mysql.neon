@@ -10,6 +10,10 @@ item_form_header:
 		create: Vytvoriť nový záznam do tabuľky
 		edit: Úprava záznamu v tabuľke
 
+database_form_header:
+	create: Vytvorenie novej databázy
+	edit: Úprava databázy
+
 table_type:
 	table:
 		title: Tabuľky

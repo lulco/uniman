@@ -35,6 +35,10 @@ item_form_header:
 		create: Create new item in table
 		edit: Edit item in table
 
+database_form_header:
+	create: Create new database
+	edit: Edit database
+
 table_type:
 	table:
 		title: Tables
