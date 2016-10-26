@@ -2,9 +2,9 @@
 
 namespace Adminerng\Drivers\MySql;
 
-use Adminerng\Core\Permissions\PermissionsInterface;
+use Adminerng\Core\Permissions\DefaultPermissions;
 
-class MySqlPermissions implements PermissionsInterface
+class MySqlPermissions extends DefaultPermissions
 {
     public function canCreateItem($database, $type, $table)
     {
@@ -19,16 +19,6 @@ class MySqlPermissions implements PermissionsInterface
     public function canDeleteItem($database, $type, $table, $item)
     {
         return $database !== 'information_schema';
-    }
-
-    public function canCreateTable($database, $type)
-    {
-        return false;
-    }
-
-    public function canEditTable($database, $type, $table)
-    {
-        return false;
     }
 
     public function canDeleteTable($database, $type, $table)
