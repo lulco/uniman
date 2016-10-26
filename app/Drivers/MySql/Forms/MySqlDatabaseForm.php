@@ -36,26 +36,34 @@ class MySqlDatabaseForm implements DatabaseFormInterface
 
         $form->addSelect('collation', 'Collation', $collations)
             ->setPrompt('Default collation');
+
+        if ($this->database) {
+            $form['name']->setDisabled();
+            $defaults = $this->pdo->query("SELECT `SCHEMA_NAME` AS `name`, `DEFAULT_CHARACTER_SET_NAME` AS `charset`, `DEFAULT_COLLATION_NAME` AS `collation` FROM `information_schema`.`SCHEMATA` WHERE `SCHEMA_NAME` = '{$this->database}'")->fetch(PDO::FETCH_ASSOC);
+            $form->setDefaults($defaults);
+        }
     }
 
     public function submit(Form $form, ArrayHash $values)
     {
-        if (!$this->database) {
+        if ($this->database) {
+            $query = 'ALTER DATABASE ' . $this->database;
+        } else {
             $query = 'CREATE DATABASE ' . $values['name'];
-            if ($values['charset']) {
-                $query .= ' CHARACTER SET ' . $values['charset'];
-                if ($values['collation']) {
-                    $query .= ' COLLATE ' . $values['collation'];
-                }
-            }
-
-            $statement = $this->pdo->prepare($query);
-            $res = $statement->execute();
-            if ($res === false) {
-                $form->addError($statement->errorInfo()[2]);
-                return;
-            }
-            return $res;
         }
+        if ($values['charset']) {
+            $query .= ' CHARACTER SET ' . $values['charset'];
+            if ($values['collation']) {
+                $query .= ' COLLATE ' . $values['collation'];
+            }
+        }
+
+        $statement = $this->pdo->prepare($query);
+        $res = $statement->execute();
+        if ($res === false) {
+            $form->addError($statement->errorInfo()[2]);
+            return;
+        }
+        return $res;
     }
 }

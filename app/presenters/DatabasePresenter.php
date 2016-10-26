@@ -16,30 +16,27 @@ class DatabasePresenter extends BasePresenter
         $this->template->driver = $driver;
     }
 
-//    public function actionEdit($driver, $database, $type, $table, $item)
-//    {
-//        if (!$this->driver->permissions()->canEditItem($database, $type, $table, $item)) {
-//            throw new ForbiddenRequestException('Edit item is not allowed');
-//        }
-//        $this->template->driver = $driver;
-//        $this->database = $database;
-//        $this->template->type = $this->type = $type;
-//        $this->table = $table;
-//        $this->item = $item;
-//    }
-//
-//    public function actionDelete($driver, $database, $type, $table, $item)
-//    {
-//        if (!$this->driver->permissions()->canDeleteItem($database, $type, $table, $item)) {
-//            throw new ForbiddenRequestException('Delete item is not allowed');
-//        }
-//        if ($this->driver->dataManager()->deleteItem($type, $table, $item)) {
-//            $this->flashMessage('Item was successfully deleted', 'success');
-//        } else {
-//            $this->flashMessage('Item was not deleted', 'danger');
-//        }
-//        $this->redirect('List:items', $driver, $database, $type, $table);
-//    }
+    public function actionEdit($driver, $database)
+    {
+        if (!$this->driver->permissions()->canEditDatabase($database)) {
+            throw new ForbiddenRequestException('Edit database is not allowed');
+        }
+        $this->template->driver = $driver;
+        $this->database = $database;
+    }
+
+    public function actionDelete($driver, $database)
+    {
+        if (!$this->driver->permissions()->canDeleteDatabase($database)) {
+            throw new ForbiddenRequestException('Delete database is not allowed');
+        }
+        if ($this->driver->dataManager()->deleteDatabase($database)) {
+            $this->flashMessage('Database was successfully deleted', 'success');
+        } else {
+            $this->flashMessage('Database was not deleted', 'danger');
+        }
+        $this->redirect('List:databases', $driver);
+    }
 
     protected function createComponentDatabaseSelect()
     {

@@ -55,4 +55,11 @@ interface DataManagerInterface
      * @return boolean|null true if delete was successfull, false if not, null if delete table is not allowed
      */
     public function deleteTable($type, $table);
+
+    /**
+     *
+     * @param string $database
+     * @return boolean|null true if delete was successfull, false if not, null if delete table is not allowed
+     */
+    public function deleteDatabase($database);
 }

@@ -41,13 +41,13 @@ class MySqlPermissions implements PermissionsInterface
         return true;
     }
 
-    public function canDeleteDatabase()
+    public function canEditDatabase($database)
     {
-        return false;
+        return true;
     }
 
-    public function canEditDatabase()
+    public function canDeleteDatabase($database)
     {
-        return false;
+        return $database !== 'information_schema';
     }
 }

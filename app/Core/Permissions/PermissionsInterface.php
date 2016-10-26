@@ -18,7 +18,7 @@ interface PermissionsInterface
 
     public function canCreateDatabase();
 
-    public function canEditDatabase();
-    
-    public function canDeleteDatabase();
+    public function canEditDatabase($database);
+
+    public function canDeleteDatabase($database);
 }

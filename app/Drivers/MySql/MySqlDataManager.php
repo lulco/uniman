@@ -144,7 +144,6 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
         return $this->connection->query($query)->fetch(PDO::FETCH_ASSOC);
     }
 
-
     public function deleteItem($type, $table, $item)
     {
         $primaryColumns = $this->getPrimaryColumns($type, $table);
@@ -162,6 +161,12 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
         } else {
             throw new InvalidArgumentException('Type "' . $type . '" is not supported');
         }
+        return $this->connection->query($query);
+    }
+
+    public function deleteDatabase($database)
+    {
+        $query = 'DROP DATABASE `' . $database . '`';
         return $this->connection->query($query);
     }
 
