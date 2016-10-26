@@ -53,7 +53,7 @@ class ItemForm extends Control
         $form->addSubmit('save', 'Save');
         $form->onSuccess[] = [$itemForm, 'submit'];
         $form->onSuccess[] = function () {
-            $this->presenter->redirect('List:items', $this->driver->type(), $this->database, $this->type, $this->table);
+            $this->presenter->redirect('Item:default', $this->driver->type(), $this->database, $this->type, $this->table);
         };
         return $form;
     }

@@ -50,7 +50,7 @@ class TableForm extends Control
         $form->addSubmit('save', 'Save');
         $form->onSuccess[] = [$tableForm, 'submit'];
         $form->onSuccess[] = function () {
-            $this->presenter->redirect('List:tables', $this->driver->type(), $this->database);
+            $this->presenter->redirect('Table:default', $this->driver->type(), $this->database);
         };
         return $form;
     }

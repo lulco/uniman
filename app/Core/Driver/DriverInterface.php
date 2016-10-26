@@ -2,6 +2,8 @@
 
 namespace Adminerng\Core\Driver;
 
+use Adminerng\Core\CredentialsFormInterface;
+use Adminerng\Core\DataManager\DataManagerInterface;
 use Adminerng\Core\Forms\FormManagerInterface;
 use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
 use Adminerng\Core\Permissions\PermissionsInterface;

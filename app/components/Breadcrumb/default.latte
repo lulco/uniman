@@ -5,9 +5,9 @@
 			<li><a href="{if $driver}{plink Default:default, $driver}{else}{plink Default:default}{/if}">{_$driver . '.name'}</a></li>
 			<li n:if="$driver && !is_null($database)"><a href="{plink Database:default, $driver}">{_$driver . '.database_select_control.database.label'}</a></li>
 			<li n:if="$driver && is_null($database)" class="active">{_$driver . '.database_select_control.database.label'}</li>
-			<li n:if="$driver && !is_null($database) && $type && $table"><a href="{plink List:tables, $driver, $database}">{$database}</a></li>
+			<li n:if="$driver && !is_null($database) && $type && $table"><a href="{plink Table:default, $driver, $database}">{$database}</a></li>
 			<li n:if="$driver && !is_null($database) && (!$type || !$table)" class="active">{$database}</li>
-			<li n:if="$driver && !is_null($database) && $type && $table && $item"><a href="{plink List:items, $driver, $database, $type, $table}">{$table}</a></li>
+			<li n:if="$driver && !is_null($database) && $type && $table && $item"><a href="{plink Item:default, $driver, $database, $type, $table}">{$table}</a></li>
 			<li n:if="$driver && !is_null($database) && $type && $table && !$item" class="active">{$table}</li>
 		</ul>
 	</div>

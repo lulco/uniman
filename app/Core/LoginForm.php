@@ -79,7 +79,7 @@ class LoginForm extends Control
         $values = (array)$values;
         $this->credentialsStorage->setCredentials($this->driver, $values);
         if (isset($values['database']) && $values['database']) {
-            $this->presenter->redirect('List:tables', $this->driver, $values['database']);
+            $this->presenter->redirect('Table:default', $this->driver, $values['database']);
         }
         $this->presenter->redirect('Database:default', $this->driver);
     }

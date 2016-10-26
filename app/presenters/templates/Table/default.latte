@@ -13,7 +13,7 @@
 				</div>
 				<div class="col-lg-2">
 					<div n:if="$actualDriver->permissions()->canCreateTable($database, $type)" class="pull-right">
-						<a class="btn btn-default" style="margin-right: 20px;" href="{link List:create, $driver, $database, $type}">Create new</a>
+						<a class="btn btn-default" style="margin-right: 20px;" href="{link Table:create, $driver, $database, $type}">Create new</a>
 					</div>
 				</div>
 			</div>
@@ -24,9 +24,9 @@
 						<tr n:foreach="$rows as $table => $values">
 							<td>
 								<div class="btn-group">
-									<a href="{link List:items, $driver, $database, $type, $table}" class="btn-default" title="{$table}"><i class="fa fa-eye"></i></a>
-									<a n:if="$actualDriver->permissions()->canEditTable($database, $type, $table)" class="btn-default" href="{link List:edit, $driver, $database, $type, $table}"><i class="fa fa-edit"></i></a>
-									<a n:if="$actualDriver->permissions()->canDeleteTable($database, $type, $table)" class="btn-default" href="{link List:delete, $driver, $database, $type, $table}"><i class="fa fa-trash"></i></a>
+									<a href="{link Item:default, $driver, $database, $type, $table}" class="btn-default" title="{$table}"><i class="fa fa-eye"></i></a>
+									<a n:if="$actualDriver->permissions()->canEditTable($database, $type, $table)" class="btn-default" href="{link Table:edit, $driver, $database, $type, $table}"><i class="fa fa-edit"></i></a>
+									<a n:if="$actualDriver->permissions()->canDeleteTable($database, $type, $table)" class="btn-default" href="{link Table:delete, $driver, $database, $type, $table}"><i class="fa fa-trash"></i></a>
 								</div>
 							</td>
 							{foreach $tablesHeaders[$type] as $column}

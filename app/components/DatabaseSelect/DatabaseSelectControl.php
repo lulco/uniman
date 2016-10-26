@@ -40,7 +40,7 @@ class DatabaseSelectControl extends Control
         $form->setRenderer(new BootstrapVerticalRenderer());
         $form->addSelect('database', $this->translator->translate($this->driver->type() . '.database_select_control.database.label'), array_combine($databases, $databases))
             ->setPrompt($this->translator->translate($this->driver->type() . '.database_select_control.database.prompt'))
-            ->setAttribute('onchange', 'window.location = \'' . $this->presenter->link('List:tables', $this->driver->type()) . '&database=\' + this.value')
+            ->setAttribute('onchange', 'window.location = \'' . $this->presenter->link('Table:default', $this->driver->type()) . '&database=\' + this.value')
             ->setDefaultValue($this->database);
         return $form;
     }
