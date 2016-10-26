@@ -33,7 +33,7 @@ class DatabasePresenter extends BasePresenter
         $this->database = $database;
     }
 
-    public function actionDelete($driver, $database)
+    public function handleDelete($driver, $database)
     {
         if (!$this->driver->permissions()->canDeleteDatabase($database)) {
             throw new ForbiddenRequestException('Delete database is not allowed');
@@ -43,7 +43,7 @@ class DatabasePresenter extends BasePresenter
         } else {
             $this->flashMessage('Database was not deleted', 'danger');
         }
-        $this->redirect('Database:default', $driver);
+        $this->redirect('this', $driver);
     }
 
     protected function createComponentDatabaseSelect()

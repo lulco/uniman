@@ -26,7 +26,7 @@
 								<div class="btn-group">
 									<a href="{link Item:default, $driver, $database, $type, $table}" class="btn-default" title="{$table}"><i class="fa fa-eye"></i></a>
 									<a n:if="$actualDriver->permissions()->canEditTable($database, $type, $table)" class="btn-default" href="{link Table:edit, $driver, $database, $type, $table}"><i class="fa fa-edit"></i></a>
-									<a n:if="$actualDriver->permissions()->canDeleteTable($database, $type, $table)" class="btn-default" href="{link Table:delete, $driver, $database, $type, $table}"><i class="fa fa-trash"></i></a>
+									<a n:if="$actualDriver->permissions()->canDeleteTable($database, $type, $table)" class="btn-default" href="{link delete!, $driver, $database, $type, $table}"><i class="fa fa-trash"></i></a>
 								</div>
 							</td>
 							{foreach $tablesHeaders[$type] as $column}

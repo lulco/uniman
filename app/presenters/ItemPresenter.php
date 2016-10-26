@@ -63,7 +63,7 @@ class ItemPresenter extends BasePresenter
         $this->item = $item;
     }
 
-    public function actionDelete($driver, $database, $type, $table, $item)
+    public function handleDelete($driver, $database, $type, $table, $item)
     {
         if (!$this->driver->permissions()->canDeleteItem($database, $type, $table, $item)) {
             throw new ForbiddenRequestException('Delete item is not allowed');
@@ -73,7 +73,7 @@ class ItemPresenter extends BasePresenter
         } else {
             $this->flashMessage('Item was not deleted', 'danger');
         }
-        $this->redirect('Item:default', $driver, $database, $type, $table);
+        $this->redirect('this', $driver, $database, $type, $table);
     }
 
     protected function createComponentDatabaseSelect()

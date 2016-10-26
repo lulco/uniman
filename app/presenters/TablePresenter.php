@@ -50,7 +50,7 @@ class TablePresenter extends BasePresenter
         $this->table = $table;
     }
 
-    public function actionDelete($driver, $database, $type, $table)
+    public function handleDelete($driver, $database, $type, $table)
     {
         if (!$this->driver->permissions()->canDeleteTable($database, $type, $table)) {
             throw new ForbiddenRequestException('Delete table is not allowed');
@@ -60,7 +60,7 @@ class TablePresenter extends BasePresenter
         } else {
             $this->flashMessage('Table was not deleted', 'danger');
         }
-        $this->redirect('Table:default', $driver, $database);
+        $this->redirect('this', $driver, $database);
     }
 
     protected function createComponentDatabaseSelect()
