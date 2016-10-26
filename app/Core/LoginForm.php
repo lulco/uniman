@@ -81,6 +81,6 @@ class LoginForm extends Control
         if (isset($values['database']) && $values['database']) {
             $this->presenter->redirect('List:tables', $this->driver, $values['database']);
         }
-        $this->presenter->redirect('List:databases', $this->driver);
+        $this->presenter->redirect('Database:default', $this->driver);
     }
 }

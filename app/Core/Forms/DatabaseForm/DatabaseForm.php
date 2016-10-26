@@ -44,7 +44,7 @@ class DatabaseForm extends Control
         $form->addSubmit('save', 'Save');
         $form->onSuccess[] = [$databaseForm, 'submit'];
         $form->onSuccess[] = function () {
-            $this->presenter->redirect('List:databases', $this->driver->type());
+            $this->presenter->redirect('Database:default', $this->driver->type());
         };
         return $form;
     }

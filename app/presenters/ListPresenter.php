@@ -49,18 +49,10 @@ class ListPresenter extends BasePresenter
         $this->redirect('List:tables', $driver, $database);
     }
 
-    public function renderDatabases($driver, array $sorting = [])
-    {
-        $this->template->driver = $driver;
-        $this->template->databasesHeaders = $this->driver->headerManager()->databasesHeaders();
-        $this->template->databases = $this->driver->dataManager()->databases($sorting);
-        $this->template->sorting = $sorting;
-    }
-
     public function renderTables($driver, $database = null, array $sorting = [])
     {
         if ($database === null) {
-            $this->redirect('List:databases', $driver);
+            $this->redirect('Database:default', $driver);
         }
         $this->database = $database;
 

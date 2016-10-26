@@ -8,6 +8,14 @@ use Nette\Application\ForbiddenRequestException;
 
 class DatabasePresenter extends BasePresenter
 {
+    public function renderDefault($driver, array $sorting = [])
+    {
+        $this->template->driver = $driver;
+        $this->template->databasesHeaders = $this->driver->headerManager()->databasesHeaders();
+        $this->template->databases = $this->driver->dataManager()->databases($sorting);
+        $this->template->sorting = $sorting;
+    }
+
     public function actionCreate($driver)
     {
         if (!$this->driver->permissions()->canCreateDatabase()) {
@@ -35,7 +43,7 @@ class DatabasePresenter extends BasePresenter
         } else {
             $this->flashMessage('Database was not deleted', 'danger');
         }
-        $this->redirect('List:databases', $driver);
+        $this->redirect('Database:default', $driver);
     }
 
     protected function createComponentDatabaseSelect()
