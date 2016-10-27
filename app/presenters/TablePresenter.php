@@ -2,7 +2,6 @@
 
 namespace Adminerng\Presenters;
 
-use Adminerng\Components\DatabaseSelect\DatabaseSelectControl;
 use Adminerng\Core\Exception\NoTablesJustItemsException;
 use Adminerng\Core\Forms\TableForm;
 use Nette\Application\ForbiddenRequestException;
@@ -61,11 +60,6 @@ class TablePresenter extends BasePresenter
             $this->flashMessage('Table was not deleted', 'danger');
         }
         $this->redirect('this', $driver, $database);
-    }
-
-    protected function createComponentDatabaseSelect()
-    {
-        return new DatabaseSelectControl($this->driver, $this->translator, $this->database);
     }
 
     protected function createComponentForm()

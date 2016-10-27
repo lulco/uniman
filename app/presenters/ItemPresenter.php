@@ -2,7 +2,6 @@
 
 namespace Adminerng\Presenters;
 
-use Adminerng\Components\DatabaseSelect\DatabaseSelectControl;
 use Adminerng\Components\DatabaseSelect\TablesSideBarControl;
 use Adminerng\Core\Forms\ItemForm;
 use App\Component\VisualPaginator;
@@ -74,11 +73,6 @@ class ItemPresenter extends BasePresenter
             $this->flashMessage('Item was not deleted', 'danger');
         }
         $this->redirect('this', $driver, $database, $type, $table);
-    }
-
-    protected function createComponentDatabaseSelect()
-    {
-        return new DatabaseSelectControl($this->driver, $this->translator, $this->database);
     }
 
     protected function createComponentForm()

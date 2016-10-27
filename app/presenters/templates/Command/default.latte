@@ -1,0 +1,32 @@
+{block content}
+
+<div class="col-lg-2">
+	{control databaseSelect}
+</div>
+<div class="col-lg-10">
+	<h3>{_$driver . '.command'}</h3>
+	{foreach $results as $command => $items}
+		<p>{$command}</p>
+		<table n:ifset="$items[0]" class="table text-nowrap">
+			<thead>
+				<tr>
+					<th n:foreach="$items[0] as $key => $value">{$key}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr n:foreach="$items as $values">
+					{foreach $values as $value}
+						<td title="{if is_null($value)}NULL{else}{$value}{/if}">
+							{if is_null($value)}
+								<i>NULL</i>
+							{else}
+								{$value|truncate:100}
+							{/if}
+						</td>
+					{/foreach}
+				</tr>
+			</tbody>
+		</table>
+	{/foreach}
+	{control form}
+</div>

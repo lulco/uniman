@@ -6,6 +6,7 @@ use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Helper\Formatter;
 use Adminerng\Core\Multisort;
 use InvalidArgumentException;
+use Nette\Utils\Strings;
 use PDO;
 
 class MySqlDataManager extends AbstractDataManager
@@ -207,5 +208,23 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
             }
         }
         return $this->columns;
+    }
+
+    public function execute($command)
+    {
+        $queries = array_filter(array_map('trim', explode(';', $command)), function ($query) {
+            return $query;
+        });
+        $results = [];
+        foreach ($queries as $query) {
+            $statement = $this->connection->query($query);
+            if (Strings::startsWith(strtolower($query), 'select ') || Strings::startsWith(strtolower($query), 'show ')) {
+                $results[$query] = $statement->fetchAll(PDO::FETCH_ASSOC);
+                continue;
+            }
+            $results[$query] = (bool) $statement;
+        }
+//        var_dump($results);
+        return $results;
     }
 }
