@@ -2,6 +2,7 @@
 
 namespace Adminerng\Presenters;
 
+use Nette\Application\ForbiddenRequestException;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use Tomaj\Form\Renderer\BootstrapVerticalRenderer;
@@ -14,6 +15,9 @@ class CommandPresenter extends BasePresenter
 
     public function renderDefault($driver, $database = null, $commands = null)
     {
+        if (!$this->driver->permissions()->canExecuteCommands()) {
+            throw new ForbiddenRequestException('Executing commands is not available');
+        }
         $this->database = $database;
         $this->commands = $commands;
         $this->template->results = $this->results;
