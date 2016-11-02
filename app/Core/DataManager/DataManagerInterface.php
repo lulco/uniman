@@ -66,6 +66,7 @@ interface DataManagerInterface
      * @param string $commands
      * @return array|null array contains keys:
      * - boolean command_result
+     * - array headers
      * - array items
      * - integer items_count
      * - float execution_time

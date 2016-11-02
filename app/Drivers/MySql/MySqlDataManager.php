@@ -210,9 +210,9 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
         return $this->columns;
     }
 
-    public function execute($command)
+    public function execute($commands)
     {
-        $queries = array_filter(array_map('trim', explode(';', $command)), function ($query) {
+        $queries = array_filter(array_map('trim', explode(';', $commands)), function ($query) {
             return $query;
         });
         $results = [];
@@ -224,7 +224,6 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
             }
             $results[$query] = (bool) $statement;
         }
-//        var_dump($results);
         return $results;
     }
 }
