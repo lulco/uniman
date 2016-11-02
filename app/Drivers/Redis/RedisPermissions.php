@@ -35,4 +35,9 @@ class RedisPermissions extends DefaultPermissions
     {
         return true;
     }
+
+    public function canExecuteCommands()
+    {
+        return true;
+    }
 }

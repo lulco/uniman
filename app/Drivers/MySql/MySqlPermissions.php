@@ -40,4 +40,9 @@ class MySqlPermissions extends DefaultPermissions
     {
         return $database !== 'information_schema';
     }
+
+    public function canExecuteCommands()
+    {
+        return true;
+    }
 }

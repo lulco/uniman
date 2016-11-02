@@ -39,4 +39,15 @@ abstract class AbstractDataManager implements DataManagerInterface
     {
         return null;
     }
+
+    /**
+     * Implement this method if permission canExecuteCommands is true
+     * @param string $commands
+     * @return array|null
+     * @see DataManagerInterface
+     */
+    public function execute($commands)
+    {
+        return null;
+    }
 }

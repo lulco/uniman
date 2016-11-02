@@ -2,6 +2,7 @@
 
 namespace Adminerng\Presenters;
 
+use Adminerng\Components\DatabaseSelect\DatabaseSelectControl;
 use Adminerng\Core\Exception\ConnectException;
 use Nette\Application\BadRequestException;
 
@@ -37,5 +38,10 @@ abstract class BasePresenter extends AbstractBasePresenter
             $this->redirect('Default:default', $actualDriver);
         }
         $this->template->actualDriver = $this->driver;
+    }
+
+    protected function createComponentDatabaseSelect()
+    {
+        return new DatabaseSelectControl($this->driver, $this->translator, $this->database);
     }
 }

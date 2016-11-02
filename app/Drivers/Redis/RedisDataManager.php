@@ -163,4 +163,59 @@ class RedisDataManager extends AbstractDataManager
         }
         return $info;
     }
+
+    public function execute($commands)
+    {
+        $listOfCommands = array_filter(array_map('trim', explode("\n", $commands)), function ($command) {
+            return $command;
+        });
+
+        $results = [];
+        foreach ($listOfCommands as $command) {
+            $commandParts = explode(' ', $command);
+            $function = array_shift($commandParts);
+            $function = strtolower($function);
+            $results[$command]['headers'] = $this->headers($function);
+            $rows = call_user_func_array([$this->connection, $function], $commandParts);
+//            print_R($rows);
+            $items = $this->getItems($function, $rows);
+            $results[$command]['items'] = $items;
+            $results[$command]['count'] = count($items);
+        }
+        return $results;
+    }
+
+    private function headers($function)
+    {
+        if ($function === 'get' || $function === 'hget') {
+            return ['value'];
+        }
+        if ($function === 'keys') {
+            return ['key'];
+        }
+        if ($function === 'hgetall') {
+            return ['key', 'value'];
+        }
+        if ($function === 'hlen') {
+            return ['items_count'];
+        }
+        return [];
+    }
+
+    private function getItems($function, $rows)
+    {
+        $items = [];
+        if ($function === 'keys') {
+            foreach ($rows as $key) {
+                $items[] = [$key];
+            }
+        } elseif ($function === 'hgetall') {
+            foreach ($rows as $key => $value) {
+                $items[] = [$key, $value];
+            }
+        } else {
+            return [[$rows]];
+        }
+        return $items;
+    }
 }

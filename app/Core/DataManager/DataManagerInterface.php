@@ -57,9 +57,20 @@ interface DataManagerInterface
     public function deleteTable($type, $table);
 
     /**
-     *
      * @param string $database
      * @return boolean|null true if delete was successfull, false if not, null if delete table is not allowed
      */
     public function deleteDatabase($database);
+
+    /**
+     * @param string $commands
+     * @return array|null array contains keys:
+     * - boolean command_result
+     * - array headers
+     * - array items
+     * - integer items_count
+     * - float execution_time
+     * for each command or null if commands execution is not allowed
+     */
+    public function execute($commands);
 }

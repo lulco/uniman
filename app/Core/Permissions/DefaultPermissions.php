@@ -48,4 +48,9 @@ class DefaultPermissions implements PermissionsInterface
     {
         return false;
     }
+
+    public function canExecuteCommands()
+    {
+        return false;
+    }
 }

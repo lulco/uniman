@@ -68,3 +68,5 @@ database_select_control:
 	database:
 		label: Databases
 		prompt: Select database
+
+commands: SQL commands

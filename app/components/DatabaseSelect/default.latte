@@ -1,1 +1,3 @@
 {control select}
+
+<p n:if="$driver->permissions()->canExecuteCommands()"><a href="{plink Command:default, $driver->type(), $actualDatabase}">Execute command</a></p>
