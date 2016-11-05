@@ -3,6 +3,7 @@
 namespace Adminerng\Core\Forms;
 
 use Adminerng\Core\Forms\DatabaseForm\DatabaseFormInterface;
+use Adminerng\Core\Forms\FilterForm\FilterFormInterface;
 use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
 use Adminerng\Core\Forms\TableForm\TableFormInterface;
 
@@ -33,4 +34,14 @@ interface FormManagerInterface
      * @return ItemFormInterface
      */
     public function itemForm($database, $type, $table, $item);
+
+    /**
+     * filter form
+     * @param array $columns
+     * @param array $filter
+     * @param array $sorting
+     * @param integer $onPage
+     * @return FilterFormInterface
+     */
+    public function filterForm(array $columns, array $filter, array $sorting, $onPage);
 }
