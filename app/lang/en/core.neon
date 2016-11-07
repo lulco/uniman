@@ -34,3 +34,19 @@ form:
 pagination:
 	previous: Previous
 	next: Next
+
+filter:
+	equal: '='
+	greater_than: '>'
+	greater_than_or_equal: '>='
+	less_than: '<'
+	less_than_or_equal: '<='
+	not_equal: '!='
+	contains: 'Contains'
+	not_contains: 'Not contains'
+	starts_with: 'Starts with'
+	ends_with: 'Ends with'
+	is_null: 'Is null'
+	is_not_null: 'Is not null'
+	is_in: 'Is in'
+	is_not_in: 'Is not in'

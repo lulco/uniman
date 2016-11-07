@@ -1,8 +1,18 @@
 <div class="col-xs-12">
-	<a href="#" onclick="$('#filter').toggle();">Show / hide filter</a>
+	<a href="#" onclick="$('#filter').toggle(); return false;">Show / hide filter</a>
 </div>
 <div id="filter"{if !$showForm} style="display: none;"{/if}>
 	{form form, class => "form-inline"}
+		<div n:if="count($form['filter']->getComponents()) > 0" class="col-xs-12 col-md-6">
+			<h4>Filter</h4>
+			{foreach $form['filter']->getComponents() as $key => $component}
+				{first 3}<div class="padding-bottom">{/first}
+					<div class="form-group">
+						{input $form['filter'][$key], class => "form-control"}
+					</div>
+				{last 3}</div>{/last}
+			{/foreach}
+		</div>
 		<div n:if="count($form['sorting']->getComponents()) > 0" class="col-xs-12 col-md-4">
 			<h4>Sorting</h4>
 			{foreach $form['sorting']->getComponents() as $key => $component}
@@ -13,19 +23,7 @@
 				{last 2}</div>{/last}
 			{/foreach}
 		</div>
-		
-		{*<div n:if="count($form['sorting']->getComponents()) > 0" class="col-xs-12 col-md-4">
-			<h4>Filter</h4>
-			{foreach $form['sorting']->getComponents() as $key => $component}
-				{first 2}<div class="padding-bottom">{/first}
-					<div class="form-group">
-						{input $form['sorting'][$key], class => "form-control"}
-					</div>
-				{last 2}</div>{/last}
-			{/foreach}
-		</div>*}
-
-		<div class="col-xs-12 col-md-4">
+		<div class="col-xs-12 col-md-2">
 			<h4>Limit</h4>
 			<div class="padding-bottom">
 				<div class="form-group">

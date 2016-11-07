@@ -90,7 +90,7 @@ class ItemPresenter extends BasePresenter
 
     protected function createComponentFilterForm()
     {
-        $form = $this->driver->formManager()->filterForm($this->columns, $this->filter, $this->sorting, $this->onPage);
+        $form = $this->driver->formManager()->filterForm($this->translator, $this->columns, $this->filter, $this->sorting, $this->onPage);
         $form->doRedirect[] = function ($onPage, $filter, $sorting) {
             $this->redirect('Item:default', $this->driver->type(), $this->database, $this->type, $this->table, 1, $onPage, $filter, $sorting);
         };

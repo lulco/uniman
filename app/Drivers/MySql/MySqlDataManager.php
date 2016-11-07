@@ -2,7 +2,9 @@
 
 namespace Adminerng\Drivers\MySql;
 
+use Adminerng\Core\Column;
 use Adminerng\Core\DataManager\AbstractDataManager;
+use Adminerng\Core\Exception\OperatorNotSupportedException;
 use Adminerng\Core\Helper\Formatter;
 use Adminerng\Core\Multisort;
 use InvalidArgumentException;
@@ -100,7 +102,7 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
 
     public function itemsCount($type, $table, array $filter = [])
     {
-        $query = 'SELECT count(*) FROM `' . $table . '`';
+        $query = 'SELECT count(*) FROM `' . $table . '`' . $this->createWhere($filter);
         return $this->connection->query($query)->fetch(PDO::FETCH_COLUMN);
     }
 
@@ -108,6 +110,7 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
     {
         $primaryColumns = $this->getPrimaryColumns($type, $table);
         $query = 'SELECT * FROM `' . $table . '`';
+        $query .= $this->createWhere($filter);
         $query .= $this->createOrderBy($sorting);
         $query .= ' LIMIT ' . (($page - 1) * $onPage) . ', ' . $onPage;
         $items = [];
@@ -121,7 +124,47 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
         return $items;
     }
 
-    private function createOrderBy($sorting)
+    private function createWhere(array $filter)
+    {
+        if (empty($filter)) {
+            return '';
+        }
+
+        $operatorsMap = [
+            Column::OPERATOR_EQUAL => '= %s',
+            Column::OPERATOR_GREATER_THAN => '> %s',
+            Column::OPERATOR_GREATER_THAN_OR_EQUAL => '>= %s',
+            Column::OPERATOR_LESS_THAN => '< %s',
+            Column::OPERATOR_LESS_THAN_OR_EQUAL => '<= %s',
+            Column::OPERATOR_NOT_EQUAL => '!= %s',
+            Column::OPERATOR_CONTAINS => 'LIKE "%%%s%%"',
+            Column::OPERATOR_NOT_CONTAINS => 'NOT LIKE "%%%s%%"',
+            Column::OPERATOR_STARTS_WITH => 'LIKE "%s%%"',
+            Column::OPERATOR_ENDS_WITH => 'LIKE "%%%s"',
+            Column::OPERATOR_IS_NULL => 'IS NULL',
+            Column::OPERATOR_IS_NOT_NULL => 'IS NOT NULL',
+            Column::OPERATOR_IS_IN => 'IN (%s)',
+            Column::OPERATOR_IS_NOT_IN => 'NOT IN (%s)',
+        ];
+
+        $where = ' WHERE ';
+        $whereParts = [];
+        foreach ($filter as $filterPart) {
+            foreach ($filterPart as $key => $filterSettings) {
+                foreach ($filterSettings as $operator => $value) {
+                    if (!isset($operatorsMap[$operator])) {
+                        throw new OperatorNotSupportedException('Operator "' . $operator . '" is not supported.');
+                    }
+                    $whereParts[] = "`$key`" . sprintf($operatorsMap[$operator], $value);
+                }
+            }
+        }
+        $where .= implode (' AND ', $whereParts);
+//        echo $where;exit();
+        return $where;
+    }
+
+    private function createOrderBy(array $sorting)
     {
         if (empty($sorting)) {
             return '';

@@ -6,6 +6,7 @@ use Adminerng\Core\Forms\DatabaseForm\DatabaseFormInterface;
 use Adminerng\Core\Forms\FilterForm\FilterFormInterface;
 use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
 use Adminerng\Core\Forms\TableForm\TableFormInterface;
+use Nette\Localization\ITranslator;
 
 interface FormManagerInterface
 {
@@ -37,11 +38,12 @@ interface FormManagerInterface
 
     /**
      * filter form
+     * @param ITranslator $translator
      * @param array $columns
      * @param array $filter
      * @param array $sorting
      * @param integer $onPage
      * @return FilterFormInterface
      */
-    public function filterForm(array $columns, array $filter, array $sorting, $onPage);
+    public function filterForm(ITranslator $translator, array $columns, array $filter, array $sorting, $onPage);
 }
