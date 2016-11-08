@@ -52,6 +52,7 @@ class FilterForm extends Control implements FilterFormInterface
     protected function createComponentForm()
     {
         $form = new Form();
+        $form->setTranslator($this->translator);
         $this->addSortingFields($form);
         $this->addFilterFields($form);
 
@@ -141,7 +142,7 @@ class FilterForm extends Control implements FilterFormInterface
             // TODO idealne by bolo davat do dropdownu s operatormi pre kazdy field len tie operatory, ktore on moze pouzit
             $filterItems[$column->getKey()] = $column->getTitle();
             foreach ($column->getFilters() as $filter) {
-                $operators[$filter] = $this->translator->translate('core.filter.' . $filter);
+                $operators[$filter] = 'core.filter.' . $filter;
             }
         }
 

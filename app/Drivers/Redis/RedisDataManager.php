@@ -2,6 +2,7 @@
 
 namespace Adminerng\Drivers\Redis;
 
+use Adminerng\Core\Column;
 use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Multisort;
 use RedisProxy\RedisProxy;
@@ -9,6 +10,8 @@ use RedisProxy\RedisProxy;
 class RedisDataManager extends AbstractDataManager
 {
     private $connection;
+
+    private $itemsCountCache = false;
 
     public function __construct(RedisProxy $connection)
     {
@@ -68,8 +71,51 @@ class RedisDataManager extends AbstractDataManager
 
     public function itemsCount($type, $table, array $filter = [])
     {
+        if ($this->itemsCountCache !== false) {
+            return $this->itemsCountCache;
+        }
         if ($type == RedisDriver::TYPE_HASH) {
-            return $this->connection->hLen($table);
+            if (!$filter) {
+                $this->itemsCountCache = $this->connection->hLen($table);
+                return $this->itemsCountCache;
+            } else {
+                $totalItems = 0;
+                foreach ($filter as $filterParts) {
+                    if (isset($filterParts['key'][Column::OPERATOR_EQUAL])) {
+                        $res = $this->connection->hget($table, $filterParts['key'][Column::OPERATOR_EQUAL]);
+                        if ($res) {
+                            $item = [
+                                'key' => $filterParts['key'][Column::OPERATOR_EQUAL],
+                                'length' => strlen($res),
+                                'value' => $res,
+                            ];
+                            if ($this->applyFilter($item, $filter)) {
+                                $totalItems++;
+                            }
+                        }
+                        $this->itemsCountCache = $totalItems;
+                        return $this->itemsCountCache;
+                    }
+                }
+                $iterator = '';
+                do {
+                    $pattern = null;    // TODO create pattern based on filter contains / starts / ends
+                    $res = $this->connection->hscan($table, $iterator, $pattern, 1000);
+                    $res = $res ?: [];
+                    foreach ($res as $key => $value) {
+                        $item = [
+                            'key' => $key,
+                            'length' => strlen($value),
+                            'value' => $value,
+                        ];
+                        if ($this->applyFilter($item, $filter)) {
+                            $totalItems++;
+                        }
+                    }
+                } while ($iterator !== 0);
+                $this->itemsCountCache = $totalItems;
+                return $this->itemsCountCache;
+            }
         }
         if ($type == RedisDriver::TYPE_KEY) {
             return 1;
@@ -84,20 +130,45 @@ class RedisDataManager extends AbstractDataManager
     {
         $items = [];
         if ($type == RedisDriver::TYPE_HASH) {
+            foreach ($filter as $filterParts) {
+                if (isset($filterParts['key'][Column::OPERATOR_EQUAL])) {
+                    $items = [];
+                    $res = $this->connection->hget($table, $filterParts['key'][Column::OPERATOR_EQUAL]);
+                    if ($res) {
+                        $item = [
+                            'key' => $filterParts['key'][Column::OPERATOR_EQUAL],
+                            'length' => strlen($res),
+                            'value' => $res,
+                        ];
+                        if ($this->applyFilter($item, $filter)) {
+                            $items[$item['key']] = $item;
+                        }
+                    }
+                    return $items;
+                }
+            }
+
             $counter = 0;
             $iterator = '';
             do {
-                $res = $this->connection->hscan($table, $iterator, null, $onPage);
+                $pattern = null; // TODO create pattern based on filter contains / starts / ends
+                $res = $this->connection->hscan($table, $iterator, $pattern, $onPage * 10);
+                $res = $res ?: [];
+                foreach ($res as $key => $value) {
+                    $item = [
+                        'key' => $key,
+                        'length' => strlen($value),
+                        'value' => $value,
+                    ];
+                    if ($this->applyFilter($item, $filter)) {
+                        $items[$key] = $item;
+                        if (count($items) === $onPage) {
+                            break;
+                        }
+                    }
+                }
                 $counter++;
-            } while ($counter != $page);
-            $res = $res ?: [];
-            foreach ($res as $key => $value) {
-                $items[$key] = [
-                    'key' => $key,
-                    'length' => strlen($value),
-                    'value' => $value,
-                ];
-            }
+            } while ($iterator !== 0 && count($items) < $onPage);
         } elseif ($type == RedisDriver::TYPE_KEY) {
             $value = $this->connection->get($table);
             $items[$table] = [
@@ -120,6 +191,11 @@ class RedisDataManager extends AbstractDataManager
                 ];
             }
         }
+
+        if ($this->itemsCount($type, $table, $filter) <= $onPage) {
+            $items = Multisort::sort($items, $sorting);
+        }
+
         return $items;
     }
 
@@ -217,5 +293,55 @@ class RedisDataManager extends AbstractDataManager
             return [[$rows]];
         }
         return $items;
+    }
+
+    private function applyFilter($item, array $filter)
+    {
+        foreach ($filter as $filterPart) {
+            foreach ($filterPart as $key => $filterSettings) {
+                foreach ($filterSettings as $operator => $value) {
+                    if (!$this->checkFilter($operator, $item[$key], $value)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private function checkFilter($operator, $actualValue, $expectedValue)
+    {
+        if ($operator === Column::OPERATOR_EQUAL) {
+            return $actualValue === $expectedValue;
+        } elseif ($operator === Column::OPERATOR_GREATER_THAN) {
+            return $actualValue > $expectedValue;
+        } elseif ($operator === Column::OPERATOR_GREATER_THAN_OR_EQUAL) {
+            return $actualValue >= $expectedValue;
+        } elseif ($operator === Column::OPERATOR_LESS_THAN) {
+            return $actualValue < $expectedValue;
+        } elseif ($operator === Column::OPERATOR_LESS_THAN_OR_EQUAL) {
+            return $actualValue <= $expectedValue;
+        } elseif ($operator === Column::OPERATOR_NOT_EQUAL) {
+            return $actualValue !== $expectedValue;
+        } elseif ($operator === Column::OPERATOR_CONTAINS) {
+            return strpos($actualValue, $expectedValue) !== false;
+        } elseif ($operator === Column::OPERATOR_NOT_CONTAINS) {
+            return strpos($actualValue, $expectedValue) === false;
+        } elseif ($operator === Column::OPERATOR_STARTS_WITH) {
+            return strpos($actualValue, $expectedValue) === 0;
+        } elseif ($operator === Column::OPERATOR_ENDS_WITH) {
+            return substr($actualValue, -strlen($expectedValue)) === $expectedValue;
+        } elseif ($operator === Column::OPERATOR_IS_NULL) {
+            return $actualValue === null;
+        } elseif ($operator === Column::OPERATOR_IS_NOT_NULL) {
+            return $actualValue !== null;
+        } elseif ($operator === Column::OPERATOR_IS_IN) {
+            $expectedValues = explode(',', $expectedValue);
+            return in_array($actualValue, $expectedValues);
+        } elseif ($operator === Column::OPERATOR_IS_NOT_IN) {
+            $expectedValues = explode(',', $expectedValue);
+            return !in_array($actualValue, $expectedValues);
+        }
+        return false;
     }
 }

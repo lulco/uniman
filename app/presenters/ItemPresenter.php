@@ -27,7 +27,11 @@ class ItemPresenter extends BasePresenter
         $this->onPage = $onPage;
         $this->sorting = $sorting;
         $this->filter = $filter;
+        $this->columns = $this->driver->headerManager()->itemsHeaders($type, $table);
+    }
 
+    public function renderDefault($driver, $database, $type, $table, $page = 1, $onPage = FilterForm::DEFAULT_ON_PAGE, array $filter = [], array $sorting = [])
+    {
         $this->template->driver = $driver;
         $this->template->database = $database;
         $this->template->type = $type;
@@ -37,7 +41,7 @@ class ItemPresenter extends BasePresenter
         $itemsCount = $this->driver->dataManager()->itemsCount($type, $table, $filter);
         $this->template->itemsCount = $itemsCount;
         $this->template->items = $this->driver->dataManager()->items($type, $table, $page, $onPage, $filter, $sorting);
-        $this->columns = $this->driver->headerManager()->itemsHeaders($type, $table);
+
         $this->template->columns = $this->columns;
 
         $visualPaginator = $this['paginator'];
