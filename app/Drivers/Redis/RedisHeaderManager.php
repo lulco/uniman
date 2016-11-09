@@ -100,10 +100,14 @@ class RedisHeaderManager implements HeaderManagerInterface
         } elseif ($type == RedisDriver::TYPE_SET) {
             $columns[] = (new Column())
                 ->setKey('member')
-                ->setTitle('redis.columns.' . $type . '.member');
+                ->setTitle('redis.columns.' . $type . '.member')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
             $columns[] = (new Column())
                 ->setKey('length')
-                ->setTitle('redis.columns.' . $type . '.length');
+                ->setTitle('redis.columns.' . $type . '.length')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
         }
         return $columns;
     }

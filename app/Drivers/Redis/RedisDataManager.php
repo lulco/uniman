@@ -121,7 +121,25 @@ class RedisDataManager extends AbstractDataManager
             return 1;
         }
         if ($type == RedisDriver::TYPE_SET) {
-            return $this->connection->sCard($table);
+            if (!$filter) {
+                return $this->connection->sCard($table);
+            }
+            $iterator = '';
+            $totalItems = 0;
+            do {
+                $res = $this->connection->sscan($table, $iterator, null, 1000);
+                $res = $res ?: [];
+                foreach ($res as $member) {
+                    $item = [
+                        'member' => $member,
+                        'length' => strlen($member),
+                    ];
+                    if ($this->applyFilter($item, $filter)) {
+                        $totalItems++;
+                    }
+                }
+            } while ($iterator !== 0);
+            return $totalItems;
         }
         return 0;
     }
@@ -148,7 +166,6 @@ class RedisDataManager extends AbstractDataManager
                 }
             }
 
-            $counter = 0;
             $iterator = '';
             do {
                 $pattern = null; // TODO create pattern based on filter contains / starts / ends
@@ -167,7 +184,6 @@ class RedisDataManager extends AbstractDataManager
                         }
                     }
                 }
-                $counter++;
             } while ($iterator !== 0 && count($items) < $onPage);
         } elseif ($type == RedisDriver::TYPE_KEY) {
             $value = $this->connection->get($table);
@@ -177,19 +193,24 @@ class RedisDataManager extends AbstractDataManager
                 'value' => $value,
             ];
         } elseif ($type == RedisDriver::TYPE_SET) {
-            $counter = 0;
             $iterator = '';
             do {
-                $res = $this->connection->sscan($table, $iterator, null, $onPage);
-                $counter++;
-            } while ($counter != $page);
-            $res = $res ?: [];
-            foreach ($res as $item) {
-                $items[$item] = [
-                    'member' => $item,
-                    'length' => strlen($item),
-                ];
-            }
+                $pattern = null; // TODO create pattern based on filter contains / starts / ends
+                $res = $this->connection->sscan($table, $iterator, $pattern, $onPage * 10);
+                $res = $res ?: [];
+                foreach ($res as $member) {
+                    $item = [
+                        'member' => $member,
+                        'length' => strlen($member),
+                    ];
+                    if ($this->applyFilter($item, $filter)) {
+                        $items[$member] = $item;
+                        if (count($items) === $onPage) {
+                            break;
+                        }
+                    }
+                }
+            } while ($iterator !== 0 && count($items) < $onPage);
         }
 
         if ($this->itemsCount($type, $table, $filter) <= $onPage) {
@@ -314,7 +335,7 @@ class RedisDataManager extends AbstractDataManager
     private function checkFilter($operator, $actualValue, $expectedValue)
     {
         if ($operator === Column::OPERATOR_EQUAL) {
-            return $actualValue === $expectedValue;
+            return $actualValue == $expectedValue;
         } elseif ($operator === Column::OPERATOR_GREATER_THAN) {
             return $actualValue > $expectedValue;
         } elseif ($operator === Column::OPERATOR_GREATER_THAN_OR_EQUAL) {
