@@ -49,6 +49,11 @@ class ItemPresenter extends BasePresenter
         $paginator->setItemCount($itemsCount);
         $paginator->setItemsPerPage($onPage);
         $paginator->page = $page;
+
+        foreach ($this->driver->dataManager()->getMessages() as $message => $type) {
+            $type = $type ?: 'info';
+            $this->flashMessage($message, $type);
+        }
     }
 
     public function actionCreate($driver, $database, $type, $table)

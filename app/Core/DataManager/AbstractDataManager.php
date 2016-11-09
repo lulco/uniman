@@ -5,6 +5,11 @@ namespace Adminerng\Core\DataManager;
 abstract class AbstractDataManager implements DataManagerInterface
 {
     /**
+     * @var array list of messages in format flash message => type of flash message (info, success, warning, danger)
+     */
+    protected $messages = [];
+
+    /**
      * Implement this method if permission canDeleteItem is true
      * @param string $type
      * @param string $table
@@ -49,5 +54,24 @@ abstract class AbstractDataManager implements DataManagerInterface
     public function execute($commands)
     {
         return null;
+    }
+
+    /**
+     * @return array
+     * @see DataManagerInterface
+     */
+    final public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * add message to list of messages
+     * @param string $message
+     * @param string $type
+     */
+    final protected function addMessage($message, $type = 'info')
+    {
+        $this->messages[$message] = $type;
     }
 }

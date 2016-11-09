@@ -194,6 +194,8 @@ class RedisDataManager extends AbstractDataManager
 
         if ($this->itemsCount($type, $table, $filter) <= $onPage) {
             $items = Multisort::sort($items, $sorting);
+        } elseif ($sorting) {
+            $this->addMessage('Sorting has not been applied because the number of items is greater then the limit. Increase the limit or modify the filter.');
         }
 
         return $items;
