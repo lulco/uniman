@@ -11,7 +11,8 @@ class MySqlCredentialsForm implements CredentialsFormInterface
     {
         $form->addText('server', 'mysql.form.server.label')
             ->setAttribute('placeholder', 'localhost');
-        $form->addText('user', 'mysql.form.user.label');
+        $form->addText('user', 'mysql.form.user.label')
+            ->setAttribute('autofocus');
         $form->addPassword('password', 'mysql.form.password.label');
         $form->addText('database', 'mysql.form.database.label');
     }
