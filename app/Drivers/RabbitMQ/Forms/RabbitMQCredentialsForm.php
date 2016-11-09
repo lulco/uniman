@@ -10,7 +10,8 @@ class RabbitMQCredentialsForm implements CredentialsFormInterface
     public function addFieldsToForm(Form $form)
     {
         $form->addText('user', 'rabbitmq.form.user.label')
-            ->setAttribute('placeholder', 'guest');
+            ->setAttribute('placeholder', 'guest')
+            ->setAttribute('autofocus');
         $form->addPassword('password', 'rabbitmq.form.password.label')
             ->setAttribute('placeholder', 'guest');
         $form->addText('host', 'rabbitmq.form.host.label')
