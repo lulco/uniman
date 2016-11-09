@@ -44,7 +44,9 @@ class FilterForm extends Control implements FilterFormInterface
 
     public function render()
     {
-        $this->template->showForm = !(empty($this->sorting) && empty($this->filter) && $this->onPage == self::DEFAULT_ON_PAGE);
+        $this->template->filter = $this->filter;
+        $this->template->sorting = $this->sorting;
+        $this->template->limit = $this->onPage != self::DEFAULT_ON_PAGE;
         $this->template->setFile(__DIR__ . '/filter_form.latte');
         $this->template->render();
     }

@@ -1,10 +1,10 @@
 <div class="col-xs-12">
 	<a href="#" onclick="$('#filter').toggle(); return false;">Show / hide filter</a>
 </div>
-<div id="filter"{if !$showForm} style="display: none;"{/if}>
+<div id="filter"{if !$sorting && !$filter && !$limit} style="display: none;"{/if}>
 	{form form, class => "form-inline"}
 		<div n:if="count($form['filter']->getComponents()) > 0" class="col-xs-12 col-md-6">
-			<h4>Filter</h4>
+			<h4>Filter <a n:if="$filter" href="{plink this, filter => []}"><i class="fa fa-times"></i></a></h4>
 			{foreach $form['filter']->getComponents() as $key => $component}
 				{first 3}<div class="padding-bottom">{/first}
 					<div class="form-group">
@@ -14,7 +14,7 @@
 			{/foreach}
 		</div>
 		<div n:if="count($form['sorting']->getComponents()) > 0" class="col-xs-12 col-md-4">
-			<h4>Sorting</h4>
+			<h4>Sorting <a n:if="$sorting" href="{plink this, sorting => []}"><i class="fa fa-times"></i></a></h4>
 			{foreach $form['sorting']->getComponents() as $key => $component}
 				{first 2}<div class="padding-bottom">{/first}
 					<div class="form-group">
@@ -24,7 +24,7 @@
 			{/foreach}
 		</div>
 		<div class="col-xs-12 col-md-2">
-			<h4>Limit</h4>
+			<h4>Limit <a n:if="$limit" href="{plink this, onPage => null}"><i class="fa fa-times"></i></a></h4>
 			<div class="padding-bottom">
 				<div class="form-group">
 					{input onPage, class => "form-control text"}
@@ -34,7 +34,9 @@
 			<div class="padding-bottom">
 				<div class="form-group">
 					{input submit, class => "btn btn-primary button"}
-					{input reset, class => "btn btn-danger button"}
+					{if $sorting || $filter || $limit}
+						{input reset, class => "btn btn-danger button"}
+					{/if}
 				</div>
 			</div>
 		</div>
