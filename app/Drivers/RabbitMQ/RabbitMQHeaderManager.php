@@ -55,19 +55,30 @@ class RabbitMQHeaderManager implements HeaderManagerInterface
         if ($type == RabbitMQDriver::TYPE_QUEUE) {
             $columns[] = (new Column())
                 ->setKey('message_body')
-                ->setTitle('rabbitmq.columns.' . $type . '.message_body');
+                ->setTitle('rabbitmq.columns.' . $type . '.message_body')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
             $columns[] = (new Column())
                 ->setKey('size')
-                ->setTitle('rabbitmq.columns.' . $type . '.size');
+                ->setTitle('rabbitmq.columns.' . $type . '.size')
+                ->setIsNumeric(true)
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
             $columns[] = (new Column())
                 ->setKey('is_truncated')
-                ->setTitle('rabbitmq.columns.' . $type . '.is_truncated');
+                ->setTitle('rabbitmq.columns.' . $type . '.is_truncated')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
             $columns[] = (new Column())
                 ->setKey('content_encoding')
-                ->setTitle('rabbitmq.columns.' . $type . '.content_encoding');
+                ->setTitle('rabbitmq.columns.' . $type . '.content_encoding')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
             $columns[] = (new Column())
                 ->setKey('redelivered')
-                ->setTitle('rabbitmq.columns.' . $type . '.redelivered');
+                ->setTitle('rabbitmq.columns.' . $type . '.redelivered')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
         }
         return $columns;
     }

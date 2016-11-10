@@ -61,11 +61,38 @@ class RabbitMQManagementApiClient
         return $queues;
     }
 
-    private function call($endpoint)
+    public function getMessages($vhost, $queue)
+    {
+        $count = 0;
+        foreach ($this->getQueues($vhost) as $vhostQueue) {
+            if ($vhostQueue['name'] == $queue) {
+                $count = $vhostQueue['messages'];
+                break;
+            }
+        }
+        if ($count == 0) {
+            return [];
+        }
+
+        $endpoint = '/api/queues/' . urlencode($vhost) . '/' . urlencode($queue) . '/get';
+        $params = [
+            'count' => $count,
+            'requeue' => true,
+            'encoding' => 'auto',
+        ];
+        $result = $this->call($endpoint, 'POST', json_encode($params));
+        return $result;
+    }
+
+    private function call($endpoint, $method = 'GET', $params = null)
     {
         $ch = curl_init($this->baseUrl . $endpoint);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+        if ($params) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+        }
         curl_setopt($ch, CURLOPT_TIMEOUT, 3);
         $response = curl_exec($ch);
         curl_close($ch);

@@ -5,6 +5,7 @@ namespace Adminerng\Drivers\RabbitMQ;
 use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Helper\Formatter;
 use Adminerng\Core\Multisort;
+use Adminerng\Core\Utils\Filter;
 use Nette\Localization\ITranslator;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
@@ -84,12 +85,28 @@ class RabbitMQDataManager extends AbstractDataManager
         if ($type != RabbitMQDriver::TYPE_QUEUE) {
             return 0;
         }
-        foreach ($this->client->getQueues($this->vhost) as $queue) {
-            if ($queue['name'] == $table) {
-                return $this->formatter->formatNumber($queue['messages']);
+        if (!$filter) {
+            foreach ($this->client->getQueues($this->vhost) as $queue) {
+                if ($queue['name'] == $table) {
+                    return $queue['messages'];
+                }
             }
         }
-        return 0;
+        $totalCount = 0;
+        foreach ($this->client->getMessages($this->vhost, $table) as $message) {
+            $item = [
+                'message_body' => $message['payload'],
+                'size' => $message['payload_bytes'],
+                'is_truncated' => false ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'), // todo how to check truncated in API?
+                'content_encoding' => $message['payload_encoding'],
+                'redelivered' => $message['redelivered'] ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
+            ];
+            if (Filter::apply($item, $filter)) {
+                $totalCount++;
+            }
+        }
+
+        return $totalCount;
     }
 
     public function items($type, $table, $page, $onPage, array $filter = [], array $sorting = [])
@@ -98,18 +115,20 @@ class RabbitMQDataManager extends AbstractDataManager
             return [];
         }
         $items = [];
-        while ($message = $this->getMessage($table)) {
-            $items[$message->getBody()] = [
-                'message_body' => $message->getBody(),
-                'size' => $this->formatter->formatNumber($message->getBodySize()),
-                'is_truncated' => $message->isTruncated() ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
-                'content_encoding' => $message->getContentEncoding(),
-                'redelivered' => $message->get('redelivered') ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
+        foreach ($this->client->getMessages($this->vhost, $table) as $message) {
+            $item = [
+                'message_body' => $message['payload'],
+                'size' => $message['payload_bytes'],
+                'is_truncated' => false ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'), // todo how to check truncated in API?
+                'content_encoding' => $message['payload_encoding'],
+                'redelivered' => $message['redelivered'] ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
             ];
-            if (count($items) == $page * $onPage) {
-                break;
+            if (!Filter::apply($item, $filter)) {
+                continue;
             }
+            $items[$message['payload']] = $item;
         }
+        $items = Multisort::sort($items, $sorting);
         return array_slice($items, ($page - 1) * $onPage, $onPage, true);
     }
 
