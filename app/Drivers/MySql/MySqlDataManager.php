@@ -7,6 +7,7 @@ use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Exception\OperatorNotSupportedException;
 use Adminerng\Core\Helper\Formatter;
 use Adminerng\Core\Multisort;
+use Adminerng\Core\Utils\Filter;
 use InvalidArgumentException;
 use Nette\Utils\Strings;
 use PDO;
@@ -131,20 +132,20 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
         }
 
         $operatorsMap = [
-            Column::OPERATOR_EQUAL => '= %s',
-            Column::OPERATOR_GREATER_THAN => '> %s',
-            Column::OPERATOR_GREATER_THAN_OR_EQUAL => '>= %s',
-            Column::OPERATOR_LESS_THAN => '< %s',
-            Column::OPERATOR_LESS_THAN_OR_EQUAL => '<= %s',
-            Column::OPERATOR_NOT_EQUAL => '!= %s',
-            Column::OPERATOR_CONTAINS => 'LIKE "%%%s%%"',
-            Column::OPERATOR_NOT_CONTAINS => 'NOT LIKE "%%%s%%"',
-            Column::OPERATOR_STARTS_WITH => 'LIKE "%s%%"',
-            Column::OPERATOR_ENDS_WITH => 'LIKE "%%%s"',
-            Column::OPERATOR_IS_NULL => 'IS NULL',
-            Column::OPERATOR_IS_NOT_NULL => 'IS NOT NULL',
-            Column::OPERATOR_IS_IN => 'IN (%s)',
-            Column::OPERATOR_IS_NOT_IN => 'NOT IN (%s)',
+            Filter::OPERATOR_EQUAL => '= %s',
+            Filter::OPERATOR_GREATER_THAN => '> %s',
+            Filter::OPERATOR_GREATER_THAN_OR_EQUAL => '>= %s',
+            Filter::OPERATOR_LESS_THAN => '< %s',
+            Filter::OPERATOR_LESS_THAN_OR_EQUAL => '<= %s',
+            Filter::OPERATOR_NOT_EQUAL => '!= %s',
+            Filter::OPERATOR_CONTAINS => 'LIKE "%%%s%%"',
+            Filter::OPERATOR_NOT_CONTAINS => 'NOT LIKE "%%%s%%"',
+            Filter::OPERATOR_STARTS_WITH => 'LIKE "%s%%"',
+            Filter::OPERATOR_ENDS_WITH => 'LIKE "%%%s"',
+            Filter::OPERATOR_IS_NULL => 'IS NULL',
+            Filter::OPERATOR_IS_NOT_NULL => 'IS NOT NULL',
+            Filter::OPERATOR_IS_IN => 'IN (%s)',
+            Filter::OPERATOR_IS_NOT_IN => 'NOT IN (%s)',
         ];
 
         $where = ' WHERE ';

@@ -2,42 +2,11 @@
 
 namespace Adminerng\Core;
 
+use Adminerng\Core\Utils\Filter;
 use Closure;
 
 class Column
 {
-    const OPERATOR_EQUAL = 'equal';
-    const OPERATOR_GREATER_THAN = 'greater_than';
-    const OPERATOR_GREATER_THAN_OR_EQUAL = 'greater_than_or_equal';
-    const OPERATOR_LESS_THAN = 'less_than';
-    const OPERATOR_LESS_THAN_OR_EQUAL = 'less_than_or_equal';
-    const OPERATOR_NOT_EQUAL = 'not_equal';
-    const OPERATOR_CONTAINS = 'contains';
-    const OPERATOR_NOT_CONTAINS = 'not_contains';
-    const OPERATOR_STARTS_WITH = 'starts_with';
-    const OPERATOR_ENDS_WITH = 'ends_with';
-    const OPERATOR_IS_NULL = 'is_null';
-    const OPERATOR_IS_NOT_NULL = 'is_not_null';
-    const OPERATOR_IS_IN = 'is_in';
-    const OPERATOR_IS_NOT_IN = 'is_not_in';
-
-    const DEFAULT_FILTER_OPERATORS = [
-        self::OPERATOR_EQUAL,
-        self::OPERATOR_GREATER_THAN,
-        self::OPERATOR_GREATER_THAN_OR_EQUAL,
-        self::OPERATOR_LESS_THAN,
-        self::OPERATOR_LESS_THAN_OR_EQUAL,
-        self::OPERATOR_NOT_EQUAL,
-        self::OPERATOR_CONTAINS,
-        self::OPERATOR_NOT_CONTAINS,
-        self::OPERATOR_STARTS_WITH,
-        self::OPERATOR_ENDS_WITH,
-        self::OPERATOR_IS_NULL,
-        self::OPERATOR_IS_NOT_NULL,
-        self::OPERATOR_IS_IN,
-        self::OPERATOR_IS_NOT_IN,
-    ];
-
     /**
      * key in item result array
      * @var string
@@ -135,7 +104,7 @@ class Column
         return $this->isSortable;
     }
 
-    public function setIsFilterable($isFilterable, $filters = self::DEFAULT_FILTER_OPERATORS)
+    public function setIsFilterable($isFilterable, $filters = Filter::DEFAULT_FILTER_OPERATORS)
     {
         $this->isFilterable = $isFilterable;
         $this->filters = $filters;

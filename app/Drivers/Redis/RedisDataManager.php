@@ -2,9 +2,9 @@
 
 namespace Adminerng\Drivers\Redis;
 
-use Adminerng\Core\Column;
 use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Multisort;
+use Adminerng\Core\Utils\Filter;
 use RedisProxy\RedisProxy;
 
 class RedisDataManager extends AbstractDataManager
@@ -81,15 +81,15 @@ class RedisDataManager extends AbstractDataManager
             } else {
                 $totalItems = 0;
                 foreach ($filter as $filterParts) {
-                    if (isset($filterParts['key'][Column::OPERATOR_EQUAL])) {
-                        $res = $this->connection->hget($table, $filterParts['key'][Column::OPERATOR_EQUAL]);
+                    if (isset($filterParts['key'][Filter::OPERATOR_EQUAL])) {
+                        $res = $this->connection->hget($table, $filterParts['key'][Filter::OPERATOR_EQUAL]);
                         if ($res) {
                             $item = [
-                                'key' => $filterParts['key'][Column::OPERATOR_EQUAL],
+                                'key' => $filterParts['key'][Filter::OPERATOR_EQUAL],
                                 'length' => strlen($res),
                                 'value' => $res,
                             ];
-                            if ($this->applyFilter($item, $filter)) {
+                            if (Filter::apply($item, $filter)) {
                                 $totalItems++;
                             }
                         }
@@ -108,7 +108,7 @@ class RedisDataManager extends AbstractDataManager
                             'length' => strlen($value),
                             'value' => $value,
                         ];
-                        if ($this->applyFilter($item, $filter)) {
+                        if (Filter::apply($item, $filter)) {
                             $totalItems++;
                         }
                     }
@@ -134,7 +134,7 @@ class RedisDataManager extends AbstractDataManager
                         'member' => $member,
                         'length' => strlen($member),
                     ];
-                    if ($this->applyFilter($item, $filter)) {
+                    if (Filter::apply($item, $filter)) {
                         $totalItems++;
                     }
                 }
@@ -149,16 +149,16 @@ class RedisDataManager extends AbstractDataManager
         $items = [];
         if ($type == RedisDriver::TYPE_HASH) {
             foreach ($filter as $filterParts) {
-                if (isset($filterParts['key'][Column::OPERATOR_EQUAL])) {
+                if (isset($filterParts['key'][Filter::OPERATOR_EQUAL])) {
                     $items = [];
-                    $res = $this->connection->hget($table, $filterParts['key'][Column::OPERATOR_EQUAL]);
+                    $res = $this->connection->hget($table, $filterParts['key'][Filter::OPERATOR_EQUAL]);
                     if ($res) {
                         $item = [
-                            'key' => $filterParts['key'][Column::OPERATOR_EQUAL],
+                            'key' => $filterParts['key'][Filter::OPERATOR_EQUAL],
                             'length' => strlen($res),
                             'value' => $res,
                         ];
-                        if ($this->applyFilter($item, $filter)) {
+                        if (Filter::apply($item, $filter)) {
                             $items[$item['key']] = $item;
                         }
                     }
@@ -177,7 +177,7 @@ class RedisDataManager extends AbstractDataManager
                         'length' => strlen($value),
                         'value' => $value,
                     ];
-                    if ($this->applyFilter($item, $filter)) {
+                    if (Filter::apply($item, $filter)) {
                         $items[$key] = $item;
                         if (count($items) === $onPage) {
                             break;
@@ -203,7 +203,7 @@ class RedisDataManager extends AbstractDataManager
                         'member' => $member,
                         'length' => strlen($member),
                     ];
-                    if ($this->applyFilter($item, $filter)) {
+                    if (Filter::apply($item, $filter)) {
                         $items[$member] = $item;
                         if (count($items) === $onPage) {
                             break;
@@ -316,55 +316,5 @@ class RedisDataManager extends AbstractDataManager
             return [[$rows]];
         }
         return $items;
-    }
-
-    private function applyFilter($item, array $filter)
-    {
-        foreach ($filter as $filterPart) {
-            foreach ($filterPart as $key => $filterSettings) {
-                foreach ($filterSettings as $operator => $value) {
-                    if (!$this->checkFilter($operator, $item[$key], $value)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    private function checkFilter($operator, $actualValue, $expectedValue)
-    {
-        if ($operator === Column::OPERATOR_EQUAL) {
-            return $actualValue == $expectedValue;
-        } elseif ($operator === Column::OPERATOR_GREATER_THAN) {
-            return $actualValue > $expectedValue;
-        } elseif ($operator === Column::OPERATOR_GREATER_THAN_OR_EQUAL) {
-            return $actualValue >= $expectedValue;
-        } elseif ($operator === Column::OPERATOR_LESS_THAN) {
-            return $actualValue < $expectedValue;
-        } elseif ($operator === Column::OPERATOR_LESS_THAN_OR_EQUAL) {
-            return $actualValue <= $expectedValue;
-        } elseif ($operator === Column::OPERATOR_NOT_EQUAL) {
-            return $actualValue !== $expectedValue;
-        } elseif ($operator === Column::OPERATOR_CONTAINS) {
-            return strpos($actualValue, $expectedValue) !== false;
-        } elseif ($operator === Column::OPERATOR_NOT_CONTAINS) {
-            return strpos($actualValue, $expectedValue) === false;
-        } elseif ($operator === Column::OPERATOR_STARTS_WITH) {
-            return strpos($actualValue, $expectedValue) === 0;
-        } elseif ($operator === Column::OPERATOR_ENDS_WITH) {
-            return substr($actualValue, -strlen($expectedValue)) === $expectedValue;
-        } elseif ($operator === Column::OPERATOR_IS_NULL) {
-            return $actualValue === null;
-        } elseif ($operator === Column::OPERATOR_IS_NOT_NULL) {
-            return $actualValue !== null;
-        } elseif ($operator === Column::OPERATOR_IS_IN) {
-            $expectedValues = explode(',', $expectedValue);
-            return in_array($actualValue, $expectedValues);
-        } elseif ($operator === Column::OPERATOR_IS_NOT_IN) {
-            $expectedValues = explode(',', $expectedValue);
-            return !in_array($actualValue, $expectedValues);
-        }
-        return false;
     }
 }
