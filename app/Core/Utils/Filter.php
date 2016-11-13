@@ -77,10 +77,10 @@ class Filter
         } elseif ($operator === self::OPERATOR_IS_NOT_NULL) {
             return $actualValue !== null;
         } elseif ($operator === self::OPERATOR_IS_IN) {
-            $expectedValues = explode(',', $expectedValue);
+            $expectedValues = array_map('trim', explode(',', $expectedValue));
             return in_array($actualValue, $expectedValues);
         } elseif ($operator === self::OPERATOR_IS_NOT_IN) {
-            $expectedValues = explode(',', $expectedValue);
+            $expectedValues = array_map('trim', explode(',', $expectedValue));
             return !in_array($actualValue, $expectedValues);
         }
         return false;

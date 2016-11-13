@@ -36,7 +36,6 @@ class MemcacheKeyForm implements TableFormInterface
                 'key' => $this->key,
                 'value' => $this->connection->get($this->key, $flags),
                 'compressed' => $flags == MEMCACHE_COMPRESSED,
-                // TODO load expiration ?
             ]);
         }
     }

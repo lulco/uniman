@@ -141,13 +141,11 @@ class FilterForm extends Control implements FilterFormInterface
             if (!$column->isFilterable()) {
                 continue;
             }
-            // TODO idealne by bolo davat do dropdownu s operatormi pre kazdy field len tie operatory, ktore on moze pouzit
             $filterItems[$column->getKey()] = $column->getTitle();
             foreach ($column->getFilters() as $filter) {
                 $operators[$filter] = 'core.filter.' . $filter;
             }
         }
-
 
         if (!empty($filterItems)) {
             for ($i = 0; $i < 10; $i++) {

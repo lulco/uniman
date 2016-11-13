@@ -97,7 +97,7 @@ class RabbitMQDataManager extends AbstractDataManager
             $item = [
                 'message_body' => $message['payload'],
                 'size' => $message['payload_bytes'],
-                'is_truncated' => false ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'), // todo how to check truncated in API?
+                'is_truncated' => false ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
                 'content_encoding' => $message['payload_encoding'],
                 'redelivered' => $message['redelivered'] ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
             ];
@@ -119,7 +119,7 @@ class RabbitMQDataManager extends AbstractDataManager
             $item = [
                 'message_body' => $message['payload'],
                 'size' => $message['payload_bytes'],
-                'is_truncated' => false ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'), // todo how to check truncated in API?
+                'is_truncated' => false ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
                 'content_encoding' => $message['payload_encoding'],
                 'redelivered' => $message['redelivered'] ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
             ];

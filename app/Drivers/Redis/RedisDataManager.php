@@ -99,7 +99,7 @@ class RedisDataManager extends AbstractDataManager
                 }
                 $iterator = '';
                 do {
-                    $pattern = null;    // TODO create pattern based on filter contains / starts / ends
+                    $pattern = null;
                     $res = $this->connection->hscan($table, $iterator, $pattern, 1000);
                     $res = $res ?: [];
                     foreach ($res as $key => $value) {
@@ -170,7 +170,7 @@ class RedisDataManager extends AbstractDataManager
             $skipped = 0;
             $iterator = '';
             do {
-                $pattern = null; // TODO create pattern based on filter contains / starts / ends
+                $pattern = null;
                 $res = $this->connection->hscan($table, $iterator, $pattern, $onPage * 10);
                 $res = $res ?: [];
                 foreach ($res as $key => $value) {
@@ -201,7 +201,7 @@ class RedisDataManager extends AbstractDataManager
         } elseif ($type == RedisDriver::TYPE_SET) {
             $iterator = '';
             do {
-                $pattern = null; // TODO create pattern based on filter contains / starts / ends
+                $pattern = null;
                 $res = $this->connection->sscan($table, $iterator, $pattern, $onPage * 10);
                 $res = $res ?: [];
                 foreach ($res as $member) {
