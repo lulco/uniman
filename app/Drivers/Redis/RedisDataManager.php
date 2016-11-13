@@ -166,6 +166,8 @@ class RedisDataManager extends AbstractDataManager
                 }
             }
 
+            $offset = ($page - 1) * $onPage;
+            $skipped = 0;
             $iterator = '';
             do {
                 $pattern = null; // TODO create pattern based on filter contains / starts / ends
@@ -178,9 +180,13 @@ class RedisDataManager extends AbstractDataManager
                         'value' => $value,
                     ];
                     if (Filter::apply($item, $filter)) {
-                        $items[$key] = $item;
-                        if (count($items) === $onPage) {
-                            break;
+                        if ($skipped < $offset) {
+                            $skipped++;
+                        } else {
+                            $items[$key] = $item;
+                            if (count($items) === $onPage) {
+                                break;
+                            }
                         }
                     }
                 }
