@@ -30,6 +30,7 @@ services:
 		setup:
 			- register('formatNumber', [@formatter, formatNumber])
 			- register('formatSize', [@formatter, formatSize])
+			- register('formatTime', [@formatter, formatTime])
 
 	nette.latteFactory:
 		setup:

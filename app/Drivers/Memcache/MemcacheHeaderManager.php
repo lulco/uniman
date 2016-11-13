@@ -12,7 +12,7 @@ class MemcacheHeaderManager implements HeaderManagerInterface
         $fields = [
             'server' => ['is_numeric' => false],
             'process_id' => ['is_numeric' => false],
-            'uptime' => ['is_numeric' => true],
+            'uptime' => ['is_numeric' => true, 'is_time' => true],
             'current_items' => ['is_numeric' => true],
             'total_items' => ['is_numeric' => true],
             'size' => ['is_numeric' => true, 'is_size' => true],
@@ -31,6 +31,9 @@ class MemcacheHeaderManager implements HeaderManagerInterface
             }
             if (isset($settings['is_size'])) {
                 $column->setIsSize($settings['is_size']);
+            }
+            if (isset($settings['is_time'])) {
+                $column->setIsTime($settings['is_time']);
             }
             $columns[] = $column;
         }
@@ -66,7 +69,9 @@ class MemcacheHeaderManager implements HeaderManagerInterface
                 ->setKey('expiration')
                 ->setTitle('memcache.columns.' . $type . '.expiration')
                 ->setIsSortable(true)
-                ->setIsFilterable(true);
+                ->setIsFilterable(true)
+                ->setIsNumeric(true)
+                ->setIsTime(true);
             $columns[] = (new Column())
                 ->setKey('compressed')
                 ->setTitle('memcache.columns.' . $type . '.compressed')
