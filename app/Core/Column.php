@@ -50,10 +50,16 @@ class Column
     private $decimals = 0;
 
     /**
-     * value is size
+     * value is size and will be formatted as size
      * @var boolean
      */
     private $isSize = false;
+
+    /**
+     * value is time and will be formatted as time
+     * @var boolean
+     */
+    private $isTime = false;
 
     /**
      * extended info about column
@@ -158,6 +164,17 @@ class Column
     public function isSize()
     {
         return $this->isSize;
+    }
+
+    public function setIsTime($isTime)
+    {
+        $this->isTime = $isTime;
+        return $this;
+    }
+
+    public function isTime()
+    {
+        return $this->isTime;
     }
 
     public function setInfo($info)

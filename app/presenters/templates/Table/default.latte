@@ -31,7 +31,7 @@
 							</td>
 							{foreach $tablesHeaders[$type] as $column}
 								{php $value = isset($values[$column->getKey()]) ? $values[$column->getKey()] : null}
-								<td n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{elseif $column->isSize()}{$value|formatSize}{elseif $column->isNumeric()}{$value|formatNumber, $column->getDecimals()}{else}{$value|truncate:100}{/if}</td>
+								<td n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{elseif $column->isSize()}{$value|formatSize}{elseif $column->isTime()}{$value|formatTime}{elseif $column->isNumeric()}{$value|formatNumber, $column->getDecimals()}{else}{$value|truncate:100}{/if}</td>
 							{/foreach}
 						</tr>
 					</tbody>

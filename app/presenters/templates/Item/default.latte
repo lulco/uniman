@@ -39,7 +39,11 @@
 						{else}
 							{php $external = $column->getExternal()}
 							<a n:tag-if="$external" href="{link Item:edit, $driver, $external['database'], $type, $external['table'], $external['callback']($value)}">
-								{if $column->isNumeric()}
+								{if $column->isSize()}
+									{$value|formatSize}
+								{elseif $column->isTime()}
+									{$value|formatTime}
+								{elseif $column->isNumeric()}
 									{$value|formatNumber, $column->getDecimals()}
 								{else}
 									{$value|truncate:100}

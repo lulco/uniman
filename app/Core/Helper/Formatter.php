@@ -34,4 +34,15 @@ class Formatter
         }
         return $this->formatNumber($number / 1024 / 1024 / 1024 / 1024, 1) . ' TB';
     }
+
+    public function formatTime($number)
+    {
+        if ($number < 60) {
+            return $number . ' s';
+        }
+        if ($number < 2600) {
+            return date('i:s', $number);
+        }
+        return ceil($number / 3600) . date('\h i\m s\s', $number);
+    }
 }
