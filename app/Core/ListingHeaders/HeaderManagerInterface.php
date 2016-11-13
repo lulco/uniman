@@ -2,6 +2,8 @@
 
 namespace Adminerng\Core\ListingHeaders;
 
+use Adminerng\Core\Column;
+
 interface HeaderManagerInterface
 {
     /**
@@ -10,7 +12,7 @@ interface HeaderManagerInterface
     public function databasesHeaders();
 
     /**
-     * @return Columns
+     * @return Column[]
      */
     public function tablesHeaders();
 

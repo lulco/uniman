@@ -73,4 +73,9 @@ interface DataManagerInterface
      * for each command or null if commands execution is not allowed
      */
     public function execute($commands);
+
+    /**
+     * @return array list of messages to show as flash messages
+     */
+    public function getMessages();
 }

@@ -2,6 +2,7 @@
 
 namespace Adminerng\Core;
 
+use Adminerng\Core\Utils\Filter;
 use Closure;
 
 class Column
@@ -23,6 +24,18 @@ class Column
      * @var boolean
      */
     private $isSortable = false;
+
+    /**
+     * result can be filtered by this column
+     * @var boolean
+     */
+    private $isFilterable = false;
+
+    /**
+     * list of filters for column
+     * @var array
+     */
+    private $filters = [];
 
     /**
      * value is number and should be align to right
@@ -89,6 +102,23 @@ class Column
     public function isSortable()
     {
         return $this->isSortable;
+    }
+
+    public function setIsFilterable($isFilterable, $filters = Filter::DEFAULT_FILTER_OPERATORS)
+    {
+        $this->isFilterable = $isFilterable;
+        $this->filters = $filters;
+        return $this;
+    }
+
+    public function isFilterable()
+    {
+        return $this->isFilterable;
+    }
+
+    public function getFilters()
+    {
+        return $this->filters;
     }
 
     public function setIsNumeric($isNumeric)

@@ -24,3 +24,13 @@ form:
 pagination:
 	previous: Predchádzajúca
 	next: Ďalšia
+
+filter:
+	contains: 'obsahuje'
+	not_contains: 'neobsahuje'
+	starts_with: 'začína na'
+	ends_with: 'končí na'
+	is_null: 'je null'
+	is_not_null: 'nie je null'
+	is_in: 'je z množiny'
+	is_not_in: 'nie je z množiny'

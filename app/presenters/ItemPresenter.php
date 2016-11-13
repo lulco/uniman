@@ -3,24 +3,35 @@
 namespace Adminerng\Presenters;
 
 use Adminerng\Components\DatabaseSelect\TablesSideBarControl;
+use Adminerng\Core\Forms\FilterForm\FilterForm;
 use Adminerng\Core\Forms\ItemForm;
 use App\Component\VisualPaginator;
 use Nette\Application\ForbiddenRequestException;
-use Nette\Application\UI\Form;
-use Tomaj\Form\Renderer\BootstrapInlineRenderer;
 
 class ItemPresenter extends BasePresenter
 {
     private $onPage;
 
-    public function renderDefault($driver, $database, $type, $table, $page = 1, $onPage = 50, array $filter = [], array $sorting = [])
+    private $sorting = [];
+
+    private $filter = [];
+
+    private $columns = [];
+
+    public function actionDefault($driver, $database, $type, $table, $page = 1, $onPage = FilterForm::DEFAULT_ON_PAGE, array $filter = [], array $sorting = [])
     {
         ksort($sorting);
         $this->database = $database;
         $this->type = $type;
         $this->table = $table;
         $this->onPage = $onPage;
+        $this->sorting = $sorting;
+        $this->filter = $filter;
+        $this->columns = $this->driver->headerManager()->itemsHeaders($type, $table);
+    }
 
+    public function renderDefault($driver, $database, $type, $table, $page = 1, $onPage = FilterForm::DEFAULT_ON_PAGE, array $filter = [], array $sorting = [])
+    {
         $this->template->driver = $driver;
         $this->template->database = $database;
         $this->template->type = $type;
@@ -30,13 +41,19 @@ class ItemPresenter extends BasePresenter
         $itemsCount = $this->driver->dataManager()->itemsCount($type, $table, $filter);
         $this->template->itemsCount = $itemsCount;
         $this->template->items = $this->driver->dataManager()->items($type, $table, $page, $onPage, $filter, $sorting);
-        $this->template->columns = $this->driver->headerManager()->itemsHeaders($type, $table);
+
+        $this->template->columns = $this->columns;
 
         $visualPaginator = $this['paginator'];
         $paginator = $visualPaginator->getPaginator();
         $paginator->setItemCount($itemsCount);
         $paginator->setItemsPerPage($onPage);
         $paginator->page = $page;
+
+        foreach ($this->driver->dataManager()->getMessages() as $message => $type) {
+            $type = $type ?: 'info';
+            $this->flashMessage($message, $type);
+        }
     }
 
     public function actionCreate($driver, $database, $type, $table)
@@ -82,12 +99,13 @@ class ItemPresenter extends BasePresenter
 
     protected function createComponentFilterForm()
     {
-        $form = new Form();
-        $form->setRenderer(new BootstrapInlineRenderer());
-        $form->setMethod('get');
-        $form->addText('onPage', 'On page')
-            ->setDefaultValue($this->onPage);
-        $form->addSubmit('submit', 'Filter');
+        $form = $this->driver->formManager()->filterForm($this->translator, $this->columns, $this->filter, $this->sorting, $this->onPage);
+        $form->doRedirect[] = function ($onPage, $filter, $sorting) {
+            $this->redirect('Item:default', $this->driver->type(), $this->database, $this->type, $this->table, 1, $onPage, $filter, $sorting);
+        };
+        $form->doReset[] = function () {
+            $this->redirect('Item:default', $this->driver->type(), $this->database, $this->type, $this->table);
+        };
         return $form;
     }
 

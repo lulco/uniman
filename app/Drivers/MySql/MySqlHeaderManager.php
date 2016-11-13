@@ -105,6 +105,7 @@ class MySqlHeaderManager implements HeaderManagerInterface
                 ->setKey($column)
                 ->setTitle($column)
                 ->setIsSortable(true)
+                ->setIsFilterable(true)
                 ->setIsNumeric($this->isNumeric($definition))
                 ->setDecimals($this->getDecimals($definition))
                 ->setInfo($definition['Comment']);
