@@ -40,7 +40,7 @@ class MySqlDataManager extends AbstractDataManager
             return $this->databases;
         }
 
-        $query = 'SELECT information_schema.SCHEMATA.*, count(*) AS tables_count, SUM(information_schema.TABLES.DATA_LENGTH) AS size
+        $query = 'SELECT information_schema.SCHEMATA.*, count(information_schema.TABLES.TABLE_NAME) AS tables_count, SUM(information_schema.TABLES.DATA_LENGTH) AS size
 FROM information_schema.SCHEMATA
 LEFT JOIN information_schema.TABLES ON information_schema.SCHEMATA.SCHEMA_NAME = information_schema.TABLES.TABLE_SCHEMA
 GROUP BY information_schema.SCHEMATA.SCHEMA_NAME

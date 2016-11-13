@@ -1,5 +1,5 @@
 {foreach $tables as $type => $rows}
-	<div style="overflow-x: auto;">
+	<div n:if="count($rows) > 0" style="overflow-x: auto;">
 		<h3>{_$driver->type() . '.table_type.' . $type. '.title'}</h3>
 		<ul>
 			<li n:foreach="$rows as $table => $info">
