@@ -97,10 +97,6 @@ class FilterForm extends Control implements FilterFormInterface
             }
         }
 
-        // toto hadze chybu Call to undefined method Adminerng\Core\Forms\FilterForm\FilterForm::doRedirect()
-//        $this->doRedirect($onPage, $filter, $sorting);
-
-        // takze to ohackujeme takto
         foreach ($this->doRedirect as $callback) {
             $callback($onPage, $filter, $sorting);
         }

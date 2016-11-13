@@ -161,7 +161,6 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
             }
         }
         $where .= implode (' AND ', $whereParts);
-//        echo $where;exit();
         return $where;
     }
 
