@@ -2,7 +2,6 @@
 
 namespace Adminerng\Drivers\MySql;
 
-use Adminerng\Core\Column;
 use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Exception\OperatorNotSupportedException;
 use Adminerng\Core\Helper\Formatter;
@@ -160,7 +159,7 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
                 }
             }
         }
-        $where .= implode (' AND ', $whereParts);
+        $where .= implode(' AND ', $whereParts);
         return $where;
     }
 
