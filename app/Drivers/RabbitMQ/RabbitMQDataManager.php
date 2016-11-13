@@ -96,7 +96,7 @@ class RabbitMQDataManager extends AbstractDataManager
         foreach ($this->client->getMessages($this->vhost, $table) as $message) {
             $item = [
                 'message_body' => $message['payload'],
-                'size' => $message['payload_bytes'],
+                'length' => $message['payload_bytes'],
                 'is_truncated' => false ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
                 'content_encoding' => $message['payload_encoding'],
                 'redelivered' => $message['redelivered'] ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
@@ -118,7 +118,7 @@ class RabbitMQDataManager extends AbstractDataManager
         foreach ($this->client->getMessages($this->vhost, $table) as $message) {
             $item = [
                 'message_body' => $message['payload'],
-                'size' => $message['payload_bytes'],
+                'length' => $message['payload_bytes'],
                 'is_truncated' => false ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
                 'content_encoding' => $message['payload_encoding'],
                 'redelivered' => $message['redelivered'] ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),

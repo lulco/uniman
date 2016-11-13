@@ -27,7 +27,7 @@
 				</td>
 				{foreach $databasesHeaders as $column}
 					{php $value = isset($databaseInfo[$column->getKey()]) ? $databaseInfo[$column->getKey()] : null}
-					<td n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{else}{if $column->isNumeric()}{$value|formatNumber, $column->getDecimals()}{else}{$value|truncate:100}{/if}{/if}</td>
+					<td n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{elseif $column->isSize()}{$value|formatSize}{elseif $column->isNumeric()}{$value|formatNumber, $column->getDecimals()}{else}{$value|truncate:100}{/if}</td>
 				{/foreach}
 			</tr>
 		</tbody>

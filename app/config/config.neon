@@ -29,6 +29,7 @@ services:
 		class: Adminerng\Core\Helper\FilterLoader
 		setup:
 			- register('formatNumber', [@formatter, formatNumber])
+			- register('formatSize', [@formatter, formatSize])
 
 	nette.latteFactory:
 		setup:

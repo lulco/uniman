@@ -12,12 +12,12 @@ class MemcacheHeaderManager implements HeaderManagerInterface
         $fields = [
             'server' => ['is_numeric' => false],
             'process_id' => ['is_numeric' => false],
-            'uptime' => [],
-            'current_items' => [],
-            'total_items' => [],
-            'size' => [],
-            'active_slabs' => [],
-            'total_malloced' => [],
+            'uptime' => ['is_numeric' => true],
+            'current_items' => ['is_numeric' => true],
+            'total_items' => ['is_numeric' => true],
+            'size' => ['is_numeric' => true, 'is_size' => true],
+            'active_slabs' => ['is_numeric' => true],
+            'total_malloced' => ['is_numeric' => true, 'is_size' => true],
         ];
 
         $columns = [];
@@ -26,8 +26,11 @@ class MemcacheHeaderManager implements HeaderManagerInterface
                 ->setKey($key)
                 ->setTitle('memcache.headers.servers.' . $key)
                 ->setIsSortable(true);
-            if (!isset($settings['is_numeric'])) {
-                $column->setIsNumeric(true);
+            if (isset($settings['is_numeric'])) {
+                $column->setIsNumeric($settings['is_numeric']);
+            }
+            if (isset($settings['is_size'])) {
+                $column->setIsSize($settings['is_size']);
             }
             $columns[] = $column;
         }
@@ -54,10 +57,11 @@ class MemcacheHeaderManager implements HeaderManagerInterface
                 ->setIsSortable(true)
                 ->setIsFilterable(true);
             $columns[] = (new Column())
-                ->setKey('size')
-                ->setTitle('memcache.columns.' . $type . '.size')
+                ->setKey('length')
+                ->setTitle('memcache.columns.' . $type . '.length')
                 ->setIsSortable(true)
-                ->setIsFilterable(true);
+                ->setIsFilterable(true)
+                ->setIsNumeric(true);
             $columns[] = (new Column())
                 ->setKey('expiration')
                 ->setTitle('memcache.columns.' . $type . '.expiration')

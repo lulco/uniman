@@ -25,7 +25,7 @@ columns:
 	key:
 		key: Key
 		value: Value
-		size: Size
+		length: Length
 		expiration: 'Expiration (s)'
 		compressed: Compressed
 
