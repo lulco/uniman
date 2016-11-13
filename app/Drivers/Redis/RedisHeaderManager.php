@@ -38,17 +38,7 @@ class RedisHeaderManager implements HeaderManagerInterface
         $keyColumns = [];
         $keyColumns[] = (new Column())
             ->setKey('key')
-            ->setTitle('redis.headers.keys.key')
-            ->setIsSortable(true);
-        $keyColumns[] = (new Column())
-            ->setKey('value')
-            ->setTitle('redis.headers.keys.value')
-            ->setIsSortable(true);
-        $keyColumns[] = (new Column())
-            ->setKey('length')
-            ->setTitle('redis.headers.keys.length')
-            ->setIsSortable(true)
-            ->setIsNumeric(true);
+            ->setTitle('redis.headers.keys.key');
 
         $hashColumns = [];
         $hashColumns[] = (new Column())

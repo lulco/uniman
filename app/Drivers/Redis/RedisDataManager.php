@@ -32,12 +32,15 @@ class RedisDataManager extends AbstractDataManager
     public function tables(array $sorting = [])
     {
         $tables = [
-            RedisDriver::TYPE_KEY => [],
+            RedisDriver::TYPE_KEY => [
+                'all' => [
+                    'key' => 'Show all keys',
+                ]
+            ],
             RedisDriver::TYPE_HASH => [],
             RedisDriver::TYPE_SET => [],
         ];
         $commands = [
-            'get' => RedisDriver::TYPE_KEY,
             'hLen' => RedisDriver::TYPE_HASH,
             'sCard' => RedisDriver::TYPE_SET,
         ];
@@ -51,10 +54,7 @@ class RedisDataManager extends AbstractDataManager
                 $tables[$label][$key] = [
                     'key' => $key
                 ];
-                if ($label == RedisDriver::TYPE_KEY) {
-                    $tables[$label][$key]['value'] = $result;
-                    $tables[$label][$key]['length'] = strlen($result);
-                } elseif ($label == RedisDriver::TYPE_HASH) {
+                if ($label == RedisDriver::TYPE_HASH) {
                     $tables[$label][$key]['number_of_fields'] = $result;
                 } elseif ($label == RedisDriver::TYPE_SET) {
                     $tables[$label][$key]['number_of_members'] = $result;
@@ -118,7 +118,25 @@ class RedisDataManager extends AbstractDataManager
             }
         }
         if ($type == RedisDriver::TYPE_KEY) {
-            return 1;
+            $totalItems = 0;
+            foreach ($this->connection->keys('*') as $key) {
+                $result = $this->connection->get($key);
+                if ($this->connection->getLastError() !== null) {
+                    $this->connection->clearLastError();
+                    continue;
+                }
+
+                $item = [
+                    'key' => $key,
+                    'value' => $result,
+                    'length' => strlen($result),
+                ];
+
+                if (Filter::apply($item, $filter)) {
+                    $totalItems++;
+                }
+            }
+            return $totalItems;
         }
         if ($type == RedisDriver::TYPE_SET) {
             if (!$filter) {
@@ -147,6 +165,8 @@ class RedisDataManager extends AbstractDataManager
     public function items($type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         $items = [];
+        $offset = ($page - 1) * $onPage;
+        $skipped = 0;
         if ($type == RedisDriver::TYPE_HASH) {
             foreach ($filter as $filterParts) {
                 if (isset($filterParts['key'][Filter::OPERATOR_EQUAL])) {
@@ -166,8 +186,7 @@ class RedisDataManager extends AbstractDataManager
                 }
             }
 
-            $offset = ($page - 1) * $onPage;
-            $skipped = 0;
+
             $iterator = '';
             do {
                 $pattern = null;
@@ -192,12 +211,30 @@ class RedisDataManager extends AbstractDataManager
                 }
             } while ($iterator !== 0 && count($items) < $onPage);
         } elseif ($type == RedisDriver::TYPE_KEY) {
-            $value = $this->connection->get($table);
-            $items[$table] = [
-                'key' => $table,
-                'length' => strlen($value),
-                'value' => $value,
-            ];
+            foreach ($this->connection->keys('*') as $key) {
+                $result = $this->connection->get($key);
+                if ($this->connection->getLastError() !== null) {
+                    $this->connection->clearLastError();
+                    continue;
+                }
+
+                $item = [
+                    'key' => $key,
+                    'value' => $result,
+                    'length' => strlen($result),
+                ];
+
+                if (Filter::apply($item, $filter)) {
+                    if ($skipped < $offset) {
+                        $skipped++;
+                    } else {
+                        $items[$key] = $item;
+                        if (count($items) === $onPage) {
+                            break;
+                        }
+                    }
+                }
+            }
         } elseif ($type == RedisDriver::TYPE_SET) {
             $iterator = '';
             do {

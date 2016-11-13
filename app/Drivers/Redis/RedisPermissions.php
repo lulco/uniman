@@ -8,32 +8,32 @@ class RedisPermissions extends DefaultPermissions
 {
     public function canCreateItem($database, $type, $table)
     {
-        return $type !== RedisDriver::TYPE_KEY;
+        return true;
     }
 
     public function canEditItem($database, $type, $table, $item = null)
     {
-        return $type !== RedisDriver::TYPE_KEY;
+        return true;
     }
 
     public function canDeleteItem($database, $type, $table, $item)
     {
-        return $type !== RedisDriver::TYPE_KEY;
+        return true;
     }
 
     public function canCreateTable($database, $type)
     {
-        return true;
+        return $type !== RedisDriver::TYPE_KEY;
     }
 
     public function canEditTable($database, $type, $table)
     {
-        return true;
+        return $type !== RedisDriver::TYPE_KEY;
     }
 
     public function canDeleteTable($database, $type, $table)
     {
-        return true;
+        return $type !== RedisDriver::TYPE_KEY;
     }
 
     public function canExecuteCommands()
