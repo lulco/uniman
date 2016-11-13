@@ -42,7 +42,8 @@ class MySqlHeaderManager implements HeaderManagerInterface
             ->setKey('size')
             ->setTitle('mysql.headers.databases.size')
             ->setIsSortable(true)
-            ->setIsNumeric(true);
+            ->setIsNumeric(true)
+            ->setIsSize(true);
         return $columns;
     }
 
@@ -52,9 +53,9 @@ class MySqlHeaderManager implements HeaderManagerInterface
             'table' => [],
             'engine' => [],
             'collation' => [],
-            'data_length' => ['is_numeric' => true],
-            'index_length' => ['is_numeric' => true],
-            'data_free' => ['is_numeric' => true],
+            'data_length' => ['is_numeric' => true, 'is_size' => true],
+            'index_length' => ['is_numeric' => true, 'is_size' => true],
+            'data_free' => ['is_numeric' => true, 'is_size' => true],
             'autoincrement' => ['is_numeric' => true],
             'rows' => ['is_numeric' => true],
         ];
@@ -66,6 +67,9 @@ class MySqlHeaderManager implements HeaderManagerInterface
                 ->setIsSortable(true);
             if (isset($settings['is_numeric'])) {
                 $column->setIsNumeric($settings['is_numeric']);
+            }
+            if (isset($settings['is_size'])) {
+                $column->setIsSize($settings['is_size']);
             }
             $tableColumns[] = $column;
         }

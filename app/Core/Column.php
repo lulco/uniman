@@ -50,6 +50,12 @@ class Column
     private $decimals = 0;
 
     /**
+     * value is size
+     * @var boolean
+     */
+    private $isSize = false;
+
+    /**
      * extended info about column
      * @var string
      */
@@ -141,6 +147,17 @@ class Column
     public function getDecimals()
     {
         return $this->decimals;
+    }
+
+    public function setIsSize($isSize)
+    {
+        $this->isSize = $isSize;
+        return $this;
+    }
+
+    public function isSize()
+    {
+        return $this->isSize;
     }
 
     public function setInfo($info)

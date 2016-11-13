@@ -31,7 +31,7 @@ table_type:
 columns:
 	queue:
 		message_body: Message body
-		size: Size
+		length: Length
 		is_truncated: Is truncated?
 		content_encoding: Content encoding
 		redelivered: Was redelivered?

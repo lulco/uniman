@@ -43,7 +43,8 @@ class RabbitMQHeaderManager implements HeaderManagerInterface
             ->setKey('size')
             ->setTitle('rabbitmq.headers.queues.size')
             ->setIsSortable(true)
-            ->setIsNumeric(true);
+            ->setIsNumeric(true)
+            ->setIsSize(true);
         return [
             RabbitMQDriver::TYPE_QUEUE => $columns,
         ];
@@ -59,8 +60,8 @@ class RabbitMQHeaderManager implements HeaderManagerInterface
                 ->setIsSortable(true)
                 ->setIsFilterable(true);
             $columns[] = (new Column())
-                ->setKey('size')
-                ->setTitle('rabbitmq.columns.' . $type . '.size')
+                ->setKey('length')
+                ->setTitle('rabbitmq.columns.' . $type . '.length')
                 ->setIsNumeric(true)
                 ->setIsSortable(true)
                 ->setIsFilterable(true);
