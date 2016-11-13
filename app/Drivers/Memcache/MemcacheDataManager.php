@@ -5,6 +5,7 @@ namespace Adminerng\Drivers\Memcache;
 use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Exception\NoTablesJustItemsException;
 use Adminerng\Core\Multisort;
+use Adminerng\Core\Utils\Filter;
 use Memcache;
 use Nette\Localization\ITranslator;
 
@@ -84,21 +85,23 @@ class MemcacheDataManager extends AbstractDataManager
             $keys = $this->getSlabKeys($this->database, $table);
         }
 
-        ksort($keys);
-        $keys = array_slice($keys, ($page - 1) * $onPage, $onPage, true);
-
         $items = [];
         foreach ($keys as $key => $info) {
             $flags = false;
-            $items[$key] = [
+            $item = [
                 'key' => $key,
                 'value' => $this->connection->get($key, $flags),
                 'size' => $info[0],
                 'expiration' => ($info[1] - time()) > 0 ? $info[1] - time() : null,
                 'compressed' => $flags == MEMCACHE_COMPRESSED ? $this->translator->translate('core.yes') : $this->translator->translate('core.no'),
             ];
+            if (Filter::apply($item, $filter)) {
+                $items[$key] = $item;
+            }
         }
-        return $items;
+
+        $items = Multisort::sort($items, $sorting);
+        return array_slice($items, ($page - 1) * $onPage, $onPage, true);
     }
 
     public function deleteItem($type, $table, $item)

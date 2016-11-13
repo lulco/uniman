@@ -45,19 +45,29 @@ class MemcacheHeaderManager implements HeaderManagerInterface
         if ($type == MemcacheDriver::TYPE_KEY) {
             $columns[] = (new Column())
                 ->setKey('key')
-                ->setTitle('memcache.columns.' . $type . '.key');
+                ->setTitle('memcache.columns.' . $type . '.key')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
             $columns[] = (new Column())
                 ->setKey('value')
-                ->setTitle('memcache.columns.' . $type . '.value');
+                ->setTitle('memcache.columns.' . $type . '.value')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
             $columns[] = (new Column())
                 ->setKey('size')
-                ->setTitle('memcache.columns.' . $type . '.size');
+                ->setTitle('memcache.columns.' . $type . '.size')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
             $columns[] = (new Column())
                 ->setKey('expiration')
-                ->setTitle('memcache.columns.' . $type . '.expiration');
+                ->setTitle('memcache.columns.' . $type . '.expiration')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
             $columns[] = (new Column())
                 ->setKey('compressed')
-                ->setTitle('memcache.columns.' . $type . '.compressed');
+                ->setTitle('memcache.columns.' . $type . '.compressed')
+                ->setIsSortable(true)
+                ->setIsFilterable(true);
         }
         return $columns;
     }
