@@ -259,9 +259,12 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
         });
         $results = [];
         foreach ($queries as $query) {
+            $results[$query]['headers'] = [];
             $statement = $this->connection->query($query);
             if (Strings::startsWith(strtolower($query), 'select ') || Strings::startsWith(strtolower($query), 'show ')) {
-                $results[$query] = $statement->fetchAll(PDO::FETCH_ASSOC);
+                $res = $statement->fetchAll(PDO::FETCH_ASSOC);
+                $results[$query]['headers'] = array_keys(current($res));
+                $results[$query]['items'] = $res;
                 continue;
             }
             $results[$query] = (bool) $statement;
