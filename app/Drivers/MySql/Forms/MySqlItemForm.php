@@ -21,6 +21,8 @@ class MySqlItemForm implements ItemFormInterface
 
     private $item;
 
+    private $columns = [];
+
     public function __construct(PDO $pdo, MySqlDataManager $dataManager, $type, $table, $item)
     {
         $this->pdo = $pdo;
@@ -32,8 +34,8 @@ class MySqlItemForm implements ItemFormInterface
 
     public function addFieldsToForm(Form $form)
     {
-        $columns = $this->dataManager->getColumns($this->type, $this->table);
-        foreach ($columns as $column => $definition) {
+        $this->columns = $this->dataManager->getColumns($this->type, $this->table);
+        foreach ($this->columns as $column => $definition) {
             if ($definition['Type'] === 'datetime') {
                 $field = $form->addDateTimePicker($column, $column);
             } elseif ($definition['Type'] === 'date') {
@@ -50,7 +52,9 @@ class MySqlItemForm implements ItemFormInterface
                 }
             }
 
-            if (!$field instanceof Checkbox && $definition['Null'] === 'NO') {
+            if ($definition['Extra'] == 'auto_increment') {
+                $field->setAttribute('placeholder', 'autoincrement');
+            } elseif (!$field instanceof Checkbox && $definition['Null'] === 'NO') {
                 $field->setRequired('mysql.item_form.field.required');
             }
         }
@@ -86,8 +90,14 @@ class MySqlItemForm implements ItemFormInterface
         }
         $statement = $this->pdo->prepare($query);
         foreach ($values as $key => $value) {
+            $value = $value === '' && $this->columns[$key]['Null'] ? null : $value;
             $statement->bindValue(':' . $key, $value);
         }
-        return $statement->execute();
+        $ret = $statement->execute();
+        if (!$ret) {
+            $form->addError($statement->errorInfo()[2]);
+            return;
+        }
+        return $ret;
     }
 }
