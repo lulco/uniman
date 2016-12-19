@@ -16,7 +16,7 @@ class Multisort
                 if (!isset($$col)) {
                     $$col = [];
                 }
-                $$col[$key] = $value;
+                ${$col}[$key] = $value;
             }
         }
 
