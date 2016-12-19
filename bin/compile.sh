@@ -23,7 +23,7 @@ echo ""
 echo "$(tput setaf 4)Compilation:$(tput sgr 0)"
 rm -rf "$BASE/build/"
 php $BASE/bin/compile
-rm -rf "$BASE/build/index.phar"
+rm -rf "$BASE/build/adminerng.phar"
 
 
 #
