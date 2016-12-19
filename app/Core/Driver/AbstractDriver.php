@@ -12,8 +12,6 @@ use Nette\Localization\ITranslator;
 
 abstract class AbstractDriver implements DriverInterface
 {
-    protected $connection;
-
     protected $translator;
 
     protected $formatter;

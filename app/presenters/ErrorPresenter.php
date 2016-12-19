@@ -14,9 +14,9 @@ class ErrorPresenter extends AbstractBasePresenter
             $this->setView('500');
         }
 
-        if ($this->isAjax()) { // AJAX request? Note this error in payload.
+        if ($this->isAjax()) {
             $this->payload->error = true;
-            $this->terminate();
+            $this->sendPayload();
         }
     }
 }

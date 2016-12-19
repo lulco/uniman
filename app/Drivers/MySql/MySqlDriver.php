@@ -13,6 +13,8 @@ class MySqlDriver extends AbstractDriver
     const TYPE_TABLE = 'table';
     const TYPE_VIEW = 'view';
 
+    private $connection;
+
     public function extensions()
     {
         return ['pdo_mysql'];

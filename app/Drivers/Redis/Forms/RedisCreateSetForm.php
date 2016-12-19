@@ -37,7 +37,6 @@ class RedisCreateSetForm implements TableFormInterface
     {
         $key = $values['key'];
         $members = array_map('trim', explode(',', $values['members']));
-//        $this->connection->sadd($key, implode(' ', $members));
         call_user_func_array([$this->connection, 'sadd'], array_merge([$key], $members));
     }
 }

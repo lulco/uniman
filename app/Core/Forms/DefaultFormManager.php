@@ -9,17 +9,17 @@ class DefaultFormManager implements FormManagerInterface
 {
     public function itemForm($database, $type, $table, $item)
     {
-        return false;
+        return null;
     }
 
     public function tableForm($database, $type, $table)
     {
-        return false;
+        return null;
     }
 
     public function databaseForm($database)
     {
-        return false;
+        return null;
     }
 
     public function filterForm(ITranslator $translator, array $columns, array $filter, array $sorting, $onPage)

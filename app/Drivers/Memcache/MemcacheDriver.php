@@ -11,6 +11,8 @@ class MemcacheDriver extends AbstractDriver
 {
     const TYPE_KEY = 'key';
 
+    private $connection;
+
     public function extensions()
     {
         return ['memcache'];

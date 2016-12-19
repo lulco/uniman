@@ -14,6 +14,8 @@ class RedisDriver extends AbstractDriver
     const TYPE_HASH = 'hash';
     const TYPE_SET = 'set';
 
+    private $connection;
+
     public function check()
     {
         return extension_loaded('redis') || class_exists('Predis\Client');

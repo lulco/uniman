@@ -24,7 +24,7 @@ class FilterForm extends Control implements FilterFormInterface
 
     private $filter = [];
 
-    private $onPage = [];
+    private $onPage;
 
     /**
      * @param Column[] $columns

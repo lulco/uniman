@@ -319,7 +319,6 @@ class RedisDataManager extends AbstractDataManager
             $function = strtolower($function);
             $results[$command]['headers'] = $this->headers($function);
             $rows = call_user_func_array([$this->connection, $function], $commandParts);
-//            print_R($rows);
             $items = $this->getItems($function, $rows);
             $results[$command]['items'] = $items;
             $results[$command]['count'] = count($items);
