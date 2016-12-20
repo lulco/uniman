@@ -140,11 +140,4 @@ class RabbitMQDataManager extends AbstractDataManager
         $this->connection->close();
         return true;
     }
-
-    private function getMessage($queue)
-    {
-        $channel = $this->connection->channel();
-        $channel->queue_declare($queue, false, false, false, false);
-        return $channel->basic_get($queue);
-    }
 }

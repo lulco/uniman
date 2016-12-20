@@ -27,16 +27,18 @@ $configurator->setTempDirectory($tempDir);
 $configurator->addConfig(__DIR__ . '/config/config.neon');
 $container = $configurator->createContainer();
 
-Form::extensionMethod('addDatePicker', function (Form $_this, $name, $label, $cols = null, $maxLength = null) {
-    $datePicker = new TbDatePicker($label, $cols, $maxLength);
+Form::extensionMethod('addDatePicker', function (Form $form, $name, $label, $maxLength = null) {
+    $datePicker = new TbDatePicker($label, $maxLength);
     $datePicker->setFormat('Y-m-d');
-    return $_this[$name] = $datePicker;
+    $datePicker->setAttribute('class', 'datepicker');
+    return $form[$name] = $datePicker;
 });
 
-Form::extensionMethod('addDateTimePicker', function (Form $_this, $name, $label, $cols = null, $maxLength = null) {
-    $dateTimePicker = new TbDateTimePicker($label, $cols, $maxLength);
+Form::extensionMethod('addDateTimePicker', function (Form $form, $name, $label, $maxLength = null) {
+    $dateTimePicker = new TbDateTimePicker($label, $maxLength);
     $dateTimePicker->setFormat('Y-m-d H:i:s');
-    return $_this[$name] = $dateTimePicker;
+    $dateTimePicker->setAttribute('class', 'datetimepicker');
+    return $form[$name] = $dateTimePicker;
 });
 
 return $container;

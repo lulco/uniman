@@ -45,8 +45,8 @@ class RedisEditSetForm implements TableFormInterface
         call_user_func_array([$this->connection, 'srem'], array_merge([$this->key], $membersToRemove));
         call_user_func_array([$this->connection, 'sadd'], array_merge([$this->key], $membersToAdd));
 
-        if ($this->key != $values['key']) {
-            $this->connection->rename($this->key, $values['key']);
+        if ($this->key != $key) {
+            $this->connection->rename($this->key, $key);
         }
     }
 }
