@@ -13,7 +13,9 @@ before_script:
     - travis_retry composer self-update
     - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction
 
-script:
+script:;
+    - mkdir -p log
+    - mkdir -p temp
     - mkdir -p build/logs
     - php vendor/bin/phpcs app tests --standard=PSR2 -n
     - php vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
