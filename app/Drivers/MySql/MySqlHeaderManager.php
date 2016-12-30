@@ -17,30 +17,20 @@ class MySqlHeaderManager implements HeaderManagerInterface
     public function databasesHeaders()
     {
         $columns = [];
-        $columns[] = (new Column())
-            ->setKey('database')
-            ->setTitle('mysql.headers.databases.database')
+        $columns[] = (new Column('database', 'mysql.headers.databases.database'))
             ->setIsSortable(true);
 
-        $columns[] = (new Column())
-            ->setKey('charset')
-            ->setTitle('mysql.headers.databases.charset')
+        $columns[] = (new Column('charset', 'mysql.headers.databases.charset'))
             ->setIsSortable(true);
 
-        $columns[] = (new Column())
-            ->setKey('collation')
-            ->setTitle('mysql.headers.databases.collation')
+        $columns[] = (new Column('collation', 'mysql.headers.databases.collation'))
             ->setIsSortable(true);
 
-        $columns[] = (new Column())
-            ->setKey('tables_count')
-            ->setTitle('mysql.headers.databases.tables')
+        $columns[] = (new Column('tables_count', 'mysql.headers.databases.tables'))
             ->setIsSortable(true)
             ->setIsNumeric(true);
 
-        $columns[] = (new Column())
-            ->setKey('size')
-            ->setTitle('mysql.headers.databases.size')
+        $columns[] = (new Column('size', 'mysql.headers.databases.size'))
             ->setIsSortable(true)
             ->setIsNumeric(true)
             ->setIsSize(true);
@@ -61,9 +51,7 @@ class MySqlHeaderManager implements HeaderManagerInterface
         ];
         $tableColumns = [];
         foreach ($tableFields as $key => $settings) {
-            $column = (new Column())
-                ->setKey($key)
-                ->setTitle('mysql.headers.tables.' . $key)
+            $column = (new Column($key, 'mysql.headers.tables.' . $key))
                 ->setIsSortable(true);
             if (isset($settings['is_numeric'])) {
                 $column->setIsNumeric($settings['is_numeric']);
@@ -85,9 +73,7 @@ class MySqlHeaderManager implements HeaderManagerInterface
         ];
         $viewColumns = [];
         foreach ($viewFields as $key => $settings) {
-            $column = (new Column())
-                ->setKey($key)
-                ->setTitle('mysql.headers.views.' . $key)
+            $column = (new Column($key, 'mysql.headers.views.' . $key))
                 ->setIsSortable(true);
             if (isset($settings['is_numeric'])) {
                 $column->setIsNumeric($settings['is_numeric']);
@@ -105,9 +91,7 @@ class MySqlHeaderManager implements HeaderManagerInterface
     {
         $columns = [];
         foreach ($this->dataManager->getColumns($type, $table) as $column => $definition) {
-            $col = (new Column())
-                ->setKey($column)
-                ->setTitle($column)
+            $col = (new Column($column, $column))
                 ->setIsSortable(true)
                 ->setIsFilterable(true)
                 ->setIsNumeric($this->isNumeric($definition))

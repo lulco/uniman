@@ -4,7 +4,7 @@ namespace Adminerng\Drivers\RabbitMQ;
 
 use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Helper\Formatter;
-use Adminerng\Core\Multisort;
+use Adminerng\Core\Utils\Multisort;
 use Adminerng\Core\Utils\Filter;
 use Nette\Localization\ITranslator;
 use PhpAmqpLib\Connection\AMQPStreamConnection;

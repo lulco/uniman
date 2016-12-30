@@ -10,18 +10,12 @@ class RabbitMQHeaderManager implements HeaderManagerInterface
     public function databasesHeaders()
     {
         $columns = [];
-        $columns[] = (new Column())
-            ->setKey('vhost')
-            ->setTitle('rabbitmq.headers.vhosts.vhost')
+        $columns[] = (new Column('vhost', 'rabbitmq.headers.vhosts.vhost'))
             ->setIsSortable(true);
-        $columns[] = (new Column())
-            ->setKey('queues')
-            ->setTitle('rabbitmq.headers.vhosts.queues')
+        $columns[] = (new Column('queues', 'rabbitmq.headers.vhosts.queues'))
             ->setIsSortable(true)
             ->setIsNumeric(true);
-        $columns[] = (new Column())
-            ->setKey('messages')
-            ->setTitle('rabbitmq.headers.vhosts.messages')
+        $columns[] = (new Column('messages', 'rabbitmq.headers.vhosts.messages'))
             ->setIsSortable(true)
             ->setIsNumeric(true);
         return $columns;
@@ -30,18 +24,12 @@ class RabbitMQHeaderManager implements HeaderManagerInterface
     public function tablesHeaders()
     {
         $columns = [];
-        $columns[] = (new Column())
-            ->setKey('queue')
-            ->setTitle('rabbitmq.headers.queues.queue')
+        $columns[] = (new Column('queue', 'rabbitmq.headers.queues.queue'))
             ->setIsSortable(true);
-        $columns[] = (new Column())
-            ->setKey('number_of_items')
-            ->setTitle('rabbitmq.headers.queues.number_of_items')
+        $columns[] = (new Column('number_of_items', 'rabbitmq.headers.queues.number_of_items'))
             ->setIsSortable(true)
             ->setIsNumeric(true);
-        $columns[] = (new Column())
-            ->setKey('size')
-            ->setTitle('rabbitmq.headers.queues.size')
+        $columns[] = (new Column('size', 'rabbitmq.headers.queues.size'))
             ->setIsSortable(true)
             ->setIsNumeric(true)
             ->setIsSize(true);
@@ -54,30 +42,20 @@ class RabbitMQHeaderManager implements HeaderManagerInterface
     {
         $columns = [];
         if ($type == RabbitMQDriver::TYPE_QUEUE) {
-            $columns[] = (new Column())
-                ->setKey('message_body')
-                ->setTitle('rabbitmq.columns.' . $type . '.message_body')
+            $columns[] = (new Column('message_body', 'rabbitmq.columns.' . $type . '.message_body'))
                 ->setIsSortable(true)
                 ->setIsFilterable(true);
-            $columns[] = (new Column())
-                ->setKey('length')
-                ->setTitle('rabbitmq.columns.' . $type . '.length')
+            $columns[] = (new Column('length', 'rabbitmq.columns.' . $type . '.length'))
                 ->setIsNumeric(true)
                 ->setIsSortable(true)
                 ->setIsFilterable(true);
-            $columns[] = (new Column())
-                ->setKey('is_truncated')
-                ->setTitle('rabbitmq.columns.' . $type . '.is_truncated')
+            $columns[] = (new Column('is_truncated', 'rabbitmq.columns.' . $type . '.is_truncated'))
                 ->setIsSortable(true)
                 ->setIsFilterable(true);
-            $columns[] = (new Column())
-                ->setKey('content_encoding')
-                ->setTitle('rabbitmq.columns.' . $type . '.content_encoding')
+            $columns[] = (new Column('content_encoding', 'rabbitmq.columns.' . $type . '.content_encoding'))
                 ->setIsSortable(true)
                 ->setIsFilterable(true);
-            $columns[] = (new Column())
-                ->setKey('redelivered')
-                ->setTitle('rabbitmq.columns.' . $type . '.redelivered')
+            $columns[] = (new Column('redelivered', 'rabbitmq.columns.' . $type . '.redelivered'))
                 ->setIsSortable(true)
                 ->setIsFilterable(true);
         }

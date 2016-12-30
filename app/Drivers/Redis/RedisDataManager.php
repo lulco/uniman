@@ -3,7 +3,7 @@
 namespace Adminerng\Drivers\Redis;
 
 use Adminerng\Core\DataManager\AbstractDataManager;
-use Adminerng\Core\Multisort;
+use Adminerng\Core\Utils\Multisort;
 use Adminerng\Core\Utils\Filter;
 use RedisProxy\RedisProxy;
 

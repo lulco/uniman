@@ -32,13 +32,13 @@ class NeonFileLoader implements LoaderInterface
         }
         foreach ($subnode as $key => $value) {
             if (is_array($value)) {
-                $nodePath = $path ? $path.'.'.$key : $key;
+                $nodePath = $path ? $path . '.' . $key : $key;
                 $this->flatten($messages, $value, $nodePath);
                 if ($path === null) {
                     unset($messages[$key]);
                 }
             } elseif ($path !== null) {
-                $messages[$path.'.'.$key] = $value;
+                $messages[$path . '.' . $key] = $value;
             }
         }
     }

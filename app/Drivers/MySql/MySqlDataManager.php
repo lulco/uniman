@@ -5,7 +5,7 @@ namespace Adminerng\Drivers\MySql;
 use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Exception\OperatorNotSupportedException;
 use Adminerng\Core\Helper\Formatter;
-use Adminerng\Core\Multisort;
+use Adminerng\Core\Utils\Multisort;
 use Adminerng\Core\Utils\Filter;
 use InvalidArgumentException;
 use Nette\Utils\Strings;
