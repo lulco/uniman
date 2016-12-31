@@ -20,6 +20,6 @@ class MemoryStorage implements StorageInterface
         if (!isset($this->translations[$language])) {
             $this->translations[$language] = $this->loader->load($language);
         }
-        return isset($this->translations[$language][$key]) ? $this->translations[$language][$key] : false;
+        return isset($this->translations[$language][$key]) ? $this->translations[$language][$key] : null;
     }
 }

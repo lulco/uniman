@@ -26,16 +26,11 @@ class Translator implements ITranslator
         return $this;
     }
 
-    public function getLanguage()
-    {
-        return $this->languageResolver->resolve();
-    }
-
     public function translate($message, $params = null)
     {
-        if ($this->getLanguage()) {
+        if ($this->languageResolver->resolve() !== null) {
             $value = $this->storage->load($this->getLanguage(), $message);
-            if ($value) {
+            if ($value !== null) {
                 return $this->replaceTokens($value, $params);
             }
         }
