@@ -8,7 +8,7 @@ php:
     - 7.0
     - 7.1
 
-sudo: false
+sudo: required
 
 before_script:
     - sudo apt-get install php-memcache
