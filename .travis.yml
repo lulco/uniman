@@ -1,6 +1,7 @@
 language: php
 
 services:
+  - memcached
 
 php:
     - 5.6

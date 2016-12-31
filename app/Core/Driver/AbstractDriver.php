@@ -58,7 +58,10 @@ abstract class AbstractDriver implements DriverInterface
     /**
      * @return array list of php extensions which should be loaded
      */
-    abstract public function extensions();
+    public function extensions()
+    {
+        return [];
+    }
 
     /**
      *
