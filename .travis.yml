@@ -11,8 +11,8 @@ php:
 sudo: required
 
 before_script:
-    - apt-get update
-    - apt-get install php-memcache
+    - sudo apt-get update
+    - sudo apt-get install php-memcache
     - travis_retry composer self-update
     - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction
 
