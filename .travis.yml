@@ -1,7 +1,7 @@
 language: php
 
 services:
-  - memcache
+  - memcached
 
 php:
     - 5.6
@@ -11,6 +11,7 @@ php:
 sudo: false
 
 before_script:
+    - sudo apt-get install php-memcache
     - travis_retry composer self-update
     - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction
 
