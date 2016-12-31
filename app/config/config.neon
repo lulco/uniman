@@ -11,6 +11,7 @@ services:
 		setup:
 			- setDefaultLanguage('en')
 
+	- Adminerng\Core\Translator\LanguageResolver\UrlLanguageResolver(@http.request::getUrl()::getAbsoluteUrl())
 	- Adminerng\Core\Translator\Storage\MemoryStorage
 	- Adminerng\Core\Translator\Loader\NeonFileLoader(%appDir%/lang)
 	- Adminerng\Core\Credentials\SessionStorageCredentials

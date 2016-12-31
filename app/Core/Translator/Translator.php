@@ -2,18 +2,22 @@
 
 namespace Adminerng\Core\Translator;
 
+use Adminerng\Core\Translator\LanguageResolver\LanguageResolverInterface;
 use Adminerng\Core\Translator\Storage\StorageInterface;
 use Nette\Localization\ITranslator;
 
 class Translator implements ITranslator
 {
-    private $defaultLanguage;
-
     private $storage;
 
-    public function __construct(StorageInterface $storage)
+    private $languageResolver;
+
+    private $defaultLanguage;
+
+    public function __construct(StorageInterface $storage, LanguageResolverInterface $languageResolver)
     {
         $this->storage = $storage;
+        $this->languageResolver = $languageResolver;
     }
 
     public function setDefaultLanguage($language)
@@ -24,7 +28,7 @@ class Translator implements ITranslator
 
     public function getLanguage()
     {
-        return filter_input(INPUT_GET, 'locale');
+        return $this->languageResolver->resolve();
     }
 
     public function translate($message, $params = null)
