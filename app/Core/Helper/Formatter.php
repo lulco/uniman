@@ -23,16 +23,16 @@ class Formatter
         if ($number < 1024) {
             return $this->formatNumber($number) . ' B';
         }
-        if ($number < 1024 * 1024) {
+        if ($number < pow(1024, 2)) {
             return $this->formatNumber($number / 1024, 1) . ' kB';
         }
-        if ($number < 1024 * 1024 * 1024) {
-            return $this->formatNumber($number / 1024 / 1024, 1) . ' MB';
+        if ($number < pow(1024, 3)) {
+            return $this->formatNumber($number / pow(1024, 2), 1) . ' MB';
         }
-        if ($number < 1024 * 1024 * 1024 * 1024) {
-            return $this->formatNumber($number / 1024 / 1024 / 1024, 1) . ' GB';
+        if ($number < pow(1024, 4)) {
+            return $this->formatNumber($number / pow(1024, 3), 1) . ' GB';
         }
-        return $this->formatNumber($number / 1024 / 1024 / 1024 / 1024, 1) . ' TB';
+        return $this->formatNumber($number / pow(1024, 4), 1) . ' TB';
     }
 
     public function formatTime($number)
@@ -40,9 +40,9 @@ class Formatter
         if ($number < 60) {
             return $number . ' s';
         }
-        if ($number < 2600) {
+        if ($number < 3600) {
             return date('i:s', $number);
         }
-        return ceil($number / 3600) . date('\h i\m s\s', $number);
+        return floor($number / 3600) . date('\h i\m s\s', $number);
     }
 }
