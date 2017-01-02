@@ -1,18 +1,17 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\Memcache;
+namespace Adminerng\Tests\Drivers\MySql;
 
 use Adminerng\Core\CredentialsFormInterface;
-use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
 use Adminerng\Core\Permissions\PermissionsInterface;
-use Adminerng\Drivers\Memcache\MemcacheDriver;
+use Adminerng\Drivers\MySql\MySqlDriver;
 use Adminerng\Tests\Drivers\AbstractDriverTest;
 
-class MemcacheDriverTest extends AbstractDriverTest
+class MySqlDriverTest extends AbstractDriverTest
 {
     public function testDriver()
     {
-        $driver = new MemcacheDriver($this->translator, $this->formatter);
+        $driver = new MySqlDriver($this->translator, $this->formatter);
         self::assertTrue(is_string($driver->type()));
         self::assertTrue(is_string($driver->name()));
         self::assertTrue(is_array($driver->classes()));
@@ -20,7 +19,6 @@ class MemcacheDriverTest extends AbstractDriverTest
         self::assertTrue(is_bool($driver->check()));
         self::assertTrue(is_array($driver->defaultCredentials()));
         self::assertInstanceOf(CredentialsFormInterface::class, $driver->getCredentialsForm());
-        self::assertInstanceOf(HeaderManagerInterface::class, $driver->headerManager());
         self::assertInstanceOf(PermissionsInterface::class, $driver->permissions());
     }
 }
