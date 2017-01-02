@@ -113,7 +113,7 @@ class Column
      * @param boolean $isSortable
      * @return Column
      */
-    public function setIsSortable($isSortable)
+    public function setSortable($isSortable)
     {
         $this->isSortable = $isSortable;
         return $this;
@@ -132,7 +132,7 @@ class Column
      * @param array $filters list of available filters for column
      * @return Column
      */
-    public function setIsFilterable($isFilterable, array $filters = Filter::DEFAULT_FILTER_OPERATORS)
+    public function setFilterable($isFilterable, array $filters = Filter::DEFAULT_FILTER_OPERATORS)
     {
         $this->isFilterable = $isFilterable;
         $this->filters = $filters;
@@ -159,7 +159,7 @@ class Column
      * @param boolean $isNumeric
      * @return Column
      */
-    public function setIsNumeric($isNumeric)
+    public function setNumeric($isNumeric)
     {
         $this->isNumeric = $isNumeric;
         return $this;
@@ -195,7 +195,7 @@ class Column
      * @param boolean $isSize
      * @return Column
      */
-    public function setIsSize($isSize)
+    public function setSize($isSize)
     {
         $this->isSize = $isSize;
         return $this;
@@ -213,7 +213,7 @@ class Column
      * @param boolean $isTime
      * @return Column
      */
-    public function setIsTime($isTime)
+    public function setTime($isTime)
     {
         $this->isTime = $isTime;
         return $this;

@@ -28,7 +28,7 @@ class RabbitMQFormManager extends DefaultFormManager
     {
         $connection = $this->dataManager->getConnection();
         if ($type === RabbitMQDriver::TYPE_QUEUE) {
-            return new RabbitMQQueueForm($connection, $table);
+            return new RabbitMQQueueForm($connection);
         }
         return parent::tableForm($database, $type, $table);
     }

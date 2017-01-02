@@ -31,12 +31,12 @@ class ColumnTest extends PHPUnit_Framework_TestCase
     public function testSetters()
     {
         $column = new Column('key', 'title');
-        self::assertInstanceOf(Column::class, $column->setIsSortable(true));
-        self::assertInstanceOf(Column::class, $column->setIsFilterable(true));
-        self::assertInstanceOf(Column::class, $column->setIsNumeric(true));
+        self::assertInstanceOf(Column::class, $column->setSortable(true));
+        self::assertInstanceOf(Column::class, $column->setFilterable(true));
+        self::assertInstanceOf(Column::class, $column->setNumeric(true));
         self::assertInstanceOf(Column::class, $column->setDecimals(2));
-        self::assertInstanceOf(Column::class, $column->setIsSize(true));
-        self::assertInstanceOf(Column::class, $column->setIsTime(true));
+        self::assertInstanceOf(Column::class, $column->setSize(true));
+        self::assertInstanceOf(Column::class, $column->setTime(true));
         self::assertInstanceOf(Column::class, $column->setInfo('info'));
         self::assertInstanceOf(Column::class, $column->setInfoUrl('info_url'));
         self::assertInstanceOf(Column::class, $column->setExternal('database_name', 'table_name', function ($value) {

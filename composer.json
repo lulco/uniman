@@ -1,5 +1,5 @@
 {
-	"name": "adminerng",
+	"name": "lulco/adminerng",
 	"description": "Universal system for managing different services.",
 	"type": "web-application",
 	"keywords": ["PHP", "Managing system", "MySql", "Redis", "Memcache", "RabbitMQ"],

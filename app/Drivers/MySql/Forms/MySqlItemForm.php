@@ -77,16 +77,16 @@ class MySqlItemForm implements ItemFormInterface
             return ':' . $key;
         }, array_keys($values));
         if ($this->item) {
-            $query = 'UPDATE `' . $this->table . '` SET ';
+            $query = sprintf('UPDATE `%s` SET ', $this->table);
             $set = [];
             foreach ($values as $key => $value) {
                 $set[] = '`' . $key . '` = :' . $key;
             }
             $query .= implode(', ', $set);
             $primaryColumns = $this->dataManager->getPrimaryColumns($this->type, $this->table);
-            $query .= ' WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "' . $this->item . '"';
+            $query .= sprintf(' WHERE md5(concat(%s)) = "%s"', implode(', "|", ', $primaryColumns), $this->item);
         } else {
-            $query = sprintf('INSERT INTO `' . $this->table . '` %s VALUES %s', '(' . implode(', ', $keys) . ')', '(' . implode(', ', $vals) . ')');
+            $query = sprintf('INSERT INTO `%s` %s VALUES %s', $this->table, '(' . implode(', ', $keys) . ')', '(' . implode(', ', $vals) . ')');
         }
         $statement = $this->pdo->prepare($query);
         foreach ($values as $key => $value) {
