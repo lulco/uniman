@@ -271,7 +271,7 @@ class RedisDataManager extends AbstractDataManager
             return $this->connection->hdel($table, $item);
         }
         if ($type == RedisDriver::TYPE_KEY) {
-            return $this->connection->del($table);
+            return $this->connection->del($item);
         }
         if ($type == RedisDriver::TYPE_SET) {
             return $this->connection->srem($table, $item);
