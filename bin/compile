@@ -9,10 +9,6 @@ use Nette\Utils\Finder;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-/**
- * TODO add parameters (i.e.: languages - and compile only selected languages)
- * TODO optimize - do not include not needed files
- */
 class Compile
 {
     private $phar;

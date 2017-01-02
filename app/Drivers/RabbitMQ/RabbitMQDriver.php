@@ -75,6 +75,6 @@ class RabbitMQDriver extends AbstractDriver
 
     protected function getDataManager()
     {
-        return new RabbitMQDataManager($this->credentials, $this->client, $this->translator, $this->formatter);
+        return new RabbitMQDataManager($this->credentials, $this->client, $this->translator);
     }
 }

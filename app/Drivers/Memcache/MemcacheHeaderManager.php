@@ -22,18 +22,16 @@ class MemcacheHeaderManager implements HeaderManagerInterface
 
         $columns = [];
         foreach ($fields as $key => $settings) {
-            $column = (new Column())
-                ->setKey($key)
-                ->setTitle('memcache.headers.servers.' . $key)
-                ->setIsSortable(true);
+            $column = (new Column($key, 'memcache.headers.servers.' . $key))
+                ->setSortable(true);
             if (isset($settings['is_numeric'])) {
-                $column->setIsNumeric($settings['is_numeric']);
+                $column->setNumeric($settings['is_numeric']);
             }
             if (isset($settings['is_size'])) {
-                $column->setIsSize($settings['is_size']);
+                $column->setSize($settings['is_size']);
             }
             if (isset($settings['is_time'])) {
-                $column->setIsTime($settings['is_time']);
+                $column->setTime($settings['is_time']);
             }
             $columns[] = $column;
         }
@@ -49,34 +47,24 @@ class MemcacheHeaderManager implements HeaderManagerInterface
     {
         $columns = [];
         if ($type == MemcacheDriver::TYPE_KEY) {
-            $columns[] = (new Column())
-                ->setKey('key')
-                ->setTitle('memcache.columns.' . $type . '.key')
-                ->setIsSortable(true)
-                ->setIsFilterable(true);
-            $columns[] = (new Column())
-                ->setKey('value')
-                ->setTitle('memcache.columns.' . $type . '.value')
-                ->setIsSortable(true)
-                ->setIsFilterable(true);
-            $columns[] = (new Column())
-                ->setKey('length')
-                ->setTitle('memcache.columns.' . $type . '.length')
-                ->setIsSortable(true)
-                ->setIsFilterable(true)
-                ->setIsNumeric(true);
-            $columns[] = (new Column())
-                ->setKey('expiration')
-                ->setTitle('memcache.columns.' . $type . '.expiration')
-                ->setIsSortable(true)
-                ->setIsFilterable(true)
-                ->setIsNumeric(true)
-                ->setIsTime(true);
-            $columns[] = (new Column())
-                ->setKey('compressed')
-                ->setTitle('memcache.columns.' . $type . '.compressed')
-                ->setIsSortable(true)
-                ->setIsFilterable(true);
+            $columns[] = (new Column('key', 'memcache.columns.' . $type . '.key'))
+                ->setSortable(true)
+                ->setFilterable(true);
+            $columns[] = (new Column('value', 'memcache.columns.' . $type . '.value'))
+                ->setSortable(true)
+                ->setFilterable(true);
+            $columns[] = (new Column('length', 'memcache.columns.' . $type . '.length'))
+                ->setSortable(true)
+                ->setFilterable(true)
+                ->setNumeric(true);
+            $columns[] = (new Column('expiration', 'memcache.columns.' . $type . '.expiration'))
+                ->setSortable(true)
+                ->setFilterable(true)
+                ->setNumeric(true)
+                ->setTime(true);
+            $columns[] = (new Column('compressed', 'memcache.columns.' . $type . '.compressed'))
+                ->setSortable(true)
+                ->setFilterable(true);
         }
         return $columns;
     }

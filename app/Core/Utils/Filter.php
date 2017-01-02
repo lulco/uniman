@@ -41,6 +41,9 @@ class Filter
         foreach ($filter as $filterPart) {
             foreach ($filterPart as $key => $filterSettings) {
                 foreach ($filterSettings as $operator => $value) {
+                    if (!array_key_exists($key, $item)) {
+                        continue;
+                    }
                     if (!self::checkFilter($operator, $item[$key], $value)) {
                         return false;
                     }

@@ -83,122 +83,192 @@ class Column
      */
     private $external = [];
 
-    public function setKey($key)
+    /**
+     * @param string $key key in item result array
+     * @param string $title title (string is translated in template)
+     */
+    public function __construct($key, $title)
     {
         $this->key = $key;
-        return $this;
+        $this->title = $title;
     }
 
+    /**
+     * @return string
+     */
     public function getKey()
     {
         return $this->key;
     }
 
-    public function setTitle($title)
-    {
-        $this->title = $title;
-        return $this;
-    }
-
+    /**
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
-    public function setIsSortable($isSortable)
+    /**
+     * @param boolean $isSortable
+     * @return Column
+     */
+    public function setSortable($isSortable)
     {
         $this->isSortable = $isSortable;
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function isSortable()
     {
         return $this->isSortable;
     }
 
-    public function setIsFilterable($isFilterable, $filters = Filter::DEFAULT_FILTER_OPERATORS)
+    /**
+     * @param boolean $isFilterable
+     * @param array $filters list of available filters for column
+     * @return Column
+     */
+    public function setFilterable($isFilterable, array $filters = Filter::DEFAULT_FILTER_OPERATORS)
     {
         $this->isFilterable = $isFilterable;
         $this->filters = $filters;
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function isFilterable()
     {
         return $this->isFilterable;
     }
 
+    /**
+     * @return array
+     */
     public function getFilters()
     {
         return $this->filters;
     }
 
-    public function setIsNumeric($isNumeric)
+    /**
+     * @param boolean $isNumeric
+     * @return Column
+     */
+    public function setNumeric($isNumeric)
     {
         $this->isNumeric = $isNumeric;
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function isNumeric()
     {
         return $this->isNumeric;
     }
 
+    /**
+     * @param integer $decimals
+     * @return Column
+     */
     public function setDecimals($decimals)
     {
         $this->decimals = $decimals;
         return $this;
     }
 
+    /**
+     * @return integer
+     */
     public function getDecimals()
     {
         return $this->decimals;
     }
 
-    public function setIsSize($isSize)
+    /**
+     * @param boolean $isSize
+     * @return Column
+     */
+    public function setSize($isSize)
     {
         $this->isSize = $isSize;
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function isSize()
     {
         return $this->isSize;
     }
 
-    public function setIsTime($isTime)
+    /**
+     * @param boolean $isTime
+     * @return Column
+     */
+    public function setTime($isTime)
     {
         $this->isTime = $isTime;
         return $this;
     }
 
+    /**
+     * @return boolean
+     */
     public function isTime()
     {
         return $this->isTime;
     }
 
+    /**
+     * @param string $info
+     * @return Column
+     */
     public function setInfo($info)
     {
         $this->info = $info;
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getInfo()
     {
         return $this->info;
     }
 
+    /**
+     * @param string $infoUrl
+     * @return Column
+     */
     public function setInfoUrl($infoUrl)
     {
         $this->infoUrl = $infoUrl;
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getInfoUrl()
     {
         return $this->infoUrl;
     }
 
+    /**
+     * @param string $database
+     * @param string $table
+     * @param Closure $callback function to create item identifier
+     * @return Column
+     */
     public function setExternal($database, $table, Closure $callback)
     {
         $this->external = [
@@ -209,6 +279,9 @@ class Column
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getExternal()
     {
         return $this->external;

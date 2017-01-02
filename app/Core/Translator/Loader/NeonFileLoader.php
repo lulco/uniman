@@ -11,13 +11,17 @@ class NeonFileLoader implements LoaderInterface
 
     public function __construct($localizationDirectory)
     {
-        $this->localizationDirectory = $localizationDirectory;
+        $this->localizationDirectory = rtrim($localizationDirectory, '/');
     }
 
     public function load($lang)
     {
-        $files = Finder::findFiles('*.neon')->in($this->localizationDirectory . '/' . $lang);
         $translations = [];
+        $dir = $this->localizationDirectory . '/' . $lang;
+        if (!file_exists($dir)) {
+            return $translations;
+        }
+        $files = Finder::findFiles('*.neon')->in($dir);
         foreach ($files as $file) {
             $translations[pathinfo($file, PATHINFO_FILENAME)] = Neon::decode(file_get_contents($file));
         }
@@ -32,13 +36,13 @@ class NeonFileLoader implements LoaderInterface
         }
         foreach ($subnode as $key => $value) {
             if (is_array($value)) {
-                $nodePath = $path ? $path.'.'.$key : $key;
+                $nodePath = $path ? $path . '.' . $key : $key;
                 $this->flatten($messages, $value, $nodePath);
                 if ($path === null) {
                     unset($messages[$key]);
                 }
             } elseif ($path !== null) {
-                $messages[$path.'.'.$key] = $value;
+                $messages[$path . '.' . $key] = $value;
             }
         }
     }

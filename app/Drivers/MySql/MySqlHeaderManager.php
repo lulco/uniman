@@ -17,33 +17,23 @@ class MySqlHeaderManager implements HeaderManagerInterface
     public function databasesHeaders()
     {
         $columns = [];
-        $columns[] = (new Column())
-            ->setKey('database')
-            ->setTitle('mysql.headers.databases.database')
-            ->setIsSortable(true);
+        $columns[] = (new Column('database', 'mysql.headers.databases.database'))
+            ->setSortable(true);
 
-        $columns[] = (new Column())
-            ->setKey('charset')
-            ->setTitle('mysql.headers.databases.charset')
-            ->setIsSortable(true);
+        $columns[] = (new Column('charset', 'mysql.headers.databases.charset'))
+            ->setSortable(true);
 
-        $columns[] = (new Column())
-            ->setKey('collation')
-            ->setTitle('mysql.headers.databases.collation')
-            ->setIsSortable(true);
+        $columns[] = (new Column('collation', 'mysql.headers.databases.collation'))
+            ->setSortable(true);
 
-        $columns[] = (new Column())
-            ->setKey('tables_count')
-            ->setTitle('mysql.headers.databases.tables')
-            ->setIsSortable(true)
-            ->setIsNumeric(true);
+        $columns[] = (new Column('tables_count', 'mysql.headers.databases.tables'))
+            ->setSortable(true)
+            ->setNumeric(true);
 
-        $columns[] = (new Column())
-            ->setKey('size')
-            ->setTitle('mysql.headers.databases.size')
-            ->setIsSortable(true)
-            ->setIsNumeric(true)
-            ->setIsSize(true);
+        $columns[] = (new Column('size', 'mysql.headers.databases.size'))
+            ->setSortable(true)
+            ->setNumeric(true)
+            ->setSize(true);
         return $columns;
     }
 
@@ -61,15 +51,13 @@ class MySqlHeaderManager implements HeaderManagerInterface
         ];
         $tableColumns = [];
         foreach ($tableFields as $key => $settings) {
-            $column = (new Column())
-                ->setKey($key)
-                ->setTitle('mysql.headers.tables.' . $key)
-                ->setIsSortable(true);
+            $column = (new Column($key, 'mysql.headers.tables.' . $key))
+                ->setSortable(true);
             if (isset($settings['is_numeric'])) {
-                $column->setIsNumeric($settings['is_numeric']);
+                $column->setNumeric($settings['is_numeric']);
             }
             if (isset($settings['is_size'])) {
-                $column->setIsSize($settings['is_size']);
+                $column->setSize($settings['is_size']);
             }
             $tableColumns[] = $column;
         }
@@ -85,12 +73,10 @@ class MySqlHeaderManager implements HeaderManagerInterface
         ];
         $viewColumns = [];
         foreach ($viewFields as $key => $settings) {
-            $column = (new Column())
-                ->setKey($key)
-                ->setTitle('mysql.headers.views.' . $key)
-                ->setIsSortable(true);
+            $column = (new Column($key, 'mysql.headers.views.' . $key))
+                ->setSortable(true);
             if (isset($settings['is_numeric'])) {
-                $column->setIsNumeric($settings['is_numeric']);
+                $column->setNumeric($settings['is_numeric']);
             }
             $viewColumns[] = $column;
         }
@@ -105,12 +91,10 @@ class MySqlHeaderManager implements HeaderManagerInterface
     {
         $columns = [];
         foreach ($this->dataManager->getColumns($type, $table) as $column => $definition) {
-            $col = (new Column())
-                ->setKey($column)
-                ->setTitle($column)
-                ->setIsSortable(true)
-                ->setIsFilterable(true)
-                ->setIsNumeric($this->isNumeric($definition))
+            $col = (new Column($column, $column))
+                ->setSortable(true)
+                ->setFilterable(true)
+                ->setNumeric($this->isNumeric($definition))
                 ->setDecimals($this->getDecimals($definition))
                 ->setInfo($definition['Comment']);
             if ($definition['key_info'] && $definition['key_info']['REFERENCED_TABLE_NAME']) {

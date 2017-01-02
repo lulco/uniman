@@ -3,17 +3,14 @@
 namespace Adminerng\Drivers\RabbitMQ;
 
 use Adminerng\Core\DataManager\AbstractDataManager;
-use Adminerng\Core\Helper\Formatter;
-use Adminerng\Core\Multisort;
 use Adminerng\Core\Utils\Filter;
+use Adminerng\Core\Utils\Multisort;
 use Nette\Localization\ITranslator;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class RabbitMQDataManager extends AbstractDataManager
 {
     private $translator;
-
-    private $formatter;
 
     /** @var AMQPStreamConnection */
     private $connection;
@@ -24,12 +21,11 @@ class RabbitMQDataManager extends AbstractDataManager
 
     private $vhost;
 
-    public function __construct(array $credentials, RabbitMQManagementApiClient $client, ITranslator $translator, Formatter $formatter)
+    public function __construct(array $credentials, RabbitMQManagementApiClient $client, ITranslator $translator)
     {
         $this->credentials = $credentials;
         $this->client = $client;
         $this->translator = $translator;
-        $this->formatter = $formatter;
     }
 
     public function getConnection()

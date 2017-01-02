@@ -2,11 +2,30 @@
 
 namespace Adminerng\Tests;
 
-use Adminerng\Core\Multisort;
+use Adminerng\Core\Utils\Multisort;
 use PHPUnit_Framework_TestCase;
 
 class MultisortTest extends PHPUnit_Framework_TestCase
 {
+    public function testNoSort()
+    {
+        $original = [
+            0 => [
+                'key' => 'first_key',
+                'title' => 'First key',
+                'sorting' => 100,
+            ],
+            1 => [
+                'key' => 'second_key',
+                'title' => 'Second key',
+                'sorting' => 50,
+            ],
+        ];
+
+        $sorting = [];
+        self::assertEquals($original, Multisort::sort($original, $sorting));
+    }
+
     public function testSingleSort()
     {
         $original = [

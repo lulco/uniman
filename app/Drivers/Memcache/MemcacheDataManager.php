@@ -4,7 +4,7 @@ namespace Adminerng\Drivers\Memcache;
 
 use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Exception\NoTablesJustItemsException;
-use Adminerng\Core\Multisort;
+use Adminerng\Core\Utils\Multisort;
 use Adminerng\Core\Utils\Filter;
 use Memcache;
 use Nette\Localization\ITranslator;

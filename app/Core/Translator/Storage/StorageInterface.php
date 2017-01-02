@@ -7,7 +7,7 @@ interface StorageInterface
     /**
      * @param string $language
      * @param string $key
-     * @return string
+     * @return string|null string for translated text or null if translation cannot be found
      */
     public function load($language, $key);
 }

@@ -11,12 +11,9 @@ class RabbitMQQueueForm implements ItemFormInterface
 {
     private $connection;
 
-    private $queue;
-
-    public function __construct(AMQPStreamConnection $connection, $queue = null)
+    public function __construct(AMQPStreamConnection $connection)
     {
         $this->connection = $connection;
-        $this->queue = $queue;
     }
 
     public function addFieldsToForm(Form $form)
