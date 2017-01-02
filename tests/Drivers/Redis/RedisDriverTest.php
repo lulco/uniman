@@ -12,7 +12,7 @@ class RedisDriverTest extends AbstractDriverTest
 {
     public function testDriver()
     {
-        $driver = new RedisDriver($this->translator, $this->formatter);
+        $driver = new RedisDriver($this->translator);
         self::assertTrue(is_string($driver->type()));
         self::assertTrue(is_string($driver->name()));
         self::assertTrue(is_array($driver->classes()));

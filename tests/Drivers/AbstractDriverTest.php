@@ -2,7 +2,6 @@
 
 namespace Adminerng\Tests\Drivers;
 
-use Adminerng\Core\Helper\Formatter;
 use Adminerng\Core\Translator\LanguageResolver\StaticLanguageResolver;
 use Adminerng\Core\Translator\Loader\NeonFileLoader;
 use Adminerng\Core\Translator\Storage\MemoryStorage;
@@ -13,8 +12,6 @@ abstract class AbstractDriverTest extends PHPUnit_Framework_TestCase
 {
     protected $translator;
 
-    protected $formatter;
-
     protected function setUp()
     {
         $localizationDirectory = __DIR__ . '/../../app/lang/';
@@ -22,6 +19,5 @@ abstract class AbstractDriverTest extends PHPUnit_Framework_TestCase
         $storage = new MemoryStorage($loader);
         $languageResolver = new StaticLanguageResolver('en');
         $this->translator = new Translator($storage, $languageResolver);
-        $this->formatter = new Formatter($this->translator);
     }
 }

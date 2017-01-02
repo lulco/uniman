@@ -12,7 +12,7 @@ class MemcacheDriverTest extends AbstractDriverTest
 {
     public function testDriver()
     {
-        $driver = new MemcacheDriver($this->translator, $this->formatter);
+        $driver = new MemcacheDriver($this->translator);
         self::assertTrue(is_string($driver->type()));
         self::assertTrue(is_string($driver->name()));
         self::assertTrue(is_array($driver->classes()));

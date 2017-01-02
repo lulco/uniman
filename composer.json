@@ -1,5 +1,9 @@
 {
-	"name": "Adminer next generation",
+	"name": "adminerng",
+	"description": "Universal system for managing different services.",
+	"type": "web-application",
+	"keywords": ["PHP", "Managing system", "MySql", "Redis", "Memcache", "RabbitMQ"],
+	"license": "MIT",
 	"require": {
 		"php": ">= 5.6",
 		"nette/application": "^2.4",

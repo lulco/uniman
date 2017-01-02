@@ -11,7 +11,7 @@ class MySqlDriverTest extends AbstractDriverTest
 {
     public function testDriver()
     {
-        $driver = new MySqlDriver($this->translator, $this->formatter);
+        $driver = new MySqlDriver($this->translator);
         self::assertTrue(is_string($driver->type()));
         self::assertTrue(is_string($driver->name()));
         self::assertTrue(is_array($driver->classes()));

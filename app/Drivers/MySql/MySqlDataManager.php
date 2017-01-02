@@ -4,9 +4,8 @@ namespace Adminerng\Drivers\MySql;
 
 use Adminerng\Core\DataManager\AbstractDataManager;
 use Adminerng\Core\Exception\OperatorNotSupportedException;
-use Adminerng\Core\Helper\Formatter;
-use Adminerng\Core\Utils\Multisort;
 use Adminerng\Core\Utils\Filter;
+use Adminerng\Core\Utils\Multisort;
 use InvalidArgumentException;
 use Nette\Utils\Strings;
 use PDO;
@@ -17,8 +16,6 @@ class MySqlDataManager extends AbstractDataManager
 
     private $connection;
 
-    private $formatter;
-
     private $database;
 
     /**
@@ -27,10 +24,9 @@ class MySqlDataManager extends AbstractDataManager
      */
     private $databases = null;
 
-    public function __construct(PDO $connection, Formatter $formatter)
+    public function __construct(PDO $connection)
     {
         $this->connection = $connection;
-        $this->formatter = $formatter;
     }
 
     public function databases(array $sorting = [])

@@ -5,7 +5,6 @@ namespace Adminerng\Core\Driver;
 use Adminerng\Core\DataManager\DataManagerInterface;
 use Adminerng\Core\Forms\DefaultFormManager;
 use Adminerng\Core\Forms\FormManagerInterface;
-use Adminerng\Core\Helper\Formatter;
 use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
 use Adminerng\Core\Permissions\DefaultPermissions;
 use Adminerng\Core\Permissions\PermissionsInterface;
@@ -15,8 +14,6 @@ abstract class AbstractDriver implements DriverInterface
 {
     protected $translator;
 
-    protected $formatter;
-
     private $permissions;
 
     private $formManager;
@@ -25,10 +22,9 @@ abstract class AbstractDriver implements DriverInterface
 
     private $dataManager;
 
-    public function __construct(ITranslator $translator, Formatter $formatter)
+    public function __construct(ITranslator $translator)
     {
         $this->translator = $translator;
-        $this->formatter = $formatter;
     }
 
     public function name()
