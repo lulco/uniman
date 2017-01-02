@@ -98,14 +98,14 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
 
     public function itemsCount($type, $table, array $filter = [])
     {
-        $query = 'SELECT count(*) FROM `' . $table . '`' . $this->createWhere($filter);
+        $query = sprintf('SELECT count(*) FROM `%s`', $table) . $this->createWhere($filter);
         return $this->connection->query($query)->fetch(PDO::FETCH_COLUMN);
     }
 
     public function items($type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         $primaryColumns = $this->getPrimaryColumns($type, $table);
-        $query = 'SELECT * FROM `' . $table . '`';
+        $query = sprintf('SELECT * FROM `%s`', $table);
         $query .= $this->createWhere($filter);
         $query .= $this->createOrderBy($sorting);
         $query .= ' LIMIT ' . (($page - 1) * $onPage) . ', ' . $onPage;
@@ -151,7 +151,7 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
                     if (!isset($operatorsMap[$operator])) {
                         throw new OperatorNotSupportedException('Operator "' . $operator . '" is not supported.');
                     }
-                    $whereParts[] = "`$key`" . sprintf($operatorsMap[$operator], $value);
+                    $whereParts[] = "`$key` " . sprintf($operatorsMap[$operator], $value);
                 }
             }
         }
@@ -179,24 +179,23 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
     public function loadItem($type, $table, $item)
     {
         $primaryColumns = $this->getPrimaryColumns($type, $table);
-        $query = 'SELECT * FROM `' . $table . '` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "' . $item . '"';
+        $query = sprintf('SELECT * FROM `%s` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "%s"', $table, $item);
         return $this->connection->query($query)->fetch(PDO::FETCH_ASSOC);
     }
 
     public function deleteItem($type, $table, $item)
     {
         $primaryColumns = $this->getPrimaryColumns($type, $table);
-
-        $query = 'DELETE FROM `' . $table . '` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "' . $item . '"';
+        $query = sprintf('DELETE FROM `%s` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "%s"', $table, $item);
         return $this->connection->query($query);
     }
 
     public function deleteTable($type, $table)
     {
         if ($type === MySqlDriver::TYPE_TABLE) {
-            $query = 'DROP TABLE `' . $table . '`';
+            $query = sprintf('DROP TABLE `%s`', $table);
         } elseif ($type === MySqlDriver::TYPE_VIEW) {
-            $query = 'DROP VIEW `' . $table . '`';
+            $query = sprintf('DROP VIEW `%s`', $table);
         } else {
             throw new InvalidArgumentException('Type "' . $type . '" is not supported');
         }
@@ -205,14 +204,15 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
 
     public function deleteDatabase($database)
     {
-        $query = 'DROP DATABASE `' . $database . '`';
+        $query = sprintf('DROP DATABASE `%s`', $database);
         return $this->connection->query($query);
     }
 
     public function selectDatabase($database)
     {
         $this->database = $database;
-        $this->connection->query('USE `' . $database . '`');
+        $query = sprintf('USE `%s`', $database);
+        $this->connection->query($query);
     }
 
     public function getPrimaryColumns($type, $table)
@@ -234,9 +234,9 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
     public function getColumns($type, $table)
     {
         if ($this->columns === null) {
-            $columns = $this->connection->query('SHOW FULL COLUMNS FROM `' . $table .'`')->fetchAll(PDO::FETCH_ASSOC);
+            $columns = $this->connection->query(sprintf('SHOW FULL COLUMNS FROM `%s`', $table))->fetchAll(PDO::FETCH_ASSOC);
             $keys = [];
-            foreach ($this->connection->query("SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = '{$this->database}' AND TABLE_NAME = '$table'")->fetchAll(PDO::FETCH_ASSOC) as $key) {
+            foreach ($this->connection->query(sprintf('SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = "%s" AND TABLE_NAME = "%s"', $this->database, $table))->fetchAll(PDO::FETCH_ASSOC) as $key) {
                 $keys[$key['COLUMN_NAME']] = $key;
             }
             $this->columns = [];
