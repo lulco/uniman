@@ -40,7 +40,7 @@ class MySqlItemForm implements ItemFormInterface
                 $field = $form->addDateTimePicker($column, $column);
             } elseif ($definition['Type'] === 'date') {
                 $field = $form->addDatePicker($column, $column);
-            } elseif ($definition['Type'] === 'text') {
+            } elseif (strpos($definition['Type'], 'text') !== false) {
                 $field = $form->addTextArea($column, $column, null, 7);
             } elseif ($definition['Type'] === 'tinyint(1)') {
                 $field = $form->addCheckbox($column, $column);

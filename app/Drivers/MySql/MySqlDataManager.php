@@ -179,14 +179,14 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
     public function loadItem($type, $table, $item)
     {
         $primaryColumns = $this->getPrimaryColumns($type, $table);
-        $query = sprintf('SELECT * FROM `%s` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "%s"', $table, $item);
+        $query = sprintf('SELECT * FROM `%s` WHERE md5(concat(%s)) = "%s"', $table, implode(', "|", ', $primaryColumns), $item);
         return $this->connection->query($query)->fetch(PDO::FETCH_ASSOC);
     }
 
     public function deleteItem($type, $table, $item)
     {
         $primaryColumns = $this->getPrimaryColumns($type, $table);
-        $query = sprintf('DELETE FROM `%s` WHERE md5(concat(' . implode(', "|", ', $primaryColumns) . ')) = "%s"', $table, $item);
+        $query = sprintf('DELETE FROM `%s` WHERE md5(concat(%s)) = "%s"', $table, implode(', "|", ', $primaryColumns), $item);
         return $this->connection->query($query);
     }
 
