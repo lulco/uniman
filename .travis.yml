@@ -1,6 +1,7 @@
 language: php
 
 services:
+    - mysql
     - rabbitmq
     - redis-server
 
@@ -14,6 +15,8 @@ sudo: false
 before_script:
     - travis_retry composer self-update
     - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction
+    - mysql -e 'DROP DATABASE IF EXISTS adminerng_test;'
+    - mysql -e 'CREATE DATABASE adminerng_test;'
 
 script:
     - mkdir -p log

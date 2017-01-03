@@ -54,10 +54,7 @@ abstract class AbstractDriver implements DriverInterface
     /**
      * @return array list of php extensions which should be loaded
      */
-    public function extensions()
-    {
-        return [];
-    }
+    abstract public function extensions();
 
     /**
      *
@@ -80,13 +77,9 @@ abstract class AbstractDriver implements DriverInterface
     }
 
     /**
-     * can be overriden in child
      * @return PermissionsInterface
      */
-    protected function getPermissions()
-    {
-        return new DefaultPermissions();
-    }
+    abstract protected function getPermissions();
 
     /**
      * @return FormManagerInterface
@@ -100,13 +93,9 @@ abstract class AbstractDriver implements DriverInterface
     }
 
     /**
-     * can be overriden in child
      * @return FormManagerInterface
      */
-    protected function getFormManager()
-    {
-        return new DefaultFormManager();
-    }
+    abstract protected function getFormManager();
 
     /**
      * @return HeaderManagerInterface
