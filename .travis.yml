@@ -1,6 +1,7 @@
 language: php
 
 services:
+    - rabbitmq
     - redis-server
 
 php:
