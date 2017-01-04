@@ -15,10 +15,12 @@ class MySqlDriverTest extends AbstractDriverTest
     public function testDriver()
     {
         $driver = new MySqlDriver($this->translator);
-        $credentials = $driver->defaultCredentials();
-        $credentials['server'] = getenv('ADMINERNG_MYSQL_SERVER') ?: $credentials['server'];
-        $credentials['user'] = getenv('ADMINERNG_MYSQL_USERNAME') ?: $credentials['user'];
-        $credentials['password'] = getenv('ADMINERNG_MYSQL_PASSWORD') ?: $credentials['password'];
+        $credentials = [
+            'server' => getenv('ADMINERNG_MYSQL_SERVER'),
+            'user' => getenv('ADMINERNG_MYSQL_USERNAME'),
+            'password' => getenv('ADMINERNG_MYSQL_PASSWORD'),
+        ];
+
         $driver->connect($credentials);
 
         self::assertTrue(is_string($driver->type()));

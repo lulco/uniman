@@ -17,13 +17,13 @@ class MySqlHeaderManagerTest extends AbstractDriverTest
     {
         parent::setUp();
 
-        $host = getenv('ADMINERNG_MYSQL_SERVER') ?: 'localhost';
+        $host = getenv('ADMINERNG_MYSQL_SERVER');
         $port = 3306;
         if (getenv('ADMINERNG_MYSQL_SERVER')) {
             list($host, $port) = explode(':', getenv('ADMINERNG_MYSQL_SERVER'));
         }
-        $user = getenv('ADMINERNG_MYSQL_USERNAME') ?: 'root';
-        $password = getenv('ADMINERNG_MYSQL_PASSWORD') ?: '';
+        $user = getenv('ADMINERNG_MYSQL_USERNAME');
+        $password = getenv('ADMINERNG_MYSQL_PASSWORD');
         $dsn = 'mysql:;host=' . $host . ';port=' . $port . ';charset=utf8';
         $connection = new PDO($dsn, $user, $password);
         $dataManager = new MySqlDataManager($connection);

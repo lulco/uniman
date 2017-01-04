@@ -3,10 +3,8 @@
 namespace Adminerng\Core\Driver;
 
 use Adminerng\Core\DataManager\DataManagerInterface;
-use Adminerng\Core\Forms\DefaultFormManager;
 use Adminerng\Core\Forms\FormManagerInterface;
 use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
-use Adminerng\Core\Permissions\DefaultPermissions;
 use Adminerng\Core\Permissions\PermissionsInterface;
 use Nette\Localization\ITranslator;
 
