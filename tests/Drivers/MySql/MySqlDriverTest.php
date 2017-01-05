@@ -20,7 +20,6 @@ class MySqlDriverTest extends AbstractDriverTest
             'user' => getenv('ADMINERNG_MYSQL_USERNAME'),
             'password' => getenv('ADMINERNG_MYSQL_PASSWORD'),
         ];
-
         $driver->connect($credentials);
 
         self::assertTrue(is_string($driver->type()));

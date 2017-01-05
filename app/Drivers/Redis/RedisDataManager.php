@@ -140,7 +140,7 @@ class RedisDataManager extends AbstractDataManager
         }
         if ($type == RedisDriver::TYPE_SET) {
             if (!$filter) {
-                return $this->connection->sCard($table);
+                return $this->connection->scard($table);
             }
             $iterator = '';
             $totalItems = 0;

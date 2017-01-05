@@ -15,7 +15,12 @@ class RedisDriverTest extends AbstractDriverTest
     public function testDriver()
     {
         $driver = new RedisDriver($this->translator);
-        $driver->connect($driver->defaultCredentials());
+        $credentials = [
+            'host' => getenv('ADMINERNG_REDIS_HOST'),
+            'port' => getenv('ADINERNG_REDIS_PORT'),
+            'database' => 0,
+        ];
+        $driver->connect($credentials);
 
         self::assertTrue(is_string($driver->type()));
         self::assertTrue(is_string($driver->name()));

@@ -5,6 +5,9 @@
 		<env name="ADMINERNG_MYSQL_SERVER" value="localhost:3306"/>
 		<env name="ADMINERNG_MYSQL_USERNAME" value="root"/>
 		<env name="ADMINERNG_MYSQL_PASSWORD" value=""/>
+		
+		<env name="ADMINERNG_REDIS_HOST" value="localhost"/>
+		<env name="ADMINERNG_REDIS_PORT" value="6379"/>
 	</php>
     <logging>
         <log type="coverage-clover" target="build/logs/clover.xml"/>

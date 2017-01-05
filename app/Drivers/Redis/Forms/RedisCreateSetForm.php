@@ -11,12 +11,9 @@ class RedisCreateSetForm implements TableFormInterface
 {
     private $connection;
 
-    private $key;
-
-    public function __construct(RedisProxy $connection, $key)
+    public function __construct(RedisProxy $connection)
     {
         $this->connection = $connection;
-        $this->key = $key;
     }
 
     public function addFieldsToForm(Form $form)
@@ -26,11 +23,6 @@ class RedisCreateSetForm implements TableFormInterface
         $form->addText('members', 'redis.set_form.members.label')
             ->setRequired('redis.set_form.members.required')
             ->setOption('description', 'redis.set_form.members.description');
-        if ($this->key) {
-            $form->setDefaults([
-                'key' => $this->key,
-            ]);
-        }
     }
 
     public function submit(Form $form, ArrayHash $values)
