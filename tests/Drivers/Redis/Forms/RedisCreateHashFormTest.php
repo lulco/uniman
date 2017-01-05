@@ -15,6 +15,9 @@ class RedisCreateHashFormTest extends AbstractDriverTest
 
     protected function setUp()
     {
+        if (!extension_loaded('redis')) {
+            self::markTestSkipped('redis extension is not available');
+        }
         $this->connection = new RedisProxy(getenv('ADMINERNG_REDIS_HOST'), getenv('ADMINERNG_REDIS_PORT'), 0);
         $this->connection->flushDB();
     }
