@@ -18,7 +18,7 @@ class RedisDriverTest extends AbstractDriverTest
         $credentials = [
             'host' => getenv('ADMINERNG_REDIS_HOST'),
             'port' => getenv('ADINERNG_REDIS_PORT'),
-            'database' => 0,
+            'database' => getenv('ADMINERNG_REDIS_DATABASE'),
         ];
         $driver->connect($credentials);
 

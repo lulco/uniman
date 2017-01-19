@@ -18,8 +18,8 @@ class RedisCreateSetFormTest extends AbstractDriverTest
         if (!extension_loaded('redis')) {
             self::markTestSkipped('redis extension is not available');
         }
-        $this->connection = new RedisProxy(getenv('ADMINERNG_REDIS_HOST'), getenv('ADMINERNG_REDIS_PORT'), 0);
-        $this->connection->flushDB();
+        $this->connection = new RedisProxy(getenv('ADMINERNG_REDIS_HOST'), getenv('ADMINERNG_REDIS_PORT'), getenv('ADMINERNG_REDIS_DATABASE'));
+        $this->connection->flushdb();
     }
 
     public function testForm()
@@ -38,7 +38,7 @@ class RedisCreateSetFormTest extends AbstractDriverTest
         $key = 'my_test_set_key';
         $members = ['my_test_set_member_1', 'my_test_set_member_2'];
         self::assertEquals(0, $this->connection->scard($key));
-        self::assertEquals([], $this->connection->sgetmembers($key));
+        self::assertEquals([], $this->connection->smembers($key));
         $values = ArrayHash::from([
             'key' => $key,
             'members' => implode(',', $members),
@@ -47,6 +47,9 @@ class RedisCreateSetFormTest extends AbstractDriverTest
         self::assertCount(0, $form->getErrors());
         self::assertCount(0, $form->getOwnErrors());
         self::assertEquals(2, $this->connection->scard($key));
-        self::assertEquals($members, $this->connection->sgetmembers($key));
+        $smembers = $this->connection->smembers($key);
+        sort($smembers);
+        sort($members);
+        self::assertEquals($members, $smembers);
     }
 }

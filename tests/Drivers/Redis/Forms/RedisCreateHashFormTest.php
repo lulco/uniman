@@ -18,8 +18,8 @@ class RedisCreateHashFormTest extends AbstractDriverTest
         if (!extension_loaded('redis')) {
             self::markTestSkipped('redis extension is not available');
         }
-        $this->connection = new RedisProxy(getenv('ADMINERNG_REDIS_HOST'), getenv('ADMINERNG_REDIS_PORT'), 0);
-        $this->connection->flushDB();
+        $this->connection = new RedisProxy(getenv('ADMINERNG_REDIS_HOST'), getenv('ADMINERNG_REDIS_PORT'), getenv('ADMINERNG_REDIS_DATABASE'));
+        $this->connection->flushdb();
     }
 
     public function testForm()
@@ -39,7 +39,7 @@ class RedisCreateHashFormTest extends AbstractDriverTest
         $field = 'my_test_hash_field';
         $value = 'my_test_hash_value';
         self::assertEquals(0, $this->connection->hlen($key));
-        self::assertFalse($this->connection->hget($key, $field));
+        self::assertNull($this->connection->hget($key, $field));
         $values = ArrayHash::from([
             'key' => $key,
             'field' => $field,

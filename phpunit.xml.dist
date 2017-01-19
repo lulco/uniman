@@ -8,6 +8,7 @@
 		
 		<env name="ADMINERNG_REDIS_HOST" value="localhost"/>
 		<env name="ADMINERNG_REDIS_PORT" value="6379"/>
+		<env name="ADMINERNG_REDIS_DATABASE" value="1"/>
 	</php>
     <logging>
         <log type="coverage-clover" target="build/logs/clover.xml"/>
