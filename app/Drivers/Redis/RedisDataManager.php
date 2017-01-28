@@ -20,11 +20,12 @@ class RedisDataManager extends AbstractDataManager
 
     public function databases(array $sorting = [])
     {
-        $numberOfDatabases = $this->connection->config('get', 'databases')['databases'];
         $keyspace = $this->connection->info('keyspace');
         $databases = [];
-        for ($i = 0; $i < $numberOfDatabases; ++$i) {
-            $databases[$i] = $this->databaseInfo($keyspace, $i);
+        foreach ($keyspace as $db => $info) {
+            $db = str_replace('db', '', $db);
+            $info['database'] = $db;
+            $databases[$db] = $info;
         }
         return Multisort::sort($databases, $sorting);
     }
@@ -140,7 +141,7 @@ class RedisDataManager extends AbstractDataManager
         }
         if ($type == RedisDriver::TYPE_SET) {
             if (!$filter) {
-                return $this->connection->sCard($table);
+                return $this->connection->scard($table);
             }
             $iterator = '';
             $totalItems = 0;
@@ -287,23 +288,6 @@ class RedisDataManager extends AbstractDataManager
     public function selectDatabase($database)
     {
         $this->connection->select($database);
-    }
-
-    private function databaseInfo($keyspace, $db)
-    {
-        $info = [
-            'database' => $db,
-            'keys' => 0,
-            'expires' => null,
-            'avg_ttl' => null,
-        ];
-        if (isset($keyspace['db' . $db])) {
-            $dbKeyspace = explode(',', $keyspace['db' . $db]);
-            $info['keys'] = explode('=', $dbKeyspace[0])[1];
-            $info['expires'] = explode('=', $dbKeyspace[1])[1];
-            $info['avg_ttl'] = explode('=', $dbKeyspace[2])[1];
-        }
-        return $info;
     }
 
     public function execute($commands)

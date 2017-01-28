@@ -12,7 +12,7 @@ interface HeaderManagerInterface
     public function databasesHeaders();
 
     /**
-     * @return Column[]
+     * @return array list of Column[] for each type supported by driver
      */
     public function tablesHeaders();
 

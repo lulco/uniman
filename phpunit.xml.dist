@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit bootstrap="vendor/autoload.php">
+	<php>
+		<env name="ADMINERNG_MYSQL_SERVER" value="localhost:3306"/>
+		<env name="ADMINERNG_MYSQL_USERNAME" value="root"/>
+		<env name="ADMINERNG_MYSQL_PASSWORD" value=""/>
+		
+		<env name="ADMINERNG_REDIS_HOST" value="localhost"/>
+		<env name="ADMINERNG_REDIS_PORT" value="6379"/>
+		<env name="ADMINERNG_REDIS_DATABASE" value="1"/>
+	</php>
     <logging>
         <log type="coverage-clover" target="build/logs/clover.xml"/>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="true" showOnlySummary="true"/>

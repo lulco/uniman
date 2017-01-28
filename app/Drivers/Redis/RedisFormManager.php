@@ -43,7 +43,7 @@ class RedisFormManager extends DefaultFormManager
             return new RedisKeyItemForm($this->connection, $table);
         } elseif ($type == RedisDriver::TYPE_SET) {
             if (!$table) {
-                return new RedisCreateSetForm($this->connection, $table);
+                return new RedisCreateSetForm($this->connection);
             }
             return new RedisEditSetForm($this->connection, $table);
         }
