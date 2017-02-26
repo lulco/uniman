@@ -22,7 +22,7 @@ class Compile
 
     public function run()
     {
-        $name = 'adminerng';
+        $name = 'uniman';
         $pharFile = $name . '.phar';
         if (!file_exists($this->appRoot . 'build')) {
             mkdir($this->appRoot . 'build');
