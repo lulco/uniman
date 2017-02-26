@@ -6,6 +6,24 @@ no_tables_for_type_key: 'Žiadne kľúče'
 no_tables_for_type_hash: 'Žiadne hashe'
 no_tables_for_type_set: 'Žiadne sety'
 
+headers:
+	databases:
+		database: 'Databáza'
+		alias: 'Alias'
+		keys: 'Počet kľúčov'
+		expires: 'Čas expirácie'
+		avg_ttl: 'Priemerný TTL'
+	keys:
+		key: 'Kľúč'
+		value: 'Hodnota'
+		length: 'Dĺžka'
+	hashes:
+		key: 'Kľúč'
+		number_of_fields: 'Počet polí'
+	sets:
+		key: 'Kľúč'
+		number_of_members: 'Počet členov'
+
 table_form_header:
 	hash:
 		create: Vytvorenie nového hashu

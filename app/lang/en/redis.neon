@@ -9,6 +9,7 @@ no_tables_for_type_set: 'No sets'
 headers:
 	databases:
 		database: 'Database'
+		alias: 'Alias'
 		keys: 'Keys'
 		expires: 'Expires'
 		avg_ttl: 'Avg TTL'

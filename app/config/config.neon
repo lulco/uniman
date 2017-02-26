@@ -16,6 +16,8 @@ services:
 	- Adminerng\Core\Translator\Loader\NeonFileLoader(%appDir%/lang)
 	- Adminerng\Core\Credentials\SessionStorageCredentials
 
+	- Adminerng\Drivers\Redis\RedisDatabaseAliasStorage
+
 	-
 		class: Adminerng\Core\Driver\DriverStorage
 		setup: 

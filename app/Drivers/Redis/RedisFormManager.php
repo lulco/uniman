@@ -5,6 +5,7 @@ namespace Adminerng\Drivers\Redis;
 use Adminerng\Core\Forms\DefaultFormManager;
 use Adminerng\Drivers\Redis\Forms\RedisCreateHashForm;
 use Adminerng\Drivers\Redis\Forms\RedisCreateSetForm;
+use Adminerng\Drivers\Redis\Forms\RedisEditDatabaseForm;
 use Adminerng\Drivers\Redis\Forms\RedisEditSetForm;
 use Adminerng\Drivers\Redis\Forms\RedisHashKeyItemForm;
 use Adminerng\Drivers\Redis\Forms\RedisKeyItemForm;
@@ -16,9 +17,12 @@ class RedisFormManager extends DefaultFormManager
 {
     private $connection;
 
-    public function __construct(RedisProxy $connection)
+    private $databaseAliasStorage;
+
+    public function __construct(RedisProxy $connection, RedisDatabaseAliasStorage $databaseAliasStorage)
     {
         $this->connection = $connection;
+        $this->databaseAliasStorage = $databaseAliasStorage;
     }
 
     public function itemForm($database, $type, $table, $item)
@@ -47,5 +51,10 @@ class RedisFormManager extends DefaultFormManager
             }
             return new RedisEditSetForm($this->connection, $table);
         }
+    }
+
+    public function databaseForm($database)
+    {
+        return new RedisEditDatabaseForm($database, $this->databaseAliasStorage);
     }
 }

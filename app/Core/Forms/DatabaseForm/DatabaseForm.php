@@ -38,7 +38,7 @@ class DatabaseForm extends Control
 
         $databaseForm = $this->driver->formManager()->databaseForm($this->database);
         if (!$databaseForm) {
-            throw new InvalidArgumentException('Item form not set');
+            throw new InvalidArgumentException('Database form not set');
         }
         $databaseForm->addFieldsToForm($form);
         $form->addSubmit('save', 'Save');

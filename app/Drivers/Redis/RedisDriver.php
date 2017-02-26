@@ -5,6 +5,7 @@ namespace Adminerng\Drivers\Redis;
 use Adminerng\Core\Driver\AbstractDriver;
 use Adminerng\Core\Exception\ConnectException;
 use Adminerng\Drivers\Redis\Forms\RedisCredentialsForm;
+use Nette\Localization\ITranslator;
 use RedisException;
 use RedisProxy\RedisProxy;
 
@@ -15,6 +16,14 @@ class RedisDriver extends AbstractDriver
     const TYPE_SET = 'set';
 
     private $connection;
+
+    private $databaseAliasStorage;
+
+    public function __construct(ITranslator $translator, RedisDatabaseAliasStorage $databaseAliasStorage)
+    {
+        parent::__construct($translator);
+        $this->databaseAliasStorage = $databaseAliasStorage;
+    }
 
     public function check()
     {
@@ -61,7 +70,7 @@ class RedisDriver extends AbstractDriver
 
     protected function getFormManager()
     {
-        return new RedisFormManager($this->connection);
+        return new RedisFormManager($this->connection, $this->databaseAliasStorage);
     }
 
     protected function getHeaderManager()
@@ -76,6 +85,6 @@ class RedisDriver extends AbstractDriver
 
     protected function getDataManager()
     {
-        return new RedisDataManager($this->connection);
+        return new RedisDataManager($this->connection, $this->databaseAliasStorage);
     }
 }

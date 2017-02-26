@@ -3,28 +3,33 @@
 namespace Adminerng\Drivers\Redis;
 
 use Adminerng\Core\DataManager\AbstractDataManager;
-use Adminerng\Core\Utils\Multisort;
 use Adminerng\Core\Utils\Filter;
+use Adminerng\Core\Utils\Multisort;
 use RedisProxy\RedisProxy;
 
 class RedisDataManager extends AbstractDataManager
 {
     private $connection;
 
+    private $databaseAliasStorage;
+
     private $itemsCountCache = false;
 
-    public function __construct(RedisProxy $connection)
+    public function __construct(RedisProxy $connection, RedisDatabaseAliasStorage $databaseAliasStorage)
     {
         $this->connection = $connection;
+        $this->databaseAliasStorage = $databaseAliasStorage;
     }
 
     public function databases(array $sorting = [])
     {
         $keyspace = $this->connection->info('keyspace');
+        $aliases = $this->databaseAliasStorage->loadAll();
         $databases = [];
         foreach ($keyspace as $db => $info) {
             $db = str_replace('db', '', $db);
             $info['database'] = $db;
+            $info['alias'] = isset($aliases[$db]) ? $aliases[$db] : null;
             $databases[$db] = $info;
         }
         return Multisort::sort($databases, $sorting);
