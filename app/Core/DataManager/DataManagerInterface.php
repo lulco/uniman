@@ -6,9 +6,24 @@ interface DataManagerInterface
 {
     /**
      * list of databases, vhosts, etc.
-     * @return array keys are used as database names for databases dropdown, values are databases informations (size, number of tables etc)
+     * @param array $sorting
+     * @return array keys are used as database identifiers, values are databases informations (size, number of tables etc)
      */
     public function databases(array $sorting = []);
+
+    /**
+     * list of databases, vhost, etc. for DatabaseSelect dropdown and all places where we need just identifier and name
+     * @param array $sorting
+     * @return array keys are used as option values for dropdown, values are used as text to show
+     */
+    public function databasesKeyValue(array $sorting = []);
+
+    /**
+     * database name
+     * @param string $identifier
+     * @return string
+     */
+    public function databaseName($identifier);
 
     /**
      * @param string $database

@@ -10,6 +10,28 @@ abstract class AbstractDataManager implements DataManagerInterface
     protected $messages = [];
 
     /**
+     * @param array $sorting
+     * @return array
+     */
+    public function databasesKeyValue(array $sorting = [])
+    {
+        $databases = array_map(function ($database) {
+            return $database[$this->getDatabaseNameColumn()];
+        }, $this->databases($sorting));
+        return $databases;
+    }
+
+    /**
+     * @param string $identifier
+     * @return string
+     */
+    public function databaseName($identifier)
+    {
+        $databases = $this->databasesKeyValue();
+        return isset($databases[$identifier]) ? $databases[$identifier] : $identifier;
+    }
+
+    /**
      * Implement this method if permission canDeleteItem is true
      * @param string $type
      * @param string $table
@@ -74,4 +96,9 @@ abstract class AbstractDataManager implements DataManagerInterface
     {
         $this->messages[$message] = $type;
     }
+
+    /**
+     * @return string Name of column where database name is stored
+     */
+    abstract protected function getDatabaseNameColumn();
 }

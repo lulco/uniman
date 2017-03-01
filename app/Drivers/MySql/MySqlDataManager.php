@@ -55,6 +55,11 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
         return Multisort::sort($databases, $sorting);
     }
 
+    protected function getDatabaseNameColumn()
+    {
+        return 'database';
+    }
+
     public function tables(array $sorting = [])
     {
         $tables = [

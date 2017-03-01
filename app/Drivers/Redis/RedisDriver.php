@@ -6,10 +6,7 @@ use Nette\Localization\ITranslator;
 use RedisException;
 use RedisProxy\RedisProxy;
 use UniMan\Core\Driver\AbstractDriver;
-use UniMan\Core\Driver\AbstractDriver;
 use UniMan\Core\Exception\ConnectException;
-use UniMan\Core\Exception\ConnectException;
-use UniMan\Drivers\Redis\Forms\RedisCredentialsForm;
 use UniMan\Drivers\Redis\Forms\RedisCredentialsForm;
 use UniMan\Drivers\Redis\RedisDatabaseAliasStorage;
 

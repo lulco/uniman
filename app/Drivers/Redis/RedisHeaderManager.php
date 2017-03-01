@@ -12,8 +12,6 @@ class RedisHeaderManager implements HeaderManagerInterface
         $columns = [];
         $columns[] = (new Column('database', 'redis.headers.databases.database'))
             ->setSortable(true);
-        $columns[] = (new Column('alias', 'redis.headers.databases.alias'))
-            ->setSortable(true);
         $columns[] = (new Column('keys', 'redis.headers.databases.keys'))
             ->setSortable(true)
             ->setNumeric(true);

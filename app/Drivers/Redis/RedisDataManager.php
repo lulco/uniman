@@ -29,11 +29,16 @@ class RedisDataManager extends AbstractDataManager
         $databases = [];
         foreach ($keyspace as $db => $info) {
             $db = str_replace('db', '', $db);
-            $info['database'] = $db;
-            $info['alias'] = isset($aliases[$db]) ? $aliases[$db] : null;
+            $alias = isset($aliases[$db]) ? ' (' . $aliases[$db] . ')' : '';
+            $info['database'] = $db . $alias;
             $databases[$db] = $info;
         }
         return Multisort::sort($databases, $sorting);
+    }
+
+    protected function getDatabaseNameColumn()
+    {
+        return 'database';
     }
 
     public function tables(array $sorting = [])
