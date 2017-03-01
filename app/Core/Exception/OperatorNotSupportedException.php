@@ -1,7 +1,7 @@
 <?php
 
-namespace Adminerng\Core\Exception;
+namespace UniMan\Core\Exception;
 
-class OperatorNotSupportedException extends AdminerngException
+class OperatorNotSupportedException extends UniManException
 {
 }

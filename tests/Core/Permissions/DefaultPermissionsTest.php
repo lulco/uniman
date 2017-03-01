@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Tests\Core\Permissions;
+namespace UniMan\Tests\Core\Permissions;
 
-use Adminerng\Core\Permissions\DefaultPermissions;
+use UniMan\Core\Permissions\DefaultPermissions;
 use PHPUnit_Framework_TestCase;
 
 class DefaultPermissionsTest extends PHPUnit_Framework_TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Presenters;
+namespace UniMan\Presenters;
 
 use Nette\Application\BadRequestException;
 

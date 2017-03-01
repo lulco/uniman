@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Presenters;
+namespace UniMan\Presenters;
 
 use Nette\Application\ForbiddenRequestException;
 use Nette\Application\UI\Form;

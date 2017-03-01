@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Core\Forms\FilterForm;
+namespace UniMan\Core\Forms\FilterForm;
 
-use Adminerng\Core\Column;
+use UniMan\Core\Column;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
 use Nette\Localization\ITranslator;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Tests\Core\Utils;
+namespace UniMan\Tests\Core\Utils;
 
-use Adminerng\Core\Utils\Filter;
+use UniMan\Core\Utils\Filter;
 use PHPUnit_Framework_TestCase;
 
 class FilterTest extends PHPUnit_Framework_TestCase

@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Core\Exception;
+namespace UniMan\Core\Exception;
 
-class NoTablesJustItemsException extends AdminerngException
+class NoTablesJustItemsException extends UniManException
 {
     private $type;
 
@@ -13,12 +13,12 @@ class NoTablesJustItemsException extends AdminerngException
         $this->type = $type;
         $this->table = $table;
     }
-    
+
     public function getType()
     {
         return $this->type;
     }
-    
+
     public function getTable()
     {
         return $this->table;

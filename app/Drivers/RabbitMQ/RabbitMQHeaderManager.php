@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Drivers\RabbitMQ;
+namespace UniMan\Drivers\RabbitMQ;
 
-use Adminerng\Core\Column;
-use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
+use UniMan\Core\Column;
+use UniMan\Core\ListingHeaders\HeaderManagerInterface;
 
 class RabbitMQHeaderManager implements HeaderManagerInterface
 {

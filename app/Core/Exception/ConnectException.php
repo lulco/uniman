@@ -1,7 +1,7 @@
 <?php
 
-namespace Adminerng\Core\Exception;
+namespace UniMan\Core\Exception;
 
-class ConnectException extends AdminerngException
+class ConnectException extends UniManException
 {
 }

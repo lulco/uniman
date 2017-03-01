@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Core;
+namespace UniMan\Core;
 
-use Adminerng\Core\Utils\Filter;
+use UniMan\Core\Utils\Filter;
 use Closure;
 
 class Column

@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Presenters;
+namespace UniMan\Presenters;
 
-use Adminerng\Components\DatabaseSelect\DatabaseSelectControl;
-use Adminerng\Core\Exception\ConnectException;
+use UniMan\Components\DatabaseSelect\DatabaseSelectControl;
+use UniMan\Core\Exception\ConnectException;
 use Nette\Application\BadRequestException;
 
 abstract class BasePresenter extends AbstractBasePresenter

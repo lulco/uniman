@@ -1,10 +1,10 @@
 <?php
 
-namespace Adminerng\Drivers\RabbitMQ;
+namespace UniMan\Drivers\RabbitMQ;
 
-use Adminerng\Core\DataManager\AbstractDataManager;
-use Adminerng\Core\Utils\Filter;
-use Adminerng\Core\Utils\Multisort;
+use UniMan\Core\DataManager\AbstractDataManager;
+use UniMan\Core\Utils\Filter;
+use UniMan\Core\Utils\Multisort;
 use Nette\Localization\ITranslator;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\Redis\Forms;
+namespace UniMan\Drivers\Redis\Forms;
 
-use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
+use UniMan\Core\Forms\ItemForm\ItemFormInterface;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use RedisProxy\RedisProxy;

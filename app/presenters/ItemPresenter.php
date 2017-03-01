@@ -1,10 +1,10 @@
 <?php
 
-namespace Adminerng\Presenters;
+namespace UniMan\Presenters;
 
-use Adminerng\Components\DatabaseSelect\TablesSideBarControl;
-use Adminerng\Core\Forms\FilterForm\FilterForm;
-use Adminerng\Core\Forms\ItemForm;
+use UniMan\Components\DatabaseSelect\TablesSideBarControl;
+use UniMan\Core\Forms\FilterForm\FilterForm;
+use UniMan\Core\Forms\ItemForm;
 use App\Component\VisualPaginator;
 use Nette\Application\ForbiddenRequestException;
 

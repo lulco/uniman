@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\RabbitMQ\Forms;
+namespace UniMan\Drivers\RabbitMQ\Forms;
 
-use Adminerng\Core\CredentialsFormInterface;
+use UniMan\Core\CredentialsFormInterface;
 use Nette\Application\UI\Form;
 
 class RabbitMQCredentialsForm implements CredentialsFormInterface

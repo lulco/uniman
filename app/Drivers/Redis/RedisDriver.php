@@ -1,12 +1,12 @@
 <?php
 
-namespace Adminerng\Drivers\Redis;
+namespace UniMan\Drivers\Redis;
 
-use Adminerng\Core\Driver\AbstractDriver;
-use Adminerng\Core\Exception\ConnectException;
-use Adminerng\Drivers\Redis\Forms\RedisCredentialsForm;
 use RedisException;
 use RedisProxy\RedisProxy;
+use UniMan\Core\Driver\AbstractDriver;
+use UniMan\Core\Exception\ConnectException;
+use UniMan\Drivers\Redis\Forms\RedisCredentialsForm;
 
 class RedisDriver extends AbstractDriver
 {

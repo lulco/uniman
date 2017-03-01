@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Core\Forms;
+namespace UniMan\Core\Forms;
 
-use Adminerng\Core\Driver\DriverInterface;
+use UniMan\Core\Driver\DriverInterface;
 use InvalidArgumentException;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;

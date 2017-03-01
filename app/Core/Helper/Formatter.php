@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Helper;
+namespace UniMan\Core\Helper;
 
 use Nette\Localization\ITranslator;
 

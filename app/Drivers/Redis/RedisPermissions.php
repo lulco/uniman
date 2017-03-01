@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\Redis;
+namespace UniMan\Drivers\Redis;
 
-use Adminerng\Core\Permissions\DefaultPermissions;
+use UniMan\Core\Permissions\DefaultPermissions;
 
 class RedisPermissions extends DefaultPermissions
 {

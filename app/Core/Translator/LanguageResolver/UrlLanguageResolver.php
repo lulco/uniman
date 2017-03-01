@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Translator\LanguageResolver;
+namespace UniMan\Core\Translator\LanguageResolver;
 
 use Nette\Http\Url;
 

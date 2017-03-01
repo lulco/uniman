@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\Redis\Forms;
+namespace UniMan\Drivers\Redis\Forms;
 
-use Adminerng\Core\CredentialsFormInterface;
+use UniMan\Core\CredentialsFormInterface;
 use Nette\Application\UI\Form;
 
 class RedisCredentialsForm implements CredentialsFormInterface

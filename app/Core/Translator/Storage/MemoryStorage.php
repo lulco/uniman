@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Core\Translator\Storage;
+namespace UniMan\Core\Translator\Storage;
 
-use Adminerng\Core\Translator\Loader\LoaderInterface;
+use UniMan\Core\Translator\Loader\LoaderInterface;
 
 class MemoryStorage implements StorageInterface
 {

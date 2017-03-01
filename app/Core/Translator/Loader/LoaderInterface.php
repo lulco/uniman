@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Translator\Loader;
+namespace UniMan\Core\Translator\Loader;
 
 interface LoaderInterface
 {

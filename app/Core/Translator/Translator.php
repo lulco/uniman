@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Core\Translator;
+namespace UniMan\Core\Translator;
 
-use Adminerng\Core\Translator\LanguageResolver\LanguageResolverInterface;
-use Adminerng\Core\Translator\Storage\StorageInterface;
+use UniMan\Core\Translator\LanguageResolver\LanguageResolverInterface;
+use UniMan\Core\Translator\Storage\StorageInterface;
 use Nette\Localization\ITranslator;
 
 class Translator implements ITranslator

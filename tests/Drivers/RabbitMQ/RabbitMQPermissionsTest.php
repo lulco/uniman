@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\RabbitMQ;
+namespace UniMan\Tests\Drivers\RabbitMQ;
 
-use Adminerng\Drivers\RabbitMQ\RabbitMQPermissions;
+use UniMan\Drivers\RabbitMQ\RabbitMQPermissions;
 use PHPUnit_Framework_TestCase;
 
 class RabbitMQPermissionsTest extends PHPUnit_Framework_TestCase

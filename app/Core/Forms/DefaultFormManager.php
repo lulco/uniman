@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Core\Forms;
+namespace UniMan\Core\Forms;
 
-use Adminerng\Core\Forms\FilterForm\FilterForm;
+use UniMan\Core\Forms\FilterForm\FilterForm;
 use Nette\Localization\ITranslator;
 
 class DefaultFormManager implements FormManagerInterface

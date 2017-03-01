@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Tests\Core\Translator\Loader;
+namespace UniMan\Tests\Core\Translator\Loader;
 
-use Adminerng\Core\Translator\Loader\NeonFileLoader;
+use UniMan\Core\Translator\Loader\NeonFileLoader;
 use PHPUnit_Framework_TestCase;
 
 class NeonFileLoaderTest extends PHPUnit_Framework_TestCase

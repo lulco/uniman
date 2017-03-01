@@ -1,10 +1,10 @@
 <?php
 
-namespace Adminerng\Drivers\Redis;
+namespace UniMan\Drivers\Redis;
 
-use Adminerng\Core\DataManager\AbstractDataManager;
-use Adminerng\Core\Utils\Multisort;
-use Adminerng\Core\Utils\Filter;
+use UniMan\Core\DataManager\AbstractDataManager;
+use UniMan\Core\Utils\Multisort;
+use UniMan\Core\Utils\Filter;
 use RedisProxy\RedisProxy;
 
 class RedisDataManager extends AbstractDataManager

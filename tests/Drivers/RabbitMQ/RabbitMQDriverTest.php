@@ -1,14 +1,14 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\RabbitMQ;
+namespace UniMan\Tests\Drivers\RabbitMQ;
 
-use Adminerng\Core\CredentialsFormInterface;
-use Adminerng\Core\DataManager\DataManagerInterface;
-use Adminerng\Core\Forms\FormManagerInterface;
-use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
-use Adminerng\Core\Permissions\PermissionsInterface;
-use Adminerng\Drivers\RabbitMQ\RabbitMQDriver;
-use Adminerng\Tests\Drivers\AbstractDriverTest;
+use UniMan\Core\CredentialsFormInterface;
+use UniMan\Core\DataManager\DataManagerInterface;
+use UniMan\Core\Forms\FormManagerInterface;
+use UniMan\Core\ListingHeaders\HeaderManagerInterface;
+use UniMan\Core\Permissions\PermissionsInterface;
+use UniMan\Drivers\RabbitMQ\RabbitMQDriver;
+use UniMan\Tests\Drivers\AbstractDriverTest;
 
 class RabbitMQDriverTest extends AbstractDriverTest
 {

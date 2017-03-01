@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\MySql;
+namespace UniMan\Tests\Drivers\MySql;
 
-use Adminerng\Drivers\MySql\MySqlPermissions;
+use UniMan\Drivers\MySql\MySqlPermissions;
 use PHPUnit_Framework_TestCase;
 
 class MySqlPermissionsTest extends PHPUnit_Framework_TestCase

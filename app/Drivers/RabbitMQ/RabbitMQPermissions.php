@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\RabbitMQ;
+namespace UniMan\Drivers\RabbitMQ;
 
-use Adminerng\Core\Permissions\DefaultPermissions;
+use UniMan\Core\Permissions\DefaultPermissions;
 
 class RabbitMQPermissions extends DefaultPermissions
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core;
+namespace UniMan\Core;
 
 use Nette\Application\UI\Form;
 

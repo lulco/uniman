@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Translator\Loader;
+namespace UniMan\Core\Translator\Loader;
 
 use Nette\Neon\Neon;
 use Nette\Utils\Finder;

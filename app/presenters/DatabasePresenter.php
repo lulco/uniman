@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Presenters;
+namespace UniMan\Presenters;
 
-use Adminerng\Core\Forms\DatabaseForm\DatabaseForm;
+use UniMan\Core\Forms\DatabaseForm\DatabaseForm;
 use Nette\Application\ForbiddenRequestException;
 
 class DatabasePresenter extends BasePresenter

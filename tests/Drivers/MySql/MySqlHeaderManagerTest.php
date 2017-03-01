@@ -1,12 +1,12 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\MySql;
+namespace UniMan\Tests\Drivers\MySql;
 
-use Adminerng\Core\Column;
-use Adminerng\Drivers\MySql\MySqlDataManager;
-use Adminerng\Drivers\MySql\MySqlDriver;
-use Adminerng\Drivers\MySql\MySqlHeaderManager;
-use Adminerng\Tests\Drivers\AbstractDriverTest;
+use UniMan\Core\Column;
+use UniMan\Drivers\MySql\MySqlDataManager;
+use UniMan\Drivers\MySql\MySqlDriver;
+use UniMan\Drivers\MySql\MySqlHeaderManager;
+use UniMan\Tests\Drivers\AbstractDriverTest;
 use PDO;
 
 class MySqlHeaderManagerTest extends AbstractDriverTest
@@ -17,13 +17,13 @@ class MySqlHeaderManagerTest extends AbstractDriverTest
     {
         parent::setUp();
 
-        $host = getenv('ADMINERNG_MYSQL_SERVER');
+        $host = getenv('UNIMAN_MYSQL_SERVER');
         $port = 3306;
-        if (getenv('ADMINERNG_MYSQL_SERVER')) {
-            list($host, $port) = explode(':', getenv('ADMINERNG_MYSQL_SERVER'));
+        if (getenv('UNIMAN_MYSQL_SERVER')) {
+            list($host, $port) = explode(':', getenv('UNIMAN_MYSQL_SERVER'));
         }
-        $user = getenv('ADMINERNG_MYSQL_USERNAME');
-        $password = getenv('ADMINERNG_MYSQL_PASSWORD');
+        $user = getenv('UNIMAN_MYSQL_USERNAME');
+        $password = getenv('UNIMAN_MYSQL_PASSWORD');
         $dsn = 'mysql:;host=' . $host . ';port=' . $port . ';charset=utf8';
         $connection = new PDO($dsn, $user, $password);
         $dataManager = new MySqlDataManager($connection);
