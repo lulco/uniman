@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-namespace Adminerng;
+namespace UniMan;
 
 use FilesystemIterator;
 use Phar;
@@ -22,7 +22,7 @@ class Compile
 
     public function run()
     {
-        $name = 'adminerng';
+        $name = 'uniman';
         $pharFile = $name . '.phar';
         if (!file_exists($this->appRoot . 'build')) {
             mkdir($this->appRoot . 'build');
@@ -109,5 +109,5 @@ class Compile
     }
 }
 
-$compile = new \Adminerng\Compile();
+$compile = new \UniMan\Compile();
 $compile->run();

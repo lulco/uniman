@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Tests\Core\Translator\Storage;
+namespace UniMan\Tests\Core\Translator\Storage;
 
-use Adminerng\Core\Translator\Loader\NeonFileLoader;
-use Adminerng\Core\Translator\Storage\MemoryStorage;
+use UniMan\Core\Translator\Loader\NeonFileLoader;
+use UniMan\Core\Translator\Storage\MemoryStorage;
 use PHPUnit_Framework_TestCase;
 
 class MemoryStorageTest extends PHPUnit_Framework_TestCase

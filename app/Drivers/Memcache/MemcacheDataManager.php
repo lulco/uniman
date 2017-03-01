@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Drivers\Memcache;
+namespace UniMan\Drivers\Memcache;
 
-use Adminerng\Core\DataManager\AbstractDataManager;
-use Adminerng\Core\Exception\NoTablesJustItemsException;
-use Adminerng\Core\Utils\Multisort;
-use Adminerng\Core\Utils\Filter;
+use UniMan\Core\DataManager\AbstractDataManager;
+use UniMan\Core\Exception\NoTablesJustItemsException;
+use UniMan\Core\Utils\Multisort;
+use UniMan\Core\Utils\Filter;
 use Memcache;
 use Nette\Localization\ITranslator;
 

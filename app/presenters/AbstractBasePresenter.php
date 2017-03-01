@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Presenters;
+namespace UniMan\Presenters;
 
-use Adminerng\Components\Breadcrumb\BreadcrumbControl;
-use Adminerng\Core\Credentials\CredentialsStorageInterface;
-use Adminerng\Core\Driver\DriverInterface;
-use Adminerng\Core\Driver\DriverStorage;
+use UniMan\Components\Breadcrumb\BreadcrumbControl;
+use UniMan\Core\Credentials\CredentialsStorageInterface;
+use UniMan\Core\Driver\DriverInterface;
+use UniMan\Core\Driver\DriverStorage;
 use Nette\Application\UI\Presenter;
 use Nette\Localization\ITranslator;
 

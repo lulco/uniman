@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\Redis\Forms;
+namespace UniMan\Tests\Drivers\Redis\Forms;
 
-use Adminerng\Drivers\Redis\Forms\RedisCreateHashForm;
-use Adminerng\Tests\Drivers\AbstractDriverTest;
+use UniMan\Drivers\Redis\Forms\RedisCreateHashForm;
+use UniMan\Tests\Drivers\AbstractDriverTest;
 use Nette\Application\UI\Form;
 use Nette\Forms\IControl;
 use Nette\Utils\ArrayHash;
@@ -18,7 +18,7 @@ class RedisCreateHashFormTest extends AbstractDriverTest
         if (!extension_loaded('redis')) {
             self::markTestSkipped('redis extension is not available');
         }
-        $this->connection = new RedisProxy(getenv('ADMINERNG_REDIS_HOST'), getenv('ADMINERNG_REDIS_PORT'), getenv('ADMINERNG_REDIS_DATABASE'));
+        $this->connection = new RedisProxy(getenv('UNIMAN_REDIS_HOST'), getenv('UNIMAN_REDIS_PORT'), getenv('UNIMAN_REDIS_DATABASE'));
         $this->connection->flushdb();
     }
 

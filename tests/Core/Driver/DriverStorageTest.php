@@ -1,10 +1,10 @@
 <?php
 
-namespace Adminerng\Tests\Core\Driver;
+namespace UniMan\Tests\Core\Driver;
 
-use Adminerng\Core\Driver\DriverInterface;
-use Adminerng\Core\Driver\DriverStorage;
-use Adminerng\Tests\Mock\Drivers\FakeDriver;
+use UniMan\Core\Driver\DriverInterface;
+use UniMan\Core\Driver\DriverStorage;
+use UniMan\Tests\Mock\Drivers\FakeDriver;
 use PHPUnit_Framework_TestCase;
 
 class DriverStorageTest extends PHPUnit_Framework_TestCase

@@ -1,10 +1,10 @@
 <?php
 
-namespace Adminerng\Drivers\RabbitMQ;
+namespace UniMan\Drivers\RabbitMQ;
 
-use Adminerng\Core\Forms\DefaultFormManager;
-use Adminerng\Drivers\RabbitMQ\Forms\RabbitMQMessageForm;
-use Adminerng\Drivers\RabbitMQ\Forms\RabbitMQQueueForm;
+use UniMan\Core\Forms\DefaultFormManager;
+use UniMan\Drivers\RabbitMQ\Forms\RabbitMQMessageForm;
+use UniMan\Drivers\RabbitMQ\Forms\RabbitMQQueueForm;
 
 class RabbitMQFormManager extends DefaultFormManager
 {

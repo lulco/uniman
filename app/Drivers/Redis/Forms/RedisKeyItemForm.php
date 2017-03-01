@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\Redis\Forms;
+namespace UniMan\Drivers\Redis\Forms;
 
-use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
+use UniMan\Core\Forms\ItemForm\ItemFormInterface;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use RedisProxy\RedisProxy;
@@ -24,7 +24,7 @@ class RedisKeyItemForm implements ItemFormInterface
         $form->addText('key', 'redis.item_form.key.label')
             ->setRequired('redis.item_form.key.required');
         $form->addText('value', 'redis.item_form.value.label');
-        
+
         if ($this->key) {
             $form->setDefaults([
                 'key' => $this->key,

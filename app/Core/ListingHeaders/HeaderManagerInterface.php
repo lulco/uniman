@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Core\ListingHeaders;
+namespace UniMan\Core\ListingHeaders;
 
-use Adminerng\Core\Column;
+use UniMan\Core\Column;
 
 interface HeaderManagerInterface
 {

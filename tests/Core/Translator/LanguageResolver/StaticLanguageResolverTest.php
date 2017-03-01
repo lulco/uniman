@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Tests\Core\Translator\LanguageResolver;
+namespace UniMan\Tests\Core\Translator\LanguageResolver;
 
-use Adminerng\Core\Translator\LanguageResolver\StaticLanguageResolver;
+use UniMan\Core\Translator\LanguageResolver\StaticLanguageResolver;
 use PHPUnit_Framework_TestCase;
 
 class StaticLanguageResolverTest extends PHPUnit_Framework_TestCase

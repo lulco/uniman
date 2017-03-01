@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\Redis;
+namespace UniMan\Tests\Drivers\Redis;
 
-use Adminerng\Drivers\Redis\RedisPermissions;
+use UniMan\Drivers\Redis\RedisPermissions;
 use PHPUnit_Framework_TestCase;
 
 class RedisPermissionsTest extends PHPUnit_Framework_TestCase

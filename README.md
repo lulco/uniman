@@ -1,12 +1,12 @@
-Adminer Next Generation
-========================
+UniMan
+======
 Universal system for managing different services (MySql, Redis, Memcache, Rabbit).
 
-[![Build Status](https://travis-ci.org/lulco/adminerng.svg?branch=master)](https://travis-ci.org/lulco/adminerng)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lulco/adminerng/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lulco/adminerng/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/lulco/adminerng/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lulco/adminerng/?branch=master)
+[![Build Status](https://travis-ci.org/lulco/uniman.svg?branch=master)](https://travis-ci.org/lulco/uniman)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/lulco/uniman/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/lulco/uniman/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/lulco/uniman/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/lulco/uniman/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/f3fb2f65-7b76-443e-9f0c-0823aae1b772/mini.png)](https://insight.sensiolabs.com/projects/f3fb2f65-7b76-443e-9f0c-0823aae1b772)
-[![PHP 7 ready](http://php7ready.timesplinter.ch/lulco/adminerng/master/badge.svg)](https://travis-ci.org/lulco/adminerng)
+[![PHP 7 ready](http://php7ready.timesplinter.ch/lulco/uniman/master/badge.svg)](https://travis-ci.org/lulco/uniman)
 
 Installation
 -----------

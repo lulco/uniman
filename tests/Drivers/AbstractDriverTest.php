@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Tests\Drivers;
+namespace UniMan\Tests\Drivers;
 
-use Adminerng\Core\Translator\LanguageResolver\StaticLanguageResolver;
-use Adminerng\Core\Translator\Loader\NeonFileLoader;
-use Adminerng\Core\Translator\Storage\MemoryStorage;
-use Adminerng\Core\Translator\Translator;
+use UniMan\Core\Translator\LanguageResolver\StaticLanguageResolver;
+use UniMan\Core\Translator\Loader\NeonFileLoader;
+use UniMan\Core\Translator\Storage\MemoryStorage;
+use UniMan\Core\Translator\Translator;
 use PHPUnit_Framework_TestCase;
 
 abstract class AbstractDriverTest extends PHPUnit_Framework_TestCase

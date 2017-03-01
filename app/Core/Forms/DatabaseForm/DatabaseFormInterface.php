@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Forms\DatabaseForm;
+namespace UniMan\Core\Forms\DatabaseForm;
 
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;

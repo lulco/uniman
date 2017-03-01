@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Drivers\RabbitMQ;
+namespace UniMan\Drivers\RabbitMQ;
 
-use Adminerng\Core\Driver\AbstractDriver;
-use Adminerng\Drivers\RabbitMQ\Forms\RabbitMQCredentialsForm;
+use UniMan\Core\Driver\AbstractDriver;
+use UniMan\Drivers\RabbitMQ\Forms\RabbitMQCredentialsForm;
 
 class RabbitMQDriver extends AbstractDriver
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\Memcache\Forms;
+namespace UniMan\Drivers\Memcache\Forms;
 
-use Adminerng\Core\Forms\TableForm\TableFormInterface;
+use UniMan\Core\Forms\TableForm\TableFormInterface;
 use Memcache;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;

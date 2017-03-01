@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Drivers\Redis\Forms;
+namespace UniMan\Drivers\Redis\Forms;
 
-use Adminerng\Core\Forms\TableForm\TableFormInterface;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use RedisProxy\RedisProxy;
+use UniMan\Core\Forms\TableForm\TableFormInterface;
 
 class RedisRenameHashForm implements TableFormInterface
 {

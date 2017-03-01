@@ -1,12 +1,12 @@
 <?php
 
-namespace Adminerng\Tests\Core\Helper;
+namespace UniMan\Tests\Core\Helper;
 
-use Adminerng\Core\Helper\Formatter;
-use Adminerng\Core\Translator\LanguageResolver\StaticLanguageResolver;
-use Adminerng\Core\Translator\Loader\NeonFileLoader;
-use Adminerng\Core\Translator\Storage\MemoryStorage;
-use Adminerng\Core\Translator\Translator;
+use UniMan\Core\Helper\Formatter;
+use UniMan\Core\Translator\LanguageResolver\StaticLanguageResolver;
+use UniMan\Core\Translator\Loader\NeonFileLoader;
+use UniMan\Core\Translator\Storage\MemoryStorage;
+use UniMan\Core\Translator\Translator;
 use PHPUnit_Framework_TestCase;
 
 class FormatterTest extends PHPUnit_Framework_TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Drivers\Redis;
+namespace UniMan\Drivers\Redis;
 
 class RedisDatabaseAliasStorage
 {
@@ -8,7 +8,7 @@ class RedisDatabaseAliasStorage
 
     public function __construct()
     {
-        $dirname = sys_get_temp_dir() . '/adminer';
+        $dirname = sys_get_temp_dir() . '/uniman';
         if (!file_exists($dirname)) {
             mkdir($dirname, 0777, true);
         }

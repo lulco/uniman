@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Drivers\Memcache;
+namespace UniMan\Drivers\Memcache;
 
-use Adminerng\Core\Forms\DefaultFormManager;
-use Adminerng\Drivers\Memcache\Forms\MemcacheKeyForm;
+use UniMan\Core\Forms\DefaultFormManager;
+use UniMan\Drivers\Memcache\Forms\MemcacheKeyForm;
 use Memcache;
 
 class MemcacheFormManager extends DefaultFormManager

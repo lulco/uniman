@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Drivers\Redis;
+namespace UniMan\Drivers\Redis;
 
-use Adminerng\Core\Column;
-use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
+use UniMan\Core\Column;
+use UniMan\Core\ListingHeaders\HeaderManagerInterface;
 
 class RedisHeaderManager implements HeaderManagerInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\DataManager;
+namespace UniMan\Core\DataManager;
 
 abstract class AbstractDataManager implements DataManagerInterface
 {

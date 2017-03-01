@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Translator\Storage;
+namespace UniMan\Core\Translator\Storage;
 
 interface StorageInterface
 {

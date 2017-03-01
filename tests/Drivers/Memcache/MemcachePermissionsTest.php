@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\Memcache;
+namespace UniMan\Tests\Drivers\Memcache;
 
-use Adminerng\Drivers\Memcache\MemcachePermissions;
+use UniMan\Drivers\Memcache\MemcachePermissions;
 use PHPUnit_Framework_TestCase;
 
 class MemcachePermissionsTest extends PHPUnit_Framework_TestCase

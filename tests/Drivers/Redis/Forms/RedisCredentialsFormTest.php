@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\Redis\Forms;
+namespace UniMan\Tests\Drivers\Redis\Forms;
 
-use Adminerng\Drivers\Redis\Forms\RedisCredentialsForm;
-use Adminerng\Tests\Drivers\AbstractDriverTest;
+use UniMan\Drivers\Redis\Forms\RedisCredentialsForm;
+use UniMan\Tests\Drivers\AbstractDriverTest;
 use Nette\Application\UI\Form;
 use Nette\Forms\IControl;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Drivers\Redis\Forms;
+namespace UniMan\Drivers\Redis\Forms;
 
-use Adminerng\Core\Forms\DatabaseForm\DatabaseFormInterface;
-use Adminerng\Drivers\Redis\RedisDatabaseAliasStorage;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
+use UniMan\Core\Forms\DatabaseForm\DatabaseFormInterface;
+use UniMan\Drivers\Redis\RedisDatabaseAliasStorage;
 
 class RedisEditDatabaseForm implements DatabaseFormInterface
 {

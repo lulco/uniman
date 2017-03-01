@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Drivers\MySql;
+namespace UniMan\Drivers\MySql;
 
-use Adminerng\Core\Column;
-use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
+use UniMan\Core\Column;
+use UniMan\Core\ListingHeaders\HeaderManagerInterface;
 
 class MySqlHeaderManager implements HeaderManagerInterface
 {

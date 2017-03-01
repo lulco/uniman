@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Forms\FilterForm;
+namespace UniMan\Core\Forms\FilterForm;
 
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
