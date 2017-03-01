@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Presenters;
+namespace UniMan\Presenters;
 
-use Adminerng\Core\LoginForm;
+use UniMan\Core\LoginForm;
 use Nette\Application\Responses\TextResponse;
 
 class DefaultPresenter extends AbstractBasePresenter
@@ -16,7 +16,7 @@ class DefaultPresenter extends AbstractBasePresenter
 
     public function actionLogout($driver = null)
     {
-        $section = $this->getSession('adminerng');
+        $section = $this->getSession('uniman');
         if ($driver) {
             unset($section->{$driver});
         } else {

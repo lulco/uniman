@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\Memcache;
+namespace UniMan\Tests\Drivers\Memcache;
 
-use Adminerng\Core\Column;
-use Adminerng\Drivers\Memcache\MemcacheDriver;
-use Adminerng\Drivers\Memcache\MemcacheHeaderManager;
-use Adminerng\Tests\Drivers\AbstractDriverTest;
+use UniMan\Core\Column;
+use UniMan\Drivers\Memcache\MemcacheDriver;
+use UniMan\Drivers\Memcache\MemcacheHeaderManager;
+use UniMan\Tests\Drivers\AbstractDriverTest;
 
 class MemcacheHeaderManagerTest extends AbstractDriverTest
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Adminerng\Drivers\Memcache;
+namespace UniMan\Drivers\Memcache;
 
-use Adminerng\Core\Driver\AbstractDriver;
-use Adminerng\Core\Exception\ConnectException;
-use Adminerng\Drivers\Memcache\Forms\MemcacheCredentialsForm;
+use UniMan\Core\Driver\AbstractDriver;
+use UniMan\Core\Exception\ConnectException;
+use UniMan\Drivers\Memcache\Forms\MemcacheCredentialsForm;
 use Memcache;
 
 class MemcacheDriver extends AbstractDriver

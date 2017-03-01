@@ -1,10 +1,10 @@
 <?php
 
-namespace Adminerng\Drivers\MySql;
+namespace UniMan\Drivers\MySql;
 
-use Adminerng\Core\Forms\DefaultFormManager;
-use Adminerng\Drivers\Mysql\Forms\MySqlDatabaseForm;
-use Adminerng\Drivers\Mysql\Forms\MySqlItemForm;
+use UniMan\Core\Forms\DefaultFormManager;
+use UniMan\Drivers\Mysql\Forms\MySqlDatabaseForm;
+use UniMan\Drivers\Mysql\Forms\MySqlItemForm;
 use PDO;
 
 class MySqlFormManager extends DefaultFormManager

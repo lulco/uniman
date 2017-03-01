@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Drivers\Memcache;
+namespace UniMan\Drivers\Memcache;
 
-use Adminerng\Core\Column;
-use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
+use UniMan\Core\Column;
+use UniMan\Core\ListingHeaders\HeaderManagerInterface;
 
 class MemcacheHeaderManager implements HeaderManagerInterface
 {

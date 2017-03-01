@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\Redis;
+namespace UniMan\Tests\Drivers\Redis;
 
-use Adminerng\Core\Column;
-use Adminerng\Drivers\Redis\RedisDriver;
-use Adminerng\Drivers\Redis\RedisHeaderManager;
-use Adminerng\Tests\Drivers\AbstractDriverTest;
+use UniMan\Core\Column;
+use UniMan\Drivers\Redis\RedisDriver;
+use UniMan\Drivers\Redis\RedisHeaderManager;
+use UniMan\Tests\Drivers\AbstractDriverTest;
 
 class RedisHeaderManagerTest extends AbstractDriverTest
 {

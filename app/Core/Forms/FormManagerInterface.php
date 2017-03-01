@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Core\Forms;
+namespace UniMan\Core\Forms;
 
-use Adminerng\Core\Forms\DatabaseForm\DatabaseFormInterface;
-use Adminerng\Core\Forms\FilterForm\FilterFormInterface;
-use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
-use Adminerng\Core\Forms\TableForm\TableFormInterface;
+use UniMan\Core\Forms\DatabaseForm\DatabaseFormInterface;
+use UniMan\Core\Forms\FilterForm\FilterFormInterface;
+use UniMan\Core\Forms\ItemForm\ItemFormInterface;
+use UniMan\Core\Forms\TableForm\TableFormInterface;
 use Nette\Localization\ITranslator;
 
 interface FormManagerInterface

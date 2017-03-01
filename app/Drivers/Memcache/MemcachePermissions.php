@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\Memcache;
+namespace UniMan\Drivers\Memcache;
 
-use Adminerng\Core\Permissions\DefaultPermissions;
+use UniMan\Core\Permissions\DefaultPermissions;
 
 class MemcachePermissions extends DefaultPermissions
 {

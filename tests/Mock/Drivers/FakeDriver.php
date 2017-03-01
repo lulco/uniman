@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Tests\Mock\Drivers;
+namespace UniMan\Tests\Mock\Drivers;
 
-use Adminerng\Core\Driver\DriverInterface;
-use Adminerng\Core\Permissions\DefaultPermissions;
+use UniMan\Core\Driver\DriverInterface;
+use UniMan\Core\Permissions\DefaultPermissions;
 
 class FakeDriver implements DriverInterface
 {

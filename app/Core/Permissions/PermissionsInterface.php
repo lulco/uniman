@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Permissions;
+namespace UniMan\Core\Permissions;
 
 interface PermissionsInterface
 {

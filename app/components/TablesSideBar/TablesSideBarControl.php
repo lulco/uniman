@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Components\DatabaseSelect;
+namespace UniMan\Components\DatabaseSelect;
 
-use Adminerng\Core\Driver\DriverInterface;
-use Adminerng\Core\Exception\NoTablesJustItemsException;
+use UniMan\Core\Driver\DriverInterface;
+use UniMan\Core\Exception\NoTablesJustItemsException;
 use Nette\Application\UI\Control;
 
 class TablesSideBarControl extends Control

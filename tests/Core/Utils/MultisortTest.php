@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Tests;
+namespace UniMan\Tests;
 
-use Adminerng\Core\Utils\Multisort;
+use UniMan\Core\Utils\Multisort;
 use PHPUnit_Framework_TestCase;
 
 class MultisortTest extends PHPUnit_Framework_TestCase

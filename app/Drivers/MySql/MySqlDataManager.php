@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Drivers\MySql;
+namespace UniMan\Drivers\MySql;
 
-use Adminerng\Core\DataManager\AbstractDataManager;
-use Adminerng\Core\Exception\OperatorNotSupportedException;
-use Adminerng\Core\Utils\Filter;
-use Adminerng\Core\Utils\Multisort;
+use UniMan\Core\DataManager\AbstractDataManager;
+use UniMan\Core\Exception\OperatorNotSupportedException;
+use UniMan\Core\Utils\Filter;
+use UniMan\Core\Utils\Multisort;
 use InvalidArgumentException;
 use Nette\Utils\Strings;
 use PDO;

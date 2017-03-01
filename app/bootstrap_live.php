@@ -18,7 +18,7 @@ $configurator = new Configurator();
 
 $configurator->setDebugMode(false);
 
-$tempDir = sys_get_temp_dir() . '/adminerng/temp';
+$tempDir = sys_get_temp_dir() . '/uniman/temp';
 if (!file_exists($tempDir)) {
     mkdir($tempDir, 0777, true);
 }

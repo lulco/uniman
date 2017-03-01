@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Credentials;
+namespace UniMan\Core\Credentials;
 
 use Nette\Http\Session;
 
@@ -15,13 +15,13 @@ class SessionStorageCredentials implements CredentialsStorageInterface
 
     public function setCredentials($driver, array $credentials)
     {
-        $section = $this->session->getSection('adminerng');
+        $section = $this->session->getSection('uniman');
         $section->$driver = base64_encode(json_encode($credentials));
     }
 
     public function getCredentials($driver)
     {
-        $section = $this->session->getSection('adminerng');
+        $section = $this->session->getSection('uniman');
         $settings = $section->$driver;
         if (!$settings) {
             return [];

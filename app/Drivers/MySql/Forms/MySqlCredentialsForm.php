@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Drivers\MySql\Forms;
+namespace UniMan\Drivers\MySql\Forms;
 
-use Adminerng\Core\CredentialsFormInterface;
 use Nette\Application\UI\Form;
+use UniMan\Core\CredentialsFormInterface;
 
 class MySqlCredentialsForm implements CredentialsFormInterface
 {

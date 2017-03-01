@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\RabbitMQ;
+namespace UniMan\Drivers\RabbitMQ;
 
-use Adminerng\Core\Exception\ConnectException;
+use UniMan\Core\Exception\ConnectException;
 
 class RabbitMQManagementApiClient
 {

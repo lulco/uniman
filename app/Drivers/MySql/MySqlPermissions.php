@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\MySql;
+namespace UniMan\Drivers\MySql;
 
-use Adminerng\Core\Permissions\DefaultPermissions;
+use UniMan\Core\Permissions\DefaultPermissions;
 
 class MySqlPermissions extends DefaultPermissions
 {

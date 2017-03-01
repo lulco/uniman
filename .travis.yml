@@ -16,8 +16,8 @@ before_script:
     - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - travis_retry composer self-update
     - travis_retry composer install ${COMPOSER_FLAGS} --no-interaction
-    - mysql -e 'DROP DATABASE IF EXISTS adminerng_test;'
-    - mysql -e 'CREATE DATABASE adminerng_test;'
+    - mysql -e 'DROP DATABASE IF EXISTS uniman_test;'
+    - mysql -e 'CREATE DATABASE uniman_test;'
 
 script:
     - mkdir -p log

@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\Memcache\Forms;
+namespace UniMan\Drivers\Memcache\Forms;
 
-use Adminerng\Core\CredentialsFormInterface;
+use UniMan\Core\CredentialsFormInterface;
 use Nette\Application\UI\Form;
 
 class MemcacheCredentialsForm implements CredentialsFormInterface

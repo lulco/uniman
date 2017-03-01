@@ -1,12 +1,12 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\Memcache;
+namespace UniMan\Tests\Drivers\Memcache;
 
-use Adminerng\Core\CredentialsFormInterface;
-use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
-use Adminerng\Core\Permissions\PermissionsInterface;
-use Adminerng\Drivers\Memcache\MemcacheDriver;
-use Adminerng\Tests\Drivers\AbstractDriverTest;
+use UniMan\Core\CredentialsFormInterface;
+use UniMan\Core\ListingHeaders\HeaderManagerInterface;
+use UniMan\Core\Permissions\PermissionsInterface;
+use UniMan\Drivers\Memcache\MemcacheDriver;
+use UniMan\Tests\Drivers\AbstractDriverTest;
 
 class MemcacheDriverTest extends AbstractDriverTest
 {

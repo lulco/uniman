@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Components\Breadcrumb;
+namespace UniMan\Components\Breadcrumb;
 
 use Nette\Application\UI\Control;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Tests\Core;
+namespace UniMan\Tests\Core;
 
-use Adminerng\Core\Column;
-use Adminerng\Core\Utils\Filter;
+use UniMan\Core\Column;
+use UniMan\Core\Utils\Filter;
 use Closure;
 use PHPUnit_Framework_TestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Router;
+namespace UniMan\Router;
 
 use Nette\Application\IRouter;
 use Nette\Application\Routers\RouteList;

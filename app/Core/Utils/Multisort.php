@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Utils;
+namespace UniMan\Core\Utils;
 
 class Multisort
 {

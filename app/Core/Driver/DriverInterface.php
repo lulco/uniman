@@ -1,12 +1,12 @@
 <?php
 
-namespace Adminerng\Core\Driver;
+namespace UniMan\Core\Driver;
 
-use Adminerng\Core\CredentialsFormInterface;
-use Adminerng\Core\DataManager\DataManagerInterface;
-use Adminerng\Core\Forms\FormManagerInterface;
-use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
-use Adminerng\Core\Permissions\PermissionsInterface;
+use UniMan\Core\CredentialsFormInterface;
+use UniMan\Core\DataManager\DataManagerInterface;
+use UniMan\Core\Forms\FormManagerInterface;
+use UniMan\Core\ListingHeaders\HeaderManagerInterface;
+use UniMan\Core\Permissions\PermissionsInterface;
 
 interface DriverInterface
 {

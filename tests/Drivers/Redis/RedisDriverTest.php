@@ -1,14 +1,14 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\Redis;
+namespace UniMan\Tests\Drivers\Redis;
 
-use Adminerng\Core\CredentialsFormInterface;
-use Adminerng\Core\DataManager\DataManagerInterface;
-use Adminerng\Core\Forms\FormManagerInterface;
-use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
-use Adminerng\Core\Permissions\PermissionsInterface;
-use Adminerng\Drivers\Redis\RedisDriver;
-use Adminerng\Tests\Drivers\AbstractDriverTest;
+use UniMan\Core\CredentialsFormInterface;
+use UniMan\Core\DataManager\DataManagerInterface;
+use UniMan\Core\Forms\FormManagerInterface;
+use UniMan\Core\ListingHeaders\HeaderManagerInterface;
+use UniMan\Core\Permissions\PermissionsInterface;
+use UniMan\Drivers\Redis\RedisDriver;
+use UniMan\Tests\Drivers\AbstractDriverTest;
 
 class RedisDriverTest extends AbstractDriverTest
 {
@@ -16,9 +16,9 @@ class RedisDriverTest extends AbstractDriverTest
     {
         $driver = new RedisDriver($this->translator);
         $credentials = [
-            'host' => getenv('ADMINERNG_REDIS_HOST'),
-            'port' => getenv('ADINERNG_REDIS_PORT'),
-            'database' => getenv('ADMINERNG_REDIS_DATABASE'),
+            'host' => getenv('UNIMAN_REDIS_HOST'),
+            'port' => getenv('UNIMAN_REDIS_PORT'),
+            'database' => getenv('UNIMAN_REDIS_DATABASE'),
         ];
         $driver->connect($credentials);
 

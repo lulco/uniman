@@ -1,11 +1,11 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\RabbitMQ;
+namespace UniMan\Tests\Drivers\RabbitMQ;
 
-use Adminerng\Core\Column;
-use Adminerng\Drivers\RabbitMQ\RabbitMQDriver;
-use Adminerng\Drivers\RabbitMQ\RabbitMQHeaderManager;
-use Adminerng\Tests\Drivers\AbstractDriverTest;
+use UniMan\Core\Column;
+use UniMan\Drivers\RabbitMQ\RabbitMQDriver;
+use UniMan\Drivers\RabbitMQ\RabbitMQHeaderManager;
+use UniMan\Tests\Drivers\AbstractDriverTest;
 
 class RabbitMQHeaderManagerTest extends AbstractDriverTest
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Adminerng\Presenters;
+namespace UniMan\Presenters;
 
-use Adminerng\Core\Exception\NoTablesJustItemsException;
-use Adminerng\Core\Forms\TableForm;
+use UniMan\Core\Exception\NoTablesJustItemsException;
+use UniMan\Core\Forms\TableForm;
 use Nette\Application\ForbiddenRequestException;
 
 class TablePresenter extends BasePresenter

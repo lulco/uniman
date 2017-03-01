@@ -1,6 +1,6 @@
 <?php
 
-namespace Adminerng\Core\Credentials;
+namespace UniMan\Core\Credentials;
 
 interface CredentialsStorageInterface
 {

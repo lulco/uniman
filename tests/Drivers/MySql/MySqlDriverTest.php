@@ -1,14 +1,14 @@
 <?php
 
-namespace Adminerng\Tests\Drivers\MySql;
+namespace UniMan\Tests\Drivers\MySql;
 
-use Adminerng\Core\CredentialsFormInterface;
-use Adminerng\Core\DataManager\DataManagerInterface;
-use Adminerng\Core\Forms\FormManagerInterface;
-use Adminerng\Core\ListingHeaders\HeaderManagerInterface;
-use Adminerng\Core\Permissions\PermissionsInterface;
-use Adminerng\Drivers\MySql\MySqlDriver;
-use Adminerng\Tests\Drivers\AbstractDriverTest;
+use UniMan\Core\CredentialsFormInterface;
+use UniMan\Core\DataManager\DataManagerInterface;
+use UniMan\Core\Forms\FormManagerInterface;
+use UniMan\Core\ListingHeaders\HeaderManagerInterface;
+use UniMan\Core\Permissions\PermissionsInterface;
+use UniMan\Drivers\MySql\MySqlDriver;
+use UniMan\Tests\Drivers\AbstractDriverTest;
 
 class MySqlDriverTest extends AbstractDriverTest
 {
@@ -16,9 +16,9 @@ class MySqlDriverTest extends AbstractDriverTest
     {
         $driver = new MySqlDriver($this->translator);
         $credentials = [
-            'server' => getenv('ADMINERNG_MYSQL_SERVER'),
-            'user' => getenv('ADMINERNG_MYSQL_USERNAME'),
-            'password' => getenv('ADMINERNG_MYSQL_PASSWORD'),
+            'server' => getenv('UNIMAN_MYSQL_SERVER'),
+            'user' => getenv('UNIMAN_MYSQL_USERNAME'),
+            'password' => getenv('UNIMAN_MYSQL_PASSWORD'),
         ];
         $driver->connect($credentials);
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Adminerng\Drivers\RabbitMQ\Forms;
+namespace UniMan\Drivers\RabbitMQ\Forms;
 
-use Adminerng\Core\Forms\ItemForm\ItemFormInterface;
+use UniMan\Core\Forms\ItemForm\ItemFormInterface;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
