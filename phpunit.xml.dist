@@ -11,7 +11,7 @@
 		<env name="UNIMAN_REDIS_DATABASE" value="1"/>
 	</php>
     <logging>
-        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <log type="coverage-clover" target="coverage/logs/clover.xml"/>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="true" showOnlySummary="true"/>
     </logging>
     <testsuites>
