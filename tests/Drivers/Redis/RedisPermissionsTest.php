@@ -12,7 +12,7 @@ class RedisPermissionsTest extends PHPUnit_Framework_TestCase
         $permissions = new RedisPermissions();
 
         self::assertFalse($permissions->canCreateDatabase());
-        self::assertFalse($permissions->canEditDatabase('database_name'));
+        self::assertTrue($permissions->canEditDatabase('database_name'));
         self::assertFalse($permissions->canDeleteDatabase('database_name'));
 
         self::assertTrue($permissions->canCreateTable('database_name', 'type_name'));
