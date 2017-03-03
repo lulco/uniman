@@ -7,6 +7,7 @@ use UniMan\Core\DataManager\DataManagerInterface;
 use UniMan\Core\Forms\FormManagerInterface;
 use UniMan\Core\ListingHeaders\HeaderManagerInterface;
 use UniMan\Core\Permissions\PermissionsInterface;
+use UniMan\Drivers\Redis\RedisDatabaseAliasStorage;
 use UniMan\Drivers\Redis\RedisDriver;
 use UniMan\Tests\Drivers\AbstractDriverTest;
 
@@ -14,7 +15,8 @@ class RedisDriverTest extends AbstractDriverTest
 {
     public function testDriver()
     {
-        $driver = new RedisDriver($this->translator);
+        $redisDatabaseAliasStorage = new RedisDatabaseAliasStorage(sys_get_temp_dir(), $this->translator);
+        $driver = new RedisDriver($this->translator, $redisDatabaseAliasStorage);
         $credentials = [
             'host' => getenv('UNIMAN_REDIS_HOST'),
             'port' => getenv('UNIMAN_REDIS_PORT'),

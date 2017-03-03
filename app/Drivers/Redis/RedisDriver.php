@@ -2,11 +2,13 @@
 
 namespace UniMan\Drivers\Redis;
 
+use Nette\Localization\ITranslator;
 use RedisException;
 use RedisProxy\RedisProxy;
 use UniMan\Core\Driver\AbstractDriver;
 use UniMan\Core\Exception\ConnectException;
 use UniMan\Drivers\Redis\Forms\RedisCredentialsForm;
+use UniMan\Drivers\Redis\RedisDatabaseAliasStorage;
 
 class RedisDriver extends AbstractDriver
 {
@@ -15,6 +17,14 @@ class RedisDriver extends AbstractDriver
     const TYPE_SET = 'set';
 
     private $connection;
+
+    private $databaseAliasStorage;
+
+    public function __construct(ITranslator $translator, RedisDatabaseAliasStorage $databaseAliasStorage)
+    {
+        parent::__construct($translator);
+        $this->databaseAliasStorage = $databaseAliasStorage;
+    }
 
     public function check()
     {
@@ -61,7 +71,7 @@ class RedisDriver extends AbstractDriver
 
     protected function getFormManager()
     {
-        return new RedisFormManager($this->connection);
+        return new RedisFormManager($this->connection, $this->databaseAliasStorage);
     }
 
     protected function getHeaderManager()
@@ -76,6 +86,6 @@ class RedisDriver extends AbstractDriver
 
     protected function getDataManager()
     {
-        return new RedisDataManager($this->connection);
+        return new RedisDataManager($this->connection, $this->databaseAliasStorage);
     }
 }

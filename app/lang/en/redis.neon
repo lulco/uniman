@@ -6,9 +6,12 @@ no_tables_for_type_key: 'No keys'
 no_tables_for_type_hash: 'No hashes'
 no_tables_for_type_set: 'No sets'
 
+alias_storage_not_writable: 'Directory "%directory%" is not writable'
+
 headers:
 	databases:
 		database: 'Database'
+		alias: 'Alias'
 		keys: 'Keys'
 		expires: 'Expires'
 		avg_ttl: 'Avg TTL'
@@ -22,6 +25,9 @@ headers:
 	sets:
 		key: 'Key'
 		number_of_members: 'Number of members'
+
+database_form_header:
+	edit: Edit database
 
 table_form_header:
 	hash:
@@ -79,6 +85,13 @@ form:
 		label: Port
 	database:
 		label: Database
+
+database_form:
+	database:
+		label: Database
+	alias:
+		label: Alias
+		description: Database alias will be shared for all users
 
 key_form:
 	key:

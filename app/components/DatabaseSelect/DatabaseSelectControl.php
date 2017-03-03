@@ -34,11 +34,11 @@ class DatabaseSelectControl extends Control
 
     protected function createComponentSelect()
     {
-        $databases = array_keys($this->driver->dataManager()->databases());
-        sort($databases);
+        $databases = $this->driver->dataManager()->databaseNames();
+        ksort($databases);
         $form = new Form();
         $form->setRenderer(new BootstrapVerticalRenderer());
-        $form->addSelect('database', $this->translator->translate($this->driver->type() . '.database_select_control.database.label'), array_combine($databases, $databases))
+        $form->addSelect('database', $this->translator->translate($this->driver->type() . '.database_select_control.database.label'), $databases)
             ->setPrompt($this->translator->translate($this->driver->type() . '.database_select_control.database.prompt'))
             ->setAttribute('onchange', 'window.location = \'' . $this->presenter->link('Table:default', $this->driver->type()) . '&database=\' + this.value')
             ->setDefaultValue($this->database);

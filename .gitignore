@@ -1,7 +1,7 @@
-/temp/
-/log/
-/vendor/
-/build/
+/temp
+/log
+/vendor
+/build
 /composer.lock
-/coverage/
-/coverage.clover
+/coverage
+/uniman_saves

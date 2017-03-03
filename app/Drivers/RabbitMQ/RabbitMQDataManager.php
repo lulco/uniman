@@ -2,11 +2,11 @@
 
 namespace UniMan\Drivers\RabbitMQ;
 
+use Nette\Localization\ITranslator;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 use UniMan\Core\DataManager\AbstractDataManager;
 use UniMan\Core\Utils\Filter;
 use UniMan\Core\Utils\Multisort;
-use Nette\Localization\ITranslator;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 class RabbitMQDataManager extends AbstractDataManager
 {
@@ -44,6 +44,11 @@ class RabbitMQDataManager extends AbstractDataManager
             ];
         }
         return Multisort::sort($vhosts, $sorting);
+    }
+
+    protected function getDatabaseNameColumn()
+    {
+        return 'vhost';
     }
 
     public function selectDatabase($vhost)

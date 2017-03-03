@@ -10,17 +10,20 @@ class BreadcrumbControl extends Control
 
     private $database;
 
+    private $databaseName;
+
     private $type;
 
     private $table;
 
     private $item;
 
-    public function __construct($driver, $database, $type, $table, $item)
+    public function __construct($driver, $database, $databaseName, $type, $table, $item)
     {
         parent::__construct();
         $this->driver = $driver;
         $this->database = $database;
+        $this->databaseName = $databaseName;
         $this->type = $type;
         $this->table = $table;
         $this->item = $item;
@@ -30,6 +33,7 @@ class BreadcrumbControl extends Control
     {
         $this->template->driver = $this->driver;
         $this->template->database = $this->database;
+        $this->template->databaseName = $this->databaseName;
         $this->template->type = $this->type;
         $this->template->table = $this->table;
         $this->template->item = $this->item;

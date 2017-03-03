@@ -2,32 +2,43 @@
 
 namespace UniMan\Drivers\Redis;
 
-use UniMan\Core\DataManager\AbstractDataManager;
-use UniMan\Core\Utils\Multisort;
-use UniMan\Core\Utils\Filter;
 use RedisProxy\RedisProxy;
+use UniMan\Core\DataManager\AbstractDataManager;
+use UniMan\Core\Utils\Filter;
+use UniMan\Core\Utils\Multisort;
+use UniMan\Drivers\Redis\RedisDatabaseAliasStorage;
 
 class RedisDataManager extends AbstractDataManager
 {
     private $connection;
 
+    private $databaseAliasStorage;
+
     private $itemsCountCache = false;
 
-    public function __construct(RedisProxy $connection)
+    public function __construct(RedisProxy $connection, RedisDatabaseAliasStorage $databaseAliasStorage)
     {
         $this->connection = $connection;
+        $this->databaseAliasStorage = $databaseAliasStorage;
     }
 
     public function databases(array $sorting = [])
     {
         $keyspace = $this->connection->info('keyspace');
+        $aliases = $this->databaseAliasStorage->loadAll();
         $databases = [];
         foreach ($keyspace as $db => $info) {
             $db = str_replace('db', '', $db);
-            $info['database'] = $db;
+            $alias = isset($aliases[$db]) ? ' (' . $aliases[$db] . ')' : '';
+            $info['database'] = $db . $alias;
             $databases[$db] = $info;
         }
         return Multisort::sort($databases, $sorting);
+    }
+
+    protected function getDatabaseNameColumn()
+    {
+        return 'database';
     }
 
     public function tables(array $sorting = [])

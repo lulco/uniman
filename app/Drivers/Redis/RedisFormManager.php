@@ -2,23 +2,28 @@
 
 namespace UniMan\Drivers\Redis;
 
+use RedisProxy\RedisProxy;
 use UniMan\Core\Forms\DefaultFormManager;
 use UniMan\Drivers\Redis\Forms\RedisCreateHashForm;
 use UniMan\Drivers\Redis\Forms\RedisCreateSetForm;
+use UniMan\Drivers\Redis\Forms\RedisEditDatabaseForm;
 use UniMan\Drivers\Redis\Forms\RedisEditSetForm;
 use UniMan\Drivers\Redis\Forms\RedisHashKeyItemForm;
 use UniMan\Drivers\Redis\Forms\RedisKeyItemForm;
 use UniMan\Drivers\Redis\Forms\RedisRenameHashForm;
 use UniMan\Drivers\Redis\Forms\RedisSetMemberForm;
-use RedisProxy\RedisProxy;
+use UniMan\Drivers\Redis\RedisDatabaseAliasStorage;
 
 class RedisFormManager extends DefaultFormManager
 {
     private $connection;
 
-    public function __construct(RedisProxy $connection)
+    private $databaseAliasStorage;
+
+    public function __construct(RedisProxy $connection, RedisDatabaseAliasStorage $databaseAliasStorage)
     {
         $this->connection = $connection;
+        $this->databaseAliasStorage = $databaseAliasStorage;
     }
 
     public function itemForm($database, $type, $table, $item)
@@ -47,5 +52,10 @@ class RedisFormManager extends DefaultFormManager
             }
             return new RedisEditSetForm($this->connection, $table);
         }
+    }
+
+    public function databaseForm($database)
+    {
+        return new RedisEditDatabaseForm($database, $this->databaseAliasStorage);
     }
 }

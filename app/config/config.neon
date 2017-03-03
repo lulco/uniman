@@ -16,6 +16,8 @@ services:
 	- UniMan\Core\Translator\Loader\NeonFileLoader(%appDir%/lang)
 	- UniMan\Core\Credentials\SessionStorageCredentials
 
+	- UniMan\Drivers\Redis\RedisDatabaseAliasStorage(%appDir%/..)
+
 	-
 		class: UniMan\Core\Driver\DriverStorage
 		setup: 

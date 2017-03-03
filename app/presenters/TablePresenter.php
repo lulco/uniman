@@ -23,6 +23,7 @@ class TablePresenter extends BasePresenter
 
         $this->template->driver = $driver;
         $this->template->database = $database;
+        $this->template->databaseName = $this->driver->dataManager()->databaseName($database);
         $this->template->tables = $tables;
         $this->template->tablesHeaders = $this->driver->headerManager()->tablesHeaders();
         $this->template->sorting = $sorting;

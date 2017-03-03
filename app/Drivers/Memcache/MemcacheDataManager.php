@@ -43,6 +43,11 @@ class MemcacheDataManager extends AbstractDataManager
         return Multisort::sort($databases, $sorting);
     }
 
+    protected function getDatabaseNameColumn()
+    {
+        return 'server';
+    }
+
     public function tables(array $sorting = [])
     {
         throw new NoTablesJustItemsException('key', 'all');

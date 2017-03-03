@@ -46,6 +46,7 @@ abstract class AbstractBasePresenter extends Presenter
         return new BreadcrumbControl(
             $this->driver ? $this->driver->type() : null,
             $this->database,
+            $this->driver && $this->database !== null ? $this->driver->dataManager()->databaseName($this->database) : null,
             $this->type,
             $this->table,
             $this->item

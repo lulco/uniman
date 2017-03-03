@@ -36,6 +36,11 @@ class RedisPermissions extends DefaultPermissions
         return $type !== RedisDriver::TYPE_KEY;
     }
 
+    public function canEditDatabase($database)
+    {
+        return true;
+    }
+
     public function canExecuteCommands()
     {
         return true;
