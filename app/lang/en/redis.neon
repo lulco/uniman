@@ -26,6 +26,9 @@ headers:
 		key: 'Key'
 		number_of_members: 'Number of members'
 
+database_form_header:
+	edit: Edit database
+
 table_form_header:
 	hash:
 		create: Create new hash
@@ -82,6 +85,13 @@ form:
 		label: Port
 	database:
 		label: Database
+
+database_form:
+	database:
+		label: Database
+	alias:
+		label: Alias
+		description: Database alias will be shared for all users
 
 key_form:
 	key:
