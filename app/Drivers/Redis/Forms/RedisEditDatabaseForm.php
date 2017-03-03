@@ -2,6 +2,7 @@
 
 namespace UniMan\Drivers\Redis\Forms;
 
+use Exception;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 use UniMan\Core\Forms\DatabaseForm\DatabaseFormInterface;
@@ -21,6 +22,12 @@ class RedisEditDatabaseForm implements DatabaseFormInterface
 
     public function addFieldsToForm(Form $form)
     {
+        try {
+            $this->databaseAliasStorage->check();
+        } catch (Exception $e) {
+            $form->addError($e->getMessage());
+        }
+
         $form->addText('database', 'redis.database_form.database.label')
             ->setRequired('redis.database_form.database.required')
             ->setDisabled();
@@ -36,6 +43,12 @@ class RedisEditDatabaseForm implements DatabaseFormInterface
 
     public function submit(Form $form, ArrayHash $values)
     {
+        try {
+            $this->databaseAliasStorage->check();
+        } catch (Exception $e) {
+            $form->addError($e->getMessage());
+            return;
+        }
         $aliases = $this->databaseAliasStorage->loadAll();
         $aliases[$this->database] = $values['alias'];
         if (!$values['alias']) {

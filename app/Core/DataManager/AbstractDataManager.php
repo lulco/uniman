@@ -13,7 +13,7 @@ abstract class AbstractDataManager implements DataManagerInterface
      * @param array $sorting
      * @return array
      */
-    public function databasesKeyValue(array $sorting = [])
+    public function databaseNames(array $sorting = [])
     {
         $databases = array_map(function ($database) {
             return $database[$this->getDatabaseNameColumn()];
@@ -27,7 +27,7 @@ abstract class AbstractDataManager implements DataManagerInterface
      */
     public function databaseName($identifier)
     {
-        $databases = $this->databasesKeyValue();
+        $databases = $this->databaseNames();
         return isset($databases[$identifier]) ? $databases[$identifier] : $identifier;
     }
 

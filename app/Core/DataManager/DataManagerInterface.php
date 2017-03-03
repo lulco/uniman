@@ -16,7 +16,7 @@ interface DataManagerInterface
      * @param array $sorting
      * @return array keys are used as option values for dropdown, values are used as text to show
      */
-    public function databasesKeyValue(array $sorting = []);
+    public function databaseNames(array $sorting = []);
 
     /**
      * database name
