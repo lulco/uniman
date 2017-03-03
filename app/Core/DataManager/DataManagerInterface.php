@@ -31,6 +31,12 @@ interface DataManagerInterface
     public function selectDatabase($database);
 
     /**
+     * count of item storages: tables, views, hashes, sets, queries etc.
+     * @return int[] key => type, value => count
+     */
+    public function tablesCount();
+
+    /**
      * list of item storages: tables, views, hashes, sets, queues etc.
      * @param array $sorting
      * @return array list of tables grouped by table type (table, view, queue), one array for each driver supported type

@@ -9,6 +9,16 @@ abstract class AbstractDataManager implements DataManagerInterface
      */
     protected $messages = [];
 
+    public function tablesCount()
+    {
+        $tablesCounts = [];
+        $tables = $this->tables();
+        foreach ($tables as $type => $rows) {
+            $tablesCounts[$type] = count($rows);
+        }
+        return $tablesCounts;
+    }
+
     /**
      * @param array $sorting
      * @return array

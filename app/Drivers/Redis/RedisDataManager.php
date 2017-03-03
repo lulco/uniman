@@ -2,6 +2,7 @@
 
 namespace UniMan\Drivers\Redis;
 
+use Redis;
 use RedisProxy\RedisProxy;
 use UniMan\Core\DataManager\AbstractDataManager;
 use UniMan\Core\Utils\Filter;
@@ -39,6 +40,32 @@ class RedisDataManager extends AbstractDataManager
     protected function getDatabaseNameColumn()
     {
         return 'database';
+    }
+
+    public function tablesCount()
+    {
+        $tables = [
+            RedisDriver::TYPE_KEY => 0,
+            RedisDriver::TYPE_HASH => 0,
+            RedisDriver::TYPE_SET => 0,
+        ];
+        foreach ($this->connection->keys('*') as $key) {
+            $type = $this->connection->type($key);
+            switch ($type) {
+                case Redis::REDIS_STRING:
+                    $tables[RedisDriver::TYPE_KEY]++;
+                    break;
+                case Redis::REDIS_HASH:
+                    $tables[RedisDriver::TYPE_HASH]++;
+                    break;
+                case Redis::REDIS_SET:
+                    $tables[RedisDriver::TYPE_SET]++;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $tables;
     }
 
     public function tables(array $sorting = [])

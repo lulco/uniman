@@ -23,7 +23,7 @@ class RedisPermissions extends DefaultPermissions
 
     public function canCreateTable($database, $type)
     {
-        return $type !== RedisDriver::TYPE_KEY;
+        return true;
     }
 
     public function canEditTable($database, $type, $table)

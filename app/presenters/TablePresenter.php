@@ -27,6 +27,7 @@ class TablePresenter extends BasePresenter
         $this->template->tables = $tables;
         $this->template->tablesHeaders = $this->driver->headerManager()->tablesHeaders();
         $this->template->sorting = $sorting;
+        $this->template->tablesCounts = $this->driver->dataManager()->tablesCount();
     }
 
     public function actionCreate($driver, $database, $type)
