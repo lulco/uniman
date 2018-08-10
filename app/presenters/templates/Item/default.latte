@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	<table class="table text-nowrap">
-		{include '../../../components/ListingTableHeader/default.latte', 'columns' => $columns}
+		{include '../../../components/ListingTableHeader/default.latte', 'columns' => $columns, 'useFilter' => true, 'filter' => $filter}
 		<tbody>
 			<tr n:foreach="$items as $key => $values">
 				<td>

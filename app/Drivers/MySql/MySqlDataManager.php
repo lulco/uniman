@@ -132,11 +132,11 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
         }
 
         $operatorsMap = [
-            Filter::OPERATOR_EQUAL => '= %s',
-            Filter::OPERATOR_GREATER_THAN => '> %s',
-            Filter::OPERATOR_GREATER_THAN_OR_EQUAL => '>= %s',
-            Filter::OPERATOR_LESS_THAN => '< %s',
-            Filter::OPERATOR_LESS_THAN_OR_EQUAL => '<= %s',
+            Filter::OPERATOR_EQUAL => '= "%s"',
+            Filter::OPERATOR_GREATER_THAN => '> "%s"',
+            Filter::OPERATOR_GREATER_THAN_OR_EQUAL => '>= "%s"',
+            Filter::OPERATOR_LESS_THAN => '< "%s"',
+            Filter::OPERATOR_LESS_THAN_OR_EQUAL => '<= "%s"',
             Filter::OPERATOR_NOT_EQUAL => '!= %s',
             Filter::OPERATOR_CONTAINS => 'LIKE "%%%s%%"',
             Filter::OPERATOR_NOT_CONTAINS => 'NOT LIKE "%%%s%%"',

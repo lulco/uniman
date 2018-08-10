@@ -6,6 +6,8 @@ no: 'No'
 ascending: Ascending
 descending: Descending
 
+add_condition: Add condition
+
 missing_driver: Missing driver?
 check_why: Check why.
 drivers_check_title: 'Drivers requirements'

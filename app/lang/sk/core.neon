@@ -6,6 +6,8 @@ no: Nie
 ascending: Vzostupne
 descending: Zostupne
 
+add_condition: Pridať podmienku
+
 missing_driver: 'Chýba vám driver?'
 check_why: 'Skontrolujte prečo.'
 drivers_check_title: 'Požiadavky pre jednotlivé drivre'

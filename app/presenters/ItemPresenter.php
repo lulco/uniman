@@ -37,7 +37,8 @@ class ItemPresenter extends BasePresenter
         $this->template->type = $type;
         $this->template->table = $table;
         $this->template->sorting = $sorting;
-
+        $this->template->filter = $filter;
+        
         $itemsCount = $this->driver->dataManager()->itemsCount($type, $table, $filter);
         $this->template->itemsCount = $itemsCount;
         $this->template->items = $this->driver->dataManager()->items($type, $table, $page, $onPage, $filter, $sorting);
