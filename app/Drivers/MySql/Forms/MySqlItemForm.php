@@ -36,7 +36,15 @@ class MySqlItemForm implements ItemFormInterface
     {
         $this->columns = $this->dataManager->getColumns($this->type, $this->table);
         foreach ($this->columns as $column => $definition) {
-            if ($definition['Type'] === 'datetime') {
+            if (isset($definition['key_info']['REFERENCED_TABLE_NAME'])) {
+                $items = [];
+                foreach ($this->dataManager->items($this->type, $definition['key_info']['REFERENCED_TABLE_NAME'], 1, PHP_INT_MAX) as $item) {
+                    $items[$item[$definition['key_info']['REFERENCED_COLUMN_NAME']]] = implode(' ', $item);
+                }
+                $field = $form->addSelect($column, $column, $items);
+                $field->setAttribute('class', 'js-select2');
+                $field->setPrompt('');
+            } elseif ($definition['Type'] === 'datetime') {
                 $field = $form->addDateTimePicker($column, $column);
             } elseif ($definition['Type'] === 'date') {
                 $field = $form->addDatePicker($column, $column);
