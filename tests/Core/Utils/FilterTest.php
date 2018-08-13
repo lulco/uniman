@@ -2,10 +2,10 @@
 
 namespace UniMan\Tests\Core\Utils;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Core\Utils\Filter;
-use PHPUnit_Framework_TestCase;
 
-class FilterTest extends PHPUnit_Framework_TestCase
+class FilterTest extends TestCase
 {
     public function testNoFilter()
     {

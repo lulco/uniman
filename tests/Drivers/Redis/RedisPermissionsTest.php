@@ -2,10 +2,10 @@
 
 namespace UniMan\Tests\Drivers\Redis;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Drivers\Redis\RedisPermissions;
-use PHPUnit_Framework_TestCase;
 
-class RedisPermissionsTest extends PHPUnit_Framework_TestCase
+class RedisPermissionsTest extends TestCase
 {
     public function testPermissions()
     {

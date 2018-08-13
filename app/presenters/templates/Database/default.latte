@@ -1,35 +1,35 @@
 {block content}
 
 <div class="col-lg-2">
-	{control databaseSelect}
+    {control databaseSelect}
 </div>
 <div class="col-lg-10">
-	<div class="row">
-		<div class="col-lg-10">
-			<h3>{_$driver . '.database_select_control.database.label'} ({count($databases)|formatNumber})</h3>
-		</div>
-		<div class="col-lg-2">
-			<div n:if="$actualDriver->permissions()->canCreateDatabase()" class="pull-right">
-				<a class="btn btn-default" style="margin-right: 20px;" href="{link Database:create, $driver}">Create new</a>
-			</div>
-		</div>
-	</div>
-	<table class="table text-nowrap">
-		{include '../../../components/ListingTableHeader/default.latte', 'columns' => $databasesHeaders}
-		<tbody>
-			<tr n:foreach="$databases as $database => $databaseInfo">
-				<td>
-					<div class="btn-group">
-						<a href="{link Table:default, $driver, $database}" class="btn-default" title="{$database}"><i class="fa fa-eye"></i></a>
-						<a n:if="$actualDriver->permissions()->canEditDatabase($database)" href="{link Database:edit, $driver, $database}" class="btn-default"><i class="fa fa-edit"></i></a>
+    <div class="row">
+        <div class="col-lg-10">
+            <h3>{_$driver . '.database_select_control.database.label'} ({count($databases)|formatNumber})</h3>
+        </div>
+        <div class="col-lg-2">
+            <div n:if="$actualDriver->permissions()->canCreateDatabase()" class="pull-right">
+                <a class="btn btn-default" style="margin-right: 20px;" href="{link Database:create, $driver}">Create new</a>
+            </div>
+        </div>
+    </div>
+    <table class="table text-nowrap">
+        {include '../../../components/ListingTableHeader/default.latte', 'columns' => $databasesHeaders}
+        <tbody>
+            <tr n:foreach="$databases as $database => $databaseInfo">
+                <td>
+                    <div class="btn-group">
+                        <a href="{link Table:default, $driver, $database}" class="btn-default" title="{$database}"><i class="fa fa-eye"></i></a>
+                        <a n:if="$actualDriver->permissions()->canEditDatabase($database)" href="{link Database:edit, $driver, $database}" class="btn-default"><i class="fa fa-edit"></i></a>
                         <a n:if="$actualDriver->permissions()->canDeleteDatabase($database)" href="{link delete!, $driver, $database}" onclick="return confirm({_'core.delete.confirm'});" class="btn-default"><i class="fa fa-trash"></i></a>
-					</div>
-				</td>
-				{foreach $databasesHeaders as $column}
-					{php $value = isset($databaseInfo[$column->getKey()]) ? $databaseInfo[$column->getKey()] : null}
-					<td n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{elseif $column->isSize()}{$value|formatSize}{elseif $column->isTime()}{$value|formatTime}{elseif $column->isNumeric()}{$value|formatNumber, $column->getDecimals()}{else}{$value|truncate:100}{/if}</td>
-				{/foreach}
-			</tr>
-		</tbody>
-	</table>
+                    </div>
+                </td>
+                {foreach $databasesHeaders as $column}
+                    {php $value = isset($databaseInfo[$column->getKey()]) ? $databaseInfo[$column->getKey()] : null}
+                    <td n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{elseif $column->isSize()}{$value|formatSize}{elseif $column->isTime()}{$value|formatTime}{elseif $column->isNumeric()}{$value|formatNumber, $column->getDecimals()}{else}{$value|truncate:100}{/if}</td>
+                {/foreach}
+            </tr>
+        </tbody>
+    </table>
 </div>

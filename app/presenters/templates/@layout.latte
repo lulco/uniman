@@ -1,72 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{ifset #title}{include #title} | {/ifset}UniMan</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{ifset #title}{include #title} | {/ifset}UniMan</title>
     <link rel="stylesheet" href="{link Default:file, 'css/bootstrap.min.css'}">
     <link rel="stylesheet" href="{link Default:file, 'css/select2.min.css'}">
-	<link rel="stylesheet" href="{link Default:file, 'css/jquery.datetimepicker.min.css'}">
-	<link rel="stylesheet" href="{link Default:file, 'css/font-awesome.min.css'}">
-	<link rel="shortcut icon" href="{link Default:file, 'favicon.ico'}">
-	<link rel="icon" href="{link Default:file, 'favicon.ico'}">
-	<style>
-		.required label:after {
-			content: ' *';
-		}
-		.padding-bottom {
-			padding-bottom: 3px;
-		}
-	</style>
+    <link rel="stylesheet" href="{link Default:file, 'css/jquery.datetimepicker.min.css'}">
+    <link rel="stylesheet" href="{link Default:file, 'css/font-awesome.min.css'}">
+    <link rel="shortcut icon" href="{link Default:file, 'favicon.ico'}">
+    <link rel="icon" href="{link Default:file, 'favicon.ico'}">
+    <style>
+        .required label:after {
+            content: ' *';
+        }
+        .padding-bottom {
+            padding-bottom: 3px;
+        }
+    </style>
 </head>
 <body>
-	<div class="navbar navbar-default navbar-static-top">
-		<div class="container-fluid">
-			<div class="nav navbar-nav">
-				<h2><a href="{link Default:default, $presenter->getParam('driver')}">{_'core.title'}</a></h2>
-			</div>
-			{control breadcrumb}
-			<div style="margin: 10px 5px;">
-				<div n:if="isset($actualDriver) && $actualDriver" class="pull-right">
-					<a class="btn btn-default" href="{link Default:logout, $actualDriver->type()}">Logout</a>
-				</div>
-				<div class="pull-right form-group" style="margin-right: 10px;">
-					<select onchange="window.location={link this, 'driver' => $driver, 'locale' => null} + '&locale=' + this.value;" class="form-control">
-						<option value="en"{if $locale == 'en'} selected{/if}>English</option>
-						<option value="sk"{if $locale == 'sk'} selected{/if}>Slovenčina</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="navbar navbar-default navbar-static-top">
+        <div class="container-fluid">
+            <div class="nav navbar-nav">
+                <h2><a href="{link Default:default, $presenter->getParam('driver')}">{_'core.title'}</a></h2>
+            </div>
+            {control breadcrumb}
+            <div style="margin: 10px 5px;">
+                <div n:if="isset($actualDriver) && $actualDriver" class="pull-right">
+                    <a class="btn btn-default" href="{link Default:logout, $actualDriver->type()}">Logout</a>
+                </div>
+                <div class="pull-right form-group" style="margin-right: 10px;">
+                    <select onchange="window.location={link this, 'driver' => $driver, 'locale' => null} + '&locale=' + this.value;" class="form-control">
+                        <option value="en"{if $locale == 'en'} selected{/if}>English</option>
+                        <option value="sk"{if $locale == 'sk'} selected{/if}>Slovenčina</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	<div n:if="$flashes" id="flash-alerts">
-		<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">
-			{$flash->message|noescape}
-		</div>
-	</div>
+    <div n:if="$flashes" id="flash-alerts">
+        <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}" role="alert">
+            {$flash->message|noescape}
+        </div>
+    </div>
 
-	<div class="container-fluid">
-		<div class="row">
-			{include content}
-		</div>
-	</div>
-	<script src="{link Default:file, 'js/jquery.min.js'}"></script>
-	<script src="{link Default:file, 'js/jquery.datetimepicker.full.min.js'}"></script>
+    <div class="container-fluid">
+        <div class="row">
+            {include content}
+        </div>
+    </div>
+    <script src="{link Default:file, 'js/jquery.min.js'}"></script>
+    <script src="{link Default:file, 'js/jquery.datetimepicker.full.min.js'}"></script>
     <script src="{link Default:file, 'js/select2.min.js'}"></script>
-	<script>
-		$(function(){
-			// Datetimepicker initialize
-			$('.datetimepicker').datetimepicker({
-				format: "Y-m-d H:i:s"
-			});
-			
-			// Datepicker initialize
-			$('.datepicker').datetimepicker({
-				format: "Y-m-d"
-			});
+    <script>
+        $(function(){
+            // Datetimepicker initialize
+            $('.datetimepicker').datetimepicker({
+                format: "Y-m-d H:i:s"
+            });
+            
+            // Datepicker initialize
+            $('.datepicker').datetimepicker({
+                format: "Y-m-d"
+            });
             $('.js-select2').select2();
-		});
-	</script>
+        });
+    </script>
 </body>
 </html>

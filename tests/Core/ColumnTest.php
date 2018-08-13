@@ -2,12 +2,12 @@
 
 namespace UniMan\Tests\Core;
 
+use Closure;
+use PHPUnit\Framework\TestCase;
 use UniMan\Core\Column;
 use UniMan\Core\Utils\Filter;
-use Closure;
-use PHPUnit_Framework_TestCase;
 
-class ColumnTest extends PHPUnit_Framework_TestCase
+class ColumnTest extends TestCase
 {
     public function testDefaults()
     {

@@ -1,59 +1,59 @@
 {block content}
 
 <div class="col-lg-2">
-	{control databaseSelect}
+    {control databaseSelect}
 
-	{control tablesSideBar}
+    {control tablesSideBar}
 </div>
 <div class="col-lg-10">
-	<div class="row">
-		<div class="col-lg-12">
-			{control filterForm}
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-10">
-			<h3>{_$driver . '.table_type.' . $type . '.items.title'} ({$itemsCount|formatNumber})</h3>
-		</div>
-		<div class="col-lg-2">
-			<div n:if="$actualDriver->permissions()->canCreateItem($database, $type, $table)" class="pull-right">
-				<a class="btn btn-default" style="margin-right: 20px;" href="{link Item:create, $driver, $database, $type, $table}">Create new</a>
-			</div>
-		</div>
-	</div>
-	<table class="table text-nowrap">
-		{include '../../../components/ListingTableHeader/default.latte', 'columns' => $columns, 'useFilter' => true, 'filter' => $filter}
-		<tbody>
-			<tr n:foreach="$items as $key => $values">
-				<td>
-					<div class="btn-group">
-						<a n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)" class="btn-default" href="{link Item:edit, $driver, $database, $type, $table, $key}"><i class="fa fa-edit"></i></a>
-						<a n:if="$actualDriver->permissions()->canDeleteItem($database, $type, $table, $key)" class="btn-default" href="{link delete!, $driver, $database, $type, $table, $key}" onclick="return confirm({_'core.delete.confirm'});"><i class="fa fa-trash"></i></a>
-					</div>
-				</td>
-				{foreach $columns as $column}
-					{php $value = isset($values[$column->getKey()]) ? $values[$column->getKey()] : null}
-					<td title="{if is_null($value)}NULL{else}{$value}{/if}" n:class="$column->isNumeric() ? 'text-right'">
-						{if is_null($value)}
-							<i>NULL</i>
-						{else}
-							{php $external = $column->getExternal()}
-							<a n:tag-if="$external" href="{link Item:edit, $driver, $external['database'], $type, $external['table'], $external['callback']($value)}">
-								{if $column->isSize()}
-									{$value|formatSize}
-								{elseif $column->isTime()}
-									{$value|formatTime}
-								{elseif $column->isNumeric()}
-									{$value|formatNumber, $column->getDecimals()}
-								{else}
-									{$value|truncate:100}
-								{/if}
-							</a>
-						{/if}
-					</td>
-				{/foreach}
-			</tr>
-		</tbody>
-	</table>
-	{control paginator}
+    <div class="row">
+        <div class="col-lg-12">
+            {control filterForm}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-10">
+            <h3>{_$driver . '.table_type.' . $type . '.items.title'} ({$itemsCount|formatNumber})</h3>
+        </div>
+        <div class="col-lg-2">
+            <div n:if="$actualDriver->permissions()->canCreateItem($database, $type, $table)" class="pull-right">
+                <a class="btn btn-default" style="margin-right: 20px;" href="{link Item:create, $driver, $database, $type, $table}">Create new</a>
+            </div>
+        </div>
+    </div>
+    <table class="table text-nowrap">
+        {include '../../../components/ListingTableHeader/default.latte', 'columns' => $columns, 'useFilter' => true, 'filter' => $filter}
+        <tbody>
+            <tr n:foreach="$items as $key => $values">
+                <td>
+                    <div class="btn-group">
+                        <a n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)" class="btn-default" href="{link Item:edit, $driver, $database, $type, $table, $key}"><i class="fa fa-edit"></i></a>
+                        <a n:if="$actualDriver->permissions()->canDeleteItem($database, $type, $table, $key)" class="btn-default" href="{link delete!, $driver, $database, $type, $table, $key}" onclick="return confirm({_'core.delete.confirm'});"><i class="fa fa-trash"></i></a>
+                    </div>
+                </td>
+                {foreach $columns as $column}
+                    {php $value = isset($values[$column->getKey()]) ? $values[$column->getKey()] : null}
+                    <td title="{if is_null($value)}NULL{else}{$value}{/if}" n:class="$column->isNumeric() ? 'text-right'">
+                        {if is_null($value)}
+                            <i>NULL</i>
+                        {else}
+                            {php $external = $column->getExternal()}
+                            <a n:tag-if="$external" href="{link Item:edit, $driver, $external['database'], $type, $external['table'], $external['callback']($value)}">
+                                {if $column->isSize()}
+                                    {$value|formatSize}
+                                {elseif $column->isTime()}
+                                    {$value|formatTime}
+                                {elseif $column->isNumeric()}
+                                    {$value|formatNumber, $column->getDecimals()}
+                                {else}
+                                    {$value|truncate:100}
+                                {/if}
+                            </a>
+                        {/if}
+                    </td>
+                {/foreach}
+            </tr>
+        </tbody>
+    </table>
+    {control paginator}
 </div>

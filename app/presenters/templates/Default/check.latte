@@ -1,33 +1,33 @@
 {block content}
 
 <div class="container">
-	<h1>{_'core.drivers_check_title'}</h1>
-	{foreach $drivers as $oneDriver}
-		<div class="row">
-			<div class="col-xs-11">
-				<h2>{_$oneDriver->name()}</h2>
-			</div>
-			<div class="col-xs-1">
-				<div class="pull-right text-{if $oneDriver->check()}success{else}danger{/if}">
-					<i class="fa fa-3x fa-{if $oneDriver->check()}check-square-o{else}times{/if}"></i>
-				</div>
-			</div>
-		</div>
-		<div n:foreach="$oneDriver->extensions() as $extension" class="row alert alert-{if extension_loaded($extension)}success{else}danger{/if}">
-			<div class="col-xs-11">{_'core.php_extension'} {$extension}</div>
-			<div class="col-xs-1">
-				<div class="pull-right">
-					<i class="fa fa-{if extension_loaded($extension)}check-square-o{else}times{/if}"></i>
-				</div>
-			</div>
-		</div>
-		<div n:foreach="$oneDriver->classes() as $class" class="row alert alert-{if class_exists($class)}success{else}danger{/if}">
-			<div class="col-xs-11">{_'core.php_class'} {$class}</div>
-			<div class="col-xs-1">
-				<div class="pull-right">
-					<i class="fa fa-{if class_exists($class)}check-square-o{else}times{/if}"></i>
-				</div>
-			</div>
-		</div>
-	{/foreach}
+    <h1>{_'core.drivers_check_title'}</h1>
+    {foreach $drivers as $oneDriver}
+        <div class="row">
+            <div class="col-xs-11">
+                <h2>{_$oneDriver->name()}</h2>
+            </div>
+            <div class="col-xs-1">
+                <div class="pull-right text-{if $oneDriver->check()}success{else}danger{/if}">
+                    <i class="fa fa-3x fa-{if $oneDriver->check()}check-square-o{else}times{/if}"></i>
+                </div>
+            </div>
+        </div>
+        <div n:foreach="$oneDriver->extensions() as $extension" class="row alert alert-{if extension_loaded($extension)}success{else}danger{/if}">
+            <div class="col-xs-11">{_'core.php_extension'} {$extension}</div>
+            <div class="col-xs-1">
+                <div class="pull-right">
+                    <i class="fa fa-{if extension_loaded($extension)}check-square-o{else}times{/if}"></i>
+                </div>
+            </div>
+        </div>
+        <div n:foreach="$oneDriver->classes() as $class" class="row alert alert-{if class_exists($class)}success{else}danger{/if}">
+            <div class="col-xs-11">{_'core.php_class'} {$class}</div>
+            <div class="col-xs-1">
+                <div class="pull-right">
+                    <i class="fa fa-{if class_exists($class)}check-square-o{else}times{/if}"></i>
+                </div>
+            </div>
+        </div>
+    {/foreach}
 </div>

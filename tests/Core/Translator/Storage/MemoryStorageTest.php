@@ -2,11 +2,11 @@
 
 namespace UniMan\Tests\Core\Translator\Storage;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Core\Translator\Loader\NeonFileLoader;
 use UniMan\Core\Translator\Storage\MemoryStorage;
-use PHPUnit_Framework_TestCase;
 
-class MemoryStorageTest extends PHPUnit_Framework_TestCase
+class MemoryStorageTest extends TestCase
 {
     public function testLoad()
     {

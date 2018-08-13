@@ -1,41 +1,41 @@
 application:
-	scanDirs: false
-	errorPresenter: Error
-	mapping:
-		*: UniMan\Presenters\*Presenter
+    scanDirs: false
+    errorPresenter: Error
+    mapping:
+        *: UniMan\Presenters\*Presenter
 
 services:
-	router: UniMan\Router\RouterFactory::createRouter
-	translator:
-		class: UniMan\Core\Translator\Translator
-		setup:
-			- setDefaultLanguage('en')
+    router: UniMan\Router\RouterFactory::createRouter
+    translator:
+        class: UniMan\Core\Translator\Translator
+        setup:
+            - setDefaultLanguage('en')
 
-	- UniMan\Core\Translator\LanguageResolver\UrlLanguageResolver(@http.request::getUrl()::getAbsoluteUrl())
-	- UniMan\Core\Translator\Storage\MemoryStorage
-	- UniMan\Core\Translator\Loader\NeonFileLoader(%appDir%/lang)
-	- UniMan\Core\Credentials\SessionStorageCredentials
+    - UniMan\Core\Translator\LanguageResolver\UrlLanguageResolver(@http.request::getUrl()::getAbsoluteUrl())
+    - UniMan\Core\Translator\Storage\MemoryStorage
+    - UniMan\Core\Translator\Loader\NeonFileLoader(%appDir%/lang)
+    - UniMan\Core\Credentials\SessionStorageCredentials
 
-	- UniMan\Drivers\Redis\RedisDatabaseAliasStorage(%appDir%/..)
+    - UniMan\Drivers\Redis\RedisDatabaseAliasStorage(%appDir%/..)
 
-	-
-		class: UniMan\Core\Driver\DriverStorage
-		setup: 
-			- add(UniMan\Drivers\MySql\MySqlDriver())
-			- add(UniMan\Drivers\Redis\RedisDriver())
-			- add(UniMan\Drivers\Memcache\MemcacheDriver())
-			- add(UniMan\Drivers\RabbitMQ\RabbitMQDriver())
+    -
+        class: UniMan\Core\Driver\DriverStorage
+        setup: 
+            - add(UniMan\Drivers\MySql\MySqlDriver())
+            - add(UniMan\Drivers\Redis\RedisDriver())
+            - add(UniMan\Drivers\Memcache\MemcacheDriver())
+            - add(UniMan\Drivers\RabbitMQ\RabbitMQDriver())
 
-	formatter: UniMan\Core\Helper\Formatter
+    formatter: UniMan\Core\Helper\Formatter
 
-	filterLoader:
-		class: UniMan\Core\Helper\FilterLoader
-		setup:
-			- register('formatNumber', [@formatter, formatNumber])
-			- register('formatSize', [@formatter, formatSize])
-			- register('formatTime', [@formatter, formatTime])
+    filterLoader:
+        class: UniMan\Core\Helper\FilterLoader
+        setup:
+            - register('formatNumber', [@formatter, formatNumber])
+            - register('formatSize', [@formatter, formatSize])
+            - register('formatTime', [@formatter, formatTime])
 
-	nette.latteFactory:
-		setup:
-			- addFilter(null, [@filterLoader, 'load'])
-			- addFilter('translate', [@translator, 'translate'])
+    nette.latteFactory:
+        setup:
+            - addFilter(null, [@filterLoader, 'load'])
+            - addFilter('translate', [@translator, 'translate'])

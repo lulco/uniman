@@ -2,10 +2,10 @@
 
 namespace UniMan\Tests\Core\Translator\LanguageResolver;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Core\Translator\LanguageResolver\StaticLanguageResolver;
-use PHPUnit_Framework_TestCase;
 
-class StaticLanguageResolverTest extends PHPUnit_Framework_TestCase
+class StaticLanguageResolverTest extends TestCase
 {
     public function testResolve()
     {
