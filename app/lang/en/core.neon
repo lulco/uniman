@@ -7,6 +7,8 @@ ascending: Ascending
 descending: Descending
 
 add_condition: Add condition
+delete:
+    confirm: Are you sure?
 
 missing_driver: Missing driver?
 check_why: Check why.

@@ -7,6 +7,8 @@ ascending: Vzostupne
 descending: Zostupne
 
 add_condition: Pridať podmienku
+delete:
+    confirm: Ste si istý?
 
 missing_driver: 'Chýba vám driver?'
 check_why: 'Skontrolujte prečo.'
