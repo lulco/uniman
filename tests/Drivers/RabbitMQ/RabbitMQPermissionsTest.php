@@ -2,10 +2,10 @@
 
 namespace UniMan\Tests\Drivers\RabbitMQ;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Drivers\RabbitMQ\RabbitMQPermissions;
-use PHPUnit_Framework_TestCase;
 
-class RabbitMQPermissionsTest extends PHPUnit_Framework_TestCase
+class RabbitMQPermissionsTest extends TestCase
 {
     public function testPermissions()
     {

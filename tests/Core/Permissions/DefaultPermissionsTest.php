@@ -2,10 +2,10 @@
 
 namespace UniMan\Tests\Core\Permissions;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Core\Permissions\DefaultPermissions;
-use PHPUnit_Framework_TestCase;
 
-class DefaultPermissionsTest extends PHPUnit_Framework_TestCase
+class DefaultPermissionsTest extends TestCase
 {
     public function testPermissions()
     {

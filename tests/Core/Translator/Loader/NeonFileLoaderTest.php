@@ -2,10 +2,10 @@
 
 namespace UniMan\Tests\Core\Translator\Loader;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Core\Translator\Loader\NeonFileLoader;
-use PHPUnit_Framework_TestCase;
 
-class NeonFileLoaderTest extends PHPUnit_Framework_TestCase
+class NeonFileLoaderTest extends TestCase
 {
     public function testLoad()
     {

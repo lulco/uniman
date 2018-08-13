@@ -2,10 +2,10 @@
 
 namespace UniMan\Tests\Core\Translator\LanguageResolver;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Core\Translator\LanguageResolver\UrlLanguageResolver;
-use PHPUnit_Framework_TestCase;
 
-class UrlLanguageResolverTest extends PHPUnit_Framework_TestCase
+class UrlLanguageResolverTest extends TestCase
 {
     public function testNoQueryParam()
     {

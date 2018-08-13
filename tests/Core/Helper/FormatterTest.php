@@ -2,14 +2,14 @@
 
 namespace UniMan\Tests\Core\Helper;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Core\Helper\Formatter;
 use UniMan\Core\Translator\LanguageResolver\StaticLanguageResolver;
 use UniMan\Core\Translator\Loader\NeonFileLoader;
 use UniMan\Core\Translator\Storage\MemoryStorage;
 use UniMan\Core\Translator\Translator;
-use PHPUnit_Framework_TestCase;
 
-class FormatterTest extends PHPUnit_Framework_TestCase
+class FormatterTest extends TestCase
 {
     private $formatter;
 

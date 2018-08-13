@@ -2,10 +2,10 @@
 
 namespace UniMan\Tests;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Core\Utils\Multisort;
-use PHPUnit_Framework_TestCase;
 
-class MultisortTest extends PHPUnit_Framework_TestCase
+class MultisortTest extends TestCase
 {
     public function testNoSort()
     {

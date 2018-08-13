@@ -1,46 +1,46 @@
 {block content}
 
 <div class="col-lg-2">
-	{control databaseSelect}
+    {control databaseSelect}
 </div>
 <div class="col-lg-10">
-	<h1>{_$driver . '.table_types_for_database', ['database' => $databaseName]}</h1>
-	{if $tables}
-		{foreach $tables as $type => $rows}
-			<div class="row">
-				<div class="col-lg-10">
-					<h3>{_$driver . '.table_type.' . $type. '.title'} ({$tablesCounts[$type]|formatNumber})</h3>
-				</div>
-				<div class="col-lg-2">
-					<div n:if="$actualDriver->permissions()->canCreateTable($database, $type)" class="pull-right">
-						<a class="btn btn-default" style="margin-right: 20px;" href="{link Table:create, $driver, $database, $type}">Create new</a>
-					</div>
-				</div>
-			</div>
-			{if $tablesCounts[$type] > 0}
-				<table class="table text-nowrap">
-					{include '../../../components/ListingTableHeader/default.latte', 'columns' => $tablesHeaders[$type]}
-					<tbody>
-						<tr n:foreach="$rows as $table => $values">
-							<td>
-								<div class="btn-group">
-									<a href="{link Item:default, $driver, $database, $type, $table}" class="btn-default" title="{$table}"><i class="fa fa-eye"></i></a>
-									<a n:if="$actualDriver->permissions()->canEditTable($database, $type, $table)" class="btn-default" href="{link Table:edit, $driver, $database, $type, $table}"><i class="fa fa-edit"></i></a>
-									<a n:if="$actualDriver->permissions()->canDeleteTable($database, $type, $table)" class="btn-default" href="{link delete!, $driver, $database, $type, $table}" onclick="return confirm({_'core.delete.confirm'});"><i class="fa fa-trash"></i></a>
-								</div>
-							</td>
-							{foreach $tablesHeaders[$type] as $column}
-								{php $value = isset($values[$column->getKey()]) ? $values[$column->getKey()] : null}
-								<td n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{elseif $column->isSize()}{$value|formatSize}{elseif $column->isTime()}{$value|formatTime}{elseif $column->isNumeric()}{$value|formatNumber, $column->getDecimals()}{else}{$value|truncate:100}{/if}</td>
-							{/foreach}
-						</tr>
-					</tbody>
-				</table>
-			{else}
-				<div class="no-items">{_$driver . '.no_tables_for_type_' . $type}</div>
-			{/if}
-		{/foreach}
-	{else}
-		<div class="no-items">{_$driver . '.no_tables_for_database', ['database' => $databaseName]}</div>
-	{/if}
+    <h1>{_$driver . '.table_types_for_database', ['database' => $databaseName]}</h1>
+    {if $tables}
+        {foreach $tables as $type => $rows}
+            <div class="row">
+                <div class="col-lg-10">
+                    <h3>{_$driver . '.table_type.' . $type. '.title'} ({$tablesCounts[$type]|formatNumber})</h3>
+                </div>
+                <div class="col-lg-2">
+                    <div n:if="$actualDriver->permissions()->canCreateTable($database, $type)" class="pull-right">
+                        <a class="btn btn-default" style="margin-right: 20px;" href="{link Table:create, $driver, $database, $type}">Create new</a>
+                    </div>
+                </div>
+            </div>
+            {if $tablesCounts[$type] > 0}
+                <table class="table text-nowrap">
+                    {include '../../../components/ListingTableHeader/default.latte', 'columns' => $tablesHeaders[$type]}
+                    <tbody>
+                        <tr n:foreach="$rows as $table => $values">
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{link Item:default, $driver, $database, $type, $table}" class="btn-default" title="{$table}"><i class="fa fa-eye"></i></a>
+                                    <a n:if="$actualDriver->permissions()->canEditTable($database, $type, $table)" class="btn-default" href="{link Table:edit, $driver, $database, $type, $table}"><i class="fa fa-edit"></i></a>
+                                    <a n:if="$actualDriver->permissions()->canDeleteTable($database, $type, $table)" class="btn-default" href="{link delete!, $driver, $database, $type, $table}" onclick="return confirm({_'core.delete.confirm'});"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </td>
+                            {foreach $tablesHeaders[$type] as $column}
+                                {php $value = isset($values[$column->getKey()]) ? $values[$column->getKey()] : null}
+                                <td n:class="$column->isNumeric() ? 'text-right'">{if is_null($value)}<i>NULL</i>{elseif $column->isSize()}{$value|formatSize}{elseif $column->isTime()}{$value|formatTime}{elseif $column->isNumeric()}{$value|formatNumber, $column->getDecimals()}{else}{$value|truncate:100}{/if}</td>
+                            {/foreach}
+                        </tr>
+                    </tbody>
+                </table>
+            {else}
+                <div class="no-items">{_$driver . '.no_tables_for_type_' . $type}</div>
+            {/if}
+        {/foreach}
+    {else}
+        <div class="no-items">{_$driver . '.no_tables_for_database', ['database' => $databaseName]}</div>
+    {/if}
 </div>

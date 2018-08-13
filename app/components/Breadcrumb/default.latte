@@ -1,14 +1,14 @@
 {ifCurrent Default:*}
 {else}
-	<div n:if="$driver" class="pull-left" style="margin-bottom: -15px; padding-top: 20px;">
-		<ul class="breadcrumb">
-			<li><a href="{if $driver}{plink Default:default, $driver}{else}{plink Default:default}{/if}">{_$driver . '.name'}</a></li>
-			<li n:if="$driver && $database !== null"><a href="{plink Database:default, $driver}">{_$driver . '.database_select_control.database.label'}</a></li>
-			<li n:if="$driver && $database === null" class="active">{_$driver . '.database_select_control.database.label'}</li>
-			<li n:if="$driver && $database !== null && $type && $table"><a href="{plink Table:default, $driver, $database}">{$databaseName}</a></li>
-			<li n:if="$driver && $database !== null && (!$type || !$table)" class="active">{$databaseName}</li>
-			<li n:if="$driver && $database !== null && $type && $table && $item"><a href="{plink Item:default, $driver, $database, $type, $table}">{$table}</a></li>
-			<li n:if="$driver && $database !== null && $type && $table && !$item" class="active">{$table}</li>
-		</ul>
-	</div>
+    <div n:if="$driver" class="pull-left" style="margin-bottom: -15px; padding-top: 20px;">
+        <ul class="breadcrumb">
+            <li><a href="{if $driver}{plink Default:default, $driver}{else}{plink Default:default}{/if}">{_$driver . '.name'}</a></li>
+            <li n:if="$driver && $database !== null"><a href="{plink Database:default, $driver}">{_$driver . '.database_select_control.database.label'}</a></li>
+            <li n:if="$driver && $database === null" class="active">{_$driver . '.database_select_control.database.label'}</li>
+            <li n:if="$driver && $database !== null && $type && $table"><a href="{plink Table:default, $driver, $database}">{$databaseName}</a></li>
+            <li n:if="$driver && $database !== null && (!$type || !$table)" class="active">{$databaseName}</li>
+            <li n:if="$driver && $database !== null && $type && $table && $item"><a href="{plink Item:default, $driver, $database, $type, $table}">{$table}</a></li>
+            <li n:if="$driver && $database !== null && $type && $table && !$item" class="active">{$table}</li>
+        </ul>
+    </div>
 {/ifCurrent}

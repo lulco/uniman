@@ -2,10 +2,10 @@
 
 namespace UniMan\Tests\Drivers\MySql;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Drivers\MySql\MySqlPermissions;
-use PHPUnit_Framework_TestCase;
 
-class MySqlPermissionsTest extends PHPUnit_Framework_TestCase
+class MySqlPermissionsTest extends TestCase
 {
     public function testPermissions()
     {

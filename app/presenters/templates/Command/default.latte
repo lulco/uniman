@@ -1,32 +1,32 @@
 {block content}
 
 <div class="col-lg-2">
-	{control databaseSelect}
+    {control databaseSelect}
 </div>
 <div class="col-lg-10">
-	<h3>{_$driver . '.commands'}</h3>
-	{foreach $results as $command => $commandResult}
-		<p>{$command}</p>
-		<table n:ifset="$commandResult['headers']" class="table text-nowrap">
-			<thead>
-				<tr>
-					<th n:foreach="$commandResult['headers'] as $column">{$column}</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr n:foreach="$commandResult['items'] as $values">
-					{foreach $values as $value}
-						<td title="{if is_null($value)}NULL{else}{$value}{/if}">
-							{if is_null($value)}
-								<i>NULL</i>
-							{else}
-								{$value|truncate:100}
-							{/if}
-						</td>
-					{/foreach}
-				</tr>
-			</tbody>
-		</table>
-	{/foreach}
-	{control form}
+    <h3>{_$driver . '.commands'}</h3>
+    {foreach $results as $command => $commandResult}
+        <p>{$command}</p>
+        <table n:ifset="$commandResult['headers']" class="table text-nowrap">
+            <thead>
+                <tr>
+                    <th n:foreach="$commandResult['headers'] as $column">{$column}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr n:foreach="$commandResult['items'] as $values">
+                    {foreach $values as $value}
+                        <td title="{if is_null($value)}NULL{else}{$value}{/if}">
+                            {if is_null($value)}
+                                <i>NULL</i>
+                            {else}
+                                {$value|truncate:100}
+                            {/if}
+                        </td>
+                    {/foreach}
+                </tr>
+            </tbody>
+        </table>
+    {/foreach}
+    {control form}
 </div>

@@ -2,12 +2,12 @@
 
 namespace UniMan\Tests\Core\Driver;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Core\Driver\DriverInterface;
 use UniMan\Core\Driver\DriverStorage;
 use UniMan\Tests\Mock\Drivers\FakeDriver;
-use PHPUnit_Framework_TestCase;
 
-class DriverStorageTest extends PHPUnit_Framework_TestCase
+class DriverStorageTest extends TestCase
 {
     public function testDriverStorage()
     {

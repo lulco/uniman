@@ -16,7 +16,7 @@ class RedisCredentialsFormTest extends AbstractDriverTest
         self::assertCount(0, $controls);
         $credentialsForm = new RedisCredentialsForm();
         $credentialsForm->addFieldsToForm($form);
-        self::assertGreaterThan(0, count($form->getControls()));
+        self::assertGreaterThan(0, $form->getControls()->count());
         foreach ($form->getControls() as $control) {
             self::assertInstanceOf(IControl::class, $control);
         }

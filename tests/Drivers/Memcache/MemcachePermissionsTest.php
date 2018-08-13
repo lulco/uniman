@@ -2,10 +2,10 @@
 
 namespace UniMan\Tests\Drivers\Memcache;
 
+use PHPUnit\Framework\TestCase;
 use UniMan\Drivers\Memcache\MemcachePermissions;
-use PHPUnit_Framework_TestCase;
 
-class MemcachePermissionsTest extends PHPUnit_Framework_TestCase
+class MemcachePermissionsTest extends TestCase
 {
     public function testPermissions()
     {
