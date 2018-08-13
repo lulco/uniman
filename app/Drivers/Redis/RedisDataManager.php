@@ -41,6 +41,32 @@ class RedisDataManager extends AbstractDataManager
         return 'database';
     }
 
+    public function tablesCount()
+    {
+        $tables = [
+            RedisDriver::TYPE_KEY => 0,
+            RedisDriver::TYPE_HASH => 0,
+            RedisDriver::TYPE_SET => 0,
+        ];
+        foreach ($this->connection->keys('*') as $key) {
+            $type = $this->connection->type($key);
+            switch ($type) {
+                case RedisProxy::TYPE_STRING:
+                    $tables[RedisDriver::TYPE_KEY]++;
+                    break;
+                case RedisProxy::TYPE_HASH:
+                    $tables[RedisDriver::TYPE_HASH]++;
+                    break;
+                case RedisProxy::TYPE_SET:
+                    $tables[RedisDriver::TYPE_SET]++;
+                    break;
+                default:
+                    break;
+            }
+        }
+        return $tables;
+    }
+
     public function tables(array $sorting = [])
     {
         $tables = [

@@ -19,7 +19,7 @@ class RedisPermissionsTest extends PHPUnit_Framework_TestCase
         self::assertTrue($permissions->canEditTable('database_name', 'type_name', 'table_name'));
         self::assertTrue($permissions->canDeleteTable('database_name', 'type_name', 'table_name'));
 
-        self::assertFalse($permissions->canCreateTable('database_name', 'key'));
+        self::assertTrue($permissions->canCreateTable('database_name', 'key'));
         self::assertFalse($permissions->canEditTable('database_name', 'key', 'table_name'));
         self::assertFalse($permissions->canDeleteTable('database_name', 'key', 'table_name'));
 
