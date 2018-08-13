@@ -29,6 +29,7 @@ class RedisHeaderManager implements HeaderManagerInterface
     {
         $keyColumns = [];
         $keyColumns[] = (new Column('key', 'redis.headers.keys.key'));
+        $keyColumns[] = (new Column('number_of_keys', 'redis.headers.keys.number_of_keys'));
 
         $hashColumns = [];
         $hashColumns[] = (new Column('key', 'redis.headers.hashes.key'))

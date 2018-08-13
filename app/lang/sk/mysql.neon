@@ -6,40 +6,40 @@ no_tables_for_type_table: 'Žiadne tabuľky'
 no_tables_for_type_view: 'Žiadne viewy'
 
 item_form_header:
-	table:
-		create: Vytvoriť nový záznam do tabuľky
-		edit: Úprava záznamu v tabuľke
+    table:
+        create: Vytvoriť nový záznam do tabuľky
+        edit: Úprava záznamu v tabuľke
 
 database_form_header:
-	create: Vytvorenie novej databázy
-	edit: Úprava databázy
+    create: Vytvorenie novej databázy
+    edit: Úprava databázy
 
 table_type:
-	table:
-		title: Tabuľky
-		items:
-			title: Záznamy
-	view:
-		title: Viewy
-		items:
-			title: Záznamy
+    table:
+        title: Tabuľky
+        items:
+            title: Záznamy
+    view:
+        title: Viewy
+        items:
+            title: Záznamy
 
 form:
-	server:
-		label: Server
-	user:
-		label: Používateľ
-	password:
-		label: Heslo
-	database:
-		label: Databáza
+    server:
+        label: Server
+    user:
+        label: Používateľ
+    password:
+        label: Heslo
+    database:
+        label: Databáza
 
 item_form:
-	field:
-		required: Toto pole je povinné
-		integer: Hodnota v tomto poli musí byť celé číslo
+    field:
+        required: Toto pole je povinné
+        integer: Hodnota v tomto poli musí byť celé číslo
 
 database_select_control:
-	database:
-		label: Databázy
-		prompt: Vyberte databázu
+    database:
+        label: Databázy
+        prompt: Vyberte databázu

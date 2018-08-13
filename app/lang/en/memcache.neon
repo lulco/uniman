@@ -1,52 +1,52 @@
 name: Memcache
 
 headers:
-	servers:
-		server: 'Server'
-		process_id: 'Process id'
-		uptime: 'Uptime'
-		current_items: 'Current items'
-		total_items: 'Total items'
-		size: 'Size'
-		active_slabs: 'Active slabs'
-		total_malloced: 'Total malloced'
+    servers:
+        server: 'Server'
+        process_id: 'Process id'
+        uptime: 'Uptime'
+        current_items: 'Current items'
+        total_items: 'Total items'
+        size: 'Size'
+        active_slabs: 'Active slabs'
+        total_malloced: 'Total malloced'
 
 item_form_header:
-	key:
-		create: Create new key
-		edit: Edit key
+    key:
+        create: Create new key
+        edit: Edit key
 
 table_type:
-	key:
-		items:
-			title: Keys
+    key:
+        items:
+            title: Keys
 
 columns:
-	key:
-		key: Key
-		value: Value
-		length: Length
-		expiration: 'Expiration'
-		compressed: Compressed
+    key:
+        key: Key
+        value: Value
+        length: Length
+        expiration: 'Expiration'
+        compressed: Compressed
 
 form:
-	servers:
-		label: Servers
-		description: 'Each server on new line in format: host:port'
+    servers:
+        label: Servers
+        description: 'Each server on new line in format: host:port'
 
 key_form:
-	key:
-		label: Key
-		required: Key is required
-	value:
-		label: Value
-		required: Value is required
-	compressed:
-		label: Compressed
-	expiration:
-		label: 'Expiration (s)'
+    key:
+        label: Key
+        required: Key is required
+    value:
+        label: Value
+        required: Value is required
+    compressed:
+        label: Compressed
+    expiration:
+        label: 'Expiration (s)'
 
 database_select_control:
-	database:
-		label: Servers
-		prompt: Select server
+    database:
+        label: Servers
+        prompt: Select server

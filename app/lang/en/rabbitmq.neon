@@ -5,64 +5,64 @@ no_tables_for_database: 'No queues found for vhost %database%'
 no_tables_for_type_queue: 'No queues'
 
 headers:
-	vhosts:
-		vhost: 'Vhost'
-		queues: 'Queues'
-		messages: 'Messages'
-	queues:
-		queue: 'Queue'
-		number_of_items: 'Number of items'
-		size: 'Size'
+    vhosts:
+        vhost: 'Vhost'
+        queues: 'Queues'
+        messages: 'Messages'
+    queues:
+        queue: 'Queue'
+        number_of_items: 'Number of items'
+        size: 'Size'
 
 table_form_header:
-	queue:
-		create: Create new queue
+    queue:
+        create: Create new queue
 
 item_form_header:
-	queue:
-		create: Create new message
+    queue:
+        create: Create new message
 
 table_type:
-	queue:
-		title: Queues
-		items:
-			title: Messages
+    queue:
+        title: Queues
+        items:
+            title: Messages
 
 columns:
-	queue:
-		message_body: Message body
-		length: Length
-		is_truncated: Is truncated?
-		content_encoding: Content encoding
-		redelivered: Was redelivered?
+    queue:
+        message_body: Message body
+        length: Length
+        is_truncated: Is truncated?
+        content_encoding: Content encoding
+        redelivered: Was redelivered?
 
 form:
-	user:
-		label: User
-	password:
-		label: Password
-	host:
-		label: Host
-	port:
-		label: Port
-	rabbitmq_management_http_api_host:
-		label: RabbitMQ Management HTTP API host
-		description: rabbitmq_management plugin must be enabled
-	rabbitmq_management_http_api_port:
-		label: RabbitMQ Management HTTP API port
-		description: rabbitmq_management plugin must be enabled
+    user:
+        label: User
+    password:
+        label: Password
+    host:
+        label: Host
+    port:
+        label: Port
+    rabbitmq_management_http_api_host:
+        label: RabbitMQ Management HTTP API host
+        description: rabbitmq_management plugin must be enabled
+    rabbitmq_management_http_api_port:
+        label: RabbitMQ Management HTTP API port
+        description: rabbitmq_management plugin must be enabled
 
 queue_form:
-	queue:
-		label: Queue
-		required: Queue is required
+    queue:
+        label: Queue
+        required: Queue is required
 
 message_form:
-	message:
-		label: Message
-		required: Message is required
+    message:
+        label: Message
+        required: Message is required
 
 database_select_control:
-	database:
-		label: Vhosts
-		prompt: Select vhost
+    database:
+        label: Vhosts
+        prompt: Select vhost
