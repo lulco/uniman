@@ -130,9 +130,7 @@ class RedisDataManager extends AbstractDataManager
         if ($type == RedisDriver::TYPE_KEY) {
             $totalItems = 0;
             foreach ($this->connection->keys('*') as $key) {
-                var_dump($key);
-                var_dump($this->connection->type($key));
-                if (!$this->connection->type($key) !== RedisProxy::TYPE_STRING) {
+                if ($this->connection->type($key) !== RedisProxy::TYPE_STRING) {
                     continue;
                 }
                 $result = $this->connection->get($key);
@@ -222,11 +220,10 @@ class RedisDataManager extends AbstractDataManager
             } while ($iterator !== 0 && count($items) < $onPage);
         } elseif ($type == RedisDriver::TYPE_KEY) {
             foreach ($this->connection->keys('*') as $key) {
-                $result = $this->connection->get($key);
-                if ($this->connection->getLastError() !== null) {
-                    $this->connection->clearLastError();
+                if ($this->connection->type($key) !== RedisProxy::TYPE_STRING) {
                     continue;
                 }
+                $result = $this->connection->get($key);
 
                 $item = [
                     'key' => $key,
