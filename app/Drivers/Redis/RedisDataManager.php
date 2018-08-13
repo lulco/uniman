@@ -2,7 +2,6 @@
 
 namespace UniMan\Drivers\Redis;
 
-use Redis;
 use RedisProxy\RedisProxy;
 use UniMan\Core\DataManager\AbstractDataManager;
 use UniMan\Core\Utils\Filter;
