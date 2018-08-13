@@ -30,7 +30,7 @@ class RedisCreateHashFormTest extends AbstractDriverTest
 
         $credentialsForm = new RedisCreateHashForm($this->connection);
         $credentialsForm->addFieldsToForm($form);
-        self::assertGreaterThan(0, count($form->getControls()));
+        self::assertGreaterThan(0, $form->getControls()->count());
         foreach ($form->getControls() as $control) {
             self::assertInstanceOf(IControl::class, $control);
         }
