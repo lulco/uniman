@@ -6,67 +6,67 @@ no_tables_for_type_table: 'No tables'
 no_tables_for_type_view: 'No views'
 
 headers:
-	databases:
-		database: 'Database'
-		charset: 'Charset'
-		collation: 'Collation'
-		tables: 'Tables'
-		size: 'Size'
-	tables:
-		table: 'Table'
-		engine: 'Engine'
-		collation: 'Collation'
-		data_length: 'Data length'
-		index_length: 'Index length'
-		data_free: 'Data free'
-		autoincrement: 'Autoincrement'
-		rows: 'Rows'
-	views:
-		view: 'View'
-		check_option: 'Check option'
-		is_updatable: 'Is updatable'
-		definer: 'Definer'
-		security_type: 'Security type'
-		character_set: 'Character set'
-		collation: 'Collation'
+    databases:
+        database: 'Database'
+        charset: 'Charset'
+        collation: 'Collation'
+        tables: 'Tables'
+        size: 'Size'
+    tables:
+        table: 'Table'
+        engine: 'Engine'
+        collation: 'Collation'
+        data_length: 'Data length'
+        index_length: 'Index length'
+        data_free: 'Data free'
+        autoincrement: 'Autoincrement'
+        rows: 'Rows'
+    views:
+        view: 'View'
+        check_option: 'Check option'
+        is_updatable: 'Is updatable'
+        definer: 'Definer'
+        security_type: 'Security type'
+        character_set: 'Character set'
+        collation: 'Collation'
 
 item_form_header:
-	table:
-		create: Create new item in table
-		edit: Edit item in table
+    table:
+        create: Create new item in table
+        edit: Edit item in table
 
 database_form_header:
-	create: Create new database
-	edit: Edit database
+    create: Create new database
+    edit: Edit database
 
 table_type:
-	table:
-		title: Tables
-		items:
-			title: Rows
-	view:
-		title: Views
-		items:
-			title: Rows
+    table:
+        title: Tables
+        items:
+            title: Rows
+    view:
+        title: Views
+        items:
+            title: Rows
 
 form:
-	server:
-		label: Server
-	user:
-		label: User
-	password:
-		label: Password
-	database:
-		label: Database
+    server:
+        label: Server
+    user:
+        label: User
+    password:
+        label: Password
+    database:
+        label: Database
 
 item_form:
-	field:
-		required: This field is required
-		integer: Value in this field have to be integer
+    field:
+        required: This field is required
+        integer: Value in this field have to be integer
 
 database_select_control:
-	database:
-		label: Databases
-		prompt: Select database
+    database:
+        label: Databases
+        prompt: Select database
 
 commands: SQL commands

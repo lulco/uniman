@@ -1,41 +1,41 @@
 name: Memcache
 
 item_form_header:
-	key:
-		create: Vytvorenie nového kľúča
-		edit: Úprava kľúča
+    key:
+        create: Vytvorenie nového kľúča
+        edit: Úprava kľúča
 
 table_type:
-	key:
-		items:
-			title: Kľúče
+    key:
+        items:
+            title: Kľúče
 
 columns:
-	key:
-		key: Kľúč
-		value: Hodnota
-		size: Veľkosť
-		expiration: 'Expirácia (s)'
-		compressed: Komprimovaný
+    key:
+        key: Kľúč
+        value: Hodnota
+        size: Veľkosť
+        expiration: 'Expirácia (s)'
+        compressed: Komprimovaný
 
 form:
-	servers:
-		label: Servery
-		description: 'Každý server na nový riadok vo formáte: host:port'
+    servers:
+        label: Servery
+        description: 'Každý server na nový riadok vo formáte: host:port'
 
 key_form:
-	key:
-		label: Kľúč
-		required: Kľúč je povinné pole
-	value:
-		label: Hodnota
-		required: Hodnota je povinné pole
-	compressed:
-		label: Komprimovať
-	expiration:
-		label: 'Expirácia (s)'
+    key:
+        label: Kľúč
+        required: Kľúč je povinné pole
+    value:
+        label: Hodnota
+        required: Hodnota je povinné pole
+    compressed:
+        label: Komprimovať
+    expiration:
+        label: 'Expirácia (s)'
 
 database_select_control:
-	database:
-		label: Servery
-		prompt: Vyberte server
+    database:
+        label: Servery
+        prompt: Vyberte server
