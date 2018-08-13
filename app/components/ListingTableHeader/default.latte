@@ -18,6 +18,9 @@
 				<a href="{link this, sorting => [0 => [$column->getKey() => $actualSort == 'desc' ? 'asc' : 'desc']]}" title="{if $actualSort == 'desc'}{_'core.ascending'}{else}{_'core.descending'}{/if}">
 					<i class="fa fa-sort{if $actualSort}-{$actualSort}{/if}"></i>
 				</a>
+                <a n:if="isset($useFilter) && $useFilter === true" href="{link this, filter => array_merge($filter, [count($filter) => [$column->getKey() => ['equal' => '']]])}" title="{_'core.add_condition'}">
+                    <i class="fa fa-plus-circle"></i>
+                </a>
 			{/if}
 		</th>
 	</tr>

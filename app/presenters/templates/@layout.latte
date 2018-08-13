@@ -4,7 +4,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>{ifset #title}{include #title} | {/ifset}UniMan</title>
-	<link rel="stylesheet" href="{link Default:file, 'css/bootstrap.min.css'}">
+    <link rel="stylesheet" href="{link Default:file, 'css/bootstrap.min.css'}">
+    <link rel="stylesheet" href="{link Default:file, 'css/select2.min.css'}">
 	<link rel="stylesheet" href="{link Default:file, 'css/jquery.datetimepicker.min.css'}">
 	<link rel="stylesheet" href="{link Default:file, 'css/font-awesome.min.css'}">
 	<link rel="shortcut icon" href="{link Default:file, 'favicon.ico'}">
@@ -52,6 +53,7 @@
 	</div>
 	<script src="{link Default:file, 'js/jquery.min.js'}"></script>
 	<script src="{link Default:file, 'js/jquery.datetimepicker.full.min.js'}"></script>
+    <script src="{link Default:file, 'js/select2.min.js'}"></script>
 	<script>
 		$(function(){
 			// Datetimepicker initialize
@@ -63,6 +65,7 @@
 			$('.datepicker').datetimepicker({
 				format: "Y-m-d"
 			});
+            $('.js-select2').select2();
 		});
 	</script>
 </body>

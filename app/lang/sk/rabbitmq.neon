@@ -5,54 +5,54 @@ no_tables_for_database: 'Žiadne fronty pre vhost %database% neboli nájdené'
 no_tables_for_type_queue: 'Žiadne fronty'
 
 table_form_header:
-	queue:
-		create: Vytvorenie nového frontu
+    queue:
+        create: Vytvorenie nového frontu
 
 item_form_header:
-	queue:
-		create: Vytvorenie novej správy
+    queue:
+        create: Vytvorenie novej správy
 
 table_type:
-	queue:
-		title: Fronty
-		items:
-			title: Správy
+    queue:
+        title: Fronty
+        items:
+            title: Správy
 
 columns:
-	queue:
-		message_body: Správa
-		size: Veľkosť
-		is_truncated: Je skrátená?
-		content_encoding: Kódovanie správy
-		redelivered: Bola viackrát poslaná?
+    queue:
+        message_body: Správa
+        size: Veľkosť
+        is_truncated: Je skrátená?
+        content_encoding: Kódovanie správy
+        redelivered: Bola viackrát poslaná?
 
 form:
-	user:
-		label: Používateľ
-	password:
-		label: Heslo
-	host:
-		label: Host
-	port:
-		label: Port
-	rabbitmq_management_http_api_host:
-		label: RabbitMQ Management HTTP API host
-		description: rabbitmq_management plugin musí byť povolený
-	rabbitmq_management_http_api_port:
-		label: RabbitMQ Management HTTP API port
-		description: rabbitmq_management plugin musí byť povolený
+    user:
+        label: Používateľ
+    password:
+        label: Heslo
+    host:
+        label: Host
+    port:
+        label: Port
+    rabbitmq_management_http_api_host:
+        label: RabbitMQ Management HTTP API host
+        description: rabbitmq_management plugin musí byť povolený
+    rabbitmq_management_http_api_port:
+        label: RabbitMQ Management HTTP API port
+        description: rabbitmq_management plugin musí byť povolený
 
 queue_form:
-	queue:
-		label: Front
-		required: Front je povinný
+    queue:
+        label: Front
+        required: Front je povinný
 
 message_form:
-	message:
-		label: Správa
-		required: Správa je povinná
+    message:
+        label: Správa
+        required: Správa je povinná
 
 database_select_control:
-	database:
-		label: Vhosts
-		prompt: Vyberte vhost
+    database:
+        label: Vhosts
+        prompt: Vyberte vhost

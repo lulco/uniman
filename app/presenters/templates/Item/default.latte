@@ -22,13 +22,13 @@
 		</div>
 	</div>
 	<table class="table text-nowrap">
-		{include '../../../components/ListingTableHeader/default.latte', 'columns' => $columns}
+		{include '../../../components/ListingTableHeader/default.latte', 'columns' => $columns, 'useFilter' => true, 'filter' => $filter}
 		<tbody>
 			<tr n:foreach="$items as $key => $values">
 				<td>
 					<div class="btn-group">
 						<a n:if="$actualDriver->permissions()->canEditItem($database, $type, $table, $key)" class="btn-default" href="{link Item:edit, $driver, $database, $type, $table, $key}"><i class="fa fa-edit"></i></a>
-						<a n:if="$actualDriver->permissions()->canDeleteItem($database, $type, $table, $key)" class="btn-default" href="{link delete!, $driver, $database, $type, $table, $key}"><i class="fa fa-trash"></i></a>
+						<a n:if="$actualDriver->permissions()->canDeleteItem($database, $type, $table, $key)" class="btn-default" href="{link delete!, $driver, $database, $type, $table, $key}" onclick="return confirm({_'core.delete.confirm'});"><i class="fa fa-trash"></i></a>
 					</div>
 				</td>
 				{foreach $columns as $column}

@@ -9,138 +9,139 @@ no_tables_for_type_set: 'No sets'
 alias_storage_not_writable: 'Directory "%directory%" is not writable'
 
 headers:
-	databases:
-		database: 'Database'
-		alias: 'Alias'
-		keys: 'Keys'
-		expires: 'Expires'
-		avg_ttl: 'Avg TTL'
-	keys:
-		key: 'Key'
-		value: 'Value'
-		length: 'Length'
-	hashes:
-		key: 'Key'
-		number_of_fields: 'Number of fields'
-	sets:
-		key: 'Key'
-		number_of_members: 'Number of members'
+    databases:
+        database: 'Database'
+        alias: 'Alias'
+        keys: 'Keys'
+        expires: 'Expires'
+        avg_ttl: 'Avg TTL'
+    keys:
+        key: 'Key'
+        value: 'Value'
+        length: 'Length'
+        number_of_keys: 'Number of keys'
+    hashes:
+        key: 'Key'
+        number_of_fields: 'Number of fields'
+    sets:
+        key: 'Key'
+        number_of_members: 'Number of members'
 
 database_form_header:
-	edit: Edit database
+    edit: Edit database
 
 table_form_header:
-	hash:
-		create: Create new hash
-		edit: Edit hash
-	key:
-		create: Create new key
-		edit: Edit key
-	set:
-		create: Create new set
-		edit: Edit set
+    hash:
+        create: Create new hash
+        edit: Edit hash
+    key:
+        create: Create new key
+        edit: Edit key
+    set:
+        create: Create new set
+        edit: Edit set
 
 item_form_header:
-	hash:
-		create: Create new key in hash
-		edit: Edit key in hash
-	key:
-		create: Create new key
-		edit: Edit key
-	set:
-		create: Add member to set
-		edit: Edit member
+    hash:
+        create: Create new key in hash
+        edit: Edit key in hash
+    key:
+        create: Create new key
+        edit: Edit key
+    set:
+        create: Add member to set
+        edit: Edit member
 
 table_type:
-	hash:
-		title: Hashes
-		items:
-			title: Keys
-	key:
-		title: Keys
-		items:
-			title: Keys
-	set:
-		title: Sets
-		items:
-			title: Members
+    hash:
+        title: Hashes
+        items:
+            title: Keys
+    key:
+        title: Keys
+        items:
+            title: Keys
+    set:
+        title: Sets
+        items:
+            title: Members
 
 columns:
-	hash:
-		key: Key
-		length: Length
-		value: Value
-	key:
-		key: Key
-		length: Length
-		value: Value
-	set:
-		member: Member
-		length: Length
+    hash:
+        key: Key
+        length: Length
+        value: Value
+    key:
+        key: Key
+        length: Length
+        value: Value
+    set:
+        member: Member
+        length: Length
 
 form:
-	host:
-		label: Host
-	port:
-		label: Port
-	database:
-		label: Database
+    host:
+        label: Host
+    port:
+        label: Port
+    database:
+        label: Database
 
 database_form:
-	database:
-		label: Database
-	alias:
-		label: Alias
-		description: Database alias will be shared for all users
+    database:
+        label: Database
+    alias:
+        label: Alias
+        description: Database alias will be shared for all users
 
 key_form:
-	key:
-		label: Key
-		required: Key is required
-	value:
-		label: Value
-		required: Value is required
+    key:
+        label: Key
+        required: Key is required
+    value:
+        label: Value
+        required: Value is required
 
 item_form:
-	key:
-		label: Key
-		required: Key is required
-	value:
-		label: Value
+    key:
+        label: Key
+        required: Key is required
+    value:
+        label: Value
 
 member_form:
-	member:
-		label: Member
-		required: Member is required
-	message:
-		cannot_be_removed: Member cannot be removed
+    member:
+        label: Member
+        required: Member is required
+    message:
+        cannot_be_removed: Member cannot be removed
 
 hash_form:
-	key:
-		label: Key
-		required: Key is required
-	field:
-		label: Field
-		required: Field is required
-	value:
-		label: Value
-		required: Value is required
-	new_key:
-		label: New key
-		required: New key is required
+    key:
+        label: Key
+        required: Key is required
+    field:
+        label: Field
+        required: Field is required
+    value:
+        label: Value
+        required: Value is required
+    new_key:
+        label: New key
+        required: New key is required
 
 set_form:
-	key:
-		label: Key
-		required: Key is required
-	members:
-		label: Members
-		required: Members are required
-		description: Comma separated
+    key:
+        label: Key
+        required: Key is required
+    members:
+        label: Members
+        required: Members are required
+        description: Comma separated
 
 database_select_control:
-	database:
-		label: Databases
-		prompt: Select database
+    database:
+        label: Databases
+        prompt: Select database
 
 commands: Commands

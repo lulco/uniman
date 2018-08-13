@@ -7,136 +7,137 @@ no_tables_for_type_hash: 'Žiadne hashe'
 no_tables_for_type_set: 'Žiadne sety'
 
 headers:
-	databases:
-		database: 'Databáza'
-		alias: 'Alias'
-		keys: 'Počet kľúčov'
-		expires: 'Čas expirácie'
-		avg_ttl: 'Priemerný TTL'
-	keys:
-		key: 'Kľúč'
-		value: 'Hodnota'
-		length: 'Dĺžka'
-	hashes:
-		key: 'Kľúč'
-		number_of_fields: 'Počet polí'
-	sets:
-		key: 'Kľúč'
-		number_of_members: 'Počet členov'
+    databases:
+        database: 'Databáza'
+        alias: 'Alias'
+        keys: 'Počet kľúčov'
+        expires: 'Čas expirácie'
+        avg_ttl: 'Priemerný TTL'
+    keys:
+        key: 'Kľúč'
+        value: 'Hodnota'
+        length: 'Dĺžka'
+        number_of_keys: 'Počet kľúčov'
+    hashes:
+        key: 'Kľúč'
+        number_of_fields: 'Počet polí'
+    sets:
+        key: 'Kľúč'
+        number_of_members: 'Počet členov'
 
 database_form_header:
-	edit: Úprava databázy
+    edit: Úprava databázy
 
 table_form_header:
-	hash:
-		create: Vytvorenie nového hashu
-		edit: Úprava hashu
-	key:
-		create: Vytvorenie nového kľúča
-		edit: Úprava kľúča
-	set:
-		create: Vytvorenie nového setu
-		edit: Úprava setu
+    hash:
+        create: Vytvorenie nového hashu
+        edit: Úprava hashu
+    key:
+        create: Vytvorenie nového kľúča
+        edit: Úprava kľúča
+    set:
+        create: Vytvorenie nového setu
+        edit: Úprava setu
 
 item_form_header:
-	hash:
-		create: Vytvorenie nového kľúča v hashi
-		edit: Úprava kľúča v hashi
-	key:
-		create: Vytvorenie nového kľúča
-		edit: Úprava kľúča
-	set:
-		create: Pridanie kľúča do setu
-		edit: Úprava kľúča
+    hash:
+        create: Vytvorenie nového kľúča v hashi
+        edit: Úprava kľúča v hashi
+    key:
+        create: Vytvorenie nového kľúča
+        edit: Úprava kľúča
+    set:
+        create: Pridanie kľúča do setu
+        edit: Úprava kľúča
 
 table_type:
-	hash:
-		title: Hashe
-		items:
-			title: Kľúče
-	key:
-		title: Kľúče
-		items:
-			title: Kľúče
-	set:
-		title: Sety
-		items:
-			title: Kľúče
+    hash:
+        title: Hashe
+        items:
+            title: Kľúče
+    key:
+        title: Kľúče
+        items:
+            title: Kľúče
+    set:
+        title: Sety
+        items:
+            title: Kľúče
 
 columns:
-	hash:
-		key: Kľúč
-		length: Dĺžka
-		value: Hodnota
-	key:
-		key: Kľúč
-		length: Dĺžka
-		value: Hodnota
-	set:
-		member: Kľúč
-		length: Dĺžka
+    hash:
+        key: Kľúč
+        length: Dĺžka
+        value: Hodnota
+    key:
+        key: Kľúč
+        length: Dĺžka
+        value: Hodnota
+    set:
+        member: Kľúč
+        length: Dĺžka
 
 form:
-	host:
-		label: Host
-	port:
-		label: Port
-	database:
-		label: Databáza
+    host:
+        label: Host
+    port:
+        label: Port
+    database:
+        label: Databáza
 
 database_form:
-	database:
-		label: Databáza
-	alias:
-		label: Alias
-		description: Databázový alias bude zdieľaný pre všetkých používateľov
+    database:
+        label: Databáza
+    alias:
+        label: Alias
+        description: Databázový alias bude zdieľaný pre všetkých používateľov
 
 key_form:
-	key:
-		label: Kľúč
-		required: Kľúč je povinné pole
-	value:
-		label: Hodnota
-		required: Hodnota je povinné pole
+    key:
+        label: Kľúč
+        required: Kľúč je povinné pole
+    value:
+        label: Hodnota
+        required: Hodnota je povinné pole
 
 item_form:
-	key:
-		label: Kľúč
-		required: Kľúč je povinné pole
-	value:
-		label: Hodnota
+    key:
+        label: Kľúč
+        required: Kľúč je povinné pole
+    value:
+        label: Hodnota
 
 member_form:
-	member:
-		label: Member
-		required: Member je povinný
-	message:
-		cannot_be_removed: Member sa nedá odstrániť
+    member:
+        label: Member
+        required: Member je povinný
+    message:
+        cannot_be_removed: Member sa nedá odstrániť
 
 hash_form:
-	key:
-		label: Kľúč
-		required: Kľúč je povinný
-	field:
-		label: Pole
-		required: Pole je povinné
-	value:
-		label: Hodnota
-		required: Hodnota je povinná
-	new_key:
-		label: Nový kľúč
-		required: Nový kľúč je povinný
+    key:
+        label: Kľúč
+        required: Kľúč je povinný
+    field:
+        label: Pole
+        required: Pole je povinné
+    value:
+        label: Hodnota
+        required: Hodnota je povinná
+    new_key:
+        label: Nový kľúč
+        required: Nový kľúč je povinný
 
 set_form:
-	key:
-		label: Kľúč
-		required: Kľúč je povinný
-	members:
-		label: Members
-		required: Members sú povinné
-		description: Zadajte čiarkou oddelené
+    key:
+        label: Kľúč
+        required: Kľúč je povinný
+    members:
+        label: Members
+        required: Members sú povinné
+        description: Zadajte čiarkou oddelené
 
 database_select_control:
-	database:
-		label: Databázy
-		prompt: Vyberte databázu
+    database:
+        label: Databázy
+        prompt: Vyberte databázu

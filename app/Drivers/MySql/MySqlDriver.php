@@ -49,6 +49,7 @@ class MySqlDriver extends AbstractDriver
         $dsn = 'mysql:;host=' . $host . ';port=' . $port . ';charset=utf8';
         try {
             $this->connection = new PDO($dsn, $credentials['user'], $credentials['password']);
+            $this->connection->query("SET SESSION sql_mode = ''");
         } catch (PDOException $e) {
             throw new ConnectException($e->getMessage());
         }
