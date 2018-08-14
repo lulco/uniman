@@ -26,6 +26,7 @@ class MySqlDatabaseForm implements DatabaseFormInterface
 
         $characterSets = $this->pdo->query('SELECT CHARACTER_SET_NAME, CONCAT(CHARACTER_SET_NAME, " (", DESCRIPTION, ")") FROM information_schema.CHARACTER_SETS ORDER BY CHARACTER_SET_NAME')->fetchAll(PDO::FETCH_KEY_PAIR);
         $form->addSelect('charset', 'Character set', $characterSets)
+            ->setAttribute('class', 'js-select2')
             ->setPrompt('Default character set');
 
         $collations = [];
@@ -35,6 +36,7 @@ class MySqlDatabaseForm implements DatabaseFormInterface
         ksort($collations);
 
         $form->addSelect('collation', 'Collation', $collations)
+            ->setAttribute('class', 'js-select2')
             ->setPrompt('Default collation');
 
         if ($this->database) {

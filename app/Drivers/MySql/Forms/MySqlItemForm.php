@@ -2,12 +2,13 @@
 
 namespace UniMan\Drivers\Mysql\Forms;
 
-use UniMan\Core\Forms\ItemForm\ItemFormInterface;
-use UniMan\Drivers\MySql\MySqlDataManager;
 use Nette\Application\UI\Form;
 use Nette\Forms\Controls\Checkbox;
+use Nette\Forms\Controls\TextArea;
 use Nette\Utils\ArrayHash;
 use PDO;
+use UniMan\Core\Forms\ItemForm\ItemFormInterface;
+use UniMan\Drivers\MySql\MySqlDataManager;
 
 class MySqlItemForm implements ItemFormInterface
 {
@@ -62,7 +63,7 @@ class MySqlItemForm implements ItemFormInterface
 
             if ($definition['Extra'] == 'auto_increment') {
                 $field->setAttribute('placeholder', 'autoincrement');
-            } elseif (!$field instanceof Checkbox && $definition['Null'] === 'NO') {
+            } elseif (!$field instanceof Checkbox && !$field instanceof TextArea && $definition['Null'] === 'NO') {
                 $field->setRequired('mysql.item_form.field.required');
             }
         }

@@ -5,11 +5,6 @@ use Nette\Configurator;
 use RadekDostal\NetteComponents\DateTimePicker\TbDatePicker;
 use RadekDostal\NetteComponents\DateTimePicker\TbDateTimePicker;
 
-if (filter_input(INPUT_GET, 'debug') == 1) {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-}
-
 require __DIR__ . '/../vendor/autoload.php';
 
 umask(0);

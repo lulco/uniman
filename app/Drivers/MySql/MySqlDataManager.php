@@ -67,7 +67,7 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
             MySqlDriver::TYPE_VIEW => [],
         ];
         $type = 'BASE TABLE';
-        if ($this->database == 'information_schema') {
+        if ($this->database === 'information_schema') {
             $type = 'SYSTEM VIEW';
         }
 
@@ -137,7 +137,7 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
             Filter::OPERATOR_GREATER_THAN_OR_EQUAL => '>= "%s"',
             Filter::OPERATOR_LESS_THAN => '< "%s"',
             Filter::OPERATOR_LESS_THAN_OR_EQUAL => '<= "%s"',
-            Filter::OPERATOR_NOT_EQUAL => '!= %s',
+            Filter::OPERATOR_NOT_EQUAL => '!= "%s"',
             Filter::OPERATOR_CONTAINS => 'LIKE "%%%s%%"',
             Filter::OPERATOR_NOT_CONTAINS => 'NOT LIKE "%%%s%%"',
             Filter::OPERATOR_STARTS_WITH => 'LIKE "%s%%"',
@@ -156,6 +156,11 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
                     if (!isset($operatorsMap[$operator])) {
                         throw new OperatorNotSupportedException('Operator "' . $operator . '" is not supported.');
                     }
+                    if ($operator === Filter::OPERATOR_IS_IN || $operator === Filter::OPERATOR_IS_NOT_IN) {
+                        $value = implode(', ', array_map(function ($item) {
+                            return '"' . $item . '"';
+                        }, explode(',', $value)));
+                    }
                     $whereParts[] = "`$key` " . sprintf($operatorsMap[$operator], $value);
                 }
             }
@@ -173,7 +178,7 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
         $order = [];
         foreach ($sorting as $sort) {
             foreach ($sort as $key => $direction) {
-                $direction = strtolower($direction) == 'asc' ? 'ASC' : 'DESC';
+                $direction = strtolower($direction) === 'asc' ? 'ASC' : 'DESC';
                 $order[] = "`$key` $direction";
             }
         }
@@ -226,7 +231,7 @@ ORDER BY information_schema.SCHEMATA.SCHEMA_NAME';
         $columns = [];
         foreach ($this->getColumns($type, $table) as $column) {
             $columns[] = $column['Field'];
-            if ($column['Key'] == 'PRI') {
+            if ($column['Key'] === 'PRI') {
                 $primaryColumns[] = $column['Field'];
             }
         }
