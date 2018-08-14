@@ -6,6 +6,7 @@ use RedisProxy\RedisProxy;
 use UniMan\Core\DataManager\AbstractDataManager;
 use UniMan\Core\Utils\Filter;
 use UniMan\Core\Utils\Multisort;
+use UniMan\Drivers\Redis\DataManager\RedisHashDataManager;
 use UniMan\Drivers\Redis\DataManager\RedisKeyDataManager;
 use UniMan\Drivers\Redis\DataManager\RedisSetDataManager;
 use UniMan\Drivers\Redis\RedisDatabaseAliasStorage;
@@ -112,131 +113,33 @@ class RedisDataManager extends AbstractDataManager
         if ($this->itemsCountCache !== false) {
             return $this->itemsCountCache;
         }
+        $itemsCount = 0;
         if ($type == RedisDriver::TYPE_HASH) {
-            if (!$filter) {
-                $this->itemsCountCache = $this->connection->hlen($table);
-                return $this->itemsCountCache;
-            } else {
-                $totalItems = 0;
-                foreach ($filter as $filterParts) {
-                    if (isset($filterParts['key'][Filter::OPERATOR_EQUAL])) {
-                        $res = $this->connection->hget($table, $filterParts['key'][Filter::OPERATOR_EQUAL]);
-                        if ($res) {
-                            $item = [
-                                'key' => $filterParts['key'][Filter::OPERATOR_EQUAL],
-                                'length' => strlen($res),
-                                'value' => $res,
-                            ];
-                            if (Filter::apply($item, $filter)) {
-                                $totalItems++;
-                            }
-                        }
-                        $this->itemsCountCache = $totalItems;
-                        return $this->itemsCountCache;
-                    }
-                }
-                $iterator = '';
-                do {
-                    $pattern = null;
-                    $res = $this->connection->hscan($table, $iterator, $pattern, 1000);
-                    $res = $res ?: [];
-                    foreach ($res as $key => $value) {
-                        $item = [
-                            'key' => $key,
-                            'length' => strlen($value),
-                            'value' => $value,
-                        ];
-                        if (Filter::apply($item, $filter)) {
-                            $totalItems++;
-                        }
-                    }
-                } while ($iterator !== 0);
-                $this->itemsCountCache = $totalItems;
-                return $this->itemsCountCache;
-            }
-        }
-        if ($type == RedisDriver::TYPE_KEY) {
+            $manager = new RedisHashDataManager($this->connection);
+            $itemsCount = $manager->itemsCount($table, $filter);
+        } elseif ($type == RedisDriver::TYPE_KEY) {
             $manager = new RedisKeyDataManager($this->connection);
-            return $manager->itemsCount($filter);
+            $itemsCount = $manager->itemsCount($filter);
+        } elseif ($type == RedisDriver::TYPE_SET) {
+            $manager = new RedisSetDataManager($this->connection);
+            $itemsCount = $manager->itemsCount($table, $filter);
         }
-        if ($type == RedisDriver::TYPE_SET) {
-            if (!$filter) {
-                return $this->connection->scard($table);
-            }
-            $iterator = '';
-            $totalItems = 0;
-            do {
-                $res = $this->connection->sscan($table, $iterator, null, 1000);
-                $res = $res ?: [];
-                foreach ($res as $member) {
-                    $item = [
-                        'member' => $member,
-                        'length' => strlen($member),
-                    ];
-                    if (Filter::apply($item, $filter)) {
-                        $totalItems++;
-                    }
-                }
-            } while ($iterator !== 0);
-            return $totalItems;
-        }
-        return 0;
+        $this->itemsCountCache = $itemsCount;
+        return $itemsCount;
     }
 
     public function items($type, $table, $page, $onPage, array $filter = [], array $sorting = [])
     {
         $items = [];
-        $offset = ($page - 1) * $onPage;
-        $skipped = 0;
         if ($type == RedisDriver::TYPE_HASH) {
-            foreach ($filter as $filterParts) {
-                if (isset($filterParts['key'][Filter::OPERATOR_EQUAL])) {
-                    $items = [];
-                    $res = $this->connection->hget($table, $filterParts['key'][Filter::OPERATOR_EQUAL]);
-                    if ($res) {
-                        $item = [
-                            'key' => $filterParts['key'][Filter::OPERATOR_EQUAL],
-                            'length' => strlen($res),
-                            'value' => $res,
-                        ];
-                        if (Filter::apply($item, $filter)) {
-                            $items[$item['key']] = $item;
-                        }
-                    }
-                    return $items;
-                }
-            }
-
-
-            $iterator = '';
-            do {
-                $pattern = null;
-                $res = $this->connection->hscan($table, $iterator, $pattern, $onPage * 10);
-                $res = $res ?: [];
-                foreach ($res as $key => $value) {
-                    $item = [
-                        'key' => $key,
-                        'length' => strlen($value),
-                        'value' => $value,
-                    ];
-                    if (Filter::apply($item, $filter)) {
-                        if ($skipped < $offset) {
-                            $skipped++;
-                        } else {
-                            $items[$key] = $item;
-                            if (count($items) === $onPage) {
-                                break;
-                            }
-                        }
-                    }
-                }
-            } while ($iterator !== 0 && count($items) < $onPage);
+            $manager = new RedisHashDataManager($this->connection);
+            $items = $manager->items($table, $page, $onPage, $filter);
         } elseif ($type == RedisDriver::TYPE_KEY) {
             $manager = new RedisKeyDataManager($this->connection);
             $items = $manager->items($page, $onPage, $filter);
         } elseif ($type == RedisDriver::TYPE_SET) {
             $manager = new RedisSetDataManager($this->connection);
-            $items = $manager->items($table, $onPage, $filter);
+            $items = $manager->items($table, $page, $onPage, $filter);
         }
 
         if ($this->itemsCount($type, $table, $filter) <= $onPage) {

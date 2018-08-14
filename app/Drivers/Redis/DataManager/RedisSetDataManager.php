@@ -14,29 +14,35 @@ class RedisSetDataManager
         $this->connection = $connection;
     }
 
-    public function itemsCount(array $filter): int
+    public function itemsCount(string $table, array $filter): int
     {
-        $totalItems = 0;
-        foreach ($this->connection->keys('*') as $key) {
-            if ($this->connection->type($key) !== RedisProxy::TYPE_STRING) {
-                continue;
-            }
-            $result = $this->connection->get($key);
-            $item = [
-                'key' => $key,
-                'value' => $result,
-                'length' => strlen($result),
-            ];
-
-            if (Filter::apply($item, $filter)) {
-                $totalItems++;
-            }
+        if (!$filter) {
+            return $this->connection->scard($table);
         }
+        $iterator = '';
+        $totalItems = 0;
+        do {
+            $res = $this->connection->sscan($table, $iterator, null, 1000);
+            if (!$res) {
+                return $totalItems;
+            }
+            foreach ($res as $member) {
+                $item = [
+                    'member' => $member,
+                    'length' => strlen($member),
+                ];
+                if (Filter::apply($item, $filter)) {
+                    $totalItems++;
+                }
+            }
+        } while ($iterator !== 0);
         return $totalItems;
     }
 
-    public function items(string $table, int $onPage, array $filter = []): array
+    public function items(string $table, int $page, int $onPage, array $filter = []): array
     {
+        $skipped = 0;
+        $offset = ($page - 1) * $onPage;
         $items = [];
         $iterator = '';
         do {
@@ -53,6 +59,12 @@ class RedisSetDataManager
                 if (!Filter::apply($item, $filter)) {
                     continue;
                 }
+
+                if ($skipped < $offset) {
+                    $skipped++;
+                    continue;
+                }
+
                 $items[$member] = $item;
                 if (count($items) === $onPage) {
                     break;
