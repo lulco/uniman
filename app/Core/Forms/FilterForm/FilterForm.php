@@ -69,6 +69,8 @@ class FilterForm extends Control implements FilterFormInterface
 
     public function filter(Form $form, ArrayHash $values): void
     {
+        $values = $form->getHttpData();
+        
         if ($form['reset']->isSubmittedBy()) {
             foreach ($this->doReset as $callback) {
                 $callback();
