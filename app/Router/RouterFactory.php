@@ -8,10 +8,7 @@ use Nette\Application\Routers\SimpleRouter;
 
 class RouterFactory
 {
-    /**
-     * @return IRouter
-     */
-    public static function createRouter()
+    public static function createRouter(): IRouter
     {
         $router = new RouteList();
         $router[] = new SimpleRouter('Default:default');
