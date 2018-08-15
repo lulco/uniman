@@ -2,9 +2,9 @@
 
 namespace UniMan\Core\Forms\FilterForm;
 
-use UniMan\Core\Column;
 use Nette\Application\UI\Control;
 use Nette\Application\UI\Form;
+use Nette\Forms\Container;
 use Nette\Localization\ITranslator;
 use Nette\Utils\ArrayHash;
 
@@ -26,14 +26,13 @@ class FilterForm extends Control implements FilterFormInterface
 
     private $onPage;
 
-    /**
-     * @param Column[] $columns
-     * @param array $filter
-     * @param array $sorting
-     * @param integer $onPage
-     */
-    public function __construct(ITranslator $translator, array $columns, array $filter, array $sorting, $onPage = self::DEFAULT_ON_PAGE)
-    {
+    public function __construct(
+        ITranslator $translator,
+        array $columns,
+        array $filter,
+        array $sorting,
+        int $onPage = self::DEFAULT_ON_PAGE
+    ) {
         parent::__construct();
         $this->translator = $translator;
         $this->columns = $columns;
@@ -42,16 +41,16 @@ class FilterForm extends Control implements FilterFormInterface
         $this->onPage = $onPage;
     }
 
-    public function render()
+    public function render(): void
     {
         $this->template->filter = $this->filter;
         $this->template->sorting = $this->sorting;
-        $this->template->limit = $this->onPage != self::DEFAULT_ON_PAGE;
+        $this->template->limit = $this->onPage !== self::DEFAULT_ON_PAGE;
         $this->template->setFile(__DIR__ . '/filter_form.latte');
         $this->template->render();
     }
 
-    protected function createComponentForm()
+    protected function createComponentForm(): Form
     {
         $form = new Form();
         $form->setTranslator($this->translator);
@@ -68,9 +67,9 @@ class FilterForm extends Control implements FilterFormInterface
         return $form;
     }
 
-    public function filter(Form $form, ArrayHash $values)
+    public function filter(Form $form, ArrayHash $values): void
     {
-        if ($form->isSubmitted()->getName() == 'reset') {
+        if ($form['reset']->isSubmittedBy()) {
             foreach ($this->doReset as $callback) {
                 $callback();
             }
@@ -102,7 +101,7 @@ class FilterForm extends Control implements FilterFormInterface
         }
     }
 
-    private function addSortingFields($form)
+    private function addSortingFields(Form $form): Container
     {
         $sortingItems = [];
         foreach ($this->columns as $column) {
@@ -128,7 +127,7 @@ class FilterForm extends Control implements FilterFormInterface
         return $sortingContainer;
     }
 
-    private function addFilterFields($form)
+    private function addFilterFields(Form $form): Container
     {
         $filterContainer = $form->addContainer('filter');
         $filterItems = [];

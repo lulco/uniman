@@ -24,7 +24,7 @@
             {/foreach}
         </div>
         <div class="col-xs-12 col-md-2">
-            <h4>Limit <a n:if="$limit" href="{plink this, onPage => null}"><i class="fa fa-times"></i></a></h4>
+            <h4>Limit <a n:if="$limit" href="{plink this, page => 1, onPage => null}"><i class="fa fa-times"></i></a></h4>
             <div class="padding-bottom">
                 <div class="form-group">
                     {input onPage, class => "form-control text"}
