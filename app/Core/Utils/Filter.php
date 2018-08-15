@@ -53,10 +53,10 @@ class Filter
         return true;
     }
 
-    private static function checkFilter(string $operator, string $actualValue, string $expectedValue): bool
+    private static function checkFilter(string $operator, ?string $actualValue, ?string $expectedValue): bool
     {
         if ($operator === self::OPERATOR_EQUAL) {
-            return $actualValue == $expectedValue;
+            return $actualValue === $expectedValue;
         } elseif ($operator === self::OPERATOR_GREATER_THAN) {
             return $actualValue > $expectedValue;
         } elseif ($operator === self::OPERATOR_GREATER_THAN_OR_EQUAL) {

@@ -64,8 +64,9 @@ class RedisDataManager extends AbstractDataManager
                 case RedisProxy::TYPE_SET:
                     $tables[RedisDriver::TYPE_SET]++;
                     break;
-                case RedisProxy::TYPE_LIST;
+                case RedisProxy::TYPE_LIST:
                     $tables[RedisDriver::TYPE_LIST]++;
+                    break;
                 default:
                     break;
             }

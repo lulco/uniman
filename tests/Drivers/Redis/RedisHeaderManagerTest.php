@@ -30,6 +30,7 @@ class RedisHeaderManagerTest extends AbstractDriverTest
             RedisDriver::TYPE_KEY,
             RedisDriver::TYPE_HASH,
             RedisDriver::TYPE_SET,
+            RedisDriver::TYPE_LIST,
         ];
         foreach ($types as $type) {
             self::assertArrayHasKey($type, $tablesHeaders);
@@ -50,6 +51,7 @@ class RedisHeaderManagerTest extends AbstractDriverTest
             RedisDriver::TYPE_KEY,
             RedisDriver::TYPE_HASH,
             RedisDriver::TYPE_SET,
+            RedisDriver::TYPE_LIST,
         ];
         foreach ($types as $type) {
             $itemsHeaders = $headerManager->itemsHeaders($type, 'whatever');
