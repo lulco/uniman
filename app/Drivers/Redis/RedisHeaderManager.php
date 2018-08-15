@@ -46,10 +46,18 @@ class RedisHeaderManager implements HeaderManagerInterface
             ->setSortable(true)
             ->setNumeric(true);
 
+        $listColumns = [];
+        $listColumns[] = (new Column('key', 'redis.headers.lists.key'))
+            ->setSortable(true);
+        $listColumns[] = (new Column('number_of_elements', 'redis.headers.lists.number_of_elements'))
+            ->setSortable(true)
+            ->setNumeric(true);
+
         return [
             RedisDriver::TYPE_KEY => $keyColumns,
             RedisDriver::TYPE_HASH => $hashColumns,
             RedisDriver::TYPE_SET => $setColumns,
+            RedisDriver::TYPE_LIST => $listColumns,
         ];
     }
 
@@ -68,6 +76,16 @@ class RedisHeaderManager implements HeaderManagerInterface
                 ->setFilterable(true);
         } elseif ($type == RedisDriver::TYPE_SET) {
             $columns[] = (new Column('member', 'redis.columns.' . $type . '.member'))
+                ->setSortable(true)
+                ->setFilterable(true);
+            $columns[] = (new Column('length', 'redis.columns.' . $type . '.length'))
+                ->setSortable(true)
+                ->setFilterable(true);
+        } elseif ($type === RedisDriver::TYPE_LIST) {
+            $columns[] = (new Column('index', 'redis.columns.' . $type . '.index'))
+                ->setSortable(true)
+                ->setFilterable(true);
+            $columns[] = (new Column('element', 'redis.columns.' . $type . '.element'))
                 ->setSortable(true)
                 ->setFilterable(true);
             $columns[] = (new Column('length', 'redis.columns.' . $type . '.length'))

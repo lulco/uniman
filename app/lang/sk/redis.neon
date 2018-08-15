@@ -1,10 +1,13 @@
 name: Redis
 
-table_types_for_database: 'Kľúče, hashe a sety pre databázu %database%'
-no_tables_for_database: 'V datábáze %database% neboli nájdené žiadne kľúče, hashe ani sety'
+table_types_for_database: 'Kľúče, hashe, sety a listy pre databázu %database%'
+no_tables_for_database: 'V datábáze %database% neboli nájdené žiadne kľúče, hashe, sety ani listy'
 no_tables_for_type_key: 'Žiadne kľúče'
 no_tables_for_type_hash: 'Žiadne hashe'
 no_tables_for_type_set: 'Žiadne sety'
+no_tables_for_type_list: 'Žiadne listy'
+
+alias_storage_not_writable: 'Do priečinka "%directory%" sa nedá zapisovať'
 
 headers:
     databases:
@@ -24,6 +27,9 @@ headers:
     sets:
         key: 'Kľúč'
         number_of_members: 'Počet členov'
+    lists:
+        key: 'Kľúč'
+        number_of_elements: 'Počet elementov'
 
 database_form_header:
     edit: Úprava databázy
@@ -38,6 +44,9 @@ table_form_header:
     set:
         create: Vytvorenie nového setu
         edit: Úprava setu
+    list:
+        create: Vytvorenie nového listu
+        edit: Úprava listu
 
 item_form_header:
     hash:
@@ -63,6 +72,10 @@ table_type:
         title: Sety
         items:
             title: Kľúče
+    list:
+        title: Listy
+        items:
+            title: Elementy
 
 columns:
     hash:
@@ -75,6 +88,10 @@ columns:
         value: Hodnota
     set:
         member: Kľúč
+        length: Dĺžka
+    list:
+        index: Index
+        element: Element
         length: Dĺžka
 
 form:
@@ -136,6 +153,20 @@ set_form:
         label: Members
         required: Members sú povinné
         description: Zadajte čiarkou oddelené
+
+list_form:
+    key:
+        label: Kľúč
+        required: Kľúč je povinný
+    elements:
+        label: Elementy
+        required: Elementy sú povinné
+        description: Zadajte čiarkou oddelené
+
+list_element_form:
+    element:
+        label: Element
+        required: Element je povinný
 
 database_select_control:
     database:

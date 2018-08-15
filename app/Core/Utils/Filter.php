@@ -36,7 +36,7 @@ class Filter
         self::OPERATOR_IS_NOT_IN,
     ];
 
-    public static function apply($item, array $filter)
+    public static function apply(array $item, array $filter): bool
     {
         foreach ($filter as $filterPart) {
             foreach ($filterPart as $key => $filterSettings) {
@@ -53,10 +53,10 @@ class Filter
         return true;
     }
 
-    private static function checkFilter($operator, $actualValue, $expectedValue)
+    private static function checkFilter(string $operator, ?string $actualValue, ?string $expectedValue): bool
     {
         if ($operator === self::OPERATOR_EQUAL) {
-            return $actualValue == $expectedValue;
+            return $actualValue === $expectedValue;
         } elseif ($operator === self::OPERATOR_GREATER_THAN) {
             return $actualValue > $expectedValue;
         } elseif ($operator === self::OPERATOR_GREATER_THAN_OR_EQUAL) {
