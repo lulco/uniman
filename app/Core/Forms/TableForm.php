@@ -44,7 +44,7 @@ class TableForm extends Control
 
         $tableForm = $this->driver->formManager()->tableForm($this->database, $this->type, $this->table);
         if (!$tableForm) {
-            throw new InvalidArgumentException('Item form not set');
+            throw new InvalidArgumentException('Table form not set');
         }
         $tableForm->addFieldsToForm($form);
         $form->addSubmit('save', 'Save');

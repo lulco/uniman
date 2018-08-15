@@ -1,10 +1,11 @@
 name: Redis
 
-table_types_for_database: 'Keys, hashes and sets for database %database%'
-no_tables_for_database: 'No keys, hashes and sets found for database %database%'
+table_types_for_database: 'Keys, hashes, sets and lists for database %database%'
+no_tables_for_database: 'No keys, hashes, sets and lists found for database %database%'
 no_tables_for_type_key: 'No keys'
 no_tables_for_type_hash: 'No hashes'
 no_tables_for_type_set: 'No sets'
+no_tables_for_type_list: 'No lists'
 
 alias_storage_not_writable: 'Directory "%directory%" is not writable'
 
@@ -26,6 +27,9 @@ headers:
     sets:
         key: 'Key'
         number_of_members: 'Number of members'
+    lists:
+        key: 'Key'
+        number_of_elements: 'Number of elements'
 
 database_form_header:
     edit: Edit database
@@ -40,6 +44,9 @@ table_form_header:
     set:
         create: Create new set
         edit: Edit set
+    list:
+        create: Create new list
+        edit: Edit list
 
 item_form_header:
     hash:
@@ -51,6 +58,9 @@ item_form_header:
     set:
         create: Add member to set
         edit: Edit member
+    list:
+        create: Add element to list
+        edit: Edit element
 
 table_type:
     hash:
@@ -65,6 +75,10 @@ table_type:
         title: Sets
         items:
             title: Members
+    list:
+        title: List
+        items:
+            title: Elements
 
 columns:
     hash:
@@ -77,6 +91,10 @@ columns:
         value: Value
     set:
         member: Member
+        length: Length
+    list:
+        index: Index
+        element: Element
         length: Length
 
 form:
@@ -138,6 +156,20 @@ set_form:
         label: Members
         required: Members are required
         description: Comma separated
+
+list_form:
+    key:
+        label: Key
+        required: Key is required
+    elements:
+        label: Elements
+        required: Elements are required
+        description: Comma separated
+
+list_element_form:
+    element:
+        label: Element
+        required: Element is required
 
 database_select_control:
     database:
