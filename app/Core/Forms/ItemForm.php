@@ -53,6 +53,9 @@ class ItemForm extends Control
         $form->addSubmit('save', 'Save');
         $form->onSuccess[] = [$itemForm, 'submit'];
         $form->onSuccess[] = function () {
+            $this->item
+                ? $this->presenter->flashMessage('Item was successfully updated', 'success')
+                : $this->presenter->flashMessage('Item was successfully created', 'success');
             $this->presenter->redirect('Item:default', $this->driver->type(), $this->database, $this->type, $this->table);
         };
         return $form;
