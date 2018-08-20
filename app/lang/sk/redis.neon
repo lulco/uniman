@@ -1,20 +1,23 @@
 name: Redis
 
-table_types_for_database: 'Kľúče, hashe, sety a listy pre databázu %database%'
-no_tables_for_database: 'V datábáze %database% neboli nájdené žiadne kľúče, hashe, sety ani listy'
+table_types_for_database: 'Kľúče, hashe, sety, listy a sorted sety pre databázu %database%'
+no_tables_for_database: 'V datábáze %database% neboli nájdené žiadne kľúče, hashe, sety, listy ani sorted sety'
 no_tables_for_type_key: 'Žiadne kľúče'
 no_tables_for_type_hash: 'Žiadne hashe'
 no_tables_for_type_set: 'Žiadne sety'
 no_tables_for_type_list: 'Žiadne listy'
+no_tables_for_type_sorted_set: 'Žiadne sorted sety'
 
 alias_storage_not_writable: 'Do priečinka "%directory%" sa nedá zapisovať'
 
 headers:
+    global:
+        ttl: TTL
     databases:
         database: 'Databáza'
         alias: 'Alias'
         keys: 'Počet kľúčov'
-        expires: 'Čas expirácie'
+        expires: 'Počet kľúčov s expiráciou'
         avg_ttl: 'Priemerný TTL'
     keys:
         key: 'Kľúč'
@@ -26,10 +29,13 @@ headers:
         number_of_fields: 'Počet polí'
     sets:
         key: 'Kľúč'
-        number_of_members: 'Počet členov'
+        number_of_members: 'Počet prvkov'
     lists:
         key: 'Kľúč'
         number_of_elements: 'Počet elementov'
+    sorted_sets:
+        key: 'Kľúč'
+        number_of_members: 'Počet prvkov'
 
 database_form_header:
     edit: Úprava databázy
@@ -47,6 +53,9 @@ table_form_header:
     list:
         create: Vytvorenie nového listu
         edit: Úprava listu
+    sorted_set:
+        create: Vytvorenie nového sorted setu
+        edit: Úprava sorted setu
 
 item_form_header:
     hash:
@@ -58,6 +67,12 @@ item_form_header:
     set:
         create: Pridanie kľúča do setu
         edit: Úprava kľúča
+    list:
+        create: Pridanie elementu do listu
+        edit: Úprava elementu
+    sorted_set:
+        create: Pridanie prvku do setu
+        edit: Úprava prvku
 
 table_type:
     hash:
@@ -76,6 +91,10 @@ table_type:
         title: Listy
         items:
             title: Elementy
+    sorted_set:
+        title: Sorted sety
+        items:
+            title: Kľúče
 
 columns:
     hash:
@@ -93,6 +112,10 @@ columns:
         index: Index
         element: Element
         length: Dĺžka
+    sorted_set:
+        member: Kľúč
+        length: Dĺžka
+        score: Skóre
 
 form:
     host:
@@ -150,8 +173,8 @@ set_form:
         label: Kľúč
         required: Kľúč je povinný
     members:
-        label: Members
-        required: Members sú povinné
+        label: Prvky
+        required: Prvky sú povinné
         description: Zadajte čiarkou oddelené
 
 list_form:
@@ -167,6 +190,23 @@ list_element_form:
     element:
         label: Element
         required: Element je povinný
+
+sorted_set_form:
+    key:
+        label: Kľúč
+        required: Kľúč je povinný
+    members:
+        label: Prvky
+        required: Prvky sú povinné
+        description: "Zadajte čiarkou oddelené, ak chcete zadať hodnotu, použite dvojbodku, napr. item1: 1.1, item2: 2.3"
+
+sorted_set_member_form:
+    member:
+        label: Prvok
+        required: Prvok je povinný
+    score:
+        label: Skóre
+        required: Skóre je povinné
 
 database_select_control:
     database:

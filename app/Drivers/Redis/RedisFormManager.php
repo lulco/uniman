@@ -10,10 +10,12 @@ use UniMan\Drivers\Redis\Forms\RedisEditDatabaseForm;
 use UniMan\Drivers\Redis\Forms\RedisEditSetForm;
 use UniMan\Drivers\Redis\Forms\RedisHashKeyItemForm;
 use UniMan\Drivers\Redis\Forms\RedisKeyItemForm;
-use UniMan\Drivers\Redis\Forms\RedisListForm;
 use UniMan\Drivers\Redis\Forms\RedisListElementForm;
+use UniMan\Drivers\Redis\Forms\RedisListForm;
 use UniMan\Drivers\Redis\Forms\RedisRenameHashForm;
 use UniMan\Drivers\Redis\Forms\RedisSetMemberForm;
+use UniMan\Drivers\Redis\Forms\RedisSortedSetForm;
+use UniMan\Drivers\Redis\Forms\RedisSortedSetMemberForm;
 use UniMan\Drivers\Redis\RedisDatabaseAliasStorage;
 
 class RedisFormManager extends DefaultFormManager
@@ -38,6 +40,8 @@ class RedisFormManager extends DefaultFormManager
             return new RedisSetMemberForm($this->connection, $table, $item);
         } elseif ($type === RedisDriver::TYPE_LIST) {
             return new RedisListElementForm($this->connection, $table, $item);
+        } elseif ($type === RedisDriver::TYPE_SORTED_SET) {
+            return new RedisSortedSetMemberForm($this->connection, $table, $item);
         }
     }
 
@@ -57,6 +61,8 @@ class RedisFormManager extends DefaultFormManager
             return new RedisEditSetForm($this->connection, $table);
         } elseif ($type === RedisDriver::TYPE_LIST) {
             return new RedisListForm($this->connection, $table);
+        } elseif ($type === RedisDriver::TYPE_SORTED_SET) {
+            return new RedisSortedSetForm($this->connection, $table);
         }
     }
 
