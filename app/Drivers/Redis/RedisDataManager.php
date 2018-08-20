@@ -71,6 +71,7 @@ class RedisDataManager extends AbstractDataManager
                     break;
                 case RedisProxy::TYPE_SORTED_SET:
                     $tables[RedisDriver::TYPE_SORTED_SET]++;
+                    break;
                 default:
                     break;
             }
