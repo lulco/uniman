@@ -18,7 +18,6 @@ class TablePresenter extends BasePresenter
         try {
             $tables = $this->driver->dataManager()->tables($sorting);
         } catch (NoTablesJustItemsException $e) {
-            $tables = [];
             $this->redirect('Item:default', $driver, $database, $e->getType(), $e->getTable());
         }
 

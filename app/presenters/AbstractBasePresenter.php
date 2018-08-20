@@ -23,7 +23,7 @@ abstract class AbstractBasePresenter extends Presenter
     /** @var ITranslator @inject */
     public $translator;
 
-    /** @var ?DriverInterface */
+    /** @var DriverInterface */
     protected $driver;
 
     protected $database;
