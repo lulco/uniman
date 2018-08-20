@@ -8,25 +8,17 @@ class RabbitMQManagementApiClient
 {
     private $baseUrl;
 
-    public function __construct($host = 'localhost', $port = '15672', $user = 'guest', $password = 'guest')
+    public function __construct(string $host = 'localhost', string $port = '15672', string $user = 'guest', string $password = 'guest')
     {
         $this->baseUrl = 'http://' . $user . ':' . $password . '@' . $host . ':' . $port;
     }
 
-    /**
-     * @return just for check if user authorised
-     */
-    public function overview()
+    public function overview(): array
     {
         return $this->call('/api/overview');
     }
 
-    /**
-     * returns list of vhosts visible for user
-     * @param string|null $user
-     * @return array
-     */
-    public function getVhosts($user = null)
+    public function getVhosts(?string $user = null): array
     {
         $result = $this->call('/api/vhosts');
         $vhosts = [];
@@ -37,7 +29,7 @@ class RabbitMQManagementApiClient
             }
             $permissions = $this->call('/api/vhosts/' . urlencode($item['name']) . '/permissions');
             foreach ($permissions as $permission) {
-                if ($permission['user'] == $user) {
+                if ($permission['user'] === $user) {
                     $vhosts[] = $item;
                     continue;
                 }
@@ -46,12 +38,7 @@ class RabbitMQManagementApiClient
         return $vhosts;
     }
 
-    /**
-     * returns list of queues for vhost
-     * @param string|null $vhost
-     * @return array
-     */
-    public function getQueues($vhost = null)
+    public function getQueues(?string $vhost = null): array
     {
         $endpoint = '/api/queues';
         if ($vhost) {
@@ -61,16 +48,16 @@ class RabbitMQManagementApiClient
         return $queues;
     }
 
-    public function getMessages($vhost, $queue)
+    public function getMessages(string $vhost, string $queue): array
     {
         $count = 0;
         foreach ($this->getQueues($vhost) as $vhostQueue) {
-            if ($vhostQueue['name'] == $queue) {
+            if ($vhostQueue['name'] === $queue) {
                 $count = $vhostQueue['messages'];
                 break;
             }
         }
-        if ($count == 0) {
+        if ($count === 0) {
             return [];
         }
 
@@ -84,7 +71,7 @@ class RabbitMQManagementApiClient
         return $result;
     }
 
-    private function call($endpoint, $method = 'GET', $params = null)
+    private function call(string $endpoint, string $method = 'GET', ?array $params = null): array
     {
         $ch = curl_init($this->baseUrl . $endpoint);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

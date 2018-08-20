@@ -6,30 +6,17 @@ use Nette\Utils\Strings;
 
 class FilterLoader
 {
-    /** @var array All registered filters */
     private $filters = [];
 
-    /**
-     * Check if filter is registered, call filter if is registered
-     *
-     * @param string $helper
-     * @return mixed
-     */
-    public function load($helper)
+    public function load(string $helper)
     {
         if (isset($this->filters[$helper])) {
             return call_user_func_array($this->filters[$helper], array_slice(func_get_args(), 1));
         }
     }
 
-    /**
-     * Registers new filter
-     *
-     * @param string $name
-     * @param callback $callback
-     */
-    public function register($name, $callback)
+    public function register(string $name, callable $callable): void
     {
-        $this->filters[Strings::lower($name)] = $callback;
+        $this->filters[Strings::lower($name)] = $callable;
     }
 }

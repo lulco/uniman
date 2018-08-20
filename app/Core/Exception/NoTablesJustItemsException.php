@@ -10,6 +10,7 @@ class NoTablesJustItemsException extends UniManException
 
     public function __construct($type, $table)
     {
+        parent::__construct();
         $this->type = $type;
         $this->table = $table;
     }
