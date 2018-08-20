@@ -16,6 +16,7 @@ class RedisDriver extends AbstractDriver
     const TYPE_HASH = 'hash';
     const TYPE_SET = 'set';
     const TYPE_LIST = 'list';
+    const TYPE_SORTED_SET = 'sorted_set';
 
     private $connection;
 

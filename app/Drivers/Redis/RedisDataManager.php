@@ -9,6 +9,7 @@ use UniMan\Drivers\Redis\DataManager\RedisHashDataManager;
 use UniMan\Drivers\Redis\DataManager\RedisKeyDataManager;
 use UniMan\Drivers\Redis\DataManager\RedisListDataManager;
 use UniMan\Drivers\Redis\DataManager\RedisSetDataManager;
+use UniMan\Drivers\Redis\DataManager\RedisSortedSetDataManager;
 use UniMan\Drivers\Redis\RedisDatabaseAliasStorage;
 
 class RedisDataManager extends AbstractDataManager
@@ -51,6 +52,7 @@ class RedisDataManager extends AbstractDataManager
             RedisDriver::TYPE_HASH => 0,
             RedisDriver::TYPE_SET => 0,
             RedisDriver::TYPE_LIST => 0,
+            RedisDriver::TYPE_SORTED_SET => 0,
         ];
         foreach ($this->connection->keys('*') as $key) {
             $type = $this->connection->type($key);
@@ -67,6 +69,8 @@ class RedisDataManager extends AbstractDataManager
                 case RedisProxy::TYPE_LIST:
                     $tables[RedisDriver::TYPE_LIST]++;
                     break;
+                case RedisProxy::TYPE_SORTED_SET:
+                    $tables[RedisDriver::TYPE_SORTED_SET]++;
                 default:
                     break;
             }
@@ -86,6 +90,7 @@ class RedisDataManager extends AbstractDataManager
             RedisDriver::TYPE_HASH => [],
             RedisDriver::TYPE_SET => [],
             RedisDriver::TYPE_LIST => [],
+            RedisDriver::TYPE_SORTED_SET => [],
         ];
         foreach ($this->connection->keys('*') as $key) {
             $type = $this->connection->type($key);
@@ -93,30 +98,44 @@ class RedisDataManager extends AbstractDataManager
                 $tables[RedisDriver::TYPE_KEY]['list_of_all_keys']['number_of_keys']++;
             } elseif ($type === RedisProxy::TYPE_HASH) {
                 $result = $this->connection->hlen($key);
+                $ttl = $this->connection->ttl($key);
                 $tables[RedisDriver::TYPE_HASH][$key] = [
                     'key' => $key,
                     'number_of_fields' => $result,
+                    'ttl' => $ttl > 0 ? $ttl : null,
                 ];
             } elseif ($type === RedisProxy::TYPE_SET) {
                 $result = $this->connection->scard($key);
+                $ttl = $this->connection->ttl($key);
                 $tables[RedisDriver::TYPE_SET][$key] = [
                     'key' => $key,
                     'number_of_members' => $result,
+                    'ttl' => $ttl > 0 ? $ttl : null,
                 ];
             } elseif ($type === RedisProxy::TYPE_LIST) {
                 $result = $this->connection->llen($key);
+                $ttl = $this->connection->ttl($key);
                 $tables[RedisDriver::TYPE_LIST][$key] = [
                     'key' => $key,
                     'number_of_elements' => $result,
+                    'ttl' => $ttl > 0 ? $ttl : null,
+                ];
+            } elseif ($type === RedisProxy::TYPE_SORTED_SET) {
+                $result = $this->connection->zcard($key);
+                $ttl = $this->connection->ttl($key);
+                $tables[RedisDriver::TYPE_SORTED_SET][$key] = [
+                    'key' => $key,
+                    'number_of_members' => $result,
+                    'ttl' => $ttl > 0 ? $ttl : null,
                 ];
             }
-            // TODO sorted set
         }
         return [
             RedisDriver::TYPE_KEY => Multisort::sort($tables[RedisDriver::TYPE_KEY], $sorting),
             RedisDriver::TYPE_HASH => Multisort::sort($tables[RedisDriver::TYPE_HASH], $sorting),
             RedisDriver::TYPE_SET => Multisort::sort($tables[RedisDriver::TYPE_SET], $sorting),
             RedisDriver::TYPE_LIST => Multisort::sort($tables[RedisDriver::TYPE_LIST], $sorting),
+            RedisDriver::TYPE_SORTED_SET => Multisort::sort($tables[RedisDriver::TYPE_SORTED_SET], $sorting),
         ];
     }
 
@@ -138,6 +157,9 @@ class RedisDataManager extends AbstractDataManager
         } elseif ($type === RedisDriver::TYPE_LIST) {
             $manager = new RedisListDataManager($this->connection);
             $itemsCount = $manager->itemsCount($table, $filter);
+        } elseif ($type === RedisDriver::TYPE_SORTED_SET) {
+            $manager = new RedisSortedSetDataManager($this->connection);
+            $itemsCount = $manager->itemsCount($table, $filter);
         }
         $this->itemsCountCache = $itemsCount;
         return $itemsCount;
@@ -157,6 +179,9 @@ class RedisDataManager extends AbstractDataManager
             $items = $manager->items($table, $page, $onPage, $filter);
         } elseif ($type === RedisDriver::TYPE_LIST) {
             $manager = new RedisListDataManager($this->connection);
+            $items = $manager->items($table, $page, $onPage, $filter);
+        } elseif ($type === RedisDriver::TYPE_SORTED_SET) {
+            $manager = new RedisSortedSetDataManager($this->connection);
             $items = $manager->items($table, $page, $onPage, $filter);
         }
 
@@ -184,6 +209,9 @@ class RedisDataManager extends AbstractDataManager
             $value = md5(uniqid());
             $this->connection->lset($table, $item, $value);
             return $this->connection->lrem($table, $value);
+        }
+        if ($type === RedisDriver::TYPE_SORTED_SET) {
+            return $this->connection->zrem($table, $item);
         }
         return parent::deleteItem($type, $table, $item);
     }

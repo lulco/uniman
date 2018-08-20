@@ -1,20 +1,23 @@
 name: Redis
 
-table_types_for_database: 'Keys, hashes, sets and lists for database %database%'
-no_tables_for_database: 'No keys, hashes, sets and lists found for database %database%'
+table_types_for_database: 'Keys, hashes, sets, lists and sorted sets for database %database%'
+no_tables_for_database: 'No keys, hashes, sets, lists and sorted sets found for database %database%'
 no_tables_for_type_key: 'No keys'
 no_tables_for_type_hash: 'No hashes'
 no_tables_for_type_set: 'No sets'
 no_tables_for_type_list: 'No lists'
+no_tables_for_type_sorted_set: 'No sorted sets'
 
 alias_storage_not_writable: 'Directory "%directory%" is not writable'
 
 headers:
+    global:
+        ttl: TTL
     databases:
         database: 'Database'
         alias: 'Alias'
         keys: 'Keys'
-        expires: 'Expires'
+        expires: 'Keys with expires time'
         avg_ttl: 'Avg TTL'
     keys:
         key: 'Key'
@@ -30,6 +33,9 @@ headers:
     lists:
         key: 'Key'
         number_of_elements: 'Number of elements'
+    sorted_sets:
+        key: 'Key'
+        number_of_members: 'Number of members'
 
 database_form_header:
     edit: Edit database
@@ -47,6 +53,9 @@ table_form_header:
     list:
         create: Create new list
         edit: Edit list
+    sorted_set:
+        create: Create new sorted set
+        edit: Edit sorted set
 
 item_form_header:
     hash:
@@ -61,6 +70,9 @@ item_form_header:
     list:
         create: Add element to list
         edit: Edit element
+    sorted_set:
+        create: Add member to sorted set
+        edit: Edit member
 
 table_type:
     hash:
@@ -76,9 +88,13 @@ table_type:
         items:
             title: Members
     list:
-        title: List
+        title: Lists
         items:
             title: Elements
+    sorted_set:
+        title: Sorted sets
+        items:
+            title: Members
 
 columns:
     hash:
@@ -96,6 +112,10 @@ columns:
         index: Index
         element: Element
         length: Length
+    sorted_set:
+        member: Member
+        length: Length
+        score: Score
 
 form:
     host:
@@ -170,6 +190,23 @@ list_element_form:
     element:
         label: Element
         required: Element is required
+
+sorted_set_form:
+    key:
+        label: Key
+        required: Key is required
+    members:
+        label: Members
+        required: Members are required
+        description: "Comma separated, use colon to set value, e.g. item1: 1.1, item2: 2.3"
+
+sorted_set_member_form:
+    member:
+        label: Member
+        required: Member is required
+    score:
+        label: Score
+        required: Score is required
 
 database_select_control:
     database:
