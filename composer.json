@@ -11,7 +11,7 @@
         "latte/latte": "^2.4",
         "tomaj/nette-bootstrap-form": "^1.2",
         "php-amqplib/php-amqplib": "^2.6",
-        "lulco/redis-proxy": "dev-master as 0.4",
+        "lulco/redis-proxy": "~0.4",
         "predis/predis": "^1.1",
         "radekdostal/nette-datetimepicker": "^2.4"
     },
